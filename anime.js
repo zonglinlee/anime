@@ -453,7 +453,7 @@
   }
 
   function recomposeValue(numbers, strings) {
-    return strings.reduce((a, b, i) => a + numbers[i - 1] + b);
+    return strings.reduce((a, b, i) => a + numbers[i - 1] + (b ? b : ' '));
   }
 
   // Animatables
