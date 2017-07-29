@@ -406,9 +406,14 @@
   function isPath(val) {
     return is.obj(val) && objectHas(val, 'totalLength');
   }
+  
+  function dist(x1, x2, y1, y2){
+    return Math.sqrt( (x2-=x1)*x2 + (y2-=y1)*y2 );
+  }
 
   function setDashoffset(el) {
-    const pathLength = el.getTotalLength();
+    const isLine = el instanceof SVGLineElement;
+    const pathLength = isLine ? dist(el.x1.baseVal.value, el.x2.baseVal.value, el.y1.baseVal.value, el.y2.baseVal.value) : el.getTotalLength();
     el.setAttribute('stroke-dasharray', pathLength);
     return pathLength;
   }
