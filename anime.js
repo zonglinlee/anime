@@ -407,13 +407,17 @@
     return is.obj(val) && objectHas(val, 'totalLength');
   }
   
-  function dist(x1, x2, y1, y2){
-    return Math.sqrt( (x2-=x1)*x2 + (y2-=y1)*y2 );
+  function getSvgElementLength(el) {
+    const constructor = el.constructor
+    switch (constructor) {
+      case SVGLineElement: return ((x1, x2, y1, y2) => Math.sqrt( (x2-=x1)*x2 + (y2-=y1)*y2 ))(el.getAttribute('x1'), el.getAttribute('x2'), el.getAttribute('y1'), el.getAttribute('y2'));
+      case SVGRectElement: return (el.getAttribute('width')*2) + (el.getAttribute('height')*2);
+      case SVGPathElement: return el.getTotalLength();
+    }
   }
 
   function setDashoffset(el) {
-    const isLine = el instanceof SVGLineElement;
-    const pathLength = isLine ? dist(el.x1.baseVal.value, el.x2.baseVal.value, el.y1.baseVal.value, el.y2.baseVal.value) : el.getTotalLength();
+    const pathLength = getSvgElementLength(el);
     el.setAttribute('stroke-dasharray', pathLength);
     return pathLength;
   }
