@@ -448,7 +448,7 @@
     return {
       original: value,
       numbers: value.match(rgx) ? value.match(rgx).map(Number) : [0],
-      strings: (typeof val === "string" || unit) ? value.split(rgx) : []
+      strings: (is.str(val) || unit) ? value.split(rgx) : []
     }
   }
 
