@@ -1,6 +1,6 @@
 {
   "name": "animejs",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "JavaScript animation engine",
   "main": "anime.min.js",
   "repository": {
@@ -21,12 +21,12 @@
   "bugs": {
     "url": "https://github.com/juliangarnier/anime/issues"
   },
-  "homepage": "http://anime-js.com",
+  "homepage": "http://animejs.com",
   "files": [
     "anime.js",
     "anime.min.js"
   ],
-  "dependencies": {
+  "devDependencies": {
     "google-closure-compiler-js": "^20170124.0.0"
   }
 }
