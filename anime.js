@@ -1,5 +1,5 @@
 /**
- * http://anime-js.com
+ * http://animejs.com
  * JavaScript animation engine
  * @version v2.1.0
  * @author Julian Garnier
@@ -448,12 +448,12 @@
     return {
       original: value,
       numbers: value.match(rgx) ? value.match(rgx).map(Number) : [0],
-      strings: value.split(rgx)
+      strings: (is.str(val) || unit) ? value.split(rgx) : []
     }
   }
 
   function recomposeValue(numbers, strings) {
-    return strings.reduce((a, b, i) => a + numbers[i - 1] + b);
+    return (strings.length === 0) ?  numbers[0] : strings.reduce((a, b, i) => a + numbers[i - 1] + b);
   }
 
   // Animatables

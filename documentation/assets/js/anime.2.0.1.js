@@ -1,5 +1,5 @@
 /**
- * http://anime-js.com
+ * http://animejs.com
  * JavaScript animation engine
  * @version v2.0.1
  * @author Julian Garnier
