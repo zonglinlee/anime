@@ -1,7 +1,7 @@
 /**
  * http://anime-js.com
  * JavaScript animation engine
- * @version v2.0.2
+ * @version v2.1.0
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -761,6 +761,7 @@
           if (!insReversed) countIteration();
         }
       }
+      setCallback('update');
       if (engineTime >= insDuration) {
         if (instance.remaining) {
           startTime = now;
@@ -778,7 +779,6 @@
         }
         lastTime = 0;
       }
-      setCallback('update');
     }
 
     instance.tick = function(t) {
@@ -872,7 +872,7 @@
     return tl;
   }
 
-  anime.version = '2.0.2';
+  anime.version = '2.1.0';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
