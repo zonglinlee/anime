@@ -30,6 +30,7 @@
       margin-top: 20px;
       border-radius: 50%;
       background-color: currentColor;
+      margin: 10px;
     }
     .box-shadow {
       background-color: transparent;
@@ -41,6 +42,8 @@
   <div class="unit-less item color-03"></div>
   <div class="specified-unit item color-05"></div>
   <div class="filter item color-07"></div>
+  <div class="rgba item color-09"></div>
+  <div class="calc item color-11"></div>
   <script>
     var boxShadow = anime({
       targets: '.box-shadow',
@@ -74,7 +77,21 @@
       direction: 'alternate',
       easing: 'linear'
     });
-    console.log(filter.animations[0]);
+    var rgba = anime({
+      targets: '.rgba',
+      backgroundColor: ['rgba(255,100,50,1)', 'rgba(255,100,50,.0)'],
+      loop: true,
+      direction: 'alternate',
+      easing: 'linear'
+    });
+    var calc = anime({
+      targets: '.calc',
+      height: ['calc(25% - 100px)', 'calc(25% - 0px)'],
+      loop: true,
+      direction: 'alternate',
+      easing: 'linear'
+    });
+    console.log(calc.animations[0]);
   </script>
 </body>
 </html>
