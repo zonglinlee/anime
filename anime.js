@@ -397,16 +397,69 @@
     return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
   }
 
+  // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes. 
+  // adapted from https://gist.github.com/SebLambla/3e0550c496c236709744
+
+  function getCircleLength(el) {
+    return 2 * Math.PI * el.getAttribute('r');
+  }
+
+  function getRectLength(el) {
+    return (el.getAttribute('width') * 2) + (el.getAttribute('height') * 2);
+  }
+
+  function getLineLength(el) {
+    const x1 = el.getAttribute('x1');
+    const x2 = el.getAttribute('x2');
+    const y1 = el.getAttribute('y1');
+    const y2 = el.getAttribute('y2');
+    return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+  }
+
+  function getDistance(p1, p2) {
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)); 
+  }
+
+  function getPolylineLength(el) {
+    const points = el.points;
+    let totalLength = 0;
+    let previousPos;
+    for (let i = 0 ; i < points.numberOfItems; i++) {
+      const currentPos = points.getItem(i);
+      if (i > 0) totalLength += getDistance(previousPos, currentPos);
+      previousPos = currentPos;
+    }
+    return totalLength;
+  }
+
+  function getPolygonLength(el) {
+    const points = el.points;
+    return getPolylineLength(el) + getDistance(points.getItem(points.numberOfItems - 1), points.getItem(0));
+  }
+
+  // Path animation
+
+  function getTotalLength(el) {
+    if (el.getTotalLength) return el.getTotalLength();
+    switch(el.tagName.toLowerCase()) {
+      case 'circle': return getCircleLength(el);
+      case 'rect': return getRectLength(el);
+      case 'line': return getLineLength(el);
+      case 'polyline': return getPolylineLength(el);
+      case 'polygon': return getPolygonLength(el);
+    }
+  }
+
+  function setDashoffset(el) {
+    const pathLength = getTotalLength(el);
+    el.setAttribute('stroke-dasharray', pathLength);
+    return pathLength;
+  }
+
   // Motion path
 
   function isPath(val) {
     return is.obj(val) && objectHas(val, 'totalLength');
-  }
-
-  function setDashoffset(el) {
-    const pathLength = el.getTotalLength();
-    el.setAttribute('stroke-dasharray', pathLength);
-    return pathLength;
   }
 
   function getPath(path, percent) {
@@ -416,7 +469,7 @@
       return {
         el: el,
         property: prop,
-        totalLength: el.getTotalLength() * (p / 100)
+        totalLength: getTotalLength(el) * (p / 100)
       }
     }
   }
