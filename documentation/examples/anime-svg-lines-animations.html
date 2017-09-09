@@ -29,22 +29,41 @@
     }
     .anim, .anim svg {
       position: relative;
-      width: 100%;
-      height: 100%;
+      width: 600px;
+      height: 400px;
     }
-    .anim path {
-      stroke-width: 2;
+    .item {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30px;
+      height: 30px;
+      margin-left: -15px;
+      margin-top: -15px;
+      background-color: white;
     }
   </style>
 </head>
 <body>
   <div class="anim">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"><g fill="none" fill-rule="evenodd" stroke-width="2"><path stroke="#F96F82" d="M51 51v98h98V51H51z"/><circle cx="300" cy="100" r="50" stroke="#FED28B"/><polygon stroke="#D1FA9E" points="500 130.381 464.772 149 471.5 109.563 443 81.634 482.386 75.881 500 40 517.614 75.881 557 81.634 528.5 109.563 535.228 149"/><polygon stroke="#7BE6D6" points="95.5 244 148 281.815 127.947 343 63.053 343 43 281.815"/><path stroke="#4E7EFC" d="M257.88 282.14c.36-6 1.86-10.98 4.5-14.94 2.64-3.96 6-7.14 10.08-9.54a43.93 43.93 0 0 1 13.77-5.13 78.29 78.29 0 0 1 15.39-1.53c4.68 0 9.42.33 14.22.99a43.5 43.5 0 0 1 13.14 3.87 25.9 25.9 0 0 1 9.72 8.01c2.52 3.42 3.78 7.95 3.78 13.59v48.42c0 4.2.24 8.22.72 12.06s1.32 6.72 2.52 8.64H319.8a36.68 36.68 0 0 1-1.8-9 33.3 33.3 0 0 1-14.4 8.82 57.8 57.8 0 0 1-16.92 2.52c-4.44 0-8.58-.54-12.42-1.62a28.44 28.44 0 0 1-10.08-5.04 23.46 23.46 0 0 1-6.75-8.64c-1.62-3.48-2.43-7.62-2.43-12.42 0-5.28.93-9.63 2.79-13.05a23.33 23.33 0 0 1 7.2-8.19 32.26 32.26 0 0 1 10.08-4.59 107.6 107.6 0 0 1 11.43-2.43c3.84-.6 7.62-1.08 11.34-1.44a68.2 68.2 0 0 0 9.9-1.62c2.88-.72 5.16-1.77 6.84-3.15 1.68-1.38 2.46-3.39 2.34-6.03 0-2.76-.45-4.95-1.35-6.57a9.93 9.93 0 0 0-3.6-3.78c-1.5-.9-3.24-1.5-5.22-1.8-1.98-.3-4.11-.45-6.39-.45-5.04 0-9 1.08-11.88 3.24-2.88 2.16-4.56 5.76-5.04 10.8h-25.56zm59.04 18.9a11.47 11.47 0 0 1-4.05 2.25c-1.62.54-3.36.99-5.22 1.35a80 80 0 0 1-5.85.9c-2.04.24-4.08.54-6.12.9-1.92.36-3.81.84-5.67 1.44-1.86.6-3.48 1.41-4.86 2.43a11.55 11.55 0 0 0-3.33 3.87 12.45 12.45 0 0 0-1.26 5.94c0 2.28.42 4.2 1.26 5.76a9.66 9.66 0 0 0 3.42 3.69c1.44.9 3.12 1.53 5.04 1.89 1.92.36 3.9.54 5.94.54 5.04 0 8.94-.84 11.7-2.52a16.85 16.85 0 0 0 6.12-6.03 19.28 19.28 0 0 0 2.43-7.11c.3-2.4.45-4.32.45-5.76v-9.54z"/><rect width="98" height="98" x="451" y="251" stroke="#C987FE" rx="25"/></g></svg>
+    <div class="item"></div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"><g fill="none" fill-rule="evenodd" stroke-width="2"><circle cx="300" cy="100" r="50" stroke="#FED28B"/><polygon stroke="#D1FA9E" points="500 130.381 464.772 149 471.5 109.563 443 81.634 482.386 75.881 500 40 517.614 75.881 557 81.634 528.5 109.563 535.228 149"/><polyline stroke="#7BE6D6" points="63.053 343 43 281.815 95.5 244 95.5 244 148 281.815 127.947 343"/><rect width="98" height="98" x="451" y="251" stroke="#C987FE" rx="25"/><path stroke="#F96F82" d="M51.5 51.5l98 98m0-98l-98 98" stroke-linecap="square"/><path class="path" stroke="#4E7EFC" d="M250 300a50 50 0 0 1 100 0v25h-25v-25a25 25 0 1 0-25 25v25a50 50 0 0 1-50-50z"/></g></svg>
   </div>
   <script>
     anime({
-      targets: ['path', 'circle', 'rect', 'polygon'],
+      targets: ['line', 'circle', 'polygon', 'polyline', 'path', 'rect'],
       strokeDashoffset: [anime.setDashoffset, 0],
+      easing: 'easeInOutSine',
+      duration: 1500,
+      direction: 'alternate',
+      loop: true
+    });
+    var pathEl = anime.path('.path');
+    anime({
+      targets: '.item',
+      translateX: pathEl('x'),
+      translateY: pathEl('y'),
+      rotate: pathEl('angle'),
       easing: 'easeInOutSine',
       duration: 1500,
       direction: 'alternate',
