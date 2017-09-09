@@ -403,8 +403,61 @@
     return is.obj(val) && objectHas(val, 'totalLength');
   }
 
+  function getSvgElementLength(el) {
+    const constructor = el.constructor
+    switch (constructor) {
+      case SVGPolylineElement: return getSvgPolylineLength(el);
+      case SVGLineElement: return getSvgLineLength(el);
+      case SVGRectElement: return getSvgRectLength(el);
+      case SVGPathElement: return getSvgPathLength(el);
+    }
+  }
+
+  function getSvgLineLength(el) {
+    let x1 = el.getAttribute('x1')
+    let x2 = el.getAttribute('x2')
+
+    let y1 = el.getAttribute('y1')
+    let y2 = el.getAttribute('y2')
+
+    let totalLength = Math.sqrt( ( x2-=x1 ) * x2 + ( y2-=y1 ) * y2 )
+    return totalLength
+  }
+
+  function getSvgRectLength(el) {
+    const width = el.getAttribute('width')
+    const height = el.getAttribute('height')
+
+    let totalLength = ( width*2 ) + ( height*2 )
+    return totalLength
+  }
+
+  function getSvgPathLength(el) {
+    let totalLength = el.getTotalLength()
+    return totalLength
+  }
+
+  function getSvgPolylineLength(el) {
+    const points = el.points.numberOfItems
+    let totalLength = 0
+    let prevPos
+
+    for (var i = 0 ; i < points;i++) {
+        const pos = el.points.getItem(i)
+
+        if (i > 0) {
+            const distance = Math.sqrt( Math.pow(pos.x - prevPos.x, 2) + Math.pow(pos.y - prevPos.y, 2))
+            totalLength += distance
+        }
+
+        prevPos = pos
+    }
+
+    return totalLength
+  }
+
   function setDashoffset(el) {
-    const pathLength = el.getTotalLength();
+    const pathLength = getSvgElementLength(el);
     el.setAttribute('stroke-dasharray', pathLength);
     return pathLength;
   }
@@ -663,7 +716,7 @@
       instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
       for (let i = arrayLength(instance.children); i--; ){
         const child = instance.children[i];
-        child.seek(child.offset); 
+        child.seek(child.offset);
         child.reset();
       }
     }
