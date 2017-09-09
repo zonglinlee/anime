@@ -330,10 +330,6 @@
 
   // Values
 
-  function parseFloatValue(val) {
-    return parseFloat(val);
-  }
-
   function minMaxValue(val, min, max) {
     return Math.min(Math.max(val, min), max);
   }
@@ -385,8 +381,8 @@
   function getRelativeValue(to, from) {
     const operator = /^(\*=|\+=|-=)/.exec(to);
     if (!operator) return to;
-    const x = parseFloatValue(from);
-    const y = parseFloatValue(to.replace(operator[0], ''));
+    const x = parseFloat(from);
+    const y = parseFloat(to.replace(operator[0], ''));
     switch (operator[0][0]) {
       case '+': return x + y;
       case '-': return x - y;
@@ -398,7 +394,7 @@
     if (is.col(val)) return colorToRgb(val);
     const originalUnit = getUnit(val);
     const unitLess = originalUnit ? val.substr(0, arrayLength(val) - arrayLength(originalUnit)) : val;
-    return unit ? unitLess + unit : unitLess;
+    return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
   }
 
   // Motion path
@@ -523,8 +519,8 @@
       }
       t[p] = value;
     }
-    t.duration = parseFloatValue(t.duration);
-    t.delay = parseFloatValue(t.delay);
+    t.duration = parseFloat(t.duration);
+    t.delay = parseFloat(t.delay);
     return t;
   }
 
