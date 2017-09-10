@@ -29,10 +29,10 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 40px;
-      height: 40px;
-      margin: -20px 0 0 -20px;
-      border-radius: 50%;
+      width: 400px;
+      height: 400px;
+      margin: -200px 0 0 -200px;
+      /*border-radius: 50%;*/
       background-color: #FBF38C;
     }
   </style>
@@ -43,8 +43,10 @@
 
     anime({
       targets: 'div',
-      width: '600px',
+      // width: '600px',
       duration: 0,
+      perspective: 20,
+      rotateY: 30,
       begin: function() { console.log('begin') },
       run: function() { console.log('run') },
       update: function() { console.log('update') },
