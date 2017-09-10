@@ -37,6 +37,9 @@
     .box-shadow {
       background-color: transparent;
     }
+    .clip-path {
+      border-radius: 0;
+    }
   </style>
 </head>
 <body>
@@ -47,6 +50,7 @@
   <div class="rgba item color-09"></div>
   <div class="calc item color-11"></div>
   <div class="zero-value item color-02"></div>
+  <div class="clip-path item color-04"></div>
   <script>
     var boxShadow = anime({
       targets: '.box-shadow',
@@ -97,6 +101,13 @@
     var zeroValue = anime({
       targets: '.zero-value',
       scale: 0,
+      loop: true,
+      direction: 'alternate',
+      easing: 'linear'
+    });
+    var clipPath = anime({
+      targets: '.clip-path',
+      clipPath: ['circle(0px at center)', 'circle(100px at center)'],
       loop: true,
       direction: 'alternate',
       easing: 'linear'
