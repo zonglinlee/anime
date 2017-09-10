@@ -750,7 +750,7 @@
         const isPath = tween.isPath;
         const round = tween.round;
         const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
-        const eased = tween.easing(elapsed, tween.elasticity);
+        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
         const progress = recomposeValue(tween.to.numbers.map((number, p) => {
           const start = isPath || !tween.from.numbers[p] ? 0 : tween.from.numbers[p];
           let value = start + eased * (number - start);
@@ -801,7 +801,11 @@
         }
         setCallback('run');
       } else {
-        if (insTime <= insOffset && insCurrentTime !== 0) {
+        if (!insDuration) {
+          setAnimationsProgress(0);
+          countIteration();
+        }
+        if ((insTime <= insOffset && insCurrentTime !== 0)) {
           setAnimationsProgress(0);
           if (insReversed) countIteration();
         }
