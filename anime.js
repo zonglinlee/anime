@@ -793,28 +793,25 @@
       const insReversed = instance.reversed;
       const insTime = minMaxValue(adjustTime(engineTime), 0, insDuration);
       if (instance.children) syncInstanceChildren(insTime);
+      if (!instance.began && insTime >= insDelay) {
+        instance.began = true;
+        setCallback('begin');
+      }
       if (insTime > insOffset && insTime < insDuration) {
         setAnimationsProgress(insTime);
-        if (!instance.began && insTime >= insDelay) {
-          instance.began = true;
-          setCallback('begin');
-        }
-        setCallback('run');
       } else {
-        if (!insDuration) {
+        if (!insDuration) countIteration();
+        if (insTime <= insOffset) {
           setAnimationsProgress(0);
-          countIteration();
+          if (insReversed && insCurrentTime !== 0) countIteration();
         }
-        if ((insTime <= insOffset && insCurrentTime !== 0)) {
-          setAnimationsProgress(0);
-          if (insReversed) countIteration();
-        }
-        if (insTime >= insDuration && insCurrentTime !== insDuration) {
+        if (insTime >= insDuration) {
           setAnimationsProgress(insDuration);
-          if (!insReversed) countIteration();
+          if (!insReversed && insCurrentTime !== insDuration) countIteration();
         }
       }
       setCallback('update');
+      if (insTime >= insDelay) setCallback('run');
       if (engineTime >= insDuration) {
         if (instance.remaining) {
           startTime = now;
