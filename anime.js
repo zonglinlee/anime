@@ -43,7 +43,7 @@
     round: 0
   }
 
-  const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skewX', 'skewY'];
+  const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skewX', 'skewY', 'perspective'];
   let transformString;
 
   // Utils
@@ -324,7 +324,7 @@
   }
 
   function getTransformUnit(propName) {
-    if (stringContains(propName, 'translate')) return 'px';
+    if (stringContains(propName, 'translate') || propName === 'perspective') return 'px';
     if (stringContains(propName, 'rotate') || stringContains(propName, 'skew')) return 'deg';
   }
 
