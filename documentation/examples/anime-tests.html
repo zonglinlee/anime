@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png">
   <link href="../assets/css/anime.css" rel="stylesheet">
   <script src="../../anime.js"></script>
-  <!-- <script src="../assets/js/anime.2.0.1.js"></script> -->
+  <!-- <script src="../assets/js/anime.2.0.2.js"></script> -->
   <!-- <script src="../assets/js/anime.1.3.js"></script> -->
   <style>
     body {
@@ -41,12 +41,43 @@
   <div></div>
   <script>
 
-  anime({
-    targets: 'div',
-    translateX: '-=100%'
-  });
+    anime({
+      targets: 'div',
+      width: '600px',
+      duration: 0,
+      begin: function() { console.log('begin') },
+      run: function() { console.log('run') },
+      update: function() { console.log('update') },
+      complete: function() { console.log('complete') }
+    })
+
+    // var tl = anime.timeline({
+    //   autoplay: true
+    // });
+
+    // tl.add({
+    //   targets: 'div',
+    //   scale: [
+    //     { value: '1', easing: 'linear', duration: 0 },
+    //     { value: '-1, 1', easing: 'linear', duration: 0 },
+    //     { value: '-2, 2', easing: 'easeInCubic', duration: 500 },
+    //     { value: '-1, 1', duration: 1000 }
+    //   ]
+    // }).add({
+    //   targets: 'div',
+    //   translateX: [
+    //     { value: 300 },
+    //     { value: 400 }
+    //   ]
+    // }).add({
+    //   targets: 'div',
+    //   translateX: [
+    //     { value: 500 },
+    //     { value: 600 }
+    //   ]
+    // })
 
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <!-- <script src="../assets/js/stats.js"></script> -->
 </body>
 </html>
