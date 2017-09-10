@@ -400,6 +400,10 @@
   // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes. 
   // adapted from https://gist.github.com/SebLambla/3e0550c496c236709744
 
+  function getDistance(p1, p2) {
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)); 
+  }
+
   function getCircleLength(el) {
     return 2 * Math.PI * el.getAttribute('r');
   }
@@ -409,15 +413,10 @@
   }
 
   function getLineLength(el) {
-    const x1 = el.getAttribute('x1');
-    const x2 = el.getAttribute('x2');
-    const y1 = el.getAttribute('y1');
-    const y2 = el.getAttribute('y2');
-    return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-  }
-
-  function getDistance(p1, p2) {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)); 
+    return getDistance(
+      {x: el.getAttribute('x1'), y: el.getAttribute('y1')}, 
+      {x: el.getAttribute('x2'), y: el.getAttribute('y2')}
+    );
   }
 
   function getPolylineLength(el) {
