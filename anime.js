@@ -712,6 +712,7 @@
       instance.paused = true;
       instance.began = false;
       instance.completed = false;
+      instance.looped = false;
       instance.reversed = direction === 'reverse';
       instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
       for (let i = arrayLength(instance.children); i--; ){
@@ -791,6 +792,7 @@
       const insDelay = instance.delay;
       const insCurrentTime = instance.currentTime;
       const insReversed = instance.reversed;
+      if (instance.looped) engineTime += insDelay;
       const insTime = minMaxValue(adjustTime(engineTime), 0, insDuration);
       if (instance.children) syncInstanceChildren(insTime);
       if (!instance.began && insTime >= insDelay) {
@@ -814,6 +816,7 @@
       if (insTime >= insDelay) setCallback('run');
       if (engineTime >= insDuration) {
         if (instance.remaining) {
+          if (instance.direction === 'staggered') instance.looped = true;
           startTime = now;
           if (instance.direction === 'alternate') toggleInstanceDirection();
         } else {

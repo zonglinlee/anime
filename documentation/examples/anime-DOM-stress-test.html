@@ -29,6 +29,7 @@
       height: 1rem;
       margin: -.5rem 0 0 -.5rem;
       border: 1px solid currentColor;
+      /*background-color: currentColor;*/
       border-radius: 50%;
       transform: scale(0);
     }
@@ -42,7 +43,7 @@
   var duration = 2000;
   var toAnimate = [];
   var radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-  var distance = radius / 4 <= 150 ? 150 : radius / 4; 
+  var distance = radius / 4 <= 150 ? 150 : radius / 3; 
   var colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'];
 
   var createElements = (function() {
@@ -61,18 +62,28 @@
   })();
 
   var animate = function(el, i) {
-    // var angle = (i * .05) * Math.PI;
-    // var angle = anime.easings['easeInOutExpo'](i);
-    var angle = i * 2;
-    var delay = ((duration * 2) / maxElements) * i;
+    // var angle = (i * .01) * Math.PI;
+    // var angle = anime.easings['easeOutBack'](i);
+    var angle = i * 4;
+    // var delay = ((duration * 2) / maxElements) * i;
+    // var angle = i * 1000;
+    var delay = (duration / maxElements) * i * 2;
     var a = anime({
       targets: el,
-      translateX: [0, Math.cos(angle) * distance],
-      translateY: [0, Math.sin(angle) * distance],
+      translateX: [0, Math.sin(angle) * distance],
+      // translateX: [0, Math.cos(angle * i *.01) * distance],
+      translateY: [0,Math.cos(angle) * distance ],
+      // translateY: [0, Math.sin(angle * i *.01) * distance],
       scale: [
-        {value: [0, 2], duration: duration / 2, easing: 'easeOutBack'},
+        {value: [0, 4], duration: duration / 2, easing: 'easeOutBack'},
         {value: 0, duration: duration / 2, delay: duration / 4, easing: 'easeInBack'}
       ],
+      // borderRadius: 0,
+      // opacity: 0,
+      // height: 100,
+      // width: 200,
+      // filter: 'blur(1px)',
+      rotate: 180,
       offset : delay,
       duration: duration,
       easing: 'easeOutSine',
