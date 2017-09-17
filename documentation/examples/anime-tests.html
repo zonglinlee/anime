@@ -62,17 +62,22 @@
       run: function() { console.log('run');},
       complete: function() { console.log('complete');}
     });
-    console.log(duration0.currentTime);
+    // console.log(duration0.currentTime);
     // animation.seek(0);
     // console.log(animation.currentTime);
     var tl = anime.timeline({
       targets: '.color-08',
+      autoplay: true,
       easing: 'easeOutExpo',
-      loop: true
+      duration: 500,
+      // update: function(anim) { console.log('TL update', anim.currentTime);},
+      begin: function(anim) { console.log('TL begin', anim.currentTime);},
+      // run: function(anim) { console.log('TL run', anim.currentTime);},
+      complete: function(anim) { console.log('TL complete', anim.currentTime);}
     });
 
     tl.add({
-      translateY: -100
+      translateY: [-100, 200]
     }).add({
       translateY: 0,
       easing: 'easeOutElastic'
@@ -85,6 +90,11 @@
     }).add({
       translateY: 0
     })
+
+    var promise = tl.finished.then(function() {
+      console.log('FINISHED');
+      tl.restart();
+    });
 
   </script>
   <!-- <script src="../assets/js/stats.js"></script> -->

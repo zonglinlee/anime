@@ -797,13 +797,13 @@
           if (instance.direction === 'alternate') toggleInstanceDirection();
         } else {
           instance.pause();
-          if ('Promise' in window) {
-            resolve();
-            promise = makePromise();
-          }
           if (!instance.completed) {
             instance.completed = true;
             setCallback('complete');
+            if ('Promise' in window) {
+              resolve();
+              promise = makePromise();
+            }
           }
         }
         lastTime = 0;
@@ -897,9 +897,10 @@
     tl.pause();
     tl.duration = 0;
     tl.add = function(instancesParams) {
-      tl.children.forEach( i => { i.began = true; i.completed = true; });
+      tl.children.forEach(i => { i.began = true; i.completed = true; });
       toArray(instancesParams).forEach(instanceParams => {
-        let insParams = mergeObjects(instanceParams, params);
+        let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
+        insParams.targets = insParams.targets || params.targets;
         const tlDuration = tl.duration;
         const insOffset = insParams.offset;
         insParams.autoplay = false;
