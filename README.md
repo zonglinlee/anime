@@ -273,7 +273,7 @@ anime({
   translateX: 100,
   duration: 2000,
   loop: 3, // Play the animation 3 times
-  direction: 'reverse' // Play the animation in reverse
+  direction: 'reverse', // Play the animation in reverse
   autoplay: false // Animation paused by default
 });
 ```
