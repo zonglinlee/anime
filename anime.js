@@ -1,7 +1,7 @@
 /**
  * http://animejs.com
  * JavaScript animation engine
- * @version v2.0.2
+ * @version v2.1.0
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -43,7 +43,7 @@
     round: 0
   }
 
-  const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skewX', 'skewY'];
+  const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skewX', 'skewY', 'perspective'];
   let transformString;
 
   // Utils
@@ -229,10 +229,6 @@
 
   // Arrays
 
-  function arrayLength(arr) {
-    return arr.length;
-  }
-
   function flattenArray(arr) {
     return arr.reduce((a, b) => a.concat(is.arr(b) ? flattenArray(b) : b), []);
   }
@@ -319,20 +315,16 @@
   // Units
 
   function getUnit(val) {
-    const split = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|pc|vw|vh|deg|rad|turn)?/.exec(val);
+    const split = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(val);
     if (split) return split[2];
   }
 
   function getTransformUnit(propName) {
-    if (stringContains(propName, 'translate')) return 'px';
+    if (stringContains(propName, 'translate') || propName === 'perspective') return 'px';
     if (stringContains(propName, 'rotate') || stringContains(propName, 'skew')) return 'deg';
   }
 
   // Values
-
-  function parseFloatValue(val) {
-    return parseFloat(val);
-  }
 
   function minMaxValue(val, min, max) {
     return Math.min(Math.max(val, min), max);
@@ -370,7 +362,7 @@
       values.push(match[2]);
     }
     const value = values.filter((val, i) => props[i] === propName );
-    return arrayLength(value) ? value[0] : defaultVal;
+    return value.length ? value[0] : defaultVal;
   }
 
   function getOriginalTargetValue(target, propName) {
@@ -385,32 +377,85 @@
   function getRelativeValue(to, from) {
     const operator = /^(\*=|\+=|-=)/.exec(to);
     if (!operator) return to;
-    const x = parseFloatValue(from);
-    const y = parseFloatValue(to.replace(operator[0], ''));
+    const u = getUnit(to) || 0;
+    const x = parseFloat(from);
+    const y = parseFloat(to.replace(operator[0], ''));
     switch (operator[0][0]) {
-      case '+': return x + y;
-      case '-': return x - y;
-      case '*': return x * y;
+      case '+': return x + y + u;
+      case '-': return x - y + u;
+      case '*': return x * y + u;
     }
   }
 
   function validateValue(val, unit) {
     if (is.col(val)) return colorToRgb(val);
     const originalUnit = getUnit(val);
-    const unitLess = originalUnit ? val.substr(0, arrayLength(val) - arrayLength(originalUnit)) : val;
-    return unit ? unitLess + unit : unitLess;
+    const unitLess = originalUnit ? val.substr(0, val.length - originalUnit.length) : val;
+    return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
+  }
+
+  // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes. 
+  // adapted from https://gist.github.com/SebLambla/3e0550c496c236709744
+
+  function getDistance(p1, p2) {
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)); 
+  }
+
+  function getCircleLength(el) {
+    return 2 * Math.PI * el.getAttribute('r');
+  }
+
+  function getRectLength(el) {
+    return (el.getAttribute('width') * 2) + (el.getAttribute('height') * 2);
+  }
+
+  function getLineLength(el) {
+    return getDistance(
+      {x: el.getAttribute('x1'), y: el.getAttribute('y1')}, 
+      {x: el.getAttribute('x2'), y: el.getAttribute('y2')}
+    );
+  }
+
+  function getPolylineLength(el) {
+    const points = el.points;
+    let totalLength = 0;
+    let previousPos;
+    for (let i = 0 ; i < points.numberOfItems; i++) {
+      const currentPos = points.getItem(i);
+      if (i > 0) totalLength += getDistance(previousPos, currentPos);
+      previousPos = currentPos;
+    }
+    return totalLength;
+  }
+
+  function getPolygonLength(el) {
+    const points = el.points;
+    return getPolylineLength(el) + getDistance(points.getItem(points.numberOfItems - 1), points.getItem(0));
+  }
+
+  // Path animation
+
+  function getTotalLength(el) {
+    if (el.getTotalLength) return el.getTotalLength();
+    switch(el.tagName.toLowerCase()) {
+      case 'circle': return getCircleLength(el);
+      case 'rect': return getRectLength(el);
+      case 'line': return getLineLength(el);
+      case 'polyline': return getPolylineLength(el);
+      case 'polygon': return getPolygonLength(el);
+    }
+  }
+
+  function setDashoffset(el) {
+    const pathLength = getTotalLength(el);
+    el.setAttribute('stroke-dasharray', pathLength);
+    return pathLength;
   }
 
   // Motion path
 
   function isPath(val) {
     return is.obj(val) && objectHas(val, 'totalLength');
-  }
-
-  function setDashoffset(el) {
-    const pathLength = el.getTotalLength();
-    el.setAttribute('stroke-dasharray', pathLength);
-    return pathLength;
   }
 
   function getPath(path, percent) {
@@ -420,7 +465,7 @@
       return {
         el: el,
         property: prop,
-        totalLength: el.getTotalLength() * (p / 100)
+        totalLength: getTotalLength(el) * (p / 100)
       }
     }
   }
@@ -448,12 +493,12 @@
     return {
       original: value,
       numbers: value.match(rgx) ? value.match(rgx).map(Number) : [0],
-      strings: value.split(rgx)
+      strings: (is.str(val) || unit) ? value.split(rgx) : []
     }
   }
 
   function recomposeValue(numbers, strings) {
-    return strings.reduce((a, b, i) => a + numbers[i - 1] + b);
+    return (strings.length === 0) ? numbers[0] : strings.reduce((a, b, i) => a + numbers[i - 1] + (b ? b : ' '));
   }
 
   // Animatables
@@ -466,7 +511,7 @@
   function getAnimatables(targets) {
     const parsed = parseTargets(targets);
     return parsed.map((t, i) => {
-      return {target: t, id: i, total: arrayLength(parsed)};
+      return {target: t, id: i, total: parsed.length};
     });
   }
 
@@ -475,7 +520,7 @@
   function normalizePropertyTweens(prop, tweenSettings) {
     let settings = cloneObject(tweenSettings);
     if (is.arr(prop)) {
-      const l = arrayLength(prop);
+      const l = prop.length;
       const isFromTo = (l === 2 && !is.obj(prop[0]));
       if (!isFromTo) {
         // Duration divided by the number of tweens
@@ -519,12 +564,12 @@
       let value = getFunctionValue(tween[p], animatable);
       if (is.arr(value)) {
         value = value.map(v => getFunctionValue(v, animatable));
-        if (arrayLength(value) === 1) value = value[0];
+        if (value.length === 1) value = value[0];
       }
       t[p] = value;
     }
-    t.duration = parseFloatValue(t.duration);
-    t.delay = parseFloatValue(t.delay);
+    t.duration = parseFloat(t.duration);
+    t.delay = parseFloat(t.delay);
     return t;
   }
 
@@ -578,7 +623,7 @@
         property: prop.name,
         animatable: animatable,
         tweens: tweens,
-        duration: tweens[arrayLength(tweens) - 1].end,
+        duration: tweens[tweens.length - 1].end,
         delay: tweens[0].delay
       }
     }
@@ -596,7 +641,7 @@
 
   function getInstanceTimings(type, animations, tweenSettings) {
     const math = (type === 'delay') ? Math.min : Math.max;
-    return arrayLength(animations) ? math.apply(Math, animations.map(anim => anim[type])) : tweenSettings[type];
+    return animations.length ? math.apply(Math, animations.map(anim => anim[type])) : tweenSettings[type];
   }
 
   function createNewInstance(params) {
@@ -622,7 +667,7 @@
   const engine = (() => {
     function play() { raf = requestAnimationFrame(step); };
     function step(t) {
-      const activeLength = arrayLength(activeInstances);
+      const activeLength = activeInstances.length;
       if (activeLength) {
         let i = 0;
         while (i < activeLength) {
@@ -655,23 +700,6 @@
 
     let instance = createNewInstance(params);
 
-    instance.reset = function() {
-      const direction = instance.direction;
-      const loops = instance.loop;
-      instance.currentTime = 0;
-      instance.progress = 0;
-      instance.paused = true;
-      instance.began = false;
-      instance.completed = false;
-      instance.reversed = direction === 'reverse';
-      instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
-      for (let i = arrayLength(instance.children); i--; ){
-        const child = instance.children[i];
-        child.seek(child.offset); 
-        child.reset();
-      }
-    }
-
     function toggleInstanceDirection() {
       instance.reversed = !instance.reversed;
     }
@@ -683,9 +711,9 @@
     function syncInstanceChildren(time) {
       const children = instance.children;
       if (time >= instance.currentTime) {
-        for (let i = 0; i < arrayLength(children); i++) children[i].seek(time);
+        for (let i = 0; i < children.length; i++) children[i].seek(time);
       } else {
-        for (let i = arrayLength(children); i--;) children[i].seek(time);
+        for (let i = children.length; i--;) children[i].seek(time);
       }
     }
 
@@ -693,19 +721,18 @@
       let i = 0;
       let transforms = {};
       const animations = instance.animations;
-      while (i < arrayLength(animations)) {
+      while (i < animations.length) {
         const anim = animations[i];
         const animatable = anim.animatable;
         const tweens = anim.tweens;
-        const tween = tweens.filter(t => (insTime < t.end))[0] || tweens[arrayLength(tweens) - 1];
-        const isPath = tween.isPath;
-        const round = tween.round;
+        const tween = tweens.filter(t => (insTime < t.end))[0] || tweens[tweens.length - 1];
         const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
-        const eased = tween.easing(elapsed, tween.elasticity);
+        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
+        const round = tween.round;
         const progress = recomposeValue(tween.to.numbers.map((number, p) => {
-          const start = isPath ? 0 : tween.from.numbers[p];
+          const start = tween.from.numbers[p];
           let value = start + eased * (number - start);
-          if (isPath) value = getPathProgress(tween.value, value);
+          if (tween.isPath) value = getPathProgress(tween.value, value);
           if (round) value = Math.round(value * round) / round;
           return value;
         }), tween.to.strings);
@@ -742,15 +769,17 @@
       const insDelay = instance.delay;
       const insCurrentTime = instance.currentTime;
       const insReversed = instance.reversed;
-      const insTime = minMaxValue(adjustTime(engineTime), 0, insDuration);
-      if (instance.children) syncInstanceChildren(insTime);
-      if (insTime > insOffset && insTime < insDuration) {
-        setAnimationsProgress(insTime);
-        if (!instance.began && insTime >= insDelay) {
+      const insTime = adjustTime(engineTime);
+      if (instance.children.length) syncInstanceChildren(insTime);
+      if (insTime >= insDelay) {
+        setCallback('run');
+        if (!instance.began) {
           instance.began = true;
           setCallback('begin');
         }
-        setCallback('run');
+      }
+      if (insTime > insOffset && insTime < insDuration) {
+        setAnimationsProgress(insTime);
       } else {
         if (insTime <= insOffset && insCurrentTime !== 0) {
           setAnimationsProgress(0);
@@ -761,24 +790,40 @@
           if (!insReversed) countIteration();
         }
       }
+      setCallback('update');
       if (engineTime >= insDuration) {
         if (instance.remaining) {
           startTime = now;
           if (instance.direction === 'alternate') toggleInstanceDirection();
         } else {
           instance.pause();
-          if ('Promise' in window) {
-            resolve();
-            promise = makePromise();
-          }
           if (!instance.completed) {
             instance.completed = true;
             setCallback('complete');
+            if ('Promise' in window) {
+              resolve();
+              promise = makePromise();
+            }
           }
         }
         lastTime = 0;
       }
-      setCallback('update');
+    }
+
+    instance.reset = function() {
+      const direction = instance.direction;
+      const loops = instance.loop;
+      instance.currentTime = 0;
+      instance.progress = 0;
+      instance.paused = true;
+      instance.began = false;
+      instance.completed = false;
+      instance.reversed = direction === 'reverse';
+      instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
+      setAnimationsProgress(0);
+      for (let i = instance.children.length; i--; ){
+        instance.children[i].reset();
+      }
     }
 
     instance.tick = function(t) {
@@ -833,13 +878,13 @@
 
   function removeTargets(targets) {
     const targetsArray = parseTargets(targets);
-    for (let i = arrayLength(activeInstances); i--;) {
+    for (let i = activeInstances.length; i--;) {
       const instance = activeInstances[i];
       const animations = instance.animations;
-      for (let a = arrayLength(animations); a--;) {
+      for (let a = animations.length; a--;) {
         if (arrayContains(targetsArray, animations[a].animatable.target)) {
           animations.splice(a, 1);
-          if (!arrayLength(animations)) instance.pause();
+          if (!animations.length) instance.pause();
         }
       }
     }
@@ -852,27 +897,32 @@
     tl.pause();
     tl.duration = 0;
     tl.add = function(instancesParams) {
-      tl.children.forEach( i => { i.began = true; i.completed = true; });
-      toArray(instancesParams).forEach(insParams => {
+      tl.children.forEach(i => { i.began = true; i.completed = true; });
+      toArray(instancesParams).forEach(instanceParams => {
+        let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params || {}));
+        insParams.targets = insParams.targets || params.targets;
         const tlDuration = tl.duration;
         const insOffset = insParams.offset;
         insParams.autoplay = false;
         insParams.offset = is.und(insOffset) ? tlDuration : getRelativeValue(insOffset, tlDuration);
+        tl.began = true;
+        tl.completed = true;
         tl.seek(insParams.offset);
         const ins = anime(insParams);
-        if (ins.duration > tlDuration) tl.duration = ins.duration;
         ins.began = true;
+        ins.completed = true;
+        if (ins.duration > tlDuration) tl.duration = ins.duration;
         tl.children.push(ins);
       });
-      tl.reset();
       tl.seek(0);
+      tl.reset();
       if (tl.autoplay) tl.restart();
       return tl;
     }
     return tl;
   }
 
-  anime.version = '2.0.2';
+  anime.version = '2.1.0';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;

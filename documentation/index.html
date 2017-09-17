@@ -877,7 +877,7 @@ absoluteOffset
 </div>
 
 <div id="timelineParameters" class="demo">
-  <h3 class="demo-title">Timeline parameters</h3>
+  <h3 class="demo-title">Basic Timeline parameters</h3>
   <div class="demo-content">
     <div class="line">
       <div class="square shadow"></div>
@@ -917,6 +917,48 @@ timelineParameters
     translateY: [ { value: -60 }, { value: -30 }, { value: -30 } ],
     duration: 3000,
     offset: 400
+  });
+
+</script>
+</div>
+
+<div id="TLParamsInheritance" class="demo">
+  <h3 class="demo-title">Parameters inheritance</h3>
+  <div class="demo-content">
+    <div class="line">
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+    <div class="line">
+      <div class="circle shadow"></div>
+      <div class="circle el"></div>
+    </div>
+    <div class="line">
+      <div class="triangle shadow"></div>
+      <div class="triangle el"></div>
+    </div>
+  </div>
+<script>var TLParamsInheritance = anime.timeline({
+  targets: '#TLParamsInheritance .el',
+  delay: function(el, i) { return i * 200 },
+  duration: 500,
+  easing: 'easeOutExpo',
+  direction: 'alternate',
+  loop: true
+});
+
+TLParamsInheritance
+  .add({
+    translateX: 250,
+  })
+  .add({
+    opacity: .5,
+    translateX: 250,
+    scale: 2,
+  })
+  .add({
+    translateX: 0,
+    scale: 1
   });
 
 </script>
@@ -1251,8 +1293,8 @@ begin.update = function(anim) {
   <h3 class="demo-title">Run</h3>
   <div class="demo-content">
     <div class="logs">
-      <input class="log current-time-log"></input>
-      <input class="log progress-log"></input>
+      <input class="log current-time-log" value="not running"></input>
+      <input class="log progress-log" value="progress : 0%"></input>
     </div>
     <div class="large square shadow"></div>
     <div class="large square el"></div>
@@ -1264,17 +1306,13 @@ var run = anime({
   targets: '#run .el',
   translateX: 250,
   delay: 1000,
-  update: function(anim) {
-    if (!anim.began) {
-      runLogEl.value = 'not running';
-    }
-    runProgressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
-  },
   run: function(anim) {
     runLogEl.value = 'running';
+    runProgressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
   },
   complete: function(anim) {
     runLogEl.value = 'not running';
+    runProgressLogEl.value = 'progress : 100%';
   }
 });
 </script>
