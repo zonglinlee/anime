@@ -38,12 +38,14 @@
 <body>
   <div class="el color-01"></div>
   <div class="el color-04"></div>
+  <div class="el color-08"></div>
+  <div class="el color-12"></div>
   <script>
     var seek0 = anime({
       targets: '.color-01',
       translateY: [200, 100],
       // loop: true,
-      // autoplay: false,
+      autoplay: false,
       update: function(anim) { console.log('update', anim.currentTime);},
       begin: function(anim) { console.log('begin', anim.currentTime);},
       run: function(anim) { console.log('run', anim.currentTime);},
@@ -51,7 +53,7 @@
     });
     var duration0 = anime({
       targets: '.color-04',
-      translateY: [200, 500],
+      translateY: [200, 100],
       loop: true,
       autoplay: false,
       duration: 0,
@@ -63,6 +65,26 @@
     console.log(duration0.currentTime);
     // animation.seek(0);
     // console.log(animation.currentTime);
+    var tl = anime.timeline({
+      targets: '.color-08',
+      easing: 'easeOutExpo',
+      loop: true
+    });
+
+    tl.add({
+      translateY: -100
+    }).add({
+      translateY: 0,
+      easing: 'easeOutElastic'
+    }).add({
+      targets: '.color-12',
+      translateY: [0, 100],
+      easing: 'easeInElastic'
+    }).add({
+      translateY: 100
+    }).add({
+      translateY: 0
+    })
 
   </script>
   <!-- <script src="../assets/js/stats.js"></script> -->

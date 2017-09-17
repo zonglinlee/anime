@@ -898,7 +898,8 @@
     tl.duration = 0;
     tl.add = function(instancesParams) {
       tl.children.forEach( i => { i.began = true; i.completed = true; });
-      toArray(instancesParams).forEach(insParams => {
+      toArray(instancesParams).forEach(instanceParams => {
+        let insParams = mergeObjects(instanceParams, params);
         const tlDuration = tl.duration;
         const insOffset = insParams.offset;
         insParams.autoplay = false;
