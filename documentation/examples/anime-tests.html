@@ -41,85 +41,85 @@
   <div class="el color-08"></div>
   <div class="el color-12"></div>
   <script>
-    var seek0 = anime({
-      targets: '.color-01',
-      translateY: [300, 100],
-      // loop: true,
-      autoplay: false,
-      update: function(anim) { console.log('seek0 update', anim.currentTime);},
-      begin: function(anim) { console.log('seek0 begin', anim.currentTime);},
-      run: function(anim) { console.log('seek0 run', anim.currentTime);},
-      complete: function(anim) { console.log('seek0 complete', anim.currentTime);}
-    });
+    // var seek0 = anime({
+    //   targets: '.color-01',
+    //   translateY: [200, 100],
+    //   delay: 1000,
+    //   loop: true,
+    //   autoplay: false,
+    //   update: function(anim) { console.log('seek0 updating', anim.currentTime);},
+    //   begin: function(anim) { console.log('seek0 began', anim.currentTime);},
+    //   run: function(anim) { console.log('seek0 runing', anim.currentTime);},
+    //   complete: function(anim) { console.log('seek0 completed', anim.currentTime);}
+    // });
     // seek0.seek(0);
-    var duration0 = anime({
-      targets: '.color-04',
-      translateY: [200, 300],
-      loop: true,
-      autoplay: false,
-      duration: 0,
-      update: function() { console.log('duration0 update');},
-      begin: function() { console.log('duration0 begin');},
-      run: function() { console.log('duration0 run');},
-      complete: function() { console.log('duration0 complete');}
-    });
+    // var duration0 = anime({
+    //   targets: '.color-04',
+    //   translateY: [100, 200],
+    //   autoplay: false,
+    //   duration: 0,
+    //   update: function() { console.log('duration0 update');},
+    //   begin: function() { console.log('duration0 began');},
+    //   run: function() { console.log('duration0 runing');},
+    //   complete: function() { console.log('duration0 completed');}
+    // });
 
     var tl = anime.timeline({
       targets: '.color-08',
       easing: 'easeOutExpo',
       duration: 500,
-      autoplay: false,
-      update: function(anim) { console.log('TL update', anim.currentTime);},
-      begin: function(anim) { console.log('TL begin', anim.currentTime);},
-      run: function(anim) { console.log('TL run', anim.currentTime);},
-      complete: function(anim) { console.log('TL complete', anim.currentTime);}
+      autoplay: true,
+      // update: function(anim) { console.log('TL updating', anim.currentTime);},
+      begin: function(anim) { console.log('TL began', anim.currentTime);},
+      // run: function(anim) { console.log('TL runing', anim.currentTime);},
+      complete: function(anim) { console.log('TL completed', anim.currentTime);}
     });
 
     tl.add({
       translateY: [-100, 200],
       begin: function() {
-        console.log('01 begin');
+        console.log('01 began');
       },
       complete: function() {
-        console.log('01 complete');
+        console.log('01 completed');
       }
     }).add({
       translateY: 0,
       easing: 'easeOutElastic',
       begin: function() {
-        console.log('02 begin');
+        console.log('02 began');
       },
       complete: function() {
-        console.log('02 complete');
+        console.log('02 completed');
       }
     }).add({
       targets: '.color-12',
       translateY: [0, 100],
       easing: 'easeInElastic',
       begin: function() {
-        console.log('03 begin');
+        console.log('03 began');
       },
       complete: function() {
-        console.log('03 complete');
+        console.log('03 completed');
       },
       offset: 0
     }).add({
       translateY: 100,
       begin: function() {
-        console.log('04 begin');
+        console.log('04 began');
       },
       complete: function() {
-        console.log('04 complete');
+        console.log('04 completed');
       }
     }).add({
       translateY: 0,
       begin: function() {
-        console.log('05 begin');
+        console.log('05 began');
       },
       complete: function() {
-        console.log('05 complete');
+        console.log('05 completed');
       }
-    })
+    });
 
     var promise = tl.finished.then(function() {
       console.log('FINISHED');
