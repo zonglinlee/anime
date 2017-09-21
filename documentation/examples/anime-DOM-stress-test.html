@@ -21,7 +21,7 @@
   <!-- <script src="../assets/js/anime.1.0.js"></script> -->
   <style>
 
-    .particule {
+    .el {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -40,59 +40,45 @@
 <body></body>
 <script>
 
-  var maxElements = Number(location.href.split('?')[1]) || 1000;
-  var duration = 2000;
-  var toAnimate = [];
-  var radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-  var distance = radius / 4 <= 150 ? 150 : radius / 3; 
-  var colors = ['#FF1461', '#18FF92', '#5A87FF', '#FBF38C'];
+    const wrapperEl = document.body;
+    const numberOfEls = 360;
+    const duration = 3000;
+    const delay = duration / numberOfEls;
+    const radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+    const distance = radius / 4 <= 150 ? 150 : radius / 3; 
 
-  var createElements = (function() {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < maxElements; i++) {
-      var el = document.createElement('div');
-      var color = Math.round((i/maxElements)*(colors.length-1));
-      el.classList.add('particule');
-      // el.style.color = colors[anime.random(0, 3)];
-      el.style.color = colors[color];
-      el.style.zIndex = i;
-      toAnimate.push(el);
-      fragment.appendChild(el);
-    }
-    document.body.appendChild(fragment);
-  })();
-
-  var animate = function(el, i) {
-    // var angle = (i * .01) * Math.PI;
-    // var angle = anime.easings['easeOutBack'](i);
-    var angle = i * 4;
-    // var delay = ((duration * 2) / maxElements) * i;
-    // var angle = i * 1000;
-    var delay = (duration / maxElements) * i * 1;
-    var a = anime({
-      targets: el,
-      translateX: [0, Math.sin(angle) * distance],
-      // translateX: [0, Math.cos(angle * i *.01) * distance],
-      translateY: [0,Math.cos(angle) * distance ],
-      // translateY: [0, Math.sin(angle * i *.01) * distance],
-      scale: [
-        {value: [0, 4], duration: duration / 2, easing: 'easeOutBack'},
-        {value: 0, duration: duration / 2, delay: duration / 4, easing: 'easeInBack'}
-      ],
-      // borderRadius: 0,
-      // opacity: 0,
-      // height: 100,
-      // width: 200,
-      // filter: 'blur(1px)',
-      rotate: 180,
-      offset : delay,
-      duration: duration,
-      easing: 'easeOutSine',
-      loop: true
+    let tl = anime.timeline({
+      duration: delay,
+      complete: function() { tl.restart(); }
     });
-  }
 
-  toAnimate.forEach(animate);
+    function createEl(i) {
+      let el = document.createElement('div');
+      const hue = Math.round(360 / numberOfEls * i);
+      const angle = Math.round(360 / numberOfEls * i);
+      el.classList.add('el');
+      el.style.borderColor = 'hsl(' + hue + ', 40%, 60%)';
+      tl.add({
+        begin: function() {
+          anime({
+            targets: el,
+            // borderColor: ['hsl(' + hue + ', 40%, 60%)', 'hsl(' + hue + ', 60%, 80%)'],
+            translateX: [0, Math.sin(angle) * distance],
+            translateY: [0,Math.cos(angle) * distance ],
+            scale: [
+              {value: [0, 4], duration: duration / 2, easing: 'easeOutBack'},
+              {value: 0, duration: duration / 2, easing: 'easeInBack'}
+            ],
+            easing: 'easeInOutSine',
+            direction: 'alternate',
+            duration: duration
+          });
+        }
+      });
+      wrapperEl.appendChild(el);
+    };
+
+    for (let i = 0; i < numberOfEls; i++) createEl(i);
 
   </script>
   <script src="../assets/js/stats.js"></script>
