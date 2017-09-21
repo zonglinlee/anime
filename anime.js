@@ -641,9 +641,8 @@
 
   function getInstanceTimings(type, animations, instanceSettings, tweenSettings) {
     const isDelay = (type === 'delay');
-    const math = isDelay ? Math.min : Math.max;
     if (animations.length) {
-      return math.apply(Math, animations.map(anim => anim[type]));
+      return (isDelay ? Math.min : Math.max).apply(Math, animations.map(anim => anim[type]));
     } else {
       return isDelay ? tweenSettings.delay : instanceSettings.offset + tweenSettings.delay + tweenSettings.duration;
     }
