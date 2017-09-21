@@ -41,39 +41,37 @@
   <div class="el color-08"></div>
   <div class="el color-12"></div>
   <script>
-    // var seek0 = anime({
-    //   targets: '.color-01',
-    //   translateY: [300, 100],
-    //   // loop: true,
-    //   autoplay: false,
-    //   update: function(anim) { console.log('update', anim.currentTime);},
-    //   begin: function(anim) { console.log('begin', anim.currentTime);},
-    //   run: function(anim) { console.log('run', anim.currentTime);},
-    //   complete: function(anim) { console.log('complete', anim.currentTime);}
-    // });
-    // var duration0 = anime({
-    //   targets: '.color-04',
-    //   translateY: [200, 300],
-    //   loop: true,
-    //   autoplay: false,
-    //   duration: 0,
-    //   update: function() { console.log('update');},
-    //   begin: function() { console.log('begin');},
-    //   run: function() { console.log('run');},
-    //   complete: function() { console.log('complete');}
-    // });
-    // console.log(duration0.currentTime);
-    // animation.seek(0);
-    // console.log(animation.currentTime);
+    var seek0 = anime({
+      targets: '.color-01',
+      translateY: [300, 100],
+      // loop: true,
+      autoplay: false,
+      update: function(anim) { console.log('seek0 update', anim.currentTime);},
+      begin: function(anim) { console.log('seek0 begin', anim.currentTime);},
+      run: function(anim) { console.log('seek0 run', anim.currentTime);},
+      complete: function(anim) { console.log('seek0 complete', anim.currentTime);}
+    });
+    // seek0.seek(0);
+    var duration0 = anime({
+      targets: '.color-04',
+      translateY: [200, 300],
+      loop: true,
+      autoplay: false,
+      duration: 0,
+      update: function() { console.log('duration0 update');},
+      begin: function() { console.log('duration0 begin');},
+      run: function() { console.log('duration0 run');},
+      complete: function() { console.log('duration0 complete');}
+    });
+
     var tl = anime.timeline({
       targets: '.color-08',
-      autoplay: true,
       easing: 'easeOutExpo',
       duration: 500,
       autoplay: false,
-      // update: function(anim) { console.log('TL update', anim.currentTime);},
+      update: function(anim) { console.log('TL update', anim.currentTime);},
       begin: function(anim) { console.log('TL begin', anim.currentTime);},
-      // run: function(anim) { console.log('TL run', anim.currentTime);},
+      run: function(anim) { console.log('TL run', anim.currentTime);},
       complete: function(anim) { console.log('TL complete', anim.currentTime);}
     });
 
