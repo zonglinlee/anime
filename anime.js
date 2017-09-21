@@ -639,9 +639,14 @@
 
   // Create Instance
 
-  function getInstanceTimings(type, animations, tweenSettings) {
-    const math = (type === 'delay') ? Math.min : Math.max;
-    return animations.length ? math.apply(Math, animations.map(anim => anim[type])) : tweenSettings[type];
+  function getInstanceTimings(type, animations, instanceSettings, tweenSettings) {
+    const isDelay = (type === 'delay');
+    const math = isDelay ? Math.min : Math.max;
+    if (animations.length) {
+      return math.apply(Math, animations.map(anim => anim[type]));
+    } else {
+      return isDelay ? tweenSettings.delay : instanceSettings.offset + tweenSettings.delay + tweenSettings.duration;
+    }
   }
 
   function createNewInstance(params) {
@@ -654,8 +659,8 @@
       children: [],
       animatables: animatables,
       animations: animations,
-      duration: getInstanceTimings('duration', animations, tweenSettings),
-      delay: getInstanceTimings('delay', animations, tweenSettings)
+      duration: getInstanceTimings('duration', animations, instanceSettings, tweenSettings),
+      delay: getInstanceTimings('delay', animations, instanceSettings, tweenSettings)
     });
   }
 
@@ -765,23 +770,22 @@
 
     function setInstanceProgress(engineTime) {
       const insDuration = instance.duration;
-      const insOffset = instance.offset;
-      const insDelay = instance.delay;
+      const insStart = instance.offset + instance.delay;
       const insCurrentTime = instance.currentTime;
       const insReversed = instance.reversed;
       const insTime = adjustTime(engineTime);
       if (instance.children.length) syncInstanceChildren(insTime);
-      if (insTime >= insDelay) {
+      if (insTime >= insStart) {
         setCallback('run');
         if (!instance.began) {
           instance.began = true;
           setCallback('begin');
         }
       }
-      if (insTime > insOffset && insTime < insDuration) {
+      if (insTime > insStart && insTime < insDuration) {
         setAnimationsProgress(insTime);
       } else {
-        if (insTime <= insOffset && insCurrentTime !== 0) {
+        if (insTime <= insStart && insCurrentTime !== 0) {
           setAnimationsProgress(0);
           if (insReversed) countIteration();
         }
@@ -904,6 +908,7 @@
         const tlDuration = tl.duration;
         const insOffset = insParams.offset;
         insParams.autoplay = false;
+        insParams.direction = tl.direction;
         insParams.offset = is.und(insOffset) ? tlDuration : getRelativeValue(insOffset, tlDuration);
         tl.began = true;
         tl.completed = true;
