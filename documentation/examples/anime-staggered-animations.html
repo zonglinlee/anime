@@ -61,38 +61,52 @@
       return Math.pow(Math.sin(t * 3), 3);
     }
 
+    var tl = anime.timeline({
+      loop: true,
+      update: function() {
+        // console.log('upd');
+      }
+    });
+
     function createEl(i) {
       let el = {};
       el.node = document.createElement('div');
       el.node.classList.add('el');
       el.node.style.backgroundColor = 'hsl('+ Math.round(360 / numberOfEls * i) +', 40%, 60%)';
       el.node.style.transform = 'rotate('+ 180 + (360 / numberOfEls) * i +'deg) translateY(-50%)';
-      el.animation = anime({
-        targets: el.node,
-        rotate: [
-          {value: '+=10', duration: duration * .1}, 
-          {value: '-=10', duration: duration * .1, easing: 'easeInOutQuad'},
-          {value: '+=0', duration: duration * .8}
-        ],
-        translateY: [
-          {value: '+=10', duration: duration * .1}, 
-          {value: '-=10', duration: duration * .1, easing: 'easeInOutQuad'},
-          {value: '+=0', duration: duration * .8}
-        ],
-        scale: [
-          {value: 1.2, duration: duration * .1}, 
-          {value: 1, duration: duration * .1, easing: 'easeInOutQuad'},
-          {value: 1, duration: duration * .8}
-        ],
-        easing: 'easeInOutQuad',
-        duration: duration,
-        delay: delay * i,
-        loop: true,
-        direction: 'staggered'
+      tl.add({
+        complete: function() {
+          console.log('complete');
+          anime({
+            targets: el.node,
+            rotate: [
+              {value: '+=10', duration: duration * .1}, 
+              {value: '-=10', duration: duration * .1, easing: 'easeInOutQuad'},
+              {value: '+=0', duration: duration * .8}
+            ],
+            translateY: [
+              {value: '+=10', duration: duration * .1}, 
+              {value: '-=10', duration: duration * .1, easing: 'easeInOutQuad'},
+              {value: '+=0', duration: duration * .8}
+            ],
+            scale: [
+              {value: 1.2, duration: duration * .1}, 
+              {value: 1, duration: duration * .1, easing: 'easeInOutQuad'},
+              {value: 1, duration: duration * .8}
+            ],
+            easing: 'easeInOutQuad',
+            duration: duration,
+          });
+        },
+        duration: 0,
+        offset: delay * i,
       });
+      console.log(delay * i);
       wrapperEl.appendChild(el.node);
       els.push(el);
-    }
+    };
+
+    console.log(tl);
 
     for (let i = 0; i < numberOfEls; i++) createEl(i);
 
@@ -104,7 +118,7 @@
     //   }
     // }
 
-    document.addEventListener('visibilitychange', handleVisibilityChange, false);
+    // document.addEventListener('visibilitychange', handleVisibilityChange, false);
 
   </script>
   <script src="../assets/js/stats.js"></script>

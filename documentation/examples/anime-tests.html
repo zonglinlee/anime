@@ -41,27 +41,27 @@
   <div class="el color-08"></div>
   <div class="el color-12"></div>
   <script>
-    var seek0 = anime({
-      targets: '.color-01',
-      translateY: [300, 100],
-      // loop: true,
-      autoplay: false,
-      update: function(anim) { console.log('update', anim.currentTime);},
-      begin: function(anim) { console.log('begin', anim.currentTime);},
-      run: function(anim) { console.log('run', anim.currentTime);},
-      complete: function(anim) { console.log('complete', anim.currentTime);}
-    });
-    var duration0 = anime({
-      targets: '.color-04',
-      translateY: [200, 300],
-      loop: true,
-      autoplay: false,
-      duration: 0,
-      update: function() { console.log('update');},
-      begin: function() { console.log('begin');},
-      run: function() { console.log('run');},
-      complete: function() { console.log('complete');}
-    });
+    // var seek0 = anime({
+    //   targets: '.color-01',
+    //   translateY: [300, 100],
+    //   // loop: true,
+    //   autoplay: false,
+    //   update: function(anim) { console.log('update', anim.currentTime);},
+    //   begin: function(anim) { console.log('begin', anim.currentTime);},
+    //   run: function(anim) { console.log('run', anim.currentTime);},
+    //   complete: function(anim) { console.log('complete', anim.currentTime);}
+    // });
+    // var duration0 = anime({
+    //   targets: '.color-04',
+    //   translateY: [200, 300],
+    //   loop: true,
+    //   autoplay: false,
+    //   duration: 0,
+    //   update: function() { console.log('update');},
+    //   begin: function() { console.log('begin');},
+    //   run: function() { console.log('run');},
+    //   complete: function() { console.log('complete');}
+    // });
     // console.log(duration0.currentTime);
     // animation.seek(0);
     // console.log(animation.currentTime);
@@ -70,6 +70,7 @@
       autoplay: true,
       easing: 'easeOutExpo',
       duration: 500,
+      autoplay: false,
       // update: function(anim) { console.log('TL update', anim.currentTime);},
       begin: function(anim) { console.log('TL begin', anim.currentTime);},
       // run: function(anim) { console.log('TL run', anim.currentTime);},
@@ -77,18 +78,49 @@
     });
 
     tl.add({
-      translateY: [-100, 200]
+      translateY: [-100, 200],
+      begin: function() {
+        console.log('01 begin');
+      },
+      complete: function() {
+        console.log('01 complete');
+      }
     }).add({
       translateY: 0,
-      easing: 'easeOutElastic'
+      easing: 'easeOutElastic',
+      begin: function() {
+        console.log('02 begin');
+      },
+      complete: function() {
+        console.log('02 complete');
+      }
     }).add({
       targets: '.color-12',
       translateY: [0, 100],
-      easing: 'easeInElastic'
+      easing: 'easeInElastic',
+      begin: function() {
+        console.log('03 begin');
+      },
+      complete: function() {
+        console.log('03 complete');
+      },
+      offset: 0
     }).add({
-      translateY: 100
+      translateY: 100,
+      begin: function() {
+        console.log('04 begin');
+      },
+      complete: function() {
+        console.log('04 complete');
+      }
     }).add({
-      translateY: 0
+      translateY: 0,
+      begin: function() {
+        console.log('05 begin');
+      },
+      complete: function() {
+        console.log('05 complete');
+      }
     })
 
     var promise = tl.finished.then(function() {

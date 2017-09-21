@@ -40,7 +40,7 @@
 <body></body>
 <script>
 
-  var maxElements = Number(location.href.split('?')[1]) || 500;
+  var maxElements = Number(location.href.split('?')[1]) || 1000;
   var duration = 2000;
   var toAnimate = [];
   var radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
@@ -68,7 +68,7 @@
     var angle = i * 4;
     // var delay = ((duration * 2) / maxElements) * i;
     // var angle = i * 1000;
-    var delay = (duration / maxElements) * i * 10;
+    var delay = (duration / maxElements) * i * 1;
     var a = anime({
       targets: el,
       translateX: [0, Math.sin(angle) * distance],
