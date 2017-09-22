@@ -57,9 +57,8 @@
     const duration = 6000;
     const delay = duration / numberOfEls;
 
-    var tl = anime.timeline({
+    let tl = anime.timeline({
       duration: delay,
-      easing: 'linear',
       complete: function() { tl.restart(); }
     });
 
@@ -75,10 +74,10 @@
         begin: function() {
           anime({
             targets: el,
-            backgroundColor: 'hsl(' + hue + ', 60%, 80%)',
-            rotate: rotate + 10 +'deg',
-            translateY: translateY + 10 + '%',
-            scale: 1.25,
+            backgroundColor: ['hsl(' + hue + ', 40%, 60%)', 'hsl(' + hue + ', 60%, 80%)'],
+            rotate: [rotate + 'deg', rotate + 10 +'deg'],
+            translateY: [translateY + '%', translateY + 10 + '%'],
+            scale: [1, 1.25],
             easing: 'easeInOutSine',
             direction: 'alternate',
             duration: duration * .1

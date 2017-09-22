@@ -21,6 +21,10 @@
   <!-- <script src="../assets/js/anime.1.0.js"></script> -->
   <style>
 
+    body {
+      /*background-color: #000;*/
+    }
+
     .el {
       position: absolute;
       top: 50%;
@@ -28,10 +32,10 @@
       width: 1em;
       height: 1em;
       margin: -.5em 0 0 -.5em;
-      border: .05em solid currentColor;
+      /*border: .05em solid currentColor;*/
       /*background-color: currentColor;*/
       font-size: 40px;
-      border-radius: 50%;
+      /*border-radius: 50%;*/
       transform: scale(0);
     }
 
@@ -41,7 +45,7 @@
 <script>
 
     const wrapperEl = document.body;
-    const numberOfEls = 360;
+    const numberOfEls = 280;
     const duration = 3000;
     const delay = duration / numberOfEls;
     const radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
@@ -55,21 +59,23 @@
     function createEl(i) {
       let el = document.createElement('div');
       const hue = Math.round(360 / numberOfEls * i);
-      const angle = Math.round(360 / numberOfEls * i);
+      const angle = i;
       el.classList.add('el');
-      el.style.borderColor = 'hsl(' + hue + ', 40%, 60%)';
+      el.style.backgroundColor = 'hsl(' + hue + ', 40%, 60%)';
       tl.add({
         begin: function() {
+          var randomDistance = anime.random(distance - 50, distance + 50);
           anime({
             targets: el,
-            translateX: [0, Math.sin(angle) * distance],
-            translateY: [0,Math.cos(angle) * distance ],
+            // backgroundColor: ['#fff', '#000'],
+            translateX: [0, Math.sin(angle) * randomDistance],
+            translateY: [0,Math.cos(angle) * randomDistance],
             scale: [
-              {value: [0, 1], duration: duration / 2, easing: 'easeOutBack'},
-              {value: 0, duration: duration / 2, easing: 'easeInBack'}
+              {value: [0, anime.random(5, 10) * .1], easing: 'easeOutBack'},
+              {value: 0, easing: 'easeInBack'},
             ],
             easing: 'easeInOutSine',
-            direction: 'alternate',
+            direction: 'reverse',
             duration: duration
           });
         }
