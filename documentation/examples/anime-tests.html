@@ -41,6 +41,43 @@
   <div class="el color-08"></div>
   <div class="el color-12"></div>
   <script>
+
+    var rgba = anime({
+      targets: '.color-01',
+      backgroundColor: ['rgba(255,255,0,.1)', 'rgba(255,0,0,.5)'],
+      easing: 'linear',
+      loop: true
+    });
+
+    console.log(rgba);
+
+    var hsl = anime({
+      targets: '.color-04',
+      backgroundColor: ['hsl(100,60%,60%)', 'hsl(300,40%,80%)'],
+      easing: 'linear',
+      loop: true
+    });
+
+    console.log(hsl);
+
+    var hsla = anime({
+      targets: '.color-08',
+      backgroundColor: ['hsla(100,60%,60%,.1)', 'hsla(300,40%,80%,.5)'],
+      easing: 'linear',
+      loop: true
+    });
+
+    console.log(hsla);
+
+    var hslaRgba = anime({
+      targets: '.color-12',
+      backgroundColor: ['hsla(100,60%,60%,.2)', 'rgba(200,0,0,.1)'],
+      easing: 'linear',
+      loop: true
+    });
+
+    console.log(hslaRgba);
+
     // var seek0 = anime({
     //   targets: '.color-01',
     //   translateY: [200, 100],
@@ -64,67 +101,67 @@
     //   complete: function() { console.log('duration0 completed');}
     // });
 
-    var tl = anime.timeline({
-      targets: '.color-08',
-      easing: 'easeOutExpo',
-      duration: 500,
-      autoplay: true,
-      // update: function(anim) { console.log('TL updating', anim.currentTime);},
-      begin: function(anim) { console.log('TL began', anim.currentTime);},
-      // run: function(anim) { console.log('TL runing', anim.currentTime);},
-      complete: function(anim) { console.log('TL completed', anim.currentTime);}
-    });
+    // var tl = anime.timeline({
+    //   targets: '.color-08',
+    //   easing: 'easeOutExpo',
+    //   duration: 500,
+    //   autoplay: true,
+    //   // update: function(anim) { console.log('TL updating', anim.currentTime);},
+    //   begin: function(anim) { console.log('TL began', anim.currentTime);},
+    //   // run: function(anim) { console.log('TL runing', anim.currentTime);},
+    //   complete: function(anim) { console.log('TL completed', anim.currentTime);}
+    // });
 
-    tl.add({
-      translateY: [-100, 200],
-      begin: function() {
-        console.log('01 began');
-      },
-      complete: function() {
-        console.log('01 completed');
-      }
-    }).add({
-      translateY: 0,
-      easing: 'easeOutElastic',
-      begin: function() {
-        console.log('02 began');
-      },
-      complete: function() {
-        console.log('02 completed');
-      }
-    }).add({
-      targets: '.color-12',
-      translateY: [0, 100],
-      easing: 'easeInElastic',
-      begin: function() {
-        console.log('03 began');
-      },
-      complete: function() {
-        console.log('03 completed');
-      },
-      offset: 0
-    }).add({
-      translateY: 100,
-      begin: function() {
-        console.log('04 began');
-      },
-      complete: function() {
-        console.log('04 completed');
-      }
-    }).add({
-      translateY: 0,
-      begin: function() {
-        console.log('05 began');
-      },
-      complete: function() {
-        console.log('05 completed');
-      }
-    });
+    // tl.add({
+    //   translateY: [-100, 200],
+    //   begin: function() {
+    //     console.log('01 began');
+    //   },
+    //   complete: function() {
+    //     console.log('01 completed');
+    //   }
+    // }).add({
+    //   translateY: 0,
+    //   easing: 'easeOutElastic',
+    //   begin: function() {
+    //     console.log('02 began');
+    //   },
+    //   complete: function() {
+    //     console.log('02 completed');
+    //   }
+    // }).add({
+    //   targets: '.color-12',
+    //   translateY: [0, 100],
+    //   easing: 'easeInElastic',
+    //   begin: function() {
+    //     console.log('03 began');
+    //   },
+    //   complete: function() {
+    //     console.log('03 completed');
+    //   },
+    //   offset: 0
+    // }).add({
+    //   translateY: 100,
+    //   begin: function() {
+    //     console.log('04 began');
+    //   },
+    //   complete: function() {
+    //     console.log('04 completed');
+    //   }
+    // }).add({
+    //   translateY: 0,
+    //   begin: function() {
+    //     console.log('05 began');
+    //   },
+    //   complete: function() {
+    //     console.log('05 completed');
+    //   }
+    // });
 
-    var promise = tl.finished.then(function() {
-      console.log('FINISHED');
-      tl.restart();
-    });
+    // var promise = tl.finished.then(function() {
+    //   console.log('FINISHED');
+    //   tl.restart();
+    // });
 
   </script>
   <!-- <script src="../assets/js/stats.js"></script> -->

@@ -1,7 +1,7 @@
 /**
  * http://animejs.com
  * JavaScript animation engine
- * @version v2.1.0
+ * @version v2.1.1
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -55,6 +55,7 @@
   const is = {
     arr: a => Array.isArray(a),
     obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
+    pth: a => is.obj(a) && a.hasOwnProperty('totalLength'),
     svg: a => a instanceof SVGElement,
     dom: a => a.nodeType || is.svg(a),
     str: a => typeof a === 'string',
@@ -246,10 +247,6 @@
 
   // Objects
 
-  function objectHas(obj, prop) {
-    return obj.hasOwnProperty(prop);
-  }
-
   function cloneObject(o) {
     let clone = {};
     for (let p in o) clone[p] = o[p];
@@ -258,7 +255,7 @@
 
   function replaceObjectProps(o1, o2) {
     let o = cloneObject(o1);
-    for (let p in o1) o[p] = objectHas(o2, p) ? o2[p] : o1[p];
+    for (let p in o1) o[p] = o2.hasOwnProperty(p) ? o2[p] : o1[p];
     return o;
   }
 
@@ -281,10 +278,11 @@
   }
 
   function hslToRgb(hslValue) {
-    const hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hslValue);
+    const hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hslValue) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(hslValue);
     const h = parseInt(hsl[1]) / 360;
     const s = parseInt(hsl[2]) / 100;
     const l = parseInt(hsl[3]) / 100;
+    const a = hsl[4];
     function hue2rgb(p, q, t) {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
@@ -303,7 +301,8 @@
       g = hue2rgb(p, q, h);
       b = hue2rgb(p, q, h - 1/3);
     }
-    return `rgb(${r * 255},${g * 255},${b * 255})`;
+    const rgbString = `(${r * 255},${g * 255},${b * 255}`;
+    return a ? `rgba${rgbString},${a})` : `rgb${rgbString})`;
   }
 
   function colorToRgb(val) {
@@ -454,10 +453,6 @@
 
   // Motion path
 
-  function isPath(val) {
-    return is.obj(val) && objectHas(val, 'totalLength');
-  }
-
   function getPath(path, percent) {
     const el = is.str(path) ? selectString(path)[0] : path;
     const p = percent || 100;
@@ -489,7 +484,7 @@
 
   function decomposeValue(val, unit) {
     const rgx = /-?\d*\.?\d+/g;
-    const value = validateValue((isPath(val) ? val.totalLength : val), unit) + '';
+    const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
     return {
       original: value,
       numbers: value.match(rgx) ? value.match(rgx).map(Number) : [0],
@@ -544,7 +539,7 @@
       // Default delay value should be applied only on the first tween
       const delay = !i ? tweenSettings.delay : 0;
       // Use path object as a tween value
-      let obj = is.obj(v) && !isPath(v) ? v : {value: v};
+      let obj = is.obj(v) && !is.pth(v) ? v : {value: v};
       // Set default delay value
       if (is.und(obj.delay)) obj.delay = delay;
       return obj;
@@ -555,7 +550,7 @@
     let properties = [];
     const settings = mergeObjects(instanceSettings, tweenSettings);
     for (let p in params) {
-      if (!objectHas(settings, p) && p !== 'targets') {
+      if (!settings.hasOwnProperty(p) && p !== 'targets') {
         properties.push({
           name: p,
           offset: settings['offset'],
@@ -597,14 +592,15 @@
       const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
       const to = getRelativeValue(is.arr(tweenValue) ? tweenValue[1] : tweenValue, from);
       const unit = getUnit(to) || getUnit(from) || getUnit(originalValue);
-      tween.isPath = isPath(tweenValue);
       tween.from = decomposeValue(from, unit);
       tween.to = decomposeValue(to, unit);
       tween.start = previousTween ? previousTween.end : prop.offset;
       tween.end = tween.start + tween.delay + tween.duration;
       tween.easing = normalizeEasing(tween.easing);
       tween.elasticity = (1000 - minMaxValue(tween.elasticity, 1, 999)) / 1000;
-      if (is.col(tween.from.original)) tween.round = 1;
+      tween.isPath = is.pth(tweenValue);
+      tween.isColor = is.col(tween.from.original);
+      if (tween.isColor) tween.round = 1;
       previousTween = tween;
       return tween;
     });
@@ -747,7 +743,7 @@
           const start = tween.from.numbers[p];
           let value = start + eased * (number - start);
           if (tween.isPath) value = getPathProgress(tween.value, value);
-          if (round) value = Math.round(value * round) / round;
+          if (round && (tween.isColor && p < 3)) value = Math.round(value * round) / round;
           return value;
         }), tween.to.strings);
         setTweenProgress[anim.type](animatable.target, anim.property, progress, transforms, animatable.id);
@@ -937,7 +933,7 @@
     return tl;
   }
 
-  anime.version = '2.1.0';
+  anime.version = '2.1.1';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
