@@ -498,7 +498,17 @@
   }
 
   function recomposeValue(numbers, strings) {
-    return (strings.length === 0) ? numbers[0] : strings.reduce((a, b, i) => a + numbers[i - 1] + (b ? b : ' '));
+    if (strings.length) {
+      return strings.reduce(function(a, b, i) {
+        if (b) {
+          return a + numbers[i - 1] + b;
+        } else {
+          return a + numbers[i - 1] + ' ';
+        }
+      });
+    } else {
+      return numbers[0];
+    }
   }
 
   // Animatables
