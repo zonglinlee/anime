@@ -267,22 +267,27 @@
 
   // Colors
 
-  function hexToRgb(hexValue) {
+  function rgbToRgba(rgbValue) {
+    const rgb = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g.exec(rgbValue);
+    return rgb ? `rgba(${rgb[1]},1)` : rgbValue;
+  }
+
+  function hexToRgba(hexValue) {
     const rgx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     const hex = hexValue.replace(rgx, (m, r, g, b) => r + r + g + g + b + b );
     const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     const r = parseInt(rgb[1], 16);
     const g = parseInt(rgb[2], 16);
     const b = parseInt(rgb[3], 16);
-    return `rgb(${r},${g},${b})`;
+    return `rgba(${r},${g},${b},1)`;
   }
 
-  function hslToRgb(hslValue) {
+  function hslToRgba(hslValue) {
     const hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hslValue) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(hslValue);
     const h = parseInt(hsl[1]) / 360;
     const s = parseInt(hsl[2]) / 100;
     const l = parseInt(hsl[3]) / 100;
-    const a = hsl[4];
+    const a = hsl[4] || 1;
     function hue2rgb(p, q, t) {
       if (t < 0) t += 1;
       if (t > 1) t -= 1;
@@ -301,14 +306,13 @@
       g = hue2rgb(p, q, h);
       b = hue2rgb(p, q, h - 1/3);
     }
-    const rgbString = `(${r * 255},${g * 255},${b * 255}`;
-    return a ? `rgba${rgbString},${a})` : `rgb${rgbString})`;
+    return `rgba(${r * 255},${g * 255},${b * 255},${a})`;
   }
 
   function colorToRgb(val) {
-    if (is.rgb(val)) return val;
-    if (is.hex(val)) return hexToRgb(val);
-    if (is.hsl(val)) return hslToRgb(val);
+    if (is.rgb(val)) return rgbToRgba(val);
+    if (is.hex(val)) return hexToRgba(val);
+    if (is.hsl(val)) return hslToRgba(val);
   }
 
   // Units
