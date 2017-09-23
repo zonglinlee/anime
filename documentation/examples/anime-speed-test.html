@@ -24,6 +24,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
     .particule {
       position: absolute;
@@ -43,7 +44,7 @@
     var duration = 2000;
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var distance = (width > height ? height : width) / 4;
+    var distance = (width > height ? height : width);
     var fragment = document.createDocumentFragment();
     var colors = ['#FF1461', '#18FF92', '#5A87FF'];
     var i = 0;
@@ -57,13 +58,10 @@
       el.classList.add('particule');
       anime({
         targets: el,
+        width: ['0px', '20px'],
+        height: ['0px', '20px'],
         left: [width/2+'px', Math.cos(angle) * distance + (width/2) + 'px'],
         top: [height/2+'px', Math.sin(angle) * distance + (height/2) + 'px'],
-        // scale: [
-        //   {value: [.5, 1.5], duration: duration * .8}, 
-        //   {value: 1.5, duration: duration * .1},
-        //   {value: 0, duration: duration * .1}
-        // ],
         color: ['#FF1461', '#5A87FF'],
         delay: (duration / maxElements) * i,
         duration: duration,
