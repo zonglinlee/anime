@@ -752,7 +752,7 @@
         const toNumbersLength = tween.to.numbers.length;
         for (let n = 0; n < toNumbersLength; n++) {
           const number = tween.to.numbers[n];
-          const start = tween.from.numbers[n];
+          const start = tween.isPath || !tween.from.numbers[n] ? 0 : tween.from.numbers[n];
           let value = start + eased * (number - start);
           if (tween.isPath) value = getPathProgress(tween.value, value);
           if (round && (tween.isColor && n < 3)) value = Math.round(value * round) / round;
