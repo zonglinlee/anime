@@ -17,6 +17,7 @@
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png">
   <link href="../assets/css/anime.css" rel="stylesheet">
   <script src="../../anime.js"></script>
+  <!-- <script src="../../anime-dev.js"></script> -->
   <!-- <script src="../assets/js/anime.2.0.1.js"></script> -->
   <!-- <script src="../assets/js/anime.1.3.js"></script> -->
   <style>
@@ -26,11 +27,18 @@
       height: 100%;
       overflow: hidden;
     }
+    .wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
     .particule {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      margin: -5px 0 0 -5px;
+      width: 1px;
+      height: 1px;
       border-radius: 50%;
       /*background-color: #FBF38C;*/
       background-color: currentColor;
@@ -41,10 +49,12 @@
   <script>
 
     var maxElements = 500;
-    var duration = 2000;
+    var duration = 1000;
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var distance = (width > height ? height : width);
+    var centerX = width / 2;
+    var centerY = height / 2;
+    var radius = Math.sqrt(centerX * centerX + centerY * centerY);
     var fragment = document.createDocumentFragment();
     var colors = ['#FF1461', '#18FF92', '#5A87FF'];
     var i = 0;
@@ -55,18 +65,19 @@
       var color = Math.round((i/maxElements)*(colors.length-1));
       // el.style.color = colors[anime.random(0, 3)];
       // el.style.color = colors[color];
+      el.style.width = '1px';
+      el.style.height = '1px';
       el.classList.add('particule');
       anime({
         targets: el,
-        width: ['0px', '20px'],
-        height: ['0px', '20px'],
-        left: [width/2+'px', Math.cos(angle) * distance + (width/2) + 'px'],
-        top: [height/2+'px', Math.sin(angle) * distance + (height/2) + 'px'],
+        width: ['1px', '16px'],
+        height: ['1px', '16px'],
+        left: [centerX + 'px', Math.cos(angle) * radius + (width/2) + 'px'],
+        top: [centerY + 'px', Math.sin(angle) * radius + (height/2) + 'px'],
         color: ['#FF1461', '#5A87FF'],
         delay: (duration / maxElements) * i,
         duration: duration,
-        // direction: 'reverse',
-        easing: 'easeOutSine',
+        easing: 'easeInCubic',
         loop: true
       });
       fragment.appendChild(el);

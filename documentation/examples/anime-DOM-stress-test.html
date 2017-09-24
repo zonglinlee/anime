@@ -17,9 +17,14 @@
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
   <link href="../assets/css/anime.css" rel="stylesheet">
   <script src="../../anime.js"></script>
+  <!-- <script src="../../anime-dev.js"></script> -->
   <!-- <script src="../assets/js/anime.2.0.2.js"></script> -->
   <!-- <script src="../assets/js/anime.1.0.js"></script> -->
   <style>
+
+    body {
+      overflow: hidden;
+    }
 
     .el {
       position: absolute;
@@ -28,7 +33,7 @@
       width: 1em;
       height: 1em;
       margin: -.5em 0 0 -.5em;
-      border: .05em solid currentColor;
+      border: 1px solid currentColor;
       /*background-color: currentColor;*/
       font-size: 40px;
       border-radius: 50%;
@@ -45,8 +50,7 @@
     const duration = 3000;
     const delay = duration / numberOfEls;
     const radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-    const distance = radius / 4 <= 150 ? 150 : radius / 3; 
-
+    const distance = radius / 4 <= 150 ? 150 : radius / 2.5; 
     let tl = anime.timeline({
       duration: delay,
       complete: function() { tl.restart(); }
@@ -55,21 +59,23 @@
     function createEl(i) {
       let el = document.createElement('div');
       const hue = Math.round(360 / numberOfEls * i);
-      const angle = Math.round(360 / numberOfEls * i);
+      const angle = Math.round(180 / numberOfEls * i * 3);
       el.classList.add('el');
-      el.style.borderColor = 'hsl(' + hue + ', 40%, 60%)';
+      el.style.color = 'hsl(' + hue + ', 40%, 60%)';
+      el.style.transform = 'scale(0)';
+      el.style.zIndex = numberOfEls - i;
       tl.add({
         begin: function() {
           anime({
             targets: el,
             translateX: [0, Math.sin(angle) * distance],
             translateY: [0,Math.cos(angle) * distance ],
+            // scale: [0, 32],
             scale: [
               {value: [0, 1], duration: duration / 2, easing: 'easeOutBack'},
               {value: 0, duration: duration / 2, easing: 'easeInBack'}
             ],
             easing: 'easeInOutSine',
-            direction: 'alternate',
             duration: duration
           });
         }

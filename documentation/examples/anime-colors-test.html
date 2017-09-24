@@ -95,38 +95,24 @@
 
     var colorTestEls = document.querySelectorAll('.color-test');
 
-    var duration = 4000;
-
-    var colorTL = anime.timeline({
-      duration: duration / colorTestEls.length,
-      complete: function() {colorTL.restart(); }
-    });
-
     function createTest(el) {
       var testHtml = el.innerHTML;
       var testValues = testHtml.split('<br>▾<br>');
       var colorEl = document.createElement('div');
       colorEl.classList.add('color-el');
-      colorEl.style.backgroundColor = testValues[0];
-      colorEl.style.transform = 'scale(.97)';
-      colorTL.add({
-        begin: function() {
-          anime({
-            targets: colorEl,
-            backgroundColor: [testValues[0], testValues[1]],
-            scale: [.97, .75],
-            direction: 'alternate',
-            easing: 'easeInOutSine',
-            duration: duration / 2,
-          });
-        }
-      });
       el.appendChild(colorEl);
+      anime({
+        targets: colorEl,
+        backgroundColor: [testValues[0], testValues[1]],
+        scale: [.97, .75],
+        direction: 'alternate',
+        easing: 'easeInOutSine',
+        duration: 4000,
+        loop: true
+      });
     }
 
-    for (var i = 0; i < colorTestEls.length; i++) {
-      createTest(colorTestEls[i], i);
-    }
+    for (var i = 0; i < colorTestEls.length; i++) createTest(colorTestEls[i]);
 
   </script>
 </body>
