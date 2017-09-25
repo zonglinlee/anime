@@ -50,7 +50,8 @@
   <div class="rgba item color-09"></div>
   <div class="calc item color-11"></div>
   <div class="zero-value item color-02"></div>
-  <div class="clip-path item color-04"></div>
+  <div class="round-value item color-04"></div>
+  <div class="clip-path item color-06"></div>
   <script>
     var boxShadow = anime({
       targets: '.box-shadow',
@@ -102,6 +103,14 @@
       targets: '.zero-value',
       scale: 0,
       loop: true,
+      direction: 'alternate',
+      easing: 'linear'
+    });
+    var roundValue = anime({
+      targets: '.round-value',
+      translateY: 100,
+      loop: true,
+      round: 1,
       direction: 'alternate',
       easing: 'linear'
     });
