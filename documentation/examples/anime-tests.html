@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>tests | anime.js</title>
+  <title>Tests | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
@@ -20,83 +20,44 @@
   <!-- <script src="../assets/js/anime.2.0.2.js"></script> -->
   <!-- <script src="../assets/js/anime.1.3.js"></script> -->
   <style>
+  <style>
     body {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100vh;
+      min-height: 100vh;
     }
-    .el {
-      position: relative;
-      width: 20px;
-      height: 20px;
-      background: currentColor;
+    .item {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: currentColor;
+      margin: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="el color-01"></div>
-  <div class="el color-04"></div>
-  <div class="el color-08"></div>
-  <div class="el color-12"></div>
+  <div class="item duration-0 color-01"></div>
+  <div class="item seek-0 color-04"></div>
   <script>
-    var seek0 = anime({
-      targets: '.color-01',
-      translateY: [300, 100],
-      // loop: true,
-      autoplay: false,
-      update: function(anim) { console.log('update', anim.currentTime);},
-      begin: function(anim) { console.log('begin', anim.currentTime);},
-      run: function(anim) { console.log('run', anim.currentTime);},
-      complete: function(anim) { console.log('complete', anim.currentTime);}
-    });
-    var duration0 = anime({
-      targets: '.color-04',
-      translateY: [200, 300],
-      loop: true,
-      autoplay: false,
+    anime({
+      targets: '.duration-0',
+      translateX: 100,
       duration: 0,
-      update: function() { console.log('update');},
-      begin: function() { console.log('begin');},
-      run: function() { console.log('run');},
-      complete: function() { console.log('complete');}
+      begin: function() {console.log('duration-0 begin') },
+      update: function() {console.log('duration-0 update') },
+      complete: function() {console.log('duration-0 complte') }
     });
-    // console.log(duration0.currentTime);
-    // animation.seek(0);
-    // console.log(animation.currentTime);
-    var tl = anime.timeline({
-      targets: '.color-08',
-      autoplay: true,
-      easing: 'easeOutExpo',
-      duration: 500,
-      // update: function(anim) { console.log('TL update', anim.currentTime);},
-      begin: function(anim) { console.log('TL begin', anim.currentTime);},
-      // run: function(anim) { console.log('TL run', anim.currentTime);},
-      complete: function(anim) { console.log('TL complete', anim.currentTime);}
+    var seek0 = anime({
+      targets: '.seek-0',
+      translateX: [100, 0],
+      autoplay: false,
+      begin: function() {console.log('seek-0 begin') },
+      update: function() {console.log('seek-0 update') },
+      complete: function() {console.log('seek-0 complte') }
     });
 
-    tl.add({
-      translateY: [-100, 200]
-    }).add({
-      translateY: 0,
-      easing: 'easeOutElastic'
-    }).add({
-      targets: '.color-12',
-      translateY: [0, 100],
-      easing: 'easeInElastic'
-    }).add({
-      translateY: 100
-    }).add({
-      translateY: 0
-    })
-
-    var promise = tl.finished.then(function() {
-      console.log('FINISHED');
-      tl.restart();
-    });
-
+    seek0.seek(0);
   </script>
-  <!-- <script src="../assets/js/stats.js"></script> -->
 </body>
 </html>
