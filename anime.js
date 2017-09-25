@@ -742,27 +742,39 @@
         const anim = animations[i];
         const animatable = anim.animatable;
         const tweens = anim.tweens;
-        const tween = filterArray(tweens, t => (insTime < t.end))[0] || tweens[tweens.length - 1];
+        const tweenLength = tweens.length - 1;
+        let tween = tweens[tweenLength];
+        // Only check for keyframes if there is more than one tween
+        if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
         const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
         const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
-        const round = tween.round;
         const strings = tween.to.strings;
+        const round = tween.round;
         let numbers = [];
-        let progress = '';
+        let progress;
         const toNumbersLength = tween.to.numbers.length;
         for (let n = 0; n < toNumbersLength; n++) {
-          const number = tween.to.numbers[n];
-          const start = tween.isPath || !tween.from.numbers[n] ? 0 : tween.from.numbers[n];
-          let value = start + eased * (number - start);
-          if (tween.isPath) value = getPathProgress(tween.value, value);
-          if (round && (tween.isColor && n < 3)) value = Math.round(value * round) / round;
+          let value;
+          const toNumber = tween.to.numbers[n];
+          const fromNumber = tween.from.numbers[n];
+          if (!tween.isPath) {
+            value = fromNumber + (eased * (toNumber - fromNumber));
+          } else {
+            value = getPathProgress(tween.value, eased * toNumber);
+          }
+          if (round) {
+            if (!(tween.isColor && n > 2)) {
+              value = Math.round(value * round) / round;
+            }
+          }
           numbers.push(value);
         }
-        if (!strings.length) {
+        // Manual Array.reduce for better performances
+        const stringsLength = strings.length;
+        if (!stringsLength) {
           progress = numbers[0];
         } else {
           progress = strings[0];
-          const stringsLength = strings.length;
           for (let s = 0; s < stringsLength; s++) {
             const a = strings[s];
             const b = strings[s + 1];
