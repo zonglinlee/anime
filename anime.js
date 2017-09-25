@@ -230,19 +230,19 @@
 
   // Arrays
 
-  function filterArray(arr, fun) {
+  function filterArray(arr, callback) {
     const len = arr.length;
     const thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-    let res = [];
+    let result = [];
     for (let i = 0; i < len; i++) {
       if (i in arr) {
         const val = arr[i];
-        if (fun.call(thisArg, val, i, arr)) {
-          res.push(val);
+        if (callback.call(thisArg, val, i, arr)) {
+          result.push(val);
         }
       }
     }
-    return res;
+    return result;
   }
 
   function flattenArray(arr) {
