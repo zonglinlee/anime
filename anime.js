@@ -882,7 +882,7 @@
     instance.tick = function(t) {
       now = t;
       if (!startTime) startTime = now;
-      const engineTime = (lastTime + now - startTime) * anime.speed;
+      const engineTime = ((lastTime * (1 / anime.speed)) + now - startTime) * anime.speed;
       setInstanceProgress(engineTime);
     }
 
