@@ -1107,6 +1107,12 @@ seekProgressEl.addEventListener('input', function() {
   seekAnim.seek(seekAnim.duration * (seekProgressEl.value / 100));
 });
 
+['input','change'].forEach(function(evt) {
+  seekProgressEl.addEventListener(evt, function() { 
+    seekAnim.seek(seekAnim.duration * (seekProgressEl.value / 100));
+  });
+});
+
 </script>
 </div>
 
@@ -1173,6 +1179,13 @@ document.querySelector('#TLcontrols .restart').onclick = TLcontrols.restart;
 controlsProgressEl.addEventListener('input', function() {
   TLcontrols.seek(TLcontrols.duration * (controlsProgressEl.value / 100));
 });
+
+['input','change'].forEach(function(evt) {
+  controlsProgressEl.addEventListener(evt, function() {
+    TLcontrols.seek(TLcontrols.duration * (controlsProgressEl.value / 100));
+  });
+});
+
 </script>
 </div>
 
