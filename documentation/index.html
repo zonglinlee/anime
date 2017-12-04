@@ -1102,9 +1102,10 @@ document.querySelector('#reverseAnim .reverse').onclick = function() {
 });
 
 var seekProgressEl = document.querySelector('#seekAnim .progress');
-document.querySelector('#seekAnim .progress').oninput = function() {
+
+seekProgressEl.addEventListener('input', function() { 
   seekAnim.seek(seekAnim.duration * (seekProgressEl.value / 100));
-};
+});
 
 </script>
 </div>
