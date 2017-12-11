@@ -532,7 +532,7 @@
     switch (path.property) {
       case 'x': return (p.x + path.offsetX) * scaleX;
       case 'y': return (p.y + path.offsetY) * scaleY;
-      case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
+      case 'angle': return Math.atan2((p1.y - p0.y) * scaleY, (p1.x - p0.x)*scaleX) * 180 / Math.PI;
     }
   }
 
