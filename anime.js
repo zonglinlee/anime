@@ -518,8 +518,12 @@
     var scaleX = 1;
     var scaleY = 1;
     if (typeof path.viewBox  !== 'undefined' ) {
-        scaleX = (path.svg.width.baseVal.value / path.viewBox.width);
-        scaleY = (path.svg.height.baseVal.value / path.viewBox.height);
+        const box = path.svg.getBoundingClientRect();
+        const width = box.right-box.left;  //path.svg.width.baseVal.value is not cross browser compatible
+        const height = box.bottom-box.top; //path.svg.height.baseVal.value is not cross browser compatible
+
+        scaleX = (width / path.viewBox.width);
+        scaleY = (height / path.viewBox.height);
     }
 
     const p = point();
