@@ -38,6 +38,7 @@
   const defaultTweenSettings = {
     duration: 1000,
     delay: 0,
+    endDelay: 0,
     easing: 'easeOutElastic',
     elasticity: 500,
     round: 0
@@ -600,7 +601,7 @@
       tween.from = decomposeValue(from, unit);
       tween.to = decomposeValue(to, unit);
       tween.start = previousTween ? previousTween.end : prop.offset;
-      tween.end = tween.start + tween.delay + tween.duration;
+      tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
       tween.easing = normalizeEasing(tween.easing);
       tween.elasticity = (1000 - minMaxValue(tween.elasticity, 1, 999)) / 1000;
       tween.isPath = is.pth(tweenValue);

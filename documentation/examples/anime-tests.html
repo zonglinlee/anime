@@ -37,27 +37,22 @@
   </style>
 </head>
 <body>
-  <div class="item duration-0 color-01"></div>
-  <div class="item seek-0 color-04"></div>
+  <div class="item color-01"></div>
+  <div class="item color-02"></div>
+  <div class="item color-03"></div>
   <script>
-    anime({
-      targets: '.duration-0',
+    var animation = anime({
+      targets: '.item',
       translateX: 100,
-      duration: 0,
-      begin: function() {console.log('duration-0 begin') },
-      update: function() {console.log('duration-0 update') },
-      complete: function() {console.log('duration-0 complte') }
-    });
-    var seek0 = anime({
-      targets: '.seek-0',
-      translateX: [100, 0],
-      autoplay: false,
-      begin: function() {console.log('seek-0 begin') },
-      update: function() {console.log('seek-0 update') },
-      complete: function() {console.log('seek-0 complte') }
+      endDelay: function(el, i, t) { return (t - i) * 1000; },
+      easing: 'linear',
+      direction: 'reverse',
+      complete: function() {
+        console.log('complete');
+      }
     });
 
-    seek0.seek(0);
+    console.log(animation.animations);
   </script>
 </body>
 </html>
