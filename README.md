@@ -197,9 +197,10 @@ Can be set globally, or individually to each properties:
 
 | Names | Defaults | Types | Info
 | --- | --- | --- | ---
-| duration | `1000` | `number`, `function`  | millisecond
-| delay | `0` | `number`, `function`   | millisecond
-| easing | `'easeOutElastic'` | `function`  | [See Easing functions](#easing-functions)
+| duration | `1000` | `number`, `function` | millisecond
+| delay | `0` | `number`, `function` | millisecond
+| endDelay | `0` | `number`, `function` | millisecond
+| easing | `'easeOutElastic'` | `function` | [See Easing functions](#easing-functions)
 | elasticity | `500` | `number`, `function` | Range [0 - 1000]
 | round | `false` | `number`, `boolean`, `function` | Power of 10
 

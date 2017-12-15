@@ -264,6 +264,21 @@ var JSobjectProp = anime({
 </script>
 </div>
 
+<div id="endDelay" class="demo">
+  <h3 class="demo-title">end delay</h3>
+  <div class="demo-content">
+<div class="square shadow"></div>
+<div class="square el"></div>
+  </div>
+<script>var endDelay = anime({
+  targets: '#endDelay .el',
+  translateX: 250,
+  endDelay: 1000,
+  direction: 'alternate'
+});
+</script>
+</div>
+
 <div id="easing" class="demo">
   <h3 class="demo-title">Easing</h3>
   <div class="demo-content">
