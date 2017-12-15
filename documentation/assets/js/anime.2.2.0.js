@@ -1,7 +1,7 @@
 /**
  * http://animejs.com
  * JavaScript animation engine
- * @version v2.2.1
+ * @version v2.2.0
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -355,7 +355,7 @@
 
   function getCSSValue(el, prop) {
     if (prop in el.style) {
-      return el.style[prop] || getComputedStyle(el).getPropertyValue(stringToHyphens(prop)) || '0';
+      return getComputedStyle(el).getPropertyValue(stringToHyphens(prop)) || '0';
     }
   }
 
@@ -976,7 +976,7 @@
     return tl;
   }
 
-  anime.version = '2.2.1';
+  anime.version = '2.2.0';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
