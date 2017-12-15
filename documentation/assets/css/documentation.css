@@ -210,6 +210,8 @@ header {
 pre {
   overflow: auto;
   font-family: 'Space Mono', monospace;
+  font-variant-ligatures: none;
+  -webkit-font-variant-ligatures: none;
   line-height: 22px;
 }
 
