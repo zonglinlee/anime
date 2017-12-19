@@ -41,18 +41,10 @@
   <div class="item color-02"></div>
   <div class="item color-03"></div>
   <script>
-    var animation = anime({
-      targets: '.item',
-      translateX: 100,
-      endDelay: function(el, i, t) { return (t - i) * 1000; },
-      easing: 'linear',
-      direction: 'reverse',
-      complete: function() {
-        console.log('complete');
-      }
-    });
-
-    console.log(animation.animations);
+    var tl = anime.timeline();
+    tl.add({
+      translateX: 100
+    })
   </script>
 </body>
 </html>

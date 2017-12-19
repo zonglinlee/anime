@@ -946,14 +946,15 @@
 
   // Timeline
 
-  function timeline(params) {
+  function timeline(parameters) {
+    let params = parameters || {};
     let tl = anime(params);
     tl.pause();
     tl.duration = 0;
     tl.add = function(instancesParams) {
       tl.children.forEach(i => { i.began = true; i.completed = true; });
       toArray(instancesParams).forEach(instanceParams => {
-        let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params || {}));
+        let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
         insParams.targets = insParams.targets || params.targets;
         const tlDuration = tl.duration;
         const insOffset = insParams.offset;
