@@ -946,8 +946,7 @@
 
   // Timeline
 
-  function timeline(parameters) {
-    let params = parameters || {};
+  function timeline(params = {}) {
     let tl = anime(params);
     tl.pause();
     tl.duration = 0;
