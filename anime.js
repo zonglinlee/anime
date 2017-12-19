@@ -665,18 +665,22 @@
       const animations = instance.animations;
       for (let a = animations.length; a--;) {
         const animation = animations[a];
-          if ((propertyName && (animation.property === propertyName)) && instance.animatables.some(t => t.target === target)) {
-            animations.splice(a, 1);
-            if (!animations.length) instance.pause();
-          }
+        const prop = propertyName ? (animation.property === propertyName) : true;
+        console.log(propertyName, (animation.property === propertyName));
+        if (prop && instance.animatables.some(t => t.target === target)) {
+          console.log('hai');
+          animations.splice(a, 1);
+          if (!animations.length) instance.pause();
+        }
       }
     }
   }
 
-  function removeTargets(targets) {
+  function removeTargets(targets, propertyName) {
     const targetsArray = parseTargets(targets);
-    for (let i = targets.length; i--;) {
-      removeAnimation(targets[i]);
+    for (let i = targetsArray.length; i--;) {
+      console.log(targetsArray[i]);
+      removeAnimation(targetsArray[i], propertyName);
     }
   }
 
