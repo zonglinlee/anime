@@ -32,7 +32,6 @@
     loop: 1,
     direction: 'normal',
     autoplay: true,
-    replace: true,
     offset: 0
   }
 
@@ -642,72 +641,13 @@
     }
   }
 
-  // Remove targets from animation
-
-  // function removeAnimation(targets, property) {
-  //   const targetsArray = parseTargets(targets);
-  //   for (let i = activeInstances.length; i--;) {
-  //     const instance = activeInstances[i];
-  //     const animations = instance.animations;
-  //     for (let a = animations.length; a--;) {
-  //       if (arrayContains(targetsArray, animations[a].animatable.target)) {
-  //         animations.splice(a, 1);
-  //         if (!animations.length) instance.pause();
-  //       }
-  //     }
-  //   }
-  // }
-
-  function removeAnimation(target, propertyName) {
-    // const targetsArray = parseTargets(targets);
-    for (let i = activeInstances.length; i--;) {
-      const instance = activeInstances[i];
-      const animations = instance.animations;
-      for (let a = animations.length; a--;) {
-        const animation = animations[a];
-          if ((propertyName && (animation.property === propertyName)) && instance.animatables.some(t => t.target === target)) {
-            animations.splice(a, 1);
-            if (!animations.length) instance.pause();
-          }
-      }
-    }
-  }
-
-  function removeTargets(targets) {
-    const targetsArray = parseTargets(targets);
-    for (let i = targets.length; i--;) {
-      removeAnimation(targets[i]);
-    }
-  }
-
-  function getAnimations(animatables, properties, replace) {
+  function getAnimations(animatables, properties) {
     return filterArray(flattenArray(animatables.map(animatable => {
       return properties.map(prop => {
-        if (replace) removeAnimation(animatable.target, prop.name);
         return createAnimation(animatable, prop);
       });
     })), a => !is.und(a));
   }
-
-  // function getAnimations(animatables, properties) {
-  //   return filterArray(flattenArray(animatables.map(animatable => {
-  //     return properties.map(prop => {
-  //       const target = animatable.target;
-  //       for (let i = activeInstances.length; i--;) {
-  //         const instance = activeInstances[i];
-  //         const animations = activeInstances[i].animations;
-  //         for (let a = animations.length; a--;) {
-  //           const animation = animations[a];
-  //           if ((animation.property === prop.name) && instance.animatables.some(t => t.target === target)) {
-  //             animations.splice(a, 1);
-  //             if (!animations.length) instance.pause();
-  //           }
-  //         }
-  //       }
-  //       return createAnimation(animatable, prop);
-  //     });
-  //   })), a => !is.und(a));
-  // }
 
   // Create Instance
 
@@ -725,7 +665,7 @@
     const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
     const animatables = getAnimatables(params.targets);
     const properties = getProperties(instanceSettings, tweenSettings, params);
-    const animations = getAnimations(animatables, properties, instanceSettings.replace);
+    const animations = getAnimations(animatables, properties);
     return mergeObjects(instanceSettings, {
       children: [],
       animatables: animatables,
@@ -759,21 +699,6 @@
     return play;
   })();
 
-  // Remove targets from animation
-
-  // function removeTargets(targets) {
-  //   const targetsArray = parseTargets(targets);
-  //   for (let i = activeInstances.length; i--;) {
-  //     const instance = activeInstances[i];
-  //     const animations = instance.animations;
-  //     for (let a = animations.length; a--;) {
-  //       if (arrayContains(targetsArray, animations[a].animatable.target)) {
-  //         animations.splice(a, 1);
-  //         if (!animations.length) instance.pause();
-  //       }
-  //     }
-  //   }
-  // }
 
   // Public Instance
 
@@ -995,14 +920,28 @@
 
     instance.finished = promise;
 
-    // if (instance.replace) removeTargets(params.targets);
-
     instance.reset();
 
     if (instance.autoplay) instance.play();
 
     return instance;
 
+  }
+
+  // Remove targets from animation
+
+  function removeTargets(targets) {
+    const targetsArray = parseTargets(targets);
+    for (let i = activeInstances.length; i--;) {
+      const instance = activeInstances[i];
+      const animations = instance.animations;
+      for (let a = animations.length; a--;) {
+        if (arrayContains(targetsArray, animations[a].animatable.target)) {
+          animations.splice(a, 1);
+          if (!animations.length) instance.pause();
+        }
+      }
+    }
   }
 
   // Timeline

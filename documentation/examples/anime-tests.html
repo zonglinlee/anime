@@ -41,39 +41,10 @@
   <div class="item color-02"></div>
   <div class="item color-03"></div>
   <script>
-    var anim = anime({
-      targets: '.color-01',
-      backgroundColor: '#BAD',
-      direction: 'alternate',
-      easing: 'linear',
-      translateX: 50,
-      loop: true
-    });
-    var anim = anime({
-      targets: '.color-02',
-      scale: 2,
-      opacity: .5,
-      loop: true
-    });
-    console.log(anim);
-    function mouseenter(e) {
-      var anim = anime({
-        targets: this,
-        scale: 2,
-        opacity: .5
-      });
-      console.log(anim);
-    }
-    function mouseleave(e) {
-      anime({
-        targets: this,
-        scale: 1,
-        opacity: 1
-      })
-    }
-    var el = document.querySelector('.color-01');
-    el.addEventListener('mouseenter', mouseenter, false);
-    el.addEventListener('mouseleave', mouseleave, false);
+    var tl = anime.timeline();
+    tl.add({
+      translateX: 100
+    })
   </script>
 </body>
 </html>
