@@ -687,7 +687,7 @@
       if (activeLength) {
         let i = 0;
         while (i < activeLength) {
-          if (activeInstances[i]) activeInstances[i].tick(t);
+          activeInstances[i].tick(t);
           i++;
         }
         play();
