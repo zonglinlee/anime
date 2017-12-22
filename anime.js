@@ -892,9 +892,10 @@
     }
 
     instance.pause = function() {
-      const i = activeInstances.indexOf(instance);
-      if (i > -1) activeInstances.splice(i, 1);
-      instance.paused = true;
+      requestAnimationFrame(() => {
+        const i = activeInstances.indexOf(instance);
+        if (i > -1) activeInstances.splice(i, 1);
+      });
     }
 
     instance.play = function() {
