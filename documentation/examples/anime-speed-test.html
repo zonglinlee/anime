@@ -46,30 +46,35 @@
   <script>
 
     var numberOfEls = 500;
-    var duration = 1000;
+    var duration = 1500;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < numberOfEls; i++) {
-      var hue = Math.round(360 / numberOfEls * i);
+      var hue = 180 + Math.round(90 / numberOfEls * i);
       var angle = anime.random(0, 360);
       var el = document.createElement('div');
       el.classList.add('particule');
-      el.style.backgroundColor = 'hsl(' + hue + ', 40%, 60%)';
-      el.style.width = '10px';
-      el.style.height = '10px';
+      el.style.backgroundColor = 'hsl(' + hue + ', 100%, 40%)';
+      el.style.width = '25px';
+      el.style.height = '25px';
       anime({
         targets: el,
         rotate: [angle, angle],
         translateX: window.innerWidth * .65,
-        scale: [0, 7],
+        // rotate: [anime.random(-360, 360), anime.random(-360, 360)],
+        scale: {
+          value: [0, 1],
+          duration: 100,
+          endDelay: duration
+        },
         delay: (duration / numberOfEls) * i,
         endDelay: (duration / numberOfEls) * i,
         duration: duration,
-        easing: 'easeInExpo',
-        // direction: 'reverse',
+        easing: 'easeInQuad',
+        direction: 'reverse',
         loop: true
       });
       fragment.appendChild(el);
