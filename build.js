@@ -15,7 +15,7 @@ fs.unlink(fileOut, (err) => {
     const out = compile(flags);
     fs.writeFile(fileOut, out.compiledCode, function(err) {
       if (err) throw err;
-      console.info('Compilation was a success! 😎 🍺');
+      console.info('Compilation was a success! 😎');
     });
   });
 });

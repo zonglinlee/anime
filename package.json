@@ -27,6 +27,6 @@
     "anime.min.js"
   ],
   "devDependencies": {
-    "google-closure-compiler-js": "^20170124.0.0"
+    "google-closure-compiler-js": "^20171203.0.0"
   }
 }
