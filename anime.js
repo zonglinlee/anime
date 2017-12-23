@@ -44,8 +44,7 @@
     round: 0
   }
 
-  const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skewX', 'skewY', 'perspective'];
-  let transformString;
+  const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skew', 'skewX', 'skewY', 'perspective'];
 
   // Utils
 
@@ -300,9 +299,9 @@
 
   function hslToRgba(hslValue) {
     const hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hslValue) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(hslValue);
-    const h = parseInt(hsl[1]) / 360;
-    const s = parseInt(hsl[2]) / 100;
-    const l = parseInt(hsl[3]) / 100;
+    const h = parseInt(hsl[1], 10) / 360;
+    const s = parseInt(hsl[2], 10) / 100;
+    const l = parseInt(hsl[3], 10) / 100;
     const a = hsl[4] || 1;
     function hue2rgb(p, q, t) {
       if (t < 0) t += 1;
@@ -367,30 +366,38 @@
     if (el[prop] != null) return 'object';
   }
 
-  function getTransformValue(el, propName) {
-    const defaultUnit = getTransformUnit(propName);
-    const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + defaultUnit;
-    const str = el.style.transform;
-    if (!str) return defaultVal;
-    let match = [];
-    let props = [];
-    let values = [];
-    const rgx = /(\w+)\((.+?)\)/g;
-    while (match = rgx.exec(str)) {
-      props.push(match[1]);
-      values.push(match[2]);
-    }
-    const value = filterArray(values, (val, i) => props[i] === propName);
-    return value.length ? value[0] : defaultVal;
+  function getElementTransforms(el) {
+    if (!is.dom(el)) return;
+    const str = el.style.transform || '';
+    const reg  = /(\w+)\(([^)]*)\)/g;
+    const transforms = new Map();
+    let m; while (m = reg.exec(str)) transforms.set(m[1], m[2]);
+    return transforms;
   }
 
-  function getOriginalTargetValue(target, propName) {
+  function getTransformValue(el, propName, animatable) {
+    const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
+    const prop = getElementTransforms(el).get(propName) || defaultVal;
+    animatable.transforms.list.set(propName, prop);
+    if (!animatable.transforms.first) animatable.transforms['first'] = propName;
+    animatable.transforms['last'] = propName;
+    return prop;
+  }
+
+  function getOriginalTargetValue(target, propName, animatable) {
     switch (getAnimationType(target, propName)) {
-      case 'transform': return getTransformValue(target, propName);
-      case 'css': return getCSSValue(target, propName);
-      case 'attribute': return target.getAttribute(propName);
+      case 'transform':
+        return getTransformValue(target, propName, animatable);
+        break;
+      case 'css':
+        return getCSSValue(target, propName);
+        break;
+      case 'attribute':
+        return target.getAttribute(propName);
+        break;
+      default:
+        return target[propName] || 0;
     }
-    return target[propName] || 0;
   }
 
   function getRelativeValue(to, from) {
@@ -522,7 +529,7 @@
   function getAnimatables(targets) {
     const parsed = parseTargets(targets);
     return parsed.map((t, i) => {
-      return {target: t, id: i, total: parsed.length};
+      return {target: t, id: i, total: parsed.length, transforms: { list: getElementTransforms(t) } };
     });
   }
 
@@ -593,7 +600,7 @@
     return prop.tweens.map(t => {
       let tween = normalizeTweenValues(t, animatable);
       const tweenValue = tween.value;
-      const originalValue = getOriginalTargetValue(animatable.target, prop.name);
+      const originalValue = getOriginalTargetValue(animatable.target, prop.name, animatable);
       const previousValue = previousTween ? previousTween.to.original : originalValue;
       const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
       const to = getRelativeValue(is.arr(tweenValue) ? tweenValue[1] : tweenValue, from);
@@ -614,14 +621,26 @@
 
   // Tween progress
 
-  const setTweenProgress = {
+  const setProgressValue = {
     css: (t, p, v) => t.style[p] = v,
     attribute: (t, p, v) => t.setAttribute(p, v),
     object: (t, p, v) => t[p] = v,
-    transform: (t, p, v, transforms, id) => {
-      if (!transforms[id]) transforms[id] = [];
-      transforms[id].push(`${p}(${v})`);
+    transform: (t, p, v, transforms, reversed, manual) => {
+      const closing = reversed ? transforms.first : transforms.last;
+      transforms.list.set(p, v);
+      if (closing === p || manual) {
+        let str = ''; for (let [prop, value] of transforms.list) str += `${prop}(${value}) `;
+        t.style.transform = str;
+      }
     }
+  }
+
+  function setTargetValue(targets, property, value) {
+    const animatables = getAnimatables(targets);
+    animatables.forEach(animatable => {
+      const animType = getAnimationType(animatable.target, property);
+      setProgressValue[animType](animatable.target, property, value, animatable.transforms, false, true);
+    });
   }
 
   // Animations
@@ -678,16 +697,26 @@
   // Core
 
   let activeInstances = [];
+  let pausedInstances = [];
   let raf = 0;
 
   const engine = (() => {
     function play() { raf = requestAnimationFrame(step); };
     function step(t) {
+      if (pausedInstances.length) {
+        activeInstances = filterArray(activeInstances, ins => !pausedInstances.includes(ins));
+        pausedInstances = [];
+      }
       const activeLength = activeInstances.length;
       if (activeLength) {
         let i = 0;
         while (i < activeLength) {
-          activeInstances[i].tick(t);
+          const activeInstance = activeInstances[i];
+          if (!activeInstance.paused) {
+            activeInstances[i].tick(t);
+          } else {
+            pausedInstances.push(activeInstance);
+          }
           i++;
         }
         play();
@@ -736,7 +765,6 @@
 
     function setAnimationsProgress(insTime) {
       let i = 0;
-      let transforms = {};
       const animations = instance.animations;
       const animationsLength = animations.length;
       while (i < animationsLength) {
@@ -751,7 +779,7 @@
         const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
         const strings = tween.to.strings;
         const round = tween.round;
-        let numbers = [];
+        const numbers = [];
         let progress;
         const toNumbersLength = tween.to.numbers.length;
         for (let n = 0; n < toNumbersLength; n++) {
@@ -789,19 +817,9 @@
             }
           }
         }
-        setTweenProgress[anim.type](animatable.target, anim.property, progress, transforms, animatable.id);
+        setProgressValue[anim.type](animatable.target, anim.property, progress, animatable.transforms, instance.reversed);
         anim.currentValue = progress;
         i++;
-      }
-      const transformsLength = Object.keys(transforms).length;
-      if (transformsLength) {
-        for (let id = 0; id < transformsLength; id++) {
-          if (!transformString) {
-            const t = 'transform';
-            transformString = (getCSSValue(document.body, t) ? t : `-webkit-${t}`);
-          }
-          instance.animatables[id].target.style[transformString] = transforms[id].join(' ');
-        }
       }
       instance.currentTime = insTime;
       instance.progress = (insTime / instance.duration) * 100;
@@ -850,7 +868,7 @@
           startTime = now;
           if (instance.direction === 'alternate') toggleInstanceDirection();
         } else {
-          instance.pause();
+          instance.paused = true;
           if (!instance.completed) {
             instance.completed = true;
             setCallback('complete');
@@ -892,10 +910,8 @@
     }
 
     instance.pause = function() {
-      requestAnimationFrame(() => {
-        const i = activeInstances.indexOf(instance);
-        if (i > -1) activeInstances.splice(i, 1);
-      });
+      const i = activeInstances.indexOf(instance);
+      if (i > -1) activeInstances.splice(i, 1);
     }
 
     instance.play = function() {
@@ -983,6 +999,7 @@
   anime.running = activeInstances;
   anime.remove = removeTargets;
   anime.getValue = getOriginalTargetValue;
+  anime.setValue = setTargetValue;
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
   anime.bezier = bezier;
