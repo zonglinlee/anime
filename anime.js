@@ -747,6 +747,8 @@
 
     function toggleInstanceDirection() {
       instance.reversed = !instance.reversed;
+      const children = instance.children;
+      children.forEach(child => child.reversed = instance.reversed);
     }
 
     function adjustTime(time) {
