@@ -631,8 +631,11 @@
   function setTargetValue(targets, property, value) {
     const animatables = getAnimatables(targets);
     animatables.forEach(animatable => {
+      const originalValue = getOriginalTargetValue(animatable.target, property, animatable);
+      const unit = getUnit(value) || getUnit(originalValue);
+      const to = getRelativeValue(validateValue(value, unit), originalValue);
       const animType = getAnimationType(animatable.target, property);
-      setProgressValue[animType](animatable.target, property, value, animatable.transforms, false, true);
+      setProgressValue[animType](animatable.target, property, to, animatable.transforms, false, true);
     });
   }
 
