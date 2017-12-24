@@ -219,7 +219,6 @@
   }
 
   function selectString(str) {
-    if (is.col(str)) return;
     try {
       let nodes = document.querySelectorAll(str);
       return nodes;
