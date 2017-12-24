@@ -628,14 +628,17 @@
     }
   }
 
-  function setTargetValue(targets, property, value) {
+  function setTargetValue(targets, properties) {
     const animatables = getAnimatables(targets);
     animatables.forEach(animatable => {
-      const originalValue = getOriginalTargetValue(animatable.target, property, animatable);
-      const unit = getUnit(value) || getUnit(originalValue);
-      const to = getRelativeValue(validateValue(value, unit), originalValue);
-      const animType = getAnimationType(animatable.target, property);
-      setProgressValue[animType](animatable.target, property, to, animatable.transforms, false, true);
+      for (var property in properties) {
+        const value = properties[property];
+        const originalValue = getOriginalTargetValue(animatable.target, property, animatable);
+        const unit = getUnit(value) || getUnit(originalValue);
+        const to = getRelativeValue(validateValue(value, unit), originalValue);
+        const animType = getAnimationType(animatable.target, property);
+        setProgressValue[animType](animatable.target, property, to, animatable.transforms, false, true);
+      }
     });
   }
 
@@ -992,12 +995,12 @@
     return tl;
   }
 
-  anime.version = '2.2.1';
+  anime.version = '3.0.0';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
-  anime.getValue = getOriginalTargetValue;
-  anime.setValue = setTargetValue;
+  anime.get = getOriginalTargetValue;
+  anime.set = setTargetValue;
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
   anime.bezier = bezier;
