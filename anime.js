@@ -32,7 +32,7 @@
     loop: 1,
     direction: 'normal',
     autoplay: true,
-    offset: 0
+    timelineOffset: 0
   }
 
   const defaultTweenSettings = {
@@ -558,7 +558,7 @@
       if (!settings.hasOwnProperty(p) && p !== 'targets') {
         properties.push({
           name: p,
-          offset: settings['offset'],
+          offset: settings['timelineOffset'],
           tweens: normalizePropertyTweens(params[p], tweenSettings)
         });
       }
@@ -673,7 +673,7 @@
     if (animations.length) {
       return (isDelay ? Math.min : Math.max).apply(Math, animations.map(anim => anim[type]));
     } else {
-      return isDelay ? tweenSettings.delay : instanceSettings.offset + tweenSettings.delay + tweenSettings.duration;
+      return isDelay ? tweenSettings.delay : instanceSettings.timelineOffset + tweenSettings.delay + tweenSettings.duration;
     }
   }
 
@@ -837,7 +837,7 @@
 
     function setInstanceProgress(engineTime) {
       const insDuration = instance.duration;
-      const insOffset = instance.offset;
+      const insOffset = instance.timelineOffset;
       const insStart = insOffset + instance.delay;
       const insCurrentTime = instance.currentTime;
       const insReversed = instance.reversed;
@@ -967,19 +967,18 @@
     let tl = anime(params);
     tl.pause();
     tl.duration = 0;
-    tl.add = function(instancesParams) {
+    tl.add = function(instancesParams, timelineOffset) {
       tl.children.forEach(i => { i.began = true; i.completed = true; });
       toArray(instancesParams).forEach(instanceParams => {
         let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
         insParams.targets = insParams.targets || params.targets;
         const tlDuration = tl.duration;
-        const insOffset = insParams.offset;
         insParams.autoplay = false;
         insParams.direction = tl.direction;
-        insParams.offset = is.und(insOffset) ? tlDuration : getRelativeValue(insOffset, tlDuration);
+        insParams.timelineOffset = is.und(timelineOffset) ? tlDuration : getRelativeValue(timelineOffset, tlDuration);
         tl.began = true;
         tl.completed = true;
-        tl.seek(insParams.offset);
+        tl.seek(insParams.timelineOffset);
         const ins = anime(insParams);
         ins.began = true;
         ins.completed = true;
