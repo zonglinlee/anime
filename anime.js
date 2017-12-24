@@ -386,17 +386,10 @@
 
   function getOriginalTargetValue(target, propName, animatable) {
     switch (getAnimationType(target, propName)) {
-      case 'transform':
-        return getTransformValue(target, propName, animatable);
-        break;
-      case 'css':
-        return getCSSValue(target, propName);
-        break;
-      case 'attribute':
-        return target.getAttribute(propName);
-        break;
-      default:
-        return target[propName] || 0;
+      case 'transform': return getTransformValue(target, propName, animatable);
+      case 'css': return getCSSValue(target, propName);
+      case 'attribute': return target.getAttribute(propName);
+      default: return target[propName] || 0;
     }
   }
 
@@ -483,10 +476,10 @@
   function getPath(path, percent) {
     const el = is.str(path) ? selectString(path)[0] : path;
     const p = percent || 100;
-    return function(prop) {
+    return function(propperty) {
       return {
-        el: el,
-        property: prop,
+        el,
+        property,
         totalLength: getTotalLength(el) * (p / 100)
       }
     }
