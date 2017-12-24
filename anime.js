@@ -967,24 +967,22 @@
     let tl = anime(params);
     tl.pause();
     tl.duration = 0;
-    tl.add = function(instancesParams, timeOffset) {
+    tl.add = function(instanceParams, timeOffset) {
       tl.children.forEach(i => { i.began = true; i.completed = true; });
-      toArray(instancesParams).forEach(instanceParams => {
-        let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
-        insParams.targets = insParams.targets || params.targets;
-        const tlDuration = tl.duration;
-        insParams.autoplay = false;
-        insParams.direction = tl.direction;
-        insParams.timeOffset = is.und(timeOffset) ? tlDuration : getRelativeValue(timeOffset, tlDuration);
-        tl.began = true;
-        tl.completed = true;
-        tl.seek(insParams.timeOffset);
-        const ins = anime(insParams);
-        ins.began = true;
-        ins.completed = true;
-        if (ins.duration > tlDuration) tl.duration = ins.duration;
-        tl.children.push(ins);
-      });
+      let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
+      insParams.targets = insParams.targets || params.targets;
+      const tlDuration = tl.duration;
+      insParams.autoplay = false;
+      insParams.direction = tl.direction;
+      insParams.timeOffset = is.und(timeOffset) ? tlDuration : getRelativeValue(timeOffset, tlDuration);
+      tl.began = true;
+      tl.completed = true;
+      tl.seek(insParams.timeOffset);
+      const ins = anime(insParams);
+      ins.began = true;
+      ins.completed = true;
+      if (ins.duration > tlDuration) tl.duration = ins.duration;
+      tl.children.push(ins);
       tl.seek(0);
       tl.reset();
       if (tl.autoplay) tl.restart();
