@@ -476,7 +476,7 @@
   function getPath(path, percent) {
     const el = is.str(path) ? selectString(path)[0] : path;
     const p = percent || 100;
-    return function(propperty) {
+    return function(property) {
       return {
         el,
         property,
