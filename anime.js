@@ -378,7 +378,6 @@
     const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
     const prop = getElementTransforms(el).get(propName) || defaultVal;
     animatable.transforms.list.set(propName, prop);
-    if (!animatable.transforms.first) animatable.transforms['first'] = propName;
     animatable.transforms['last'] = propName;
     return prop;
   }
@@ -618,7 +617,7 @@
     css: (t, p, v) => t.style[p] = v,
     attribute: (t, p, v) => t.setAttribute(p, v),
     object: (t, p, v) => t[p] = v,
-    transform: (t, p, v, transforms, reversed, manual) => {
+    transform: (t, p, v, transforms, manual) => {
       transforms.list.set(p, v);
       if (p === transforms.last || manual) {
         let str = '';
@@ -627,7 +626,6 @@
         }
         t.style.transform = str;
       }
-      console.log(transforms.list);
     }
   }
 
@@ -640,7 +638,7 @@
         const unit = getUnit(value) || getUnit(originalValue);
         const to = getRelativeValue(validateValue(value, unit), originalValue);
         const animType = getAnimationType(animatable.target, property);
-        setProgressValue[animType](animatable.target, property, to, animatable.transforms, false, true);
+        setProgressValue[animType](animatable.target, property, to, animatable.transforms, true);
       }
     });
   }
@@ -709,10 +707,9 @@
         activeInstances = filterArray(activeInstances, ins => !pausedInstances.includes(ins));
         pausedInstances = [];
       }
-      const activeLength = activeInstances.length;
-      if (activeLength) {
+      if (activeInstances.length) {
         let i = 0;
-        while (i < activeLength) {
+        while (i < activeInstances.length) {
           const activeInstance = activeInstances[i];
           if (!activeInstance.paused) {
             activeInstances[i].tick(t);
@@ -760,16 +757,12 @@
     function syncInstanceChildren(time, manual) {
       const children = instance.children;
       const childrenLength = children.length;
-      if (!manual) {
+      if (!manual || time >= instance.currentTime) {
         for (let i = 0; i < childrenLength; i++) children[i].seek(time);
       } else {
-        if (time >= instance.currentTime) {
-          for (let i = 0; i < childrenLength; i++) children[i].seek(time);
-        } else {
-          for (let i = childrenLength; i--;) children[i].seek(time);
-        }
+        // Manual backward seeking requires looping in reverse
+        for (let i = childrenLength; i--;) children[i].seek(time);
       }
-
     }
 
     function setAnimationsProgress(insTime) {
@@ -826,7 +819,7 @@
             }
           }
         }
-        setProgressValue[anim.type](animatable.target, anim.property, progress, animatable.transforms, instance.reversed);
+        setProgressValue[anim.type](animatable.target, anim.property, progress, animatable.transforms);
         anim.currentValue = progress;
         i++;
       }
@@ -851,7 +844,6 @@
       const insCurrentTime = instance.currentTime;
       const insReversed = instance.reversed;
       const insTime = adjustTime(engineTime);
-      // instance.reversed = insTime < insCurrentTime;
       if (instance.children.length) syncInstanceChildren(insTime, manual);
       if (insTime >= insStart || !insDuration) {
         if (!instance.began) {
@@ -993,23 +985,6 @@
       ins.began = true;
       ins.completed = true;
       if (ins.duration > tlDuration) tl.duration = ins.duration;
-      // ins.animatables.forEach(newAnimatable => {
-      //   const newTransforms = newAnimatable.transforms;
-      //   tl.children.forEach(child => {
-      //     child.animatables.forEach(animatable => {
-      //       if (animatable.target === newAnimatable.target) {
-      //         childTransforms = animatable.transforms;
-      //         for (let [prop, value] of newTransforms.list) {
-      //           if (!childTransforms.list.get(prop)) {
-      //             childTransforms.list.set(prop, value);
-      //             childTransforms['manual'] = true;
-      //           }
-      //         }
-      //       }
-      //     });
-      //   });
-      // });
-      console.log(ins.animations);
       tl.children.push(ins);
       tl.seek(0);
       tl.reset();
