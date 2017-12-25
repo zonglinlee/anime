@@ -54,7 +54,7 @@
 
     for (var i = 0; i < numberOfEls; i++) {
       var hue = 180 + Math.round(90 / numberOfEls * i);
-      var angle = anime.random(0, 360);
+      var angle = anime.random(-360, 360);
       var el = document.createElement('div');
       el.classList.add('particule');
       el.style.backgroundColor = 'hsl(' + hue + ', 100%, 40%)';

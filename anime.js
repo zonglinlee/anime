@@ -540,7 +540,8 @@
         prop = {value: prop};
       }
     }
-    return toArray(prop).map((v, i) => {
+    const propArray = is.arr(prop) ? prop : [prop];
+    return propArray.map((v, i) => {
       // Default delay value should be applied only on the first tween
       const delay = !i ? tweenSettings.delay : 0;
       // Use path object as a tween value
@@ -618,12 +619,15 @@
     attribute: (t, p, v) => t.setAttribute(p, v),
     object: (t, p, v) => t[p] = v,
     transform: (t, p, v, transforms, reversed, manual) => {
-      const closing = reversed ? transforms.first : transforms.last;
       transforms.list.set(p, v);
-      if (closing === p || manual) {
-        let str = ''; for (let [prop, value] of transforms.list) str += `${prop}(${value}) `;
+      if (p === transforms.last || manual) {
+        let str = '';
+        for (let [prop, value] of transforms.list) {
+          str += `${prop}(${value}) `;
+        }
         t.style.transform = str;
       }
+      console.log(transforms.list);
     }
   }
 
@@ -753,14 +757,19 @@
       return instance.reversed ? instance.duration - time : time;
     }
 
-    function syncInstanceChildren(time) {
+    function syncInstanceChildren(time, manual) {
       const children = instance.children;
       const childrenLength = children.length;
-      if (time >= instance.currentTime) {
+      if (!manual) {
         for (let i = 0; i < childrenLength; i++) children[i].seek(time);
       } else {
-        for (let i = childrenLength; i--;) children[i].seek(time);
+        if (time >= instance.currentTime) {
+          for (let i = 0; i < childrenLength; i++) children[i].seek(time);
+        } else {
+          for (let i = childrenLength; i--;) children[i].seek(time);
+        }
       }
+
     }
 
     function setAnimationsProgress(insTime) {
@@ -835,14 +844,15 @@
       }
     }
 
-    function setInstanceProgress(engineTime) {
+    function setInstanceProgress(engineTime, manual) {
       const insDuration = instance.duration;
       const insOffset = instance.timeOffset;
       const insStart = insOffset + instance.delay;
       const insCurrentTime = instance.currentTime;
       const insReversed = instance.reversed;
       const insTime = adjustTime(engineTime);
-      if (instance.children.length) syncInstanceChildren(insTime);
+      // instance.reversed = insTime < insCurrentTime;
+      if (instance.children.length) syncInstanceChildren(insTime, manual);
       if (insTime >= insStart || !insDuration) {
         if (!instance.began) {
           instance.began = true;
@@ -906,10 +916,11 @@
     }
 
     instance.seek = function(time) {
-      setInstanceProgress(adjustTime(time));
+      setInstanceProgress(adjustTime(time), true);
     }
 
     instance.pause = function() {
+      instance.paused = true;
       const i = activeInstances.indexOf(instance);
       if (i > -1) activeInstances.splice(i, 1);
     }
@@ -982,6 +993,23 @@
       ins.began = true;
       ins.completed = true;
       if (ins.duration > tlDuration) tl.duration = ins.duration;
+      // ins.animatables.forEach(newAnimatable => {
+      //   const newTransforms = newAnimatable.transforms;
+      //   tl.children.forEach(child => {
+      //     child.animatables.forEach(animatable => {
+      //       if (animatable.target === newAnimatable.target) {
+      //         childTransforms = animatable.transforms;
+      //         for (let [prop, value] of newTransforms.list) {
+      //           if (!childTransforms.list.get(prop)) {
+      //             childTransforms.list.set(prop, value);
+      //             childTransforms['manual'] = true;
+      //           }
+      //         }
+      //       }
+      //     });
+      //   });
+      // });
+      console.log(ins.animations);
       tl.children.push(ins);
       tl.seek(0);
       tl.reset();
