@@ -838,14 +838,11 @@
     }
 
     function setInstanceProgress(engineTime, manual) {
-      const insDuration = instance.duration;
       const insOffset = instance.timeOffset;
-      const insStart = insOffset + instance.delay;
-      const insCurrentTime = instance.currentTime;
-      const insReversed = instance.reversed;
+      const insDuration = instance.duration;
       const insTime = adjustTime(engineTime);
       if (instance.children.length) syncInstanceChildren(insTime, manual);
-      if (insTime >= insStart || !insDuration) {
+      if (insTime >= (insOffset + instance.delay) || !insDuration) {
         if (!instance.began) {
           instance.began = true;
           setCallback('begin');
@@ -855,13 +852,13 @@
       if (insTime > insOffset && insTime < insDuration) {
         setAnimationsProgress(insTime);
       } else {
-        if (insTime <= insOffset && insCurrentTime !== 0) {
+        if (insTime <= insOffset && instance.currentTime !== 0) {
           setAnimationsProgress(0);
-          if (insReversed) countIteration();
+          if (instance.reversed) countIteration();
         }
-        if ((insTime >= insDuration && insCurrentTime !== insDuration) || !insDuration) {
+        if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
           setAnimationsProgress(insDuration);
-          if (!insReversed) countIteration();
+          if (!instance.reversed) countIteration();
         }
       }
       setCallback('update');
