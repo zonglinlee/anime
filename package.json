@@ -22,6 +22,9 @@
     "url": "https://github.com/juliangarnier/anime/issues"
   },
   "homepage": "http://animejs.com",
+  "scripts": {
+    "build": "node build"
+  },
   "files": [
     "anime.js",
     "anime.min.js"
