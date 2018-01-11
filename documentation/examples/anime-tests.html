@@ -41,10 +41,13 @@
   <div class="item color-02"></div>
   <div class="item color-03"></div>
   <script>
-    var tl = anime.timeline();
-    tl.add({
-      translateX: 100
-    })
+    var color01El = document.querySelector('.color-01');
+    color01El.addEventListener('mouseenter', function() {
+      anime({ targets: this, scale: 2 });
+    }, false);
+    color01El.addEventListener('mouseleave', function() {
+      anime({ targets: this, scale: 1 });
+    }, false);
   </script>
 </body>
 </html>

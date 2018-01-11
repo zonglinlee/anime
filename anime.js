@@ -697,31 +697,28 @@
   // Core
 
   let activeInstances = [];
-  let pausedInstances = [];
-  let raf = 0;
+  let raf;
 
   const engine = (() => {
-    function play() { raf = requestAnimationFrame(step); };
+    function play() { 
+      raf = requestAnimationFrame(step);
+    };
     function step(t) {
-      if (pausedInstances.length) {
-        activeInstances = filterArray(activeInstances, ins => !pausedInstances.includes(ins));
-        pausedInstances = [];
-      }
       if (activeInstances.length) {
         let i = 0;
         while (i < activeInstances.length) {
           const activeInstance = activeInstances[i];
           if (!activeInstance.paused) {
-            activeInstances[i].tick(t);
+            activeInstance.tick(t);
           } else {
-            pausedInstances.push(activeInstance);
+            const instanceIndex = activeInstances.indexOf(activeInstance);
+            if (instanceIndex > -1) activeInstances.splice(instanceIndex, 1);
           }
           i++;
         }
         play();
       } else {
-        cancelAnimationFrame(raf);
-        raf = 0;
+        raf = cancelAnimationFrame(raf);
       }
     }
     return play;
@@ -910,8 +907,6 @@
 
     instance.pause = function() {
       instance.paused = true;
-      const i = activeInstances.indexOf(instance);
-      if (i > -1) activeInstances.splice(i, 1);
     }
 
     instance.play = function() {
