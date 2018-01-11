@@ -541,12 +541,18 @@
     }
     const propArray = is.arr(prop) ? prop : [prop];
     return propArray.map((v, i) => {
-      // Default delay value should be applied only on the first tween
-      const delay = !i ? tweenSettings.delay : 0;
-      // Use path object as a tween value
-      let obj = is.obj(v) && !is.pth(v) ? v : {value: v};
+      let obj;
+      if (is.obj(v) && !is.pth(v)) {
+        // Override hadDuration if no duration is specified in the object
+        v.springDuration = is.und(v.duration) ? false : v.duration;
+        obj = v;
+      } else {
+        // Path object are used as tween values
+        obj = {value: v};
+      }
       // Set default delay value
-      if (is.und(obj.delay)) obj.delay = delay;
+      // Default delay value should be applied only on the first tween
+      if (is.und(obj.delay)) obj.delay = !i ? tweenSettings.delay : 0;
       return obj;
     }).map(k => mergeObjects(k, settings));
   }
@@ -682,6 +688,7 @@
   function createNewInstance(params) {
     const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
     const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
+    tweenSettings.springDuration = params.duration;
     const animatables = getAnimatables(params.targets);
     const properties = getProperties(instanceSettings, tweenSettings, params);
     const animations = getAnimations(animatables, properties);
@@ -889,7 +896,7 @@
       instance.reversed = direction === 'reverse';
       instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
       setAnimationsProgress(0);
-      for (let i = instance.children.length; i--; ){
+      for (let i = instance.children.length; i--; ) {
         instance.children[i].reset();
       }
     }

@@ -48,6 +48,15 @@
     color01El.addEventListener('mouseleave', function() {
       anime({ targets: this, scale: 1 });
     }, false);
+    var animation = anime({
+      targets: '.color-02',
+      duration: 500,
+      scale: {
+        value: 2,
+        duration: 700
+      }
+    });
+    console.log(animation.animations[0].tweens[0].hasDuration);
   </script>
 </body>
 </html>
