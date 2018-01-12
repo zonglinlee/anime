@@ -968,7 +968,7 @@
         const child = children[c];
         const childAnimations = child.animations;
         removeTargetsFromAnimations(targetsArray, childAnimations);
-        if (!childAnimations.length && !child.children.length) children.splice(a, 1);
+        if (!childAnimations.length && !child.children.length) children.splice(c, 1);
       }
       if (!animations.length && !children.length) instance.pause();
     }
