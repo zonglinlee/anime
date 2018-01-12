@@ -949,17 +949,28 @@
 
   // Remove targets from animation
 
+  function removeTargetsFromAnimations(targetsArray, animations) {
+    for (let a = animations.length; a--;) {
+      if (arrayContains(targetsArray, animations[a].animatable.target)) {
+        animations.splice(a, 1);
+      }
+    }
+  }
+
   function removeTargets(targets) {
     const targetsArray = parseTargets(targets);
     for (let i = activeInstances.length; i--;) {
       const instance = activeInstances[i];
       const animations = instance.animations;
-      for (let a = animations.length; a--;) {
-        if (arrayContains(targetsArray, animations[a].animatable.target)) {
-          animations.splice(a, 1);
-          if (!animations.length) instance.pause();
-        }
+      const children = instance.children;
+      removeTargetsFromAnimations(targetsArray, animations);
+      for (let c = children.length; c--;) {
+        const child = children[c];
+        const childAnimations = child.animations;
+        removeTargetsFromAnimations(targetsArray, childAnimations);
+        if (!childAnimations.length && !child.children.length) children.splice(a, 1);
       }
+      if (!animations.length && !children.length) instance.pause();
     }
   }
 
