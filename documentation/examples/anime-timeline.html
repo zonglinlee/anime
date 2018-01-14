@@ -33,8 +33,7 @@
     .el {
       width: 10px;
       height: 10px;
-      background: white;
-      transform: scale(0);
+      background: #FFF;
       margin: 10px;
     }
 
@@ -69,13 +68,14 @@
   </style>
 </head>
 <body>
-  <div class="el no-offset"></div>
-  <div class="el relative-offset"></div>
-  <div class="el absolute-offset"></div>
-  <div class="el multiple-targets-01"></div>
-  <div class="el multiple-targets-02"></div>
-  <div class="el multiple-targets-03"></div>
-  <div class="el multiple-targets-04"></div>
+
+  <div class="el"></div>
+  <div class="el"></div>
+  <div class="el"></div>
+  <div class="el"></div>
+  <div class="el"></div>
+  <div class="el"></div>
+  <div class="el"></div>
 
   <div class="controls">
     <div class="buttons">
@@ -91,209 +91,74 @@
 </body>
 <script>
 
-  var noOffset = anime.timeline({
-    autoplay: false
-  });
-
-  noOffset
-    .add({
-      targets: '.no-offset',
-      translateX: -100,
-      translateY: -100,
-      scale: 2,
-      background: '#FF1461',
-      begin: function() { console.log('noOffset animation 1 began')},
-      complete: function() { console.log('noOffset animation 1 completed')}
-    })
-    .add({
-      targets: '.no-offset',
-      translateX: -100,
-      translateY: 100,
-      scale: 3,
-      background: '#18FF92',
-      begin: function() { console.log('noOffset animation 2 began')},
-      complete: function() { console.log('noOffset animation 2 completed')}
-    })
-    .add({
-      targets: '.no-offset',
-      translateX: 100,
-      translateY: 100,
-      rotate: 120,
-      scale: 4,
-      background: '#5A87FF',
-      begin: function() { console.log('noOffset animation 3 began')},
-      complete: function() { console.log('noOffset animation 3 completed')}
-    })
-    .add({
-      targets: '.no-offset',
-      translateX: 100,
-      translateY: -100,
-      scale: 5,
-      background: '#FBF38C',
-      begin: function() { console.log('noOffset animation 4 began')},
-      complete: function() { console.log('noOffset animation 4 completed')}
-    })
-    .add({
-      targets: '.no-offset',
-      translateX: 100,
-      translateY: -100,
-      scale: '+=8',
-      background: '#FBF38C',
-      begin: function() { console.log('noOffset animation 5 began')},
-      complete: function() { console.log('noOffset animation 5 completed')}
-    });
-
-  var relativeOffset = anime.timeline({
-    autoplay: false
-  });
-
-  relativeOffset
-    .add({
-      targets: '.relative-offset',
-      translateX: -100,
-      translateY: -100,
-      scale: 2,
-      background: '#FF1461',
-    })
-    .add({
-      targets: '.relative-offset',
-      translateX: -100,
-      translateY: 100,
-      scale: 3,
-      background: '#18FF92',
-      offset: '-=500'
-    })
-    .add({
-      targets: '.relative-offset',
-      translateX: 100,
-      translateY: 100,
-      rotate: 120,
-      scale: 4,
-      background: '#5A87FF',
-      offset: '-=500'
-    })
-    .add({
-      targets: '.relative-offset',
-      translateX: 100,
-      translateY: -100,
-      scale: 5,
-      background: '#FBF38C',
-      offset: '+=500'
-    })
-    .add({
-      targets: '.relative-offset',
-      translateX: 100,
-      translateY: -100,
-      scale: '+=8',
-      background: '#FBF38C',
-      offset: '+=500'
-    });
-
-  var absoluteOffset = anime.timeline({
-    autoplay: false
-  });
-
-  absoluteOffset
-    .add({
-      targets: '.absolute-offset',
-      translateX: -100,
-      translateY: -100,
-      scale: 2,
-      background: '#FF1461',
-    }, 0)
-    .add({
-      targets: '.absolute-offset',
-      translateX: -100,
-      translateY: 100,
-      scale: 3,
-      background: '#18FF92',
-    }, 1000)
-    .add({
-      targets: '.absolute-offset',
-      translateX: 100,
-      translateY: 100,
-      rotate: 120,
-      scale: 4,
-      background: '#5A87FF',
-    }, 2000)
-    .add({
-      targets: '.absolute-offset',
-      translateX: 100,
-      translateY: -100,
-      scale: 5,
-      background: '#FBF38C',
-    }, 3000)
-    .add({
-      targets: '.absolute-offset',
-      translateX: 100,
-      translateY: -100,
-      scale: '+=8',
-      background: '#FBF38C',
-    }), 4000;
-
+  var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
 
-  var multipleTargets = anime.timeline({
+  var tl = anime.timeline({
+    targets: els,
     autoplay: false,
-    direction: 'reverse',
+    direction: 'alternate',
+    duration: 750,
+    delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
     },
     begin: function(anim) {
-      console.log('multiple begin');
+      console.log('tl begin');
     },
     complete: function(anim) {
-      console.log('multiple complete');
+      console.log('tl complete');
     }
   });
 
-  document.querySelector('.controls .play').onclick = multipleTargets.play;
-  document.querySelector('.controls .pause').onclick = multipleTargets.pause;
-  document.querySelector('.controls .restart').onclick = multipleTargets.restart;
+  document.querySelector('.controls .play').onclick = tl.play;
+  document.querySelector('.controls .pause').onclick = tl.pause;
+  document.querySelector('.controls .restart').onclick = tl.restart;
 
-  multipleTargets
-    .add({
-      targets: ['.multiple-targets-01', '.multiple-targets-02', '.multiple-targets-03', '.multiple-targets-04'],
-      translateY: -100,
-      scale: 8,
-      background: '#FF1461',
-      duration: 500,
-      begin: function() { console.log('multipleTargets animation 1 began')},
-      complete: function() { console.log('multipleTargets animation 1 completed')}
-    })
-    .add({
-      targets: ['.multiple-targets-01', '.multiple-targets-02', '.multiple-targets-03', '.multiple-targets-04'],
-      background: '#18FF92',
-      duration: 500,
-      begin: function() { console.log('multipleTargets animation 2 began')},
-      complete: function() { console.log('multipleTargets animation 2 completed')}
-    }, '-=250')
-    .add({
-      targets: ['.multiple-targets-01', '.multiple-targets-02', '.multiple-targets-03', '.multiple-targets-04'],
-      background: '#5A87FF',
-      duration: 500,
-      begin: function() { console.log('multipleTargets animation 3 began')},
-      complete: function() { console.log('multipleTargets animation 3 completed')}
-    }, '-=250')
-    .add({
-      targets: ['.multiple-targets-01', '.multiple-targets-02', '.multiple-targets-03', '.multiple-targets-04'],
-      background: '#FBF38C',
-      duration: 500,
-      begin: function() { console.log('multipleTargets animation 4 began')},
-      complete: function() { console.log('multipleTargets animation 4 completed')}
-    }, '-=250')
-    .add({
-      targets: ['.multiple-targets-01', '.multiple-targets-02', '.multiple-targets-03', '.multiple-targets-04'],
-      scale: 13,
-      background: '#FBF38C',
-      duration: 1000,
-      begin: function() { console.log('multipleTargets animation 5 began')},
-      complete: function() { console.log('multipleTargets animation 5 completed')}
-    }, '-=250');
+  tl
+  .add({
+    translateY: -100,
+    scale: 8,
+    background: '#FF1461',
+    begin: function() { console.log('animation 1 began')},
+    complete: function() { console.log('animation 1 completed')}
+  })
+  .add({
+    background: '#18FF92',
+    rotate: 45,
+    begin: function() { console.log('animation 2 began')},
+    complete: function() { console.log('animation 2 completed')}
+  }, '-=250')
+  .add({
+    background: '#5A87FF',
+    begin: function() { console.log('animation 3 began')},
+    complete: function() { console.log('animation 3 completed')}
+  }, '-=250')
+  .add({
+    background: '#FBF38C',
+    rotate: 90,
+    begin: function() { console.log('animation 4 began')},
+    complete: function() { console.log('animation 4 completed')}
+  }, '-=250')
+  .add({
+    scaleX: 3,
+    scaleY: .5,
+    background: '#FBF38C',
+    duration: 1000,
+    begin: function() { console.log('animation 5 began')},
+    complete: function() { console.log('animation 5 completed')}
+  });
 
-    controlsProgressEl.addEventListener('input', function() {
-      multipleTargets.seek(multipleTargets.duration * (controlsProgressEl.value / 100));
-    });
+  controlsProgressEl.addEventListener('input', function() {
+    tl.seek(tl.duration * (controlsProgressEl.value / 100));
+  });
+
+  for (var i = 0; i < els.length; i++) {
+    els[i].addEventListener('mouseenter', function() {
+      anime.remove(this);
+      this.style.backgroundColor = 'red';
+    }, false);
+  }
 
   </script>
   <!-- <script src="../assets/js/stats.js"></script> -->

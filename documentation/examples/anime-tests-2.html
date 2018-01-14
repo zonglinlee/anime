@@ -55,25 +55,10 @@
       });
       console.log(animation.animations[0].tweens[0].from);
     }
-    // anime({
-    //   targets: '.color-03',
-    //   scale: 1.5,
-    //   duration: 1000
-    // })
-    // var animation = anime({
-    //   targets: '.color-03',
-    //   scale: 2,
-    //   translateX: 100,
-    //   translateY: 50,
-    //   rotate: 50,
-    //   skew: 45,
-    //   duration: 3000,
-    //   autoplay: false
-    // });
 
     anime.timeline({
       targets: '.color-02',
-      easing: 'easeInOutSine',
+      easing: 'spring 100 50',
       loop: true,
       direction: 'alternate'
     }).add({

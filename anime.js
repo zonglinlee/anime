@@ -39,8 +39,7 @@
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'easeOutElastic',
-    elasticity: 500,
+    easing: 'out-elastic',
     round: 0
   }
 
@@ -65,6 +64,66 @@
     rgb: a => /^rgb/.test(a),
     hsl: a => /^hsl/.test(a),
     col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
+  }
+
+  function parseEasingParameters(string) {
+    return string.replace(/[^\d.-]/g,' ').split(' ').filter( p => p !== '' && p !== '-').map( p => parseFloat(p));
+  }
+
+  // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
+
+  function spring(string, duration) {
+
+    const [mass = 1, stiffness = 100, damping = 10, velocity = 0] = parseEasingParameters(string);
+    const w0 = Math.sqrt(stiffness / mass);
+    const zeta = damping / (2 * Math.sqrt(stiffness * mass));
+    const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
+    const a = 1;
+    const b = zeta < 1 ? (zeta * w0 + -velocity) / wd : -velocity + w0;
+
+    function solver(t) {
+      let progress = duration ? (duration * t) / 1000 : t;
+      if (zeta < 1) {
+        progress = Math.exp(-progress * zeta * w0) * (a * Math.cos(wd * progress) + b * Math.sin(wd * progress));
+      } else {
+        progress = (a + b * progress) * Math.exp(-progress * w0);
+      }
+      return t === 0 || t === 1 ? t : 1 - progress;
+    }
+
+    function getDuration() {
+      const frame = 1/6;
+      let elapsed = 0;
+      let rest = 0;
+      while(true) {
+        elapsed += frame;
+        if (solver(elapsed) === 1) {
+          rest++;
+          if (rest >= 16) break;
+        } else {
+          rest = 0;
+        }
+      }
+      return elapsed * frame * 1000;
+    }
+
+    return duration ? solver : getDuration;
+
+  }
+
+  // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
+
+  function elastic(amplitude = 1, period = .5) {
+    return t => {
+      const offset = period / (2 * Math.PI) * Math.asin(1 / amplitude);
+      return t === 0 || t === 1 ? t : -(amplitude * Math.pow(2, 10 * (t -= 1)) * Math.sin( (t - offset) * (Math.PI * 2) / period));
+    }
+  }
+
+  function step(steps) {
+    return t => {
+      Math.round(percentComplete * steps) * (1 / steps) * (endValue - startValue);
+    }
   }
 
   // BezierEasing https://github.com/gre/bezier-easing
@@ -149,57 +208,9 @@
 
   })();
 
-  // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
-
-  function spring(string, duration) {
-
-    const [name, mass = 1, stiffness = 100, damping = 10, velocity = 0] = string.split(' ');
-    const w0 = Math.sqrt(stiffness / mass);
-    const zeta = damping / (2 * Math.sqrt(stiffness * mass));
-    const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
-    const a = 1;
-    const b = zeta < 1 ? (zeta * w0 + -velocity) / wd : -velocity + w0;
-
-    function solver(t) {
-      let progress = duration ? (duration * t) / 1000 : t;
-      if (zeta < 1) {
-        progress = Math.exp(-progress * zeta * w0) * (a * Math.cos(wd * progress) + b * Math.sin(wd * progress));
-      } else {
-        progress = (a + b * progress) * Math.exp(-progress * w0);
-      }
-      return t === 0 || t === 1 ? t : 1 - progress;
-    }
-
-    function getDuration() {
-      const frame = 1 / 6;
-      let elapsed = 0;
-      let rest = 0;
-      while(true) {
-        elapsed += frame;
-        if (solver(elapsed) === 1) {
-          rest++;
-          if (rest >= 16) break;
-        } else {
-          rest = 0;
-        }
-      }
-      return elapsed * frame * 1000;
-    }
-
-    return duration ? solver : getDuration;
-
-  }
-
   const easings = (() => {
 
     const names = ['Quad', 'Cubic', 'Quart', 'Quint', 'Sine', 'Expo', 'Circ', 'Back', 'Elastic'];
-
-    // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
-
-    function elastic(t, p) {
-      return t === 0 || t === 1 ? t :
-      -Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1))) * (Math.PI * 2)) / p );
-    }
 
     // Approximated Penner equations http://matthewlein.com/ceaser/
 
@@ -223,7 +234,7 @@
         [0.190, 1.000, 0.220, 1.000], /* OutExpo */
         [0.075, 0.820, 0.165, 1.000], /* OutCirc */
         [0.175, 0.885, 0.320, 1.275], /* OutBack */
-        (t, f) => 1 - elastic(1 - t, f) /* OutElastic */
+        (a, p) => t => 1 - elastic(a, p)(1 - t) /* OutElastic */
       ], InOut: [
         [0.455, 0.030, 0.515, 0.955], /* InOutQuad */
         [0.645, 0.045, 0.355, 1.000], /* InOutCubic */
@@ -233,38 +244,34 @@
         [1.000, 0.000, 0.000, 1.000], /* InOutExpo */
         [0.785, 0.135, 0.150, 0.860], /* InOutCirc */
         [0.680, -0.550, 0.265, 1.550], /* InOutBack */
-        (t, f) => t < .5 ? elastic(t * 2, f) / 2 : 1 - elastic(t * -2 + 2, f) / 2 /* InOutElastic */
+        (a, p) => t => t < .5 ? elastic(a, p)(t * 2) / 2 : 1 - elastic(a, p)(t * -2 + 2) / 2 /* InOutElastic */
       ]
     }
 
-    let functions = {
-      linear: t => t
-    }
+    let eases = { linear: t => t };
 
     for (let type in equations) {
-      equations[type].forEach((f, i) => {
-        functions[stringToHyphens(type+names[i])] = is.fnc(f) ? f : bezier.apply(this, f);
+      equations[type].forEach((ease, i) => {
+        eases[stringToHyphens(type+names[i])] = ease;
       });
     }
 
-    return functions;
+    return eases;
 
   })();
 
   function parseEasings(tween) {
     const string = tween.easing;
-    const args = string.split(' ');
-    const easingName = args[0];
-    args.shift();
-    switch (easingName) {
+    const name = string.split('(')[0];
+    const args = parseEasingParameters(string);
+    const ease = easings[name];
+    switch (name) {
       case 'spring' : return spring(string, tween.duration);
       case 'cubic-bezier' : return bezier.apply(this, args);
       case 'step' : return step.apply(this, args);
-      default : return easings[easingName];
+      default : return is.fnc(ease) ? ease.apply(this, args) : bezier.apply(this, ease);
     }
   }
-
-  // console.log(spring()(.5), easings['easeOutElastic']);
 
   // Strings
 
@@ -606,12 +613,11 @@
 
   function getProperties(instanceSettings, tweenSettings, params) {
     let properties = [];
-    const settings = mergeObjects(instanceSettings, tweenSettings);
     for (let p in params) {
-      if (!settings.hasOwnProperty(p) && p !== 'targets') {
+      if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets') {
         properties.push({
           name: p,
-          offset: settings['timeOffset'],
+          offset: instanceSettings['timeOffset'],
           tweens: normalizePropertyTweens(params[p], tweenSettings)
         });
       }
@@ -651,7 +657,6 @@
       tween.start = previousTween ? previousTween.end : prop.offset;
       tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
       tween.easing = parseEasings(tween);
-      tween.elasticity = (1000 - minMaxValue(tween.elasticity, 1, 999)) / 1000;
       tween.isPath = is.pth(tweenValue);
       tween.isColor = is.col(tween.from.original);
       if (tween.isColor) tween.round = 1;
@@ -824,7 +829,7 @@
         // Only check for keyframes if there is more than one tween
         if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
         const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
-        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
+        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed);
         const strings = tween.to.strings;
         const round = tween.round;
         const numbers = [];
