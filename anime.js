@@ -74,14 +74,14 @@
     const kSplineTableSize = 11;
     const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
 
-    function A (aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1 };
-    function B (aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1 };
-    function C (aA1)      { return 3.0 * aA1 };
+    function A(aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1 };
+    function B(aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1 };
+    function C(aA1)      { return 3.0 * aA1 };
 
-    function calcBezier (aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT };
-    function getSlope (aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1) };
+    function calcBezier(aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT };
+    function getSlope(aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1) };
 
-    function binarySubdivide (aX, aA, aB, mX1, mX2) {
+    function binarySubdivide(aX, aA, aB, mX1, mX2) {
       let currentX, currentT, i = 0;
       do {
         currentT = aA + (aB - aA) / 2.0;
@@ -91,7 +91,7 @@
       return currentT;
     }
 
-    function newtonRaphsonIterate (aX, aGuessT, mX1, mX2) {
+    function newtonRaphsonIterate(aX, aGuessT, mX1, mX2) {
       for (let i = 0; i < 4; ++i) {
         const currentSlope = getSlope(aGuessT, mX1, mX2);
         if (currentSlope === 0.0) return aGuessT;
@@ -140,9 +140,7 @@
 
       return x => {
         if (mX1 === mY1 && mX2 === mY2) return x;
-        if (x === 0) return 0;
-        if (x === 1) return 1;
-        return calcBezier(getTForX(x), mY1, mY2);
+        return x === 0 || x === 1 ? x : calcBezier(getTForX(x), mY1, mY2);
       }
 
     }
@@ -150,6 +148,47 @@
     return bezier;
 
   })();
+
+  // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
+
+  function spring(string, duration) {
+
+    const [name, mass = 1, stiffness = 100, damping = 10, velocity = 0] = string.split(' ');
+    const w0 = Math.sqrt(stiffness / mass);
+    const zeta = damping / (2 * Math.sqrt(stiffness * mass));
+    const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
+    const a = 1;
+    const b = zeta < 1 ? (zeta * w0 + -velocity) / wd : -velocity + w0;
+
+    function solver(t) {
+      let progress = duration ? (duration * t) / 1000 : t;
+      if (zeta < 1) {
+        progress = Math.exp(-progress * zeta * w0) * (a * Math.cos(wd * progress) + b * Math.sin(wd * progress));
+      } else {
+        progress = (a + b * progress) * Math.exp(-progress * w0);
+      }
+      return t === 0 || t === 1 ? t : 1 - progress;
+    }
+
+    function getDuration() {
+      const frame = 1 / 6;
+      let elapsed = 0;
+      let rest = 0;
+      while(true) {
+        elapsed += frame;
+        if (solver(elapsed) === 1) {
+          rest++;
+          if (rest >= 16) break;
+        } else {
+          rest = 0;
+        }
+      }
+      return elapsed * frame * 1000;
+    }
+
+    return duration ? solver : getDuration;
+
+  }
 
   const easings = (() => {
 
@@ -159,7 +198,7 @@
 
     function elastic(t, p) {
       return t === 0 || t === 1 ? t :
-      -Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2.0) * Math.asin(1))) * (Math.PI * 2)) / p );
+      -Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1))) * (Math.PI * 2)) / p );
     }
 
     // Approximated Penner equations http://matthewlein.com/ceaser/
@@ -199,18 +238,33 @@
     }
 
     let functions = {
-      linear: bezier(0.250, 0.250, 0.750, 0.750)
+      linear: t => t
     }
 
     for (let type in equations) {
       equations[type].forEach((f, i) => {
-        functions['ease'+type+names[i]] = is.fnc(f) ? f : bezier.apply(this, f);
+        functions[stringToHyphens(type+names[i])] = is.fnc(f) ? f : bezier.apply(this, f);
       });
     }
 
     return functions;
 
   })();
+
+  function parseEasings(tween) {
+    const string = tween.easing;
+    const args = string.split(' ');
+    const easingName = args[0];
+    args.shift();
+    switch (easingName) {
+      case 'spring' : return spring(string, tween.duration);
+      case 'cubic-bezier' : return bezier.apply(this, args);
+      case 'step' : return step.apply(this, args);
+      default : return easings[easingName];
+    }
+  }
+
+  // console.log(spring()(.5), easings['easeOutElastic']);
 
   // Strings
 
@@ -528,6 +582,8 @@
 
   function normalizePropertyTweens(prop, tweenSettings) {
     let settings = cloneObject(tweenSettings);
+    // Override duration if easing is a spring
+    if (/^spring/.test(settings.easing)) settings.duration = spring(settings.easing);
     if (is.arr(prop)) {
       const l = prop.length;
       const isFromTo = (l === 2 && !is.obj(prop[0]));
@@ -541,16 +597,7 @@
     }
     const propArray = is.arr(prop) ? prop : [prop];
     return propArray.map((v, i) => {
-      let obj;
-      if (is.obj(v) && !is.pth(v)) {
-        // Override hadDuration if no duration is specified in the object
-        v.springDuration = is.und(v.duration) ? false : v.duration;
-        obj = v;
-      } else {
-        // Path object are used as tween values
-        obj = {value: v};
-      }
-      // Set default delay value
+      const obj = (is.obj(v) && !is.pth(v)) ? v : {value: v};
       // Default delay value should be applied only on the first tween
       if (is.und(obj.delay)) obj.delay = !i ? tweenSettings.delay : 0;
       return obj;
@@ -589,10 +636,6 @@
     return t;
   }
 
-  function normalizeEasing(val) {
-    return is.arr(val) ? bezier.apply(this, val) : easings[val];
-  }
-
   function normalizeTweens(prop, animatable) {
     let previousTween;
     return prop.tweens.map(t => {
@@ -607,7 +650,7 @@
       tween.to = decomposeValue(to, unit);
       tween.start = previousTween ? previousTween.end : prop.offset;
       tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
-      tween.easing = normalizeEasing(tween.easing);
+      tween.easing = parseEasings(tween);
       tween.elasticity = (1000 - minMaxValue(tween.elasticity, 1, 999)) / 1000;
       tween.isPath = is.pth(tweenValue);
       tween.isColor = is.col(tween.from.original);
@@ -688,7 +731,6 @@
   function createNewInstance(params) {
     const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
     const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
-    tweenSettings.springDuration = params.duration;
     const animatables = getAnimatables(params.targets);
     const properties = getProperties(instanceSettings, tweenSettings, params);
     const animations = getAnimations(animatables, properties);
