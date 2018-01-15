@@ -1058,8 +1058,6 @@
   anime.get = getOriginalTargetValue;
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
-  anime.bezier = bezier;
-  anime.easings = easings;
   anime.timeline = timeline;
   anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
