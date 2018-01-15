@@ -71,10 +71,10 @@
             translateX: [0, Math.sin(angle) * randomDistance],
             translateY: [0,Math.cos(angle) * randomDistance],
             scale: [
-              {value: [0, anime.random(5, 10) * .1], easing: 'out-back'},
-              {value: 0, easing: 'in-back'},
+              {value: [0, anime.random(5, 10) * .1], easing: 'easeOutBack'},
+              {value: 0, easing: 'easeInBack'},
             ],
-            easing: 'in-out-sine',
+            easing: 'easeInOutSine',
             direction: 'reverse',
             duration: duration
           });

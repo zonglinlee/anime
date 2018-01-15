@@ -1,7 +1,7 @@
 /**
  * http://animejs.com
  * JavaScript animation engine
- * @version v2.2.1
+ * @version v3.0.0-alpha
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -39,7 +39,8 @@
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'out-elastic',
+    easing: 'easeOutElastic',
+    elasticity: 500,
     round: 0
   }
 
@@ -66,67 +67,6 @@
     col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
   }
 
-  function parseEasingParameters(string) {
-    return string.replace(/[^\d.-]/g,' ').split(' ').filter( p => p !== '' && p !== '-').map( p => parseFloat(p));
-  }
-
-  // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
-
-  function spring(string, duration) {
-
-    const [mass = 1, stiffness = 100, damping = 10, velocity = 0] = parseEasingParameters(string);
-    const w0 = Math.sqrt(stiffness / mass);
-    const zeta = damping / (2 * Math.sqrt(stiffness * mass));
-    const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
-    const a = 1;
-    const b = zeta < 1 ? (zeta * w0 + -velocity) / wd : -velocity + w0;
-
-    function solver(t) {
-      let progress = duration ? (duration * t) / 1000 : t;
-      if (zeta < 1) {
-        progress = Math.exp(-progress * zeta * w0) * (a * Math.cos(wd * progress) + b * Math.sin(wd * progress));
-      } else {
-        progress = (a + b * progress) * Math.exp(-progress * w0);
-      }
-      if (t === 0 || t === 1) return t;
-      return 1 - progress;
-    }
-
-    function getDuration() {
-      const frame = 1/6;
-      let elapsed = 0;
-      let rest = 0;
-      while(true) {
-        elapsed += frame;
-        if (solver(elapsed) === 1) {
-          rest++;
-          if (rest >= 16) break;
-        } else {
-          rest = 0;
-        }
-      }
-      return elapsed * frame * 1000;
-    }
-
-    return duration ? solver : getDuration;
-
-  }
-
-  // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
-
-  function elastic(amplitude = 1, period = .5) {
-    return t => {
-      const offset = period / (2 * Math.PI) * Math.asin(1 / amplitude);
-      return t === 0 || t === 1 ? t : -(amplitude * Math.pow(2, 10 * (t -= 1)) * Math.sin( (t - offset) * (Math.PI * 2) / period));
-    }
-  }
-
-  function step(steps) {
-    return t => {
-      Math.round(percentComplete * steps) * (1 / steps) * (endValue - startValue);
-    }
-  }
-
   // BezierEasing https://github.com/gre/bezier-easing
 
   const bezier = (() => {
@@ -134,14 +74,14 @@
     const kSplineTableSize = 11;
     const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
 
-    function A(aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1 };
-    function B(aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1 };
-    function C(aA1)      { return 3.0 * aA1 };
+    function A (aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1 };
+    function B (aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1 };
+    function C (aA1)      { return 3.0 * aA1 };
 
-    function calcBezier(aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT };
-    function getSlope(aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1) };
+    function calcBezier (aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT };
+    function getSlope (aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1) };
 
-    function binarySubdivide(aX, aA, aB, mX1, mX2) {
+    function binarySubdivide (aX, aA, aB, mX1, mX2) {
       let currentX, currentT, i = 0;
       do {
         currentT = aA + (aB - aA) / 2.0;
@@ -151,7 +91,7 @@
       return currentT;
     }
 
-    function newtonRaphsonIterate(aX, aGuessT, mX1, mX2) {
+    function newtonRaphsonIterate (aX, aGuessT, mX1, mX2) {
       for (let i = 0; i < 4; ++i) {
         const currentSlope = getSlope(aGuessT, mX1, mX2);
         if (currentSlope === 0.0) return aGuessT;
@@ -200,7 +140,8 @@
 
       return x => {
         if (mX1 === mY1 && mX2 === mY2) return x;
-        if (x === 0 || x === 1) return x;
+        if (x === 0) return 0;
+        if (x === 1) return 1;
         return calcBezier(getTForX(x), mY1, mY2);
       }
 
@@ -213,6 +154,13 @@
   const easings = (() => {
 
     const names = ['Quad', 'Cubic', 'Quart', 'Quint', 'Sine', 'Expo', 'Circ', 'Back', 'Elastic'];
+
+    // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
+
+    function elastic(t, p) {
+      return t === 0 || t === 1 ? t :
+      -Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2.0) * Math.asin(1))) * (Math.PI * 2)) / p );
+    }
 
     // Approximated Penner equations http://matthewlein.com/ceaser/
 
@@ -236,7 +184,7 @@
         [0.190, 1.000, 0.220, 1.000], /* OutExpo */
         [0.075, 0.820, 0.165, 1.000], /* OutCirc */
         [0.175, 0.885, 0.320, 1.275], /* OutBack */
-        (a, p) => t => 1 - elastic(a, p)(1 - t) /* OutElastic */
+        (t, f) => 1 - elastic(1 - t, f) /* OutElastic */
       ], InOut: [
         [0.455, 0.030, 0.515, 0.955], /* InOutQuad */
         [0.645, 0.045, 0.355, 1.000], /* InOutCubic */
@@ -246,36 +194,23 @@
         [1.000, 0.000, 0.000, 1.000], /* InOutExpo */
         [0.785, 0.135, 0.150, 0.860], /* InOutCirc */
         [0.680, -0.550, 0.265, 1.550], /* InOutBack */
-        (a, p) => t => t < .5 ? elastic(a, p)(t * 2) / 2 : 1 - elastic(a, p)(t * -2 + 2) / 2 /* InOutElastic */
+        (t, f) => t < .5 ? elastic(t * 2, f) / 2 : 1 - elastic(t * -2 + 2, f) / 2 /* InOutElastic */
       ]
     }
 
-    let eases = { 
-      linear: [0.250, 0.250, 0.750, 0.750]
+    let functions = {
+      linear: bezier(0.250, 0.250, 0.750, 0.750)
     }
 
     for (let type in equations) {
-      equations[type].forEach((ease, i) => {
-        eases['ease'+type+names[i]] = ease;
+      equations[type].forEach((f, i) => {
+        functions['ease'+type+names[i]] = is.fnc(f) ? f : bezier.apply(this, f);
       });
     }
 
-    return eases;
+    return functions;
 
   })();
-
-  function parseEasings(tween) {
-    const string = tween.easing;
-    const name = string.split('(')[0];
-    const args = parseEasingParameters(string);
-    const ease = easings[name];
-    switch (name) {
-      case 'spring' : return spring(string, tween.duration);
-      case 'cubic-bezier' : return bezier.apply(this, args);
-      case 'step' : return step.apply(this, args);
-      default : return is.fnc(ease) ? ease.apply(this, args) : bezier.apply(this, ease);
-    }
-  }
 
   // Strings
 
@@ -593,8 +528,6 @@
 
   function normalizePropertyTweens(prop, tweenSettings) {
     let settings = cloneObject(tweenSettings);
-    // Override duration if easing is a spring
-    if (/^spring/.test(settings.easing)) settings.duration = spring(settings.easing);
     if (is.arr(prop)) {
       const l = prop.length;
       const isFromTo = (l === 2 && !is.obj(prop[0]));
@@ -608,20 +541,24 @@
     }
     const propArray = is.arr(prop) ? prop : [prop];
     return propArray.map((v, i) => {
-      const obj = (is.obj(v) && !is.pth(v)) ? v : {value: v};
       // Default delay value should be applied only on the first tween
-      if (is.und(obj.delay)) obj.delay = !i ? tweenSettings.delay : 0;
+      const delay = !i ? tweenSettings.delay : 0;
+      // Use path object as a tween value
+      let obj = is.obj(v) && !is.pth(v) ? v : {value: v};
+      // Set default delay value
+      if (is.und(obj.delay)) obj.delay = delay;
       return obj;
     }).map(k => mergeObjects(k, settings));
   }
 
   function getProperties(instanceSettings, tweenSettings, params) {
     let properties = [];
+    const settings = mergeObjects(instanceSettings, tweenSettings);
     for (let p in params) {
-      if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets') {
+      if (!settings.hasOwnProperty(p) && p !== 'targets') {
         properties.push({
           name: p,
-          timeOffset: instanceSettings['timeOffset'],
+          offset: settings['timeOffset'],
           tweens: normalizePropertyTweens(params[p], tweenSettings)
         });
       }
@@ -646,6 +583,10 @@
     return t;
   }
 
+  function normalizeEasing(val) {
+    return is.arr(val) ? bezier.apply(this, val) : easings[val];
+  }
+
   function normalizeTweens(prop, animatable) {
     let previousTween;
     return prop.tweens.map(t => {
@@ -658,9 +599,10 @@
       const unit = getUnit(to) || getUnit(from) || getUnit(originalValue);
       tween.from = decomposeValue(from, unit);
       tween.to = decomposeValue(to, unit);
-      tween.start = previousTween ? previousTween.end : prop.timeOffset;
+      tween.start = previousTween ? previousTween.end : prop.offset;
       tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
-      tween.easing = parseEasings(tween);
+      tween.easing = normalizeEasing(tween.easing);
+      tween.elasticity = (1000 - minMaxValue(tween.elasticity, 1, 999)) / 1000;
       tween.isPath = is.pth(tweenValue);
       tween.isColor = is.col(tween.from.original);
       if (tween.isColor) tween.round = 1;
@@ -833,7 +775,7 @@
         // Only check for keyframes if there is more than one tween
         if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
         const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
-        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed);
+        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
         const strings = tween.to.strings;
         const round = tween.round;
         const numbers = [];
@@ -947,7 +889,7 @@
       instance.reversed = direction === 'reverse';
       instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
       setAnimationsProgress(0);
-      for (let i = instance.children.length; i--; ) {
+      for (let i = instance.children.length; i--; ){
         instance.children[i].reset();
       }
     }
@@ -1000,28 +942,17 @@
 
   // Remove targets from animation
 
-  function removeTargetsFromAnimations(targetsArray, animations) {
-    for (let a = animations.length; a--;) {
-      if (arrayContains(targetsArray, animations[a].animatable.target)) {
-        animations.splice(a, 1);
-      }
-    }
-  }
-
   function removeTargets(targets) {
     const targetsArray = parseTargets(targets);
     for (let i = activeInstances.length; i--;) {
       const instance = activeInstances[i];
       const animations = instance.animations;
-      const children = instance.children;
-      removeTargetsFromAnimations(targetsArray, animations);
-      for (let c = children.length; c--;) {
-        const child = children[c];
-        const childAnimations = child.animations;
-        removeTargetsFromAnimations(targetsArray, childAnimations);
-        if (!childAnimations.length && !child.children.length) children.splice(c, 1);
+      for (let a = animations.length; a--;) {
+        if (arrayContains(targetsArray, animations[a].animatable.target)) {
+          animations.splice(a, 1);
+          if (!animations.length) instance.pause();
+        }
       }
-      if (!animations.length && !children.length) instance.pause();
     }
   }
 
@@ -1055,7 +986,7 @@
     return tl;
   }
 
-  anime.version = '3.0.0';
+  anime.version = '3.0.0-alpha';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
