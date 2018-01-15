@@ -51,6 +51,10 @@
     return str.indexOf(text) > -1;
   }
 
+  function applyArguments(func, args) {
+    return func.apply(null, args);
+  }
+
   const is = {
     arr: a => Array.isArray(a),
     obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
@@ -67,7 +71,8 @@
   }
 
   function parseEasingParameters(string) {
-    return string.replace(/[^\d.-]/g,' ').split(' ').filter( p => p !== '' && p !== '-').map( p => parseFloat(p));
+    const match = /\(([^)]+)\)/.exec(string);
+    if (match) return match[1].split(',').map(p=> parseFloat(p));
   }
 
   // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
@@ -116,11 +121,14 @@
 
   function elastic(amplitude = 1, period = .5) {
     return t => {
-      const offset = period / (2 * Math.PI) * Math.asin(1 / amplitude);
-      if (t === 0 || t === 1) return t;
-      return -(amplitude * Math.pow(2, 10 * (t -= 1)) * Math.sin( (t - offset) * (Math.PI * 2) / period));
+      const a = Math.max(amplitude, 1);
+      const p = period;
+      return (t === 0 || t === 1) ? t : 
+        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (2 * Math.PI) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
     }
   }
+
+  // Basic steps easing implementation https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function
 
   function steps(steps = 10) {
     return t => Math.round(t * steps) * (1 / steps);
@@ -215,37 +223,37 @@
 
     // Approximated Penner equations http://matthewlein.com/ceaser/
 
-    const equations = {
-      In: [
-        [0.550, 0.085, 0.680, 0.530], /* InQuad */
-        [0.550, 0.055, 0.675, 0.190], /* InCubic */
-        [0.895, 0.030, 0.685, 0.220], /* InQuart */
-        [0.755, 0.050, 0.855, 0.060], /* InQuint */
-        [0.470, 0.000, 0.745, 0.715], /* InSine */
-        [0.950, 0.050, 0.795, 0.035], /* InExpo */
-        [0.600, 0.040, 0.980, 0.335], /* InCirc */
-        [0.600,-0.280, 0.735, 0.045], /* InBack */
-        elastic /* InElastic */
-      ], Out: [
-        [0.250, 0.460, 0.450, 0.940], /* OutQuad */
-        [0.215, 0.610, 0.355, 1.000], /* OutCubic */
-        [0.165, 0.840, 0.440, 1.000], /* OutQuart */
-        [0.230, 1.000, 0.320, 1.000], /* OutQuint */
-        [0.390, 0.575, 0.565, 1.000], /* OutSine */
-        [0.190, 1.000, 0.220, 1.000], /* OutExpo */
-        [0.075, 0.820, 0.165, 1.000], /* OutCirc */
-        [0.175, 0.885, 0.320, 1.275], /* OutBack */
-        (a, p) => t => 1 - elastic(a, p)(1 - t) /* OutElastic */
-      ], InOut: [
-        [0.455, 0.030, 0.515, 0.955], /* InOutQuad */
-        [0.645, 0.045, 0.355, 1.000], /* InOutCubic */
-        [0.770, 0.000, 0.175, 1.000], /* InOutQuart */
-        [0.860, 0.000, 0.070, 1.000], /* InOutQuint */
-        [0.445, 0.050, 0.550, 0.950], /* InOutSine */
-        [1.000, 0.000, 0.000, 1.000], /* InOutExpo */
-        [0.785, 0.135, 0.150, 0.860], /* InOutCirc */
-        [0.680,-0.550, 0.265, 1.550], /* InOutBack */
-        (a, p) => t => t < .5 ? elastic(a, p)(t * 2) / 2 : 1 - elastic(a, p)(t * -2 + 2) / 2 /* InOutElastic */
+    const penner = {
+      in: [
+        [0.550, 0.085, 0.680, 0.530], /* inQuad */
+        [0.550, 0.055, 0.675, 0.190], /* inCubic */
+        [0.895, 0.030, 0.685, 0.220], /* inQuart */
+        [0.755, 0.050, 0.855, 0.060], /* inQuint */
+        [0.470, 0.000, 0.745, 0.715], /* inSine */
+        [0.950, 0.050, 0.795, 0.035], /* inExpo */
+        [0.600, 0.040, 0.980, 0.335], /* inCirc */
+        [0.600,-0.280, 0.735, 0.045], /* inBack */
+        elastic /* inElastic */
+      ], out: [
+        [0.250, 0.460, 0.450, 0.940], /* outQuad */
+        [0.215, 0.610, 0.355, 1.000], /* outCubic */
+        [0.165, 0.840, 0.440, 1.000], /* outQuart */
+        [0.230, 1.000, 0.320, 1.000], /* outQuint */
+        [0.390, 0.575, 0.565, 1.000], /* outSine */
+        [0.190, 1.000, 0.220, 1.000], /* outExpo */
+        [0.075, 0.820, 0.165, 1.000], /* outCirc */
+        [0.175, 0.885, 0.320, 1.275], /* outBack */
+        (a, p) => t => 1 - elastic(a, p)(1 - t) /* outElastic */
+      ], inOut: [
+        [0.455, 0.030, 0.515, 0.955], /* inOutQuad */
+        [0.645, 0.045, 0.355, 1.000], /* inOutCubic */
+        [0.770, 0.000, 0.175, 1.000], /* inOutQuart */
+        [0.860, 0.000, 0.070, 1.000], /* inOutQuint */
+        [0.445, 0.050, 0.550, 0.950], /* inOutSine */
+        [1.000, 0.000, 0.000, 1.000], /* inOutExpo */
+        [0.785, 0.135, 0.150, 0.860], /* inOutCirc */
+        [0.680,-0.550, 0.265, 1.550], /* inOutBack */
+        (a, p) => t => t < .5 ? elastic(a, p)(t * 2) / 2 : 1 - elastic(a, p)(t * -2 + 2) / 2 /* inOutElastic */
       ]
     }
 
@@ -257,8 +265,10 @@
       inOut:  [0.420, 0.000, 0.580, 1.000]
     }
 
-    for (let type in equations) {
-      equations[type].forEach((ease, i) => { eases['ease'+type+names[i]] = ease; });
+    for (let equation in penner) {
+      penner[equation].forEach((ease, i) => { 
+        eases[equation+names[i]] = ease;
+      });
     }
 
     return eases;
@@ -272,17 +282,13 @@
     const ease = easings[name];
     switch (name) {
       case 'spring' : return spring(string, tween.duration);
-      case 'cubic-bezier' : return bezier.apply(this, args);
-      case 'steps' : return steps.apply(this, args);
-      default : return is.fnc(ease) ? ease.apply(this, args) : bezier.apply(this, ease);
+      case 'cubicBezier' : return applyArguments(bezier, args);
+      case 'steps' : return applyArguments(steps, args);
+      default : return is.fnc(ease) ? applyArguments(ease, args) : applyArguments(bezier, ease);
     }
   }
 
   // Strings
-
-  function stringToHyphens(str) {
-    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-  }
 
   function selectString(str) {
     try {
@@ -420,7 +426,8 @@
 
   function getCSSValue(el, prop) {
     if (prop in el.style) {
-      return el.style[prop] || getComputedStyle(el).getPropertyValue(stringToHyphens(prop)) || '0';
+      return el.style[prop] || 
+        getComputedStyle(el).getPropertyValue(prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()) || '0';
     }
   }
 
@@ -650,7 +657,7 @@
   function normalizeTweens(prop, animatable) {
     let previousTween;
     return prop.tweens.map(t => {
-      let tween = normalizeTweenValues(t, animatable);
+      const tween = normalizeTweenValues(t, animatable);
       const tweenValue = tween.value;
       const originalValue = getOriginalTargetValue(animatable.target, prop.name, animatable);
       const previousValue = previousTween ? previousTween.to.original : originalValue;
@@ -686,20 +693,6 @@
         t.style.transform = str;
       }
     }
-  }
-
-  function setTargetValue(targets, properties) {
-    const animatables = getAnimatables(targets);
-    animatables.forEach(animatable => {
-      for (var property in properties) {
-        const value = properties[property];
-        const originalValue = getOriginalTargetValue(animatable.target, property, animatable);
-        const unit = getUnit(value) || getUnit(originalValue);
-        const to = getRelativeValue(validateValue(value, unit), originalValue);
-        const animType = getAnimationType(animatable.target, property);
-        setProgressValue[animType](animatable.target, property, to, animatable.transforms, true);
-      }
-    });
   }
 
   // Animations
@@ -1063,7 +1056,6 @@
   anime.running = activeInstances;
   anime.remove = removeTargets;
   anime.get = getOriginalTargetValue;
-  anime.set = setTargetValue;
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
   anime.bezier = bezier;

@@ -78,16 +78,22 @@
       duration: 10000,
       loop: true
     })
-    // var anim02 = anime({
-    //   targets: '.color-02',
-    //   translateX: 1000,
-    //   easing: 'spring(10, 20, 10, 10)'
-    // })
-    // var anim03 = anime({
-    //   targets: '.color-03',
-    //   translateX: 1000,
-    //   easing: 'in-out-elastic'
-    // })
+    var anim02 = anime({
+      targets: '.color-01',
+      translateX: 1000,
+      easing: 'cubicBezier(0, -.55, .0, 1.55)'
+    })
+    var anim02 = anime({
+      targets: '.color-02',
+      translateX: 1000,
+      easing: 'spring(1, 100, 10, 0)'
+    })
+    var anim03 = anime({
+      targets: '.color-03',
+      translateX: 1000,
+      duration: 5000,
+      easing: 'outElastic(2, .1)'
+    })
     // console.log(anim01);
     // anime({
     //   targets: '.color-03',
