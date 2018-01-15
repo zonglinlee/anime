@@ -117,14 +117,13 @@
   function elastic(amplitude = 1, period = .5) {
     return t => {
       const offset = period / (2 * Math.PI) * Math.asin(1 / amplitude);
-      return t === 0 || t === 1 ? t : -(amplitude * Math.pow(2, 10 * (t -= 1)) * Math.sin( (t - offset) * (Math.PI * 2) / period));
+      if (t === 0 || t === 1) return t;
+      return -(amplitude * Math.pow(2, 10 * (t -= 1)) * Math.sin( (t - offset) * (Math.PI * 2) / period));
     }
   }
 
-  function step(steps) {
-    return t => {
-      Math.round(percentComplete * steps) * (1 / steps) * (endValue - startValue);
-    }
+  function steps(steps = 10) {
+    return t => Math.round(t * steps) * (1 / steps);
   }
 
   // BezierEasing https://github.com/gre/bezier-easing
@@ -225,7 +224,7 @@
         [0.470, 0.000, 0.745, 0.715], /* InSine */
         [0.950, 0.050, 0.795, 0.035], /* InExpo */
         [0.600, 0.040, 0.980, 0.335], /* InCirc */
-        [0.600, -0.280, 0.735, 0.045], /* InBack */
+        [0.600,-0.280, 0.735, 0.045], /* InBack */
         elastic /* InElastic */
       ], Out: [
         [0.250, 0.460, 0.450, 0.940], /* OutQuad */
@@ -245,19 +244,21 @@
         [0.445, 0.050, 0.550, 0.950], /* InOutSine */
         [1.000, 0.000, 0.000, 1.000], /* InOutExpo */
         [0.785, 0.135, 0.150, 0.860], /* InOutCirc */
-        [0.680, -0.550, 0.265, 1.550], /* InOutBack */
+        [0.680,-0.550, 0.265, 1.550], /* InOutBack */
         (a, p) => t => t < .5 ? elastic(a, p)(t * 2) / 2 : 1 - elastic(a, p)(t * -2 + 2) / 2 /* InOutElastic */
       ]
     }
 
     let eases = { 
-      linear: [0.250, 0.250, 0.750, 0.750]
+      linear: [0.250, 0.250, 0.750, 0.750],
+      ease:   [0.250, 0.100, 0.250, 1.000],
+      in:     [0.420, 0.000, 1.000, 1.000],
+      out:    [0.000, 0.000, 0.580, 1.000],
+      inOut:  [0.420, 0.000, 0.580, 1.000]
     }
 
     for (let type in equations) {
-      equations[type].forEach((ease, i) => {
-        eases['ease'+type+names[i]] = ease;
-      });
+      equations[type].forEach((ease, i) => { eases['ease'+type+names[i]] = ease; });
     }
 
     return eases;
@@ -272,7 +273,7 @@
     switch (name) {
       case 'spring' : return spring(string, tween.duration);
       case 'cubic-bezier' : return bezier.apply(this, args);
-      case 'step' : return step.apply(this, args);
+      case 'steps' : return steps.apply(this, args);
       default : return is.fnc(ease) ? ease.apply(this, args) : bezier.apply(this, ease);
     }
   }

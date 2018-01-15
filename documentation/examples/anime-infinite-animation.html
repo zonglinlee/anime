@@ -51,7 +51,7 @@
     var rows = 22;
     var numberOfEls = rows * rows;
     var duration = 1000;
-    var stagger =duration / rows / 10;
+    var stagger = duration / rows / 10;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
@@ -67,7 +67,7 @@
       el.classList.add('particule');
       el.style.backgroundColor = 'hsl(' + hue + ', 100%, 50%)';
 
-      anime({
+      var anim = anime({
         targets: el,
         translateY: '1em',
         scale: [.5, .1],
