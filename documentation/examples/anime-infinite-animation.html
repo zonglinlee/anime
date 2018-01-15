@@ -30,7 +30,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 8em;
       font-size: 24px;
     }
     .wrapper {
@@ -39,22 +38,28 @@
       flex-wrap: wrap;
     }
     .particule {
-      width: 1px;
-      height: 10em;
-      margin-left: 1px;
-      transform-origin: 50 50%;
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
+  <div class="wrapper"></div>
   <script>
 
-    var numberOfEls = 500;
-    var duration = 4000;
+    var rows = 22;
+    var numberOfEls = rows * rows;
+    var duration = 1000;
+    var stagger =duration / rows / 10;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
     var fragment = document.createDocumentFragment();
+    var wrapperEl = document.querySelector('.wrapper');
+
+    wrapperEl.style.width = rows + 'em';
+    wrapperEl.style.height = rows + 'em';
 
     for (var i = 0; i < numberOfEls; i++) {
       var hue = 10 + Math.round(40 / numberOfEls * i);
@@ -64,16 +69,19 @@
 
       anime({
         targets: el,
-        rotate: [i * 1, '+=360'],
+        translateY: '1em',
+        scale: [.5, .1],
+        direction: 'alternate',
         loop: true,
-        easing: 'linear',
-        duration: duration
+        easing: 'easeInOutSine',
+        duration: duration,
+        timeOffset: i * stagger
       });
 
       fragment.appendChild(el);
     }
 
-    document.body.appendChild(fragment);
+    wrapperEl.appendChild(fragment);
 
   </script>
   <script src="../assets/js/stats.js"></script>

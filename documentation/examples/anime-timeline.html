@@ -149,6 +149,8 @@
     complete: function() { console.log('animation 5 completed')}
   });
 
+  console.log(tl);
+
   controlsProgressEl.addEventListener('input', function() {
     tl.seek(tl.duration * (controlsProgressEl.value / 100));
   });

@@ -1,7 +1,7 @@
 /**
  * http://animejs.com
  * JavaScript animation engine
- * @version v2.2.1
+ * @version v3.0.0
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -39,7 +39,7 @@
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'out-elastic',
+    easing: 'easeOutElastic',
     round: 0
   }
 
@@ -658,7 +658,7 @@
       const unit = getUnit(to) || getUnit(from) || getUnit(originalValue);
       tween.from = decomposeValue(from, unit);
       tween.to = decomposeValue(to, unit);
-      tween.start = previousTween ? previousTween.end : prop.timeOffset;
+      tween.start = previousTween ? previousTween.end : 0;
       tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
       tween.easing = parseEasings(tween);
       tween.isPath = is.pth(tweenValue);
@@ -728,12 +728,12 @@
 
   // Create Instance
 
-  function getInstanceTimings(type, animations, instanceSettings, tweenSettings) {
+  function getInstanceTimings(type, animations, tweenSettings) {
     const isDelay = (type === 'delay');
     if (animations.length) {
       return (isDelay ? Math.min : Math.max).apply(Math, animations.map(anim => anim[type]));
     } else {
-      return isDelay ? tweenSettings.delay : instanceSettings.timeOffset + tweenSettings.delay + tweenSettings.duration;
+      return isDelay ? tweenSettings.delay : tweenSettings.delay + tweenSettings.duration;
     }
   }
 
@@ -747,8 +747,8 @@
       children: [],
       animatables: animatables,
       animations: animations,
-      duration: getInstanceTimings('duration', animations, instanceSettings, tweenSettings),
-      delay: getInstanceTimings('delay', animations, instanceSettings, tweenSettings)
+      duration: getInstanceTimings('duration', animations, tweenSettings),
+      delay: getInstanceTimings('delay', animations, tweenSettings)
     });
   }
 
@@ -801,22 +801,20 @@
 
     function toggleInstanceDirection() {
       instance.reversed = !instance.reversed;
-      const children = instance.children;
-      children.forEach(child => child.reversed = instance.reversed);
+      instance.children.forEach(child => child.reversed = instance.reversed);
     }
 
     function adjustTime(time) {
       return instance.reversed ? instance.duration - time : time;
     }
 
-    function syncInstanceChildren(time, manual) {
+    function syncInstanceChildren(time) {
       const children = instance.children;
       const childrenLength = children.length;
-      if (!manual || time >= instance.currentTime) {
-        for (let i = 0; i < childrenLength; i++) children[i].seek(time);
+      if (time >= instance.currentTime) {
+        for (let i = 0; i < childrenLength; i++) children[i].seek(time - children[i].timeOffset);
       } else {
-        // Manual backward seeking requires looping in reverse
-        for (let i = childrenLength; i--;) children[i].seek(time);
+        for (let i = childrenLength; i--;) children[i].seek(time - children[i].timeOffset);
       }
     }
 
@@ -837,8 +835,8 @@
         const strings = tween.to.strings;
         const round = tween.round;
         const numbers = [];
-        let progress;
         const toNumbersLength = tween.to.numbers.length;
+        let progress;
         for (let n = 0; n < toNumbersLength; n++) {
           let value;
           const toNumber = tween.to.numbers[n];
@@ -892,22 +890,22 @@
       }
     }
 
-    function setInstanceProgress(engineTime, manual) {
-      const insOffset = instance.timeOffset;
+    function setInstanceProgress(engineTime) {
       const insDuration = instance.duration;
+      const insDelay = instance.delay;
       const insTime = adjustTime(engineTime);
-      if (instance.children.length) syncInstanceChildren(insTime, manual);
-      if (insTime >= (insOffset + instance.delay) || !insDuration) {
+      if (instance.children.length) syncInstanceChildren(insTime);
+      if (insTime >= insDelay || !insDuration) {
         if (!instance.began) {
           instance.began = true;
           setCallback('begin');
         }
         setCallback('run');
       }
-      if (insTime > insOffset && insTime < insDuration) {
+      if (insTime > insDelay && insTime < insDuration) {
         setAnimationsProgress(insTime);
       } else {
-        if (insTime <= insOffset && instance.currentTime !== 0) {
+        if (insTime <= insDelay && instance.currentTime !== 0) {
           setAnimationsProgress(0);
           if (instance.reversed) countIteration();
         }
@@ -920,6 +918,7 @@
       if (engineTime >= insDuration) {
         if (instance.remaining) {
           startTime = now;
+          instance.looped = true;
           if (instance.direction === 'alternate') toggleInstanceDirection();
         } else {
           instance.paused = true;
@@ -944,6 +943,7 @@
       instance.paused = true;
       instance.began = false;
       instance.completed = false;
+      instance.looped = false;
       instance.reversed = direction === 'reverse';
       instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
       setAnimationsProgress(0);
@@ -955,12 +955,13 @@
     instance.tick = function(t) {
       now = t;
       if (!startTime) startTime = now;
-      const engineTime = (lastTime + now - startTime) * anime.speed;
+      const offset = instance.looped ? 0 : -instance.timeOffset;
+      const engineTime = (lastTime + now - startTime + offset) * anime.speed;
       setInstanceProgress(engineTime);
     }
 
     instance.seek = function(time) {
-      setInstanceProgress(adjustTime(time), true);
+      setInstanceProgress(adjustTime(time));
     }
 
     instance.pause = function() {
@@ -1032,20 +1033,21 @@
     tl.pause();
     tl.duration = 0;
     tl.add = function(instanceParams, timeOffset) {
-      tl.children.forEach(i => { i.began = true; i.completed = true; });
+      function passThrough(ins) { ins.began = true;  ins.completed = true; };
+      tl.children.forEach(passThrough);
       let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
       insParams.targets = insParams.targets || params.targets;
       const tlDuration = tl.duration;
       insParams.autoplay = false;
       insParams.direction = tl.direction;
       insParams.timeOffset = is.und(timeOffset) ? tlDuration : getRelativeValue(timeOffset, tlDuration);
-      tl.began = true;
-      tl.completed = true;
+      passThrough(tl);
       tl.seek(insParams.timeOffset);
       const ins = anime(insParams);
-      ins.began = true;
-      ins.completed = true;
-      if (ins.duration > tlDuration) tl.duration = ins.duration;
+      passThrough(ins);
+      const totalDuration = ins.duration + insParams.timeOffset;
+      if (is.fnc(tl.delay)) tl.delay = ins.delay;
+      if (is.fnc(tlDuration) || totalDuration > tlDuration) tl.duration = totalDuration;
       tl.children.push(ins);
       tl.seek(0);
       tl.reset();
