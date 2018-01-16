@@ -39,7 +39,7 @@
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'easeOutElastic',
+    easing: 'outQuad',
     round: 0
   }
 
