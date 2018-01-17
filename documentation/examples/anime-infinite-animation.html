@@ -48,10 +48,10 @@
   <div class="wrapper"></div>
   <script>
 
-    var rows = 22;
+    var rows = 10;
     var numberOfEls = rows * rows;
     var duration = 1000;
-    var stagger = duration / rows / 10;
+    var stagger = 10;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
@@ -75,15 +75,16 @@
         loop: true,
         easing: 'inOutSine',
         duration: duration,
-        timeOffset: i * stagger
+        startTime: -((i + 1) * stagger)
       });
 
       fragment.appendChild(el);
+
     }
 
     wrapperEl.appendChild(fragment);
 
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <!-- <script src="../assets/js/stats.js"></script> -->
 </body>
 </html>

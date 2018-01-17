@@ -98,7 +98,7 @@
     targets: els,
     autoplay: false,
     direction: 'alternate',
-    duration: 750,
+    duration: 250,
     delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
@@ -128,23 +128,22 @@
     rotate: 45,
     begin: function() { console.log('animation 2 began')},
     complete: function() { console.log('animation 2 completed')}
-  }, '-=250')
+  })
   .add({
     background: '#5A87FF',
     begin: function() { console.log('animation 3 began')},
     complete: function() { console.log('animation 3 completed')}
-  }, '-=250')
+  })
   .add({
     background: '#FBF38C',
     rotate: 90,
     begin: function() { console.log('animation 4 began')},
     complete: function() { console.log('animation 4 completed')}
-  }, '-=250')
+  })
   .add({
     scaleX: 3,
     scaleY: .5,
     background: '#FBF38C',
-    duration: 1000,
     begin: function() { console.log('animation 5 began')},
     complete: function() { console.log('animation 5 completed')}
   });
