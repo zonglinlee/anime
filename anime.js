@@ -73,10 +73,12 @@
 
   function parseEasingParameters(string) {
     const match = /\(([^)]+)\)/.exec(string);
-    if (match) return match[1].split(',').map(p=> parseFloat(p));
+    return match ? match[1].split(',').map(p=> parseFloat(p)) : [];
   }
 
   // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
+
+  const springCache = {};
 
   function spring(string, duration) {
 
@@ -99,6 +101,7 @@
     }
 
     function getDuration() {
+      if (springCache[string]) return springCache[string];
       const frame = 1/6;
       let elapsed = 0;
       let rest = 0;
@@ -111,7 +114,8 @@
           rest = 0;
         }
       }
-      return elapsed * frame * 1000;
+      springCache[string] = elapsed * frame * 1000;
+      return springCache[string];
     }
 
     return duration ? solver : getDuration;
@@ -123,9 +127,8 @@
   function elastic(amplitude = 1, period = .5) {
     return t => {
       const a = Math.max(amplitude, 1);
-      const p = period;
       return (t === 0 || t === 1) ? t : 
-        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (2 * Math.PI) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
+        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (period / (2 * Math.PI) * Math.asin(1 / a))) * (Math.PI * 2)) / period);
     }
   }
 
@@ -259,11 +262,7 @@
     }
 
     let eases = { 
-      linear: [0.250, 0.250, 0.750, 0.750],
-      ease:   [0.250, 0.100, 0.250, 1.000],
-      in:     [0.420, 0.000, 1.000, 1.000],
-      out:    [0.000, 0.000, 0.580, 1.000],
-      inOut:  [0.420, 0.000, 0.580, 1.000]
+      linear: [0.250, 0.250, 0.750, 0.750]
     }
 
     for (let equation in penner) {

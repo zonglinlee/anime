@@ -51,7 +51,7 @@
     var rows = 10;
     var numberOfEls = rows * rows;
     var duration = 1000;
-    var stagger = 10;
+    var stagger = 6;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
@@ -69,13 +69,13 @@
 
       var anim = anime({
         targets: el,
-        translateY: '1em',
-        scale: [.5, .1],
+        translateY: '2em',
+        scale: [.9, .1],
         direction: 'alternate',
         loop: true,
-        easing: 'inOutSine',
+        easing: 'spring(100, 100, 1, 0)',
         duration: duration,
-        startTime: -((i + 1) * stagger)
+        startTime: ((numberOfEls + 1 - (i)) * stagger)
       });
 
       fragment.appendChild(el);

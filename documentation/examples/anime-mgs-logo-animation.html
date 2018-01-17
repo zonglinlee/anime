@@ -186,7 +186,7 @@
       fill: '#F9C100',
       delay: (el, i) => 2200 + (i * 75),
       duration: 400,
-      easing: 'easeOutExpo',
+      easing: 'outExpo',
     }, 0)
   .add({
       targets: '.katakana path',
@@ -198,13 +198,13 @@
       fill: '#F9C100',
       delay: (el, i) => 2400 + (i * 120),
       duration: 1200,
-      easing: 'easeOutCirc',
+      easing: 'outCirc',
     }, 0)
     .add({
       targets: '.text-fills path',
       opacity: [0, 1],
       fill: '#F9C100',
-      easing: 'easeOutExpo',
+      easing: 'outExpo',
       duration: 200,
       delay: (t, i) => 3300 + (anime.random(0, 450)),
     }, 0)
@@ -236,7 +236,7 @@
       },
       delay: (t, i) => (i * 25),
       duration: 500,
-      easing: 'easeOutQuart',
+      easing: 'outQuart',
     }, 0);
 
   </script>
