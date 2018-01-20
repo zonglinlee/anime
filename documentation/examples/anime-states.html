@@ -41,27 +41,34 @@
   <div class="item color-02"></div>
   <div class="item color-03"></div>
   <script>
-    var color01El = document.querySelector('.color-01');
-    var color02El = document.querySelector('.color-02');
-    color01El.addEventListener('mouseenter', function() {
-      anime({ targets: this, scale: 2 });
-    }, false);
-    color01El.addEventListener('mouseleave', function() {
-      anime({ targets: this, scale: 1 });
-    }, false);
+
     var animation = anime({
-      targets: ['.color-02', '.color-03'],
-      duration: 500,
-      scale: {
-        value: 2,
-        duration: 700
-      },
-      loop: true
-    });
-    color02El.addEventListener('mouseenter', function() {
-      anime.remove(this);
-    }, false);
-    console.log(animation);
+      targets: '.item',
+      duration: 2000,
+      easing: 'easeOutExpo',
+      update: function() {
+        console.log('updating')
+      }
+    })
+
+    animation.states.left = {
+      translateX: -100,
+      duration: 1000,
+      easing: 'easeInOutQuad'
+    }
+
+    animation.states.right = {
+      translateX: 100
+    }
+
+    animation.states.top = {
+      translateY: -100
+    }
+
+    animation.states.bottom = {
+      translateY: 100
+    }
+
   </script>
 </body>
 </html>

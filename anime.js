@@ -128,7 +128,7 @@
     return t => {
       const a = Math.max(amplitude, 1);
       return (t === 0 || t === 1) ? t : 
-        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (period / (2 * Math.PI) * Math.asin(1 / a))) * (Math.PI * 2)) / period);
+        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (period / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / period);
     }
   }
 
@@ -426,6 +426,10 @@
     return val(animatable.target, animatable.id, animatable.total);
   }
 
+  function getAttribute(el, prop) {
+    return el.getAttribute(prop);
+  }
+
   function getCSSValue(el, prop) {
     if (prop in el.style) {
       return el.style[prop] || 
@@ -435,7 +439,7 @@
 
   function getAnimationType(el, prop) {
     if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
-    if (is.dom(el) && (el.getAttribute(prop) || (is.svg(el) && el[prop]))) return 'attribute';
+    if (is.dom(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
     if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
     if (el[prop] != null) return 'object';
   }
@@ -461,7 +465,7 @@
     switch (getAnimationType(target, propName)) {
       case 'transform': return getTransformValue(target, propName, animatable);
       case 'css': return getCSSValue(target, propName);
-      case 'attribute': return target.getAttribute(propName);
+      case 'attribute': return getAttribute(target, propName);
       default: return target[propName] || 0;
     }
   }
@@ -494,17 +498,17 @@
   }
 
   function getCircleLength(el) {
-    return 2 * Math.PI * el.getAttribute('r');
+    return Math.PI * 2 * getAttribute(el, 'r');
   }
 
   function getRectLength(el) {
-    return (el.getAttribute('width') * 2) + (el.getAttribute('height') * 2);
+    return (getAttribute(el, 'width') * 2) + (getAttribute(el, 'height') * 2);
   }
 
   function getLineLength(el) {
     return getDistance(
-      {x: el.getAttribute('x1'), y: el.getAttribute('y1')}, 
-      {x: el.getAttribute('x2'), y: el.getAttribute('y2')}
+      {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')}, 
+      {x: getAttribute(el, 'x2'), y: getAttribute(el, 'y2')}
     );
   }
 
@@ -739,6 +743,7 @@
     const properties = getProperties(instanceSettings, tweenSettings, params);
     const animations = getAnimations(animatables, properties);
     return mergeObjects(instanceSettings, {
+      states: {default: params},
       children: [],
       animatables: animatables,
       animations: animations,
@@ -996,6 +1001,15 @@
       instance.play();
     }
 
+    instance.goTo = function(stateName, bypassAnimation) {
+      const nextState = instance.states[stateName];
+      const defaultState = instance.states.default;
+      const params = mergeObjects(nextState, defaultState);
+      anime.remove(defaultState.targets);
+      const animation = anime(params);
+      if (bypassAnimation) animation.seek(animation.duration);
+    }
+
     instance.finished = promise;
 
     instance.reset();
@@ -1004,7 +1018,7 @@
       setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
     }
 
-    if (instance.autoplay) instance.play();
+    if (instance.autoplay && instance.animations.length) instance.play();
 
     return instance;
 
