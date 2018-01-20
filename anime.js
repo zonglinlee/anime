@@ -438,8 +438,8 @@
   }
 
   function getAnimationType(el, prop) {
-    if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
     if (is.dom(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
+    if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
     if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
     if (el[prop] != null) return 'object';
   }
@@ -1063,6 +1063,7 @@
     tl.pause();
     tl.duration = 0;
     tl.add = function(instanceParams, timelineOffset) {
+      const currentTime = tl.currentTime;
       function passThrough(ins) { ins.began = true;  ins.completed = true; };
       tl.children.forEach(passThrough);
       let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
@@ -1079,9 +1080,9 @@
       if (is.fnc(tl.delay)) tl.delay = ins.delay;
       if (is.fnc(tlDuration) || totalDuration > tlDuration) tl.duration = totalDuration;
       tl.children.push(ins);
-      tl.seek(0);
       tl.reset();
-      if (tl.autoplay) tl.restart();
+      tl.seek(currentTime);
+      if (tl.autoplay) tl.play();
       return tl;
     }
     return tl;
