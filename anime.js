@@ -801,7 +801,6 @@
   function anime(params = {}) {
 
     let startTime = 0, lastTime = 0, now = 0;
-    let lastStartTime = 0;
     let children, childrenLength = 0;
     let resolve = null;
 
@@ -917,7 +916,7 @@
           instance.began = true;
           setCallback('begin');
         }
-        setCallback('run');
+        (insTime <= instance.endDelay) setCallback('run');
       }
       if (insTime > insDelay && insTime < insDuration) {
         setAnimationsProgress(insTime);
@@ -928,7 +927,6 @@
         }
         if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
           setAnimationsProgress(insDuration);
-          lastStartTime = startTime;
           if (!instance.reversed) countIteration();
         }
       }

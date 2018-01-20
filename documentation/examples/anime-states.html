@@ -38,12 +38,13 @@
 </head>
 <body>
   <div class="item color-01"></div>
-  <div class="item color-02"></div>
+  <div class="item color-01"></div>
+  <div class="item color-03"></div>
   <div class="item color-03"></div>
   <script>
 
     var animation = anime({
-      targets: '.item',
+      targets: '.color-01',
       translateX: 0,
       translateY: 0,
       scale: 1,
@@ -51,7 +52,7 @@
       easing: 'easeOutExpo',
       autoplay: false,
       update: function() {
-        console.log('updating')
+        console.log('animation updating')
       }
     })
 
@@ -72,6 +73,15 @@
     animation.states.bottom = {
       translateY: 100
     }
+
+    var timeline = anime.timeline({
+      targets: '.color-03',
+      easing: 'easeOutExpo',
+      autoplay: false,
+      update: function() {
+        console.log('timeline updating')
+      }
+    })
 
   </script>
 </body>
