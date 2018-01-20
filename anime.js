@@ -1007,7 +1007,12 @@
       const params = mergeObjects(nextState, defaultState);
       anime.remove(defaultState.targets);
       const animation = anime(params);
+      animation.play();
       if (bypassAnimation) animation.seek(animation.duration);
+    }
+
+    instance.switchTo = function(stateName) {
+      instance.goTo(stateName, true);
     }
 
     instance.finished = promise;

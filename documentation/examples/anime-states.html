@@ -44,8 +44,12 @@
 
     var animation = anime({
       targets: '.item',
+      translateX: 0,
+      translateY: 0,
+      scale: 1,
       duration: 2000,
       easing: 'easeOutExpo',
+      autoplay: false,
       update: function() {
         console.log('updating')
       }
