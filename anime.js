@@ -40,7 +40,7 @@
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'outQuad',
+    easing: 'easeOutQuad',
     round: 0
   }
 
@@ -228,7 +228,7 @@
     // Approximated Penner equations http://matthewlein.com/ceaser/
 
     const penner = {
-      in: [
+      In: [
         [0.550, 0.085, 0.680, 0.530], /* inQuad */
         [0.550, 0.055, 0.675, 0.190], /* inCubic */
         [0.895, 0.030, 0.685, 0.220], /* inQuart */
@@ -238,7 +238,8 @@
         [0.600, 0.040, 0.980, 0.335], /* inCirc */
         [0.600,-0.280, 0.735, 0.045], /* inBack */
         elastic /* inElastic */
-      ], out: [
+      ],
+      Out: [
         [0.250, 0.460, 0.450, 0.940], /* outQuad */
         [0.215, 0.610, 0.355, 1.000], /* outCubic */
         [0.165, 0.840, 0.440, 1.000], /* outQuart */
@@ -248,7 +249,8 @@
         [0.075, 0.820, 0.165, 1.000], /* outCirc */
         [0.175, 0.885, 0.320, 1.275], /* outBack */
         (a, p) => t => 1 - elastic(a, p)(1 - t) /* outElastic */
-      ], inOut: [
+      ],
+      InOut: [
         [0.455, 0.030, 0.515, 0.955], /* inOutQuad */
         [0.645, 0.045, 0.355, 1.000], /* inOutCubic */
         [0.770, 0.000, 0.175, 1.000], /* inOutQuart */
@@ -267,7 +269,7 @@
 
     for (let equation in penner) {
       penner[equation].forEach((ease, i) => { 
-        eases[equation+names[i]] = ease;
+        eases['ease'+equation+names[i]] = ease;
       });
     }
 
@@ -794,6 +796,7 @@
   function anime(params = {}) {
 
     let startTime = 0, lastTime = 0, now = 0;
+    let lastStartTime = 0;
     let children, childrenLength = 0;
     let resolve = null;
 
@@ -808,6 +811,11 @@
     function toggleInstanceDirection() {
       instance.reversed = !instance.reversed;
       children.forEach(child => child.reversed = instance.reversed);
+    }
+
+    function resetTime() {
+      startTime = 0;
+      lastTime = adjustTime(instance.currentTime);
     }
 
     function adjustTime(time) {
@@ -915,11 +923,13 @@
         }
         if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
           setAnimationsProgress(insDuration);
+          lastStartTime = startTime;
           if (!instance.reversed) countIteration();
         }
       }
       setCallback('update');
       if (engineTime >= insDuration) {
+        lastTime = 0;
         if (instance.remaining) {
           startTime = now;
           if (instance.direction === 'alternate') toggleInstanceDirection();
@@ -934,7 +944,6 @@
             }
           }
         }
-        lastTime = 0;
       }
     }
 
@@ -971,16 +980,14 @@
     instance.play = function() {
       if (!instance.paused) return;
       instance.paused = false;
-      startTime = 0;
-      lastTime = adjustTime(instance.currentTime);
+      resetTime();
       activeInstances.push(instance);
       if (!raf) engine();
     }
 
     instance.reverse = function() {
       toggleInstanceDirection();
-      startTime = 0;
-      lastTime = adjustTime(instance.currentTime);
+      resetTime();
     }
 
     instance.restart = function() {
@@ -993,8 +1000,10 @@
 
     instance.reset();
 
-    const offBy = instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration));
-    setInstanceProgress(offBy);
+    if (instance.startTime) {
+      setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
+    }
+
     if (instance.autoplay) instance.play();
 
     return instance;

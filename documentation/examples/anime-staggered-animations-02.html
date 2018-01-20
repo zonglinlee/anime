@@ -51,7 +51,7 @@
   <script>
 
     const wrapperEl = document.querySelector('.wrapper');
-    const numberOfEls = 72;
+    const numberOfEls = 400;
     const duration = 6000;
     const delay = duration / numberOfEls;
     const gap = 10;
@@ -86,9 +86,9 @@
             rotate: [0, 90],
             borderRadius: {
               value: ['30%', '50%'],
-              easing: 'easeInOutQuad'
+              easing: 'inOutQuad'
             },
-            easing: 'easeInOutSine',
+            easing: 'inOutSine',
             direction: 'alternate',
             duration: duration / 4
           });

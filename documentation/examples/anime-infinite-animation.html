@@ -30,12 +30,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 24px;
+      font-size: 50px;
     }
     .wrapper {
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
+      flex-direction: row;
     }
     .particule {
       width: 1em;
@@ -48,17 +47,17 @@
   <div class="wrapper"></div>
   <script>
 
-    var rows = 10;
+    var rows = 2;
     var numberOfEls = rows * rows;
     var duration = 1000;
-    var stagger = 6;
+    var stagger = 100;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
     var fragment = document.createDocumentFragment();
     var wrapperEl = document.querySelector('.wrapper');
 
-    wrapperEl.style.width = rows + 'em';
+    wrapperEl.style.width = numberOfEls + 'em';
     wrapperEl.style.height = rows + 'em';
 
     for (var i = 0; i < numberOfEls; i++) {
@@ -73,7 +72,7 @@
         scale: [.9, .1],
         direction: 'alternate',
         loop: true,
-        easing: 'spring(100, 100, 1, 0)',
+        easing: 'easeInOutQuad',
         duration: duration,
         startTime: ((numberOfEls + 1 - (i)) * stagger)
       });
