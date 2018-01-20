@@ -916,7 +916,7 @@
           instance.began = true;
           setCallback('begin');
         }
-        (insTime <= instance.endDelay) setCallback('run');
+        if (insTime <= instance.endDelay) setCallback('run');
       }
       if (insTime > insDelay && insTime < insDuration) {
         setAnimationsProgress(insTime);
@@ -1061,7 +1061,6 @@
     tl.pause();
     tl.duration = 0;
     tl.add = function(instanceParams, timelineOffset) {
-      const currentTime = tl.currentTime;
       function passThrough(ins) { ins.began = true;  ins.completed = true; };
       tl.children.forEach(passThrough);
       let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
@@ -1078,9 +1077,9 @@
       if (is.fnc(tl.delay)) tl.delay = ins.delay;
       if (is.fnc(tlDuration) || totalDuration > tlDuration) tl.duration = totalDuration;
       tl.children.push(ins);
+      tl.seek(0);
       tl.reset();
-      tl.seek(currentTime);
-      if (tl.autoplay) tl.play();
+      if (tl.autoplay) tl.restart();
       return tl;
     }
     return tl;

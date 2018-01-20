@@ -41,6 +41,7 @@
       height: 10px;
       background: #FFF;
       margin: 10px;
+      border-radius: 50%;
     }
 
     .controls {
@@ -119,7 +120,7 @@
     el.style.backgroundColor = 'hsl(' + hue + ', 60%, 60%)';
     tl.add({
       targets: el,
-      scale: [0, 3],
+      scale: [0, 2],
       duration: 5000,
       easing: 'easeOutElastic(1, .05)',
     }, !i ? 0 : '-=4990');
