@@ -837,15 +837,13 @@ relativeOffset
   .add({
     targets: '#relativeOffset .circle.el',
     translateX: 250,
-    easing: 'easeOutExpo',
-    offset: '-=600' // Starts 600ms before the previous animation ends
-  })
+    easing: 'easeOutExpo'
+  }, '-=600') // Starts 600ms before the previous animation ends
   .add({
     targets: '#relativeOffset .triangle.el',
     translateX: 250,
-    easing: 'easeOutExpo',
-    offset: '-=800' // Starts 800ms before the previous animation ends
-  });
+    easing: 'easeOutExpo'
+  }, '-=800'); // Starts 800ms before the previous animation ends
 
 </script>
 </div>
@@ -872,21 +870,18 @@ absoluteOffset
   .add({
     targets: '#absoluteOffset .square.el',
     translateX: 250,
-    easing: 'easeOutExpo',
-    offset: 1000 // Starts at 1000ms of the timeline
-  })
+    easing: 'easeOutExpo'
+  }, 1000) // Starts at 1000ms of the timeline
   .add({
     targets: '#absoluteOffset .circle.el',
     translateX: 250,
-    easing: 'easeOutExpo',
-    offset: 500 // Starts at 500ms of the timeline
-  })
+    easing: 'easeOutExpo'
+  }, 500) // Starts at 500ms of the timeline
   .add({
     targets: '#absoluteOffset .triangle.el',
     translateX: 250,
-    easing: 'easeOutExpo',
-    offset: 0 // Starts at 0ms of the timeline
-  });
+    easing: 'easeOutExpo'
+  }, 0);  // Starts at 0ms of the timeline
 
 </script>
 </div>
@@ -923,16 +918,14 @@ timelineParameters
     targets: '#timelineParameters .circle.el',
     translateX: [ { value: 80 }, { value: 160 }, { value: 250 } ],
     translateY: [ { value: 30 }, { value: -30 }, { value: -30 } ],
-    duration: 3000,
-    offset: 200
-  })
+    duration: 3000
+  }, 200)
   .add({
     targets: '#timelineParameters .triangle.el',
     translateX: [ { value: 80 }, { value: 250 } ],
     translateY: [ { value: -60 }, { value: -30 }, { value: -30 } ],
-    duration: 3000,
-    offset: 400
-  });
+    duration: 3000
+  }, 400);
 
 </script>
 </div>
@@ -1162,23 +1155,20 @@ TLcontrols
     targets: '#TLcontrols .square.el',
     translateX: [ { value: 80 }, { value: 160 }, { value: 250 } ],
     translateY: [ { value: 30 }, { value: 60 }, { value: 60 } ],
-    duration: 3000,
-    offset: 0
-  })
+    duration: 3000
+  }, 0)
   .add({
     targets: '#TLcontrols .circle.el',
     translateX: [ { value: 80 }, { value: 160 }, { value: 250 } ],
     translateY: [ { value: 30 }, { value: -30 }, { value: -30 } ],
-    duration: 3000,
-    offset: 0
-  })
+    duration: 3000
+  }, 0)
   .add({
     targets: '#TLcontrols .triangle.el',
     translateX: [ { value: 80 }, { value: 250 } ],
     translateY: [ { value: -60 }, { value: -30 }, { value: -30 } ],
-    duration: 3000,
-    offset: 0
-  });
+    duration: 3000
+  }, 0);
 
 document.querySelector('#TLcontrols .play').onclick = TLcontrols.play;
 document.querySelector('#TLcontrols .pause').onclick = TLcontrols.pause;
@@ -1616,105 +1606,80 @@ var motionPath = anime({
 <script>var penner = anime.timeline();
 penner
   .add({
-    targets: '#penner .linear', translateX: 250, offset: 0,
-    easing: 'linear'
-  })
+    targets: '#penner .linear', translateX: 250, easing: 'linear'
+  }, 0)
   .add({
-    targets: '#penner .InQuad', translateX: 250, offset: 0,
-    easing: 'easeInQuad'
-  })
+    targets: '#penner .InQuad', translateX: 250, easing: 'easeInQuad'
+  }, 0)
   .add({
-    targets: '#penner .InCubic', translateX: 250, offset: 0,
-    easing: 'easeInCubic'
-  })
+    targets: '#penner .InCubic', translateX: 250, easing: 'easeInCubic'
+  }, 0)
   .add({
-    targets: '#penner .InQuart', translateX: 250, offset: 0,
-    easing: 'easeInQuart'
-  })
+    targets: '#penner .InQuart', translateX: 250, easing: 'easeInQuart'
+  }, 0)
   .add({
-    targets: '#penner .InQuint', translateX: 250, offset: 0,
-    easing: 'easeInQuint'
-  })
+    targets: '#penner .InQuint', translateX: 250, easing: 'easeInQuint'
+  }, 0)
   .add({
-    targets: '#penner .InSine', translateX: 250, offset: 0,
-    easing: 'easeInSine'
-  })
+    targets: '#penner .InSine', translateX: 250, easing: 'easeInSine'
+  }, 0)
   .add({
-    targets: '#penner .InExpo', translateX: 250, offset: 0,
-    easing: 'easeInExpo'
-  })
+    targets: '#penner .InExpo', translateX: 250, easing: 'easeInExpo'
+  }, 0)
   .add({
-    targets: '#penner .InCirc', translateX: 250, offset: 0,
-    easing: 'easeInCirc'
-  })
+    targets: '#penner .InCirc', translateX: 250, easing: 'easeInCirc'
+  }, 0)
   .add({
-    targets: '#penner .InBack', translateX: 250, offset: 0,
-    easing: 'easeInBack'
-  })
+    targets: '#penner .InBack', translateX: 250, easing: 'easeInBack'
+  }, 0)
   .add({
-    targets: '#penner .OutQuad', translateX: 250, offset: 0,
-    easing: 'easeOutQuad'
-  })
+    targets: '#penner .OutQuad', translateX: 250, easing: 'easeOutQuad'
+  }, 0)
   .add({
-    targets: '#penner .OutCubic', translateX: 250, offset: 0,
-    easing: 'easeOutCubic'
-  })
+    targets: '#penner .OutCubic', translateX: 250, easing: 'easeOutCubic'
+  }, 0)
   .add({
-    targets: '#penner .OutQuart', translateX: 250, offset: 0,
-    easing: 'easeOutQuart'
-  })
+    targets: '#penner .OutQuart', translateX: 250, easing: 'easeOutQuart'
+  }, 0)
   .add({
-    targets: '#penner .OutQuint', translateX: 250, offset: 0,
-    easing: 'easeOutQuint'
-  })
+    targets: '#penner .OutQuint', translateX: 250, easing: 'easeOutQuint'
+  }, 0)
   .add({
-    targets: '#penner .OutSine', translateX: 250, offset: 0,
-    easing: 'easeOutSine'
-  })
+    targets: '#penner .OutSine', translateX: 250, easing: 'easeOutSine'
+  }, 0)
   .add({
-    targets: '#penner .OutExpo', translateX: 250, offset: 0,
-    easing: 'easeOutExpo'
-  })
+    targets: '#penner .OutExpo', translateX: 250, easing: 'easeOutExpo'
+  }, 0)
   .add({
-    targets: '#penner .OutCirc', translateX: 250, offset: 0,
-    easing: 'easeOutCirc'
-  })
+    targets: '#penner .OutCirc', translateX: 250, easing: 'easeOutCirc'
+  }, 0)
   .add({
-    targets: '#penner .OutBack', translateX: 250, offset: 0,
-    easing: 'easeOutBack'
-  })
+    targets: '#penner .OutBack', translateX: 250, easing: 'easeOutBack'
+  }, 0)
   .add({
-    targets: '#penner .InOutQuad', translateX: 250, offset: 0,
-    easing: 'easeInOutQuad'
-  })
+    targets: '#penner .InOutQuad', translateX: 250, easing: 'easeInOutQuad'
+  }, 0)
   .add({
-    targets: '#penner .InOutCubic', translateX: 250, offset: 0,
-    easing: 'easeInOutCubic'
-  })
+    targets: '#penner .InOutCubic', translateX: 250, easing: 'easeInOutCubic'
+  }, 0)
   .add({
-    targets: '#penner .InOutQuart', translateX: 250, offset: 0,
-    easing: 'easeInOutQuart'
-  })
+    targets: '#penner .InOutQuart', translateX: 250, easing: 'easeInOutQuart'
+  }, 0)
   .add({
-    targets: '#penner .InOutQuint', translateX: 250, offset: 0,
-    easing: 'easeInOutQuint'
-  })
+    targets: '#penner .InOutQuint', translateX: 250, easing: 'easeInOutQuint'
+  }, 0)
   .add({
-    targets: '#penner .InOutSine', translateX: 250, offset: 0,
-    easing: 'easeInOutSine'
-  })
+    targets: '#penner .InOutSine', translateX: 250, easing: 'easeInOutSine'
+  }, 0)
   .add({
-    targets: '#penner .InOutExpo', translateX: 250, offset: 0,
-    easing: 'easeInOutExpo'
-  })
+    targets: '#penner .InOutExpo', translateX: 250, easing: 'easeInOutExpo'
+  }, 0)
   .add({
-    targets: '#penner .InOutCirc', translateX: 250, offset: 0,
-    easing: 'easeInOutCirc'
-  })
+    targets: '#penner .InOutCirc', translateX: 250, easing: 'easeInOutCirc'
+  }, 0)
   .add({
-    targets: '#penner .InOutBack', translateX: 250, offset: 0,
-    easing: 'easeInOutBack'
-  });
+    targets: '#penner .InOutBack', translateX: 250, easing: 'easeInOutBack'
+  }), 0;
 </script>
 </div>
 
@@ -1768,60 +1733,60 @@ penner
   </div>
 <script>var elasticity = anime.timeline();
 elasticity.add({
-  targets: '#elasticity .elasticity-0', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-0', translateX: 250,
   duration: 3000,
   elasticity: 0,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-100', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-100', translateX: 250,
   duration: 3000,
   elasticity: 100,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-200', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-200', translateX: 250,
   duration: 3000,
   elasticity: 200,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-300', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-300', translateX: 250,
   duration: 3000,
   elasticity: 300,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-400', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-400', translateX: 250,
   duration: 3000,
   elasticity: 400,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-500', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-500', translateX: 250,
   duration: 3000,
   elasticity: 500,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-600', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-600', translateX: 250,
   duration: 3000,
   elasticity: 600,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-700', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-700', translateX: 250,
   duration: 3000,
   elasticity: 700,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-800', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-800', translateX: 250,
   duration: 3000,
   elasticity: 800,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-900', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-900', translateX: 250,
   duration: 3000,
   elasticity: 900,
-})
+}, 0)
 .add({
-  targets: '#elasticity .elasticity-1000', translateX: 250, offset: 0,
+  targets: '#elasticity .elasticity-1000', translateX: 250,
   duration: 3000,
   elasticity: 1000,
-});
+}, 0);
 </script>
 </div>
 
