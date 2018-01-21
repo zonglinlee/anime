@@ -82,7 +82,11 @@
 
   function spring(string, duration) {
 
-    const [mass = 1, stiffness = 100, damping = 10, velocity = 0] = parseEasingParameters(string);
+    const parameters = parseEasingParameters(string);
+    const mass = is.und(parameters[0]) ? 1 : parameters[0];
+    const stiffness = is.und(parameters[1]) ? 100 : parameters[1];
+    const damping = is.und(parameters[2]) ? 10 : parameters[2];
+    const velocity =  is.und(parameters[3]) ? 0 : parameters[3];
     const w0 = Math.sqrt(stiffness / mass);
     const zeta = damping / (2 * Math.sqrt(stiffness * mass));
     const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
@@ -692,9 +696,9 @@
       transforms.list.set(p, v);
       if (p === transforms.last || manual) {
         let str = '';
-        for (let [prop, value] of transforms.list) {
+        transforms.list.forEach((value, prop) => {
           str += `${prop}(${value}) `;
-        }
+        });
         t.style.transform = str;
       }
     }
@@ -786,7 +790,7 @@
   function handleVisibilityChange() {
     if (document.hidden) {
       activeInstances.forEach(ins => ins.pause());
-      pausedInstances = [...activeInstances];
+      pausedInstances = activeInstances.slice(0);
       activeInstances = [];
     } else {
       pausedInstances.forEach(ins => ins.play());
@@ -916,7 +920,7 @@
           instance.began = true;
           setCallback('begin');
         }
-        if (insTime <= instance.endDelay) setCallback('run');
+        setCallback('run');
       }
       if (insTime > insDelay && insTime < insDuration) {
         setAnimationsProgress(insTime);
@@ -1093,6 +1097,7 @@
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
   anime.timeline = timeline;
+  anime.easings = easings;
   anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   return anime;

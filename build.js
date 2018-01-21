@@ -10,7 +10,8 @@ fs.unlink(fileOut, (err) => {
   fs.readFile(fileIn, {encoding: 'utf-8'}, function(err, data) {
     if (err) throw err;
     const flags = {
-      jsCode: [{src: data}]
+      jsCode: [{src: data}],
+      rewritePolyfills: false
     };
     const out = compile(flags);
     fs.writeFile(fileOut, out.compiledCode, function(err) {

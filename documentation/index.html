@@ -19,7 +19,7 @@
   <link href="assets/css/anime.css" rel="stylesheet">
   <link href="assets/css/anime-theme.css" rel="stylesheet">
   <link href="assets/css/documentation.css" rel="stylesheet">
-  <script src="../anime.min.js"></script>
+  <script src="../anime.js"></script>
 </head>
 <body>
   <div class="content">
@@ -1834,7 +1834,7 @@ elasticity.add({
 <script>var customBezier = anime({
   targets: '#customBezier .el',
   translateX: 250,
-  easing: [.91,-0.54,.29,1.56]
+  easing: 'cubicBezier(.91, -0.54, .29, 1.56)'
 });
 </script>
 </div>
@@ -1845,14 +1845,16 @@ elasticity.add({
     <div class="square large shadow"></div>
     <div class="square large el"></div>
   </div>
-<script>anime.easings['myCustomEasingName'] = function(t) {
-  return Math.pow(Math.sin(t * 3), 3);
+<script>anime.easings['myCustomEasingName'] = function(arg1) {
+  return function(t) {
+    return Math.pow(Math.sin(t * arg1), arg1);
+  }
 }
 
 var customEasingFunction = anime({
   targets: '#customEasingFunction .el',
   translateX: 250,
-  easing: 'myCustomEasingName'
+  easing: 'myCustomEasingName(3)'
 });
 </script>
 </div>
