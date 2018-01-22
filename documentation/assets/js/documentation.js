@@ -63,10 +63,8 @@ function outputCode(JScode, HTMLcode, title, APIdecription) {
   APIOutputEl.innerHTML = APIdecription;
   APITitleEl.innerHTML = title;
   APIOutputCodeEls = APIOutputEl.querySelectorAll('code');
-  if (APIOutputCodeEls) {
-    for (var i = 0; i < APIOutputCodeEls.length; i++) {
-      hljs.highlightBlock(APIOutputCodeEls[i]);
-    }
+  for (var i = 0; i < APIOutputCodeEls.length; i++) {
+    hljs.highlightBlock(APIOutputCodeEls[i]);
   }
   hljs.highlightBlock(jsOutputEl);
   hljs.highlightBlock(htmlOutputEl);

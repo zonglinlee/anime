@@ -233,7 +233,7 @@ code {
 
 .api-output {
   color: #C5C2CB;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 20px;
 }
 
@@ -255,6 +255,11 @@ code {
 .api-output tr, .api-output td {
   border: 1px solid #6e6d72;
   padding: 6px 8px;
+}
+
+.api-output code.hljs {
+  display: inline;
+  font-size: 14px;
 }
 
 .code-output {

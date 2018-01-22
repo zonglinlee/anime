@@ -37,13 +37,10 @@
   </style>
 </head>
 <body>
-<svg width="400" height="400" viewBox="0 0 300 300"
-     xmlns="http://www.w3.org/2000/svg">
+<svg width="400" height="400" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
   <filter id="displacementFilter">
-    <feTurbulence type="turbulence" baseFrequency="0.05"
-        numOctaves="2" result="turbulence"/>
-    <feDisplacementMap in2="turbulence" in="SourceGraphic"
-        scale="10" xChannelSelector="R" yChannelSelector="G"/>
+    <feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turbulence"/>
+    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
 
   <circle cx="80" cy="80" r="80" fill="yellow" style="filter: url(#displacementFilter)"/>

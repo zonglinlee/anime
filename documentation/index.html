@@ -218,16 +218,21 @@ var mixedArray = anime({
       Note that most CSS properties will cause layout changes or repaint, and will result in choppy animation.
       Prroritize <code>'opacity', 'translate', 'rotate', 'scale'</code> as much as possible.
     </p>
-  <table>
-    <thead>
-      <td>Accepts</td>
-      <td>Examples</td>
-    </thead>
-    <tr>
-      <td>string</td>
-      <td><code>'opacity'</code></td>
-    </tr>
-  </table>
+    <table>
+      <thead>
+        <td>Example</td>
+        <td>value</td>
+      </thead>
+      <tr>
+        <td><code>'opacity'</code></td>
+        <td><code>.5</code></td>
+      </tr>
+      <tr>
+        <td><code>'left'</code></td>
+        <td><code>100</code></td>
+      </tr>
+    </table>
+    <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
   </div>
   <div class="demo-content">
     <div class="large square shadow"></div>
@@ -245,6 +250,33 @@ var mixedArray = anime({
 
 <div id="CSStransforms" class="demo">
   <h3 class="demo-title">CSS Transforms</h3>
+  <div class="demo-description">
+    <p>
+      Animate CSS transforms properties indivudaly
+    </p>
+    <table>
+      <thead>
+        <td>Valid properties</td>
+        <td>Default unit</td>
+      </thead>
+      <tr><td><code>'translateX'</code></td><td><code>'px'</code></td></tr>
+      <tr><td><code>'translateY'</code></td><td><code>'px'</code></td></tr>
+      <tr><td><code>'translateZ'</code></td><td><code>'px'</code></td></tr>
+      <tr><td><code>'rotate'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'rotateX'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'rotateY'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'rotateZ'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'scale'</code></td><td><code>—</code></td></tr>
+      <tr><td><code>'scaleX'</code></td><td><code>—</code></td></tr>
+      <tr><td><code>'scaleY'</code></td><td><code>—</code></td></tr>
+      <tr><td><code>'scaleZ'</code></td><td><code>—</code></td></tr>
+      <tr><td><code>'skew'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'skewX'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'skewY'</code></td><td><code>'deg'</code></td></tr>
+      <tr><td><code>'perspective'</code></td><td><code>'px'</code></td></tr>
+    </table>
+    <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
+  </div>
   <div class="demo-content">
     <div class="square shadow"></div>
     <div class="square el"></div>
@@ -258,34 +290,74 @@ var mixedArray = anime({
 </script>
 </div>
 
-<div id="JSobjectProp" class="demo">
+<div id="JSobjProp" class="demo">
   <h3 class="demo-title">Object properties</h3>
+  <div class="demo-description">
+    <p>
+      Any Object property containing a numerical value can be animated:
+    </p>
+    <table>
+      <thead>
+        <td>Example</td>
+        <td>value</td>
+      </thead>
+      <tr>
+        <td><code>prop1</code></td>
+        <td><code>50</code></td>
+      </tr>
+      <tr>
+        <td><code>'prop-2'</code></td>
+        <td><code>'100%'</code></td>
+      </tr>
+    </table>
+    <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
+  </div>
 <div class="demo-content"><pre>{"myProperty":"0"}</pre></div>
 <script>var myObject = {
   prop1: 0,
   prop2: '0%'
 }
-var JSobjectProp = anime({
+var JSobjProp = anime({
   targets: myObject,
   prop1: 50,
   prop2: '100%',
   easing: 'linear',
   round: 1,
   update: function() {
-    var el = document.querySelector('#JSobjectProp pre');
+    var el = document.querySelector('#JSobjProp pre');
     el.innerHTML = JSON.stringify(myObject);
   }
 });
 </script>
 </div>
 
-<div id="domAttributes" class="demo">
+<div id="domAttr" class="demo">
   <h3 class="demo-title">DOM Attributes</h3>
+  <div class="demo-description">
+    <p>
+      Any DOM Attribute containing a numerical value can be animated.
+    </p>
+    <table>
+      <thead>
+        <td>Example</td>
+        <td>value</td>
+      </thead>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>1000</code></td>
+      </tr>
+      <tr>
+        <td><code>volume</code></td>
+        <td><code>0</code></td>
+      </tr>
+    </table>
+    <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
+  </div>
   <div class="demo-content">
     <input class="text-output" value="0"></input>
   </div>
-<script>var domAttributes = anime({
-  targets: '#domAttributes input',
+<script>var domAttr = anime({
+  targets: '#domAttr input',
   value: 1000,
   round: 1,
   easing: 'easeInOutExpo'
@@ -293,16 +365,48 @@ var JSobjectProp = anime({
 </script>
 </div>
 
-<div id="svgAttributes" class="demo">
+<div id="svgAttr" class="demo">
   <h3 class="demo-title">SVG Attributes</h3>
+  <div class="demo-description">
+    <p>
+      Like any other <a class="color-02" href="#domAttr">DOM Attribute</a> all SVG attributes can be animated.
+    </p>
+    <table>
+      <thead>
+        <td>Example</td>
+        <td>value</td>
+      </thead>
+      <tr>
+        <td><code>points</code></td>
+        <td><code>'64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100'</code></td>
+      </tr>
+      <tr>
+        <td><code>scale</code></td>
+        <td><code>1</code></td>
+      </tr>
+      <tr>
+        <td><code>baseFrequency</code></td>
+        <td><code>1</code></td>
+      </tr>
+    </table>
+    <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
+  </div>
   <div class="demo-content align-center">
 <svg width="128" height="128" viewBox="0 0 128 128">
-  <polygon points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" fill="currentColor"/>
+  <filter id="displacementFilter">
+    <feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turbulence"/>
+    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <polygon points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" style="filter: url(#displacementFilter)" fill="currentColor"/>
 </svg>
   </div>
-<script>var svgAttributes = anime({
-  targets: '#svgAttributes polygon',
+<script>var svgAttr = anime({
+  targets: ['#svgAttr polygon', '#svgAttr feTurbulence', 'feDisplacementMap'],
   points: '64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96',
+  baseFrequency: 0,
+  scale: 1,
+  loop: true,
+  direction: 'alternate',
   easing: 'easeInOutExpo'
 });
 </script>
@@ -319,6 +423,38 @@ var JSobjectProp = anime({
 
 <div id="duration" class="demo">
   <h3 class="demo-title">Duration</h3>
+  <div class="demo-description">
+    <p>
+      Defines the duration of the animation.
+    </p>
+    <table>
+      <thead>
+        <td>Default</td>
+        <td>unit</td>
+      </thead>
+      <tr>
+        <td><code>1000</code></td>
+        <td><code>ms</code></td>
+      </tr>
+    </table>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Example</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td><code>2000</code></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><code>Function</code></td>
+        <td><code>(el, i, t) => i * 200</code></td>
+        <td>More info on <a class="color-03" href="#functionBasedParameters">Function based parameters</a></td>
+      </tr>
+    </table>
+  </div>
   <div class="demo-content">
     <div class="square shadow"></div>
     <div class="square el"></div>
@@ -333,6 +469,38 @@ var JSobjectProp = anime({
 
 <div id="delay" class="demo">
   <h3 class="demo-title">Delay</h3>
+  <div class="demo-description">
+    <p>
+      Defines the delay of the animation.
+    </p>
+    <table>
+      <thead>
+        <td>Default</td>
+        <td>unit</td>
+      </thead>
+      <tr>
+        <td><code>0</code></td>
+        <td><code>ms</code></td>
+      </tr>
+    </table>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Example</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td><code>1000</code></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><code>Function</code></td>
+        <td><code>(el, i, t) => i * 200</code></td>
+        <td>More info on <a class="color-03" href="#functionBasedParameters">Function based parameters</a></td>
+      </tr>
+    </table>
+  </div>
   <div class="demo-content">
 <div class="square shadow"></div>
 <div class="square el"></div>
@@ -347,6 +515,38 @@ var JSobjectProp = anime({
 
 <div id="endDelay" class="demo">
   <h3 class="demo-title">end delay</h3>
+  <div class="demo-description">
+    <p>
+      Add some time at the end of the animation.<br>
+    </p>
+    <table>
+      <thead>
+        <td>Default</td>
+        <td>unit</td>
+      </thead>
+      <tr>
+        <td><code>0</code></td>
+        <td><code>ms</code></td>
+      </tr>
+    </table>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Example</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td><code>2000</code></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><code>Function</code></td>
+        <td><code>(el, i, t) => i * 200</code></td>
+        <td>More info on <a class="color-03" href="#functionBasedParameters">Function based parameters</a></td>
+      </tr>
+    </table>
+  </div>
   <div class="demo-content">
 <div class="square shadow"></div>
 <div class="square el"></div>
@@ -362,6 +562,24 @@ var JSobjectProp = anime({
 
 <div id="easing" class="demo">
   <h3 class="demo-title">Easing</h3>
+  <div class="demo-description">
+    <p>
+      Defines the easing of the animation.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Default</td>
+      </thead>
+      <tr>
+        <td><code>String</code></td>
+        <td><code>'easeOutElastic(1, .5)'</code></td>
+      </tr>
+    </table>
+    <p>
+      For a complete list of available easing and their parameters, check out the <a class="color-07" href="#PennerEasings">Easings</a> section.
+    </p>
+  </div>
   <div class="demo-content">
     <div class="square shadow"></div>
     <div class="square el"></div>
@@ -376,6 +594,25 @@ var JSobjectProp = anime({
 
 <div id="specificPropertyParameters" class="demo">
   <h3 class="demo-title">Specific property parameters</h3>
+  <div class="demo-description">
+    <p>
+      By default, all properties will inherit the same parameters.
+      But you can defin unique parameters to a specific property using an <code>Object</code> as value.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Default</td>
+      </thead>
+      <tr>
+        <td><code>String</code></td>
+        <td><code>'easeOutElastic(1, .5)'</code></td>
+      </tr>
+    </table>
+    <p>
+      For a complete list of available easing and their parameters, check out the <a class="color-07" href="#PennerEasings">Easings</a> section.
+    </p>
+  </div>
   <div class="demo-content">
     <div class="square shadow"></div>
     <div class="square el"></div>
