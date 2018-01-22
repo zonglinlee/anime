@@ -40,7 +40,7 @@
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'easeOutQuad',
+    easing: 'easeOutElastic(1, .5)',
     round: 0
   }
 
@@ -73,7 +73,7 @@
 
   function parseEasingParameters(string) {
     const match = /\(([^)]+)\)/.exec(string);
-    return match ? match[1].split(',').map(p=> parseFloat(p)) : [];
+    return match ? match[1].split(',').map(p => parseFloat(p)) : [];
   }
 
   // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
@@ -82,11 +82,11 @@
 
   function spring(string, duration) {
 
-    const parameters = parseEasingParameters(string);
-    const mass = is.und(parameters[0]) ? 1 : parameters[0];
-    const stiffness = is.und(parameters[1]) ? 100 : parameters[1];
-    const damping = is.und(parameters[2]) ? 10 : parameters[2];
-    const velocity =  is.und(parameters[3]) ? 0 : parameters[3];
+    const params = parseEasingParameters(string);
+    const mass = is.und(params[0]) ? 1 : params[0];
+    const stiffness = is.und(params[1]) ? 100 : params[1];
+    const damping = is.und(params[2]) ? 10 : params[2];
+    const velocity =  is.und(params[3]) ? 0 : params[3];
     const w0 = Math.sqrt(stiffness / mass);
     const zeta = damping / (2 * Math.sqrt(stiffness * mass));
     const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
@@ -1003,18 +1003,21 @@
       instance.play();
     }
 
-    instance.goTo = function(stateName, bypassAnimation) {
+    instance.animateTo = function(stateName, paramsOverrides = {}, bypassAnimation) {
       const nextState = instance.states[stateName];
       const defaultState = instance.states.default;
-      const params = mergeObjects(nextState, defaultState);
-      anime.remove(defaultState.targets);
+      const params = mergeObjects(paramsOverrides, mergeObjects(nextState, defaultState));
+      anime.remove(params.targets);
       const animation = anime(params);
-      animation.play();
-      if (bypassAnimation) animation.seek(animation.duration);
+      if (!bypassAnimation) {
+        animation.play();
+      } else {
+        animation.seek(animation.duration);
+      }
     }
 
-    instance.switchTo = function(stateName) {
-      instance.goTo(stateName, true);
+    instance.switchTo = function(stateName, paramsOverrides) {
+      instance.animateTo(stateName, paramsOverrides, true);
     }
 
     instance.finished = promise;

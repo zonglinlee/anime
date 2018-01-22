@@ -1,4 +1,5 @@
 .content {
+  overflow: hidden;
   opacity: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -65,7 +66,7 @@ header {
   height: 60px;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid rgba(0,0,0,.7);
 }
 
 .logo, h2 {
@@ -92,7 +93,7 @@ header {
 .sidebar {
   width: 240px;
   padding-top: 60px;
-  border-right: 1px solid #000;
+  border-right: 1px solid rgba(0,0,0,.7);
 }
 
 .navigation {
@@ -186,39 +187,90 @@ header {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border-left: 1px solid #000;
+  border-left: 1px solid rgba(0,0,0,.7);
 }
 
 .code-pane {
   position: relative;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid rgba(0,0,0,.7);
 }
 
-.code-pane-js {
-  height: 66%;
-}
-
-.code-pane-html {
-  height: 34%;
-}
+.code-pane-api { height: 40%; }
+.code-pane-js { height: 40%; }
+.code-pane-html { height: 20%; }
 
 .code-header {
   position: absolute;
+  z-index: 0;
+  top: -60px;
+}
+
+.code-header:hover {
+  cursor: ns-resize;
+}
+
+.gutter {
+  z-index: 1;
+}
+
+.code-pane-api .code-header {
   top: 0;
 }
 
 pre {
-  overflow: auto;
-  font-family: 'Space Mono', monospace;
   font-variant-ligatures: none;
   -webkit-font-variant-ligatures: none;
-  line-height: 22px;
+}
+
+code {
+  font-family: "Input Mono Reg", "Space Mono", monospace;
+  font-size: 14px;
+  line-height: 20px;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+}
+
+.api-output {
+  color: #C5C2CB;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.api-output p {
+  margin-bottom: 20px;
+}
+
+.api-output table {
+  margin-bottom: 20px;
+}
+
+.api-output thead {
+  font-size: 12px;
+  line-height: 20px;
+  text-transform: uppercase;
+  opacity: .6;
+}
+
+.api-output tr, .api-output td {
+  border: 1px solid #6e6d72;
+  padding: 6px 8px;
 }
 
 .code-output {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  top: 0;
   width: 100%;
   height: 100%;
-  padding: 80px 20px 20px 20px;
+  padding: 20px;
+  background-color: rgba()
+}
+
+.code-pane-api .code-output {
+  top: 60px;
+  height: calc(100% - 60px);
 }
 
 /* Demos */
@@ -267,7 +319,7 @@ article {
   width: 100%;
   min-height: 200px;
   padding-top: 35px;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid rgba(0,0,0,.7);
   cursor: pointer;
 }
 
@@ -311,6 +363,10 @@ article {
   text-align: center;
   width: 290px;
   height: 100%;
+}
+
+.demo-description {
+  display: none;
 }
 
 #penner .demo-content {

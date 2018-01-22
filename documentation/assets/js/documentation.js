@@ -1,10 +1,20 @@
 var navigationEl = document.querySelector('.navigation');
 var demosEl = document.querySelector('.demos');
 var articleEls = document.querySelectorAll('article');
+var APIOutputEl = document.querySelector('.api-output');
+var APITitleEl = document.querySelector('.code-pane-api h2');
 var jsOutputEl = document.querySelector('.js-output');
 var htmlOutputEl = document.querySelector('.html-output');
 var ulHeight = 20;
 var demos = [];
+
+Split(['.code-pane-api', '.code-pane-js', '.code-pane-html'], {
+  direction: 'vertical',
+  gutterSize: 60,
+  snapOffset: 0,
+  sizes: [58, 38, 4],
+  minSize: [60, 0, 0]
+})
 
 function getScrollTop() {
   return document.body.scrollTop || document.documentElement.scrollTop;
@@ -43,13 +53,21 @@ function parseHTML(el, parentId) {
   });
 }
 
-function outputCode(JScode, HTMLcode) {
+function outputCode(JScode, HTMLcode, title, APIdecription) {
   var js = document.createTextNode(JScode);
   var html = document.createTextNode(HTMLcode);
   jsOutputEl.innerHTML = '';
   htmlOutputEl.innerHTML = '';
   jsOutputEl.appendChild(js);
   htmlOutputEl.appendChild(html);
+  APIOutputEl.innerHTML = APIdecription;
+  APITitleEl.innerHTML = title;
+  APIOutputCodeEls = APIOutputEl.querySelectorAll('code');
+  if (APIOutputCodeEls) {
+    for (var i = 0; i < APIOutputCodeEls.length; i++) {
+      hljs.highlightBlock(APIOutputCodeEls[i]);
+    }
+  }
   hljs.highlightBlock(jsOutputEl);
   hljs.highlightBlock(htmlOutputEl);
 }
@@ -88,11 +106,13 @@ function createDemo(el) {
   var demo = {};
   var scriptEl = el.querySelector('script');
   var demoContentEl = el.querySelector('.demo-content');
+  var descriptionContentEl = el.querySelector('.demo-description');
   var title = el.querySelector('h3').innerHTML;
   var id = el.id;
   var demoAnim = window[id];
   var JScode = scriptEl ? scriptEl.innerHTML : '';
   var HTMLcode = demoContentEl ? parseHTML(demoContentEl, id) : '';
+  var APIdescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
   function highlightDemo(e, push) {
     if (e) e.preventDefault();
     if (!el.classList.contains('active')) {
@@ -104,7 +124,7 @@ function createDemo(el) {
         linkEls[i].parentNode.classList.remove('active');
         d.anim.pause();
       }
-      outputCode(JScode, HTMLcode);
+      outputCode(JScode, HTMLcode, title, APIdescription);
       var linkEl = document.querySelector('a[href="#'+id+'"]');
       var ulEl = linkEl.parentNode.parentNode;
       linkEl.parentNode.classList.add('active');
