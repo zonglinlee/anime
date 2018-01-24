@@ -510,6 +510,7 @@ anime({
     </table>
   </div>
   <div class="demo-content duration-demo">
+    <div class="label">3000ms</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -560,6 +561,7 @@ anime({
     </table>
   </div>
   <div class="demo-content delay-demo">
+    <div class="label">1000ms</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -610,6 +612,7 @@ anime({
     </table>
   </div>
   <div class="demo-content end-delay-demo">
+    <div class="label">1000ms</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -648,6 +651,7 @@ anime({
     </p>
   </div>
   <div class="demo-content easing-demo">
+    <div class="label">easeInOutExpo</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -656,7 +660,7 @@ anime({
 anime({
   targets: '.easing-demo .el',
   translateX: 250,
-  easing: 'easeInOutQuart'
+  easing: 'easeInOutExpo'
 });
 /*DEMO*/
 }
@@ -1452,12 +1456,53 @@ anime({
   <h3 class="demo-title">Basic timeline</h3>
   <div class="demo-description">
     <p>
-      Synchronise multiple animations.<br>
-      Parent animation parameters are not required.<br>
-      Children inherits their parent parameters.
+      Timelines let you synchronise multiple animations together.<br>
+      By default each child animation will start after the previous one ends.
     </p>
+<pre>
+<code>var myTimeline = anime.timeline(parameters);
+</code>
+    </pre>
+    <table>
+      <thead>
+        <td>Argument</td>
+        <td>Type</td>
+        <td>Info</td>
+        <td>Required</td>
+      </thead>
+      <tr>
+        <td><code>parameters</code></td>
+        <td><code>Object</code></td>
+        <td>The default parameters of the timeline inherited by children</td>
+        <td>Optional</td>
+      </tr>
+    </table>
+<pre>
+<code>myTimeline.add(parameters, offset);
+</code>
+    </pre>
+    <table>
+      <thead>
+        <td>Argument</td>
+        <td>Types</td>
+        <td>Info</td>
+        <td>Required</td>
+      </thead>
+      <tr>
+        <td><code>parameters</code></td>
+        <td><code>Object</code></td>
+        <td>The child animation parameters, override the timeline default parameters</td>
+        <td>Required</td>
+      </tr>
+      <tr>
+        <td><code>time offset</code></td>
+        <td><code>String</code> or <code>Number</code></td>
+        <td>Check out the <a class="color-tl" href="#timelineOffsets">Timeline offsets</a> section</td>
+        <td>Optional</td>
+      </tr>
+    </table>
     <pre>
-<code>var myTimeline = anime.timeline(parameters);<br>
+<code>var myTimeline = anime.timeline(parameters);
 myTimeline.add(parameters);
 </code>
     </pre>
@@ -1479,33 +1524,25 @@ myTimeline.add(parameters);
   <script>var basicTimeline = function() {
 /*DEMO*/
 // Create a timeline with default parameters
-var basicTimeline = anime.timeline({
-  targets: '.basic-timeline-demo .el',
+var tl = anime.timeline({
   easing: 'easeOutExpo',
   duration: 750
 });
 
 // Add children
-basicTimeline
-  .add({
-    translateX: 250,
-  })
-  .add({
-    rotate: 180,
-  })
-  .add({
-    // Override targets parameter
-    targets: '.basic-timeline-demo .el.square',
-    translateY: -60
-  })
-  .add({
-    targets: '.basic-timeline-demo .el.circle',
-    translateY: 30
-  })
-  .add({
-    targets: '.basic-timeline-demo .el.triangle',
-    translateY: 30
-  })
+tl
+.add({
+  targets: '.basic-timeline-demo .el.square',
+  translateX: 250,
+})
+.add({
+  targets: '.basic-timeline-demo .el.circle',
+  translateX: 250,
+})
+.add({
+  targets: '.basic-timeline-demo .el.triangle',
+  translateX: 250,
+});
 
 /*DEMO*/
 }
@@ -1513,129 +1550,89 @@ basicTimeline
 
 </div>
 
-<div id="relativeOffset" class="demo">
-  <h3 class="demo-title">Relative offset</h3>
-  <div class="demo-content">
+<div id="timelineOffsets" class="demo">
+  <h3 class="demo-title">Time Offsets</h3>
+  <div class="demo-description">
+    <p>
+      Defines when the child aniamtion starts.
+    </p>
+    <table>
+      <thead>
+        <td>Offset</td>
+        <td>Example</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>'+='</code></td>
+        <td><code>'+=200'</code></td>
+        <td>Starts 200ms after the previous animation ends</td>
+      </tr>
+      <tr>
+        <td><code>'-='</code></td>
+        <td><code>'-=200'</code></td>
+        <td>Starts 200ms before the previous animation ends</td>
+      </tr>
+      <tr>
+        <td><code>Number</code></td>
+        <td><code>100</code></td>
+        <td>Starts at 100ms, reagardless of the animtion position in the timeline</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content offsets-demo">
     <div class="line">
+      <div class="label">no offset</div>
       <div class="square shadow"></div>
       <div class="square el"></div>
     </div>
     <div class="line">
+      <div class="label">relative offset ('-=600')</div>
       <div class="circle shadow"></div>
       <div class="circle el"></div>
     </div>
     <div class="line">
+      <div class="label">absolute offset (400)</div>
       <div class="triangle shadow"></div>
       <div class="triangle el"></div>
     </div>
   </div>
-<script>var relativeOffset = anime.timeline();
-
-relativeOffset
-  .add({
-    targets: '#relativeOffset .square.el',
-    translateX: 250,
-    easing: 'easeOutExpo',
-  })
-  .add({
-    targets: '#relativeOffset .circle.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
-  }, '-=600') // Starts 600ms before the previous animation ends
-  .add({
-    targets: '#relativeOffset .triangle.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
-  }, '-=800'); // Starts 800ms before the previous animation ends
-
-</script>
-</div>
-
-<div id="absoluteOffset" class="demo">
-  <h3 class="demo-title">Absolute offset</h3>
-  <div class="demo-content">
-    <div class="line">
-      <div class="square shadow"></div>
-      <div class="square el"></div>
-    </div>
-    <div class="line">
-      <div class="circle shadow"></div>
-      <div class="circle el"></div>
-    </div>
-    <div class="line">
-      <div class="triangle shadow"></div>
-      <div class="triangle el"></div>
-    </div>
-  </div>
-<script>var absoluteOffset = anime.timeline();
-
-absoluteOffset
-  .add({
-    targets: '#absoluteOffset .square.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
-  }, 1000) // Starts at 1000ms of the timeline
-  .add({
-    targets: '#absoluteOffset .circle.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
-  }, 500) // Starts at 500ms of the timeline
-  .add({
-    targets: '#absoluteOffset .triangle.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
-  }, 0);  // Starts at 0ms of the timeline
-
-</script>
-</div>
-
-<div id="timelineParameters" class="demo">
-  <h3 class="demo-title">Basic Timeline parameters</h3>
-  <div class="demo-content">
-    <div class="line">
-      <div class="square shadow"></div>
-      <div class="square el"></div>
-    </div>
-    <div class="line">
-      <div class="circle shadow"></div>
-      <div class="circle el"></div>
-    </div>
-    <div class="line">
-      <div class="triangle shadow"></div>
-      <div class="triangle el"></div>
-    </div>
-  </div>
-<script>var timelineParameters = anime.timeline({
-  direction: 'alternate',
-  loop: true
+  <script>var timelineOffsets = function() {
+/*DEMO*/
+// Create a timeline with default parameters
+var tl = anime.timeline({
+  easing: 'easeOutExpo',
+  duration: 750
 });
 
-timelineParameters
-  .add({
-    targets: '#timelineParameters .square.el',
-    translateX: [ { value: 80 }, { value: 160 }, { value: 250 } ],
-    translateY: [ { value: 30 }, { value: 60 }, { value: 60 } ],
-    duration: 3000
-  })
-  .add({
-    targets: '#timelineParameters .circle.el',
-    translateX: [ { value: 80 }, { value: 160 }, { value: 250 } ],
-    translateY: [ { value: 30 }, { value: -30 }, { value: -30 } ],
-    duration: 3000
-  }, 200)
-  .add({
-    targets: '#timelineParameters .triangle.el',
-    translateX: [ { value: 80 }, { value: 250 } ],
-    translateY: [ { value: -60 }, { value: -30 }, { value: -30 } ],
-    duration: 3000
-  }, 400);
+tl
+.add({
+  targets: '.offsets-demo .el.square',
+  translateX: 250,
+})
+.add({
+  targets: '.offsets-demo .el.circle',
+  translateX: 250,
+}, '-=600') // relative offset
+.add({
+  targets: '.offsets-demo .el.triangle',
+  translateX: 250,
+}, 0); // absolute offset
 
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="TLParamsInheritance" class="demo">
   <h3 class="demo-title">Parameters inheritance</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      Write less code by defining default parameters.<br>
+      Every child inherits the default parameters of the timeline.<br>
+      Default parameters can be overrided.
+    </p>
+  </div>
+  <div class="demo-content params-inheritance-demo">
     <div class="line">
       <div class="square shadow"></div>
       <div class="square el"></div>
@@ -1649,8 +1646,10 @@ timelineParameters
       <div class="triangle el"></div>
     </div>
   </div>
-<script>var TLParamsInheritance = anime.timeline({
-  targets: '#TLParamsInheritance .el',
+  <script>var TLParamsInheritance = function() {
+/*DEMO*/
+var tl = anime.timeline({
+  targets: '.params-inheritance-demo .el',
   delay: function(el, i) { return i * 200 },
   duration: 500,
   easing: 'easeOutExpo',
@@ -1658,21 +1657,29 @@ timelineParameters
   loop: true
 });
 
-TLParamsInheritance
-  .add({
-    translateX: 250,
-  })
-  .add({
-    opacity: .5,
-    translateX: 250,
-    scale: 2,
-  })
-  .add({
-    translateX: 0,
-    scale: 1
-  });
+tl
+.add({
+  translateX: 250,
+  // override the easing parameter
+  easing: 'spring',
+})
+.add({
+  opacity: .5,
+  scale: 2
+})
+.add({
+  // override the targets parameter
+  targets: '.params-inheritance-demo .el.triangle',
+  rotate: 180
+})
+.add({
+  translateX: 0,
+  scale: 1
+});
+/*DEMO*/
+}
+  </script>
 
-</script>
 </div>
 
 </article>
@@ -1699,7 +1706,7 @@ TLParamsInheritance
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
-    <div class="line player">
+    <div class="player">
       <button class="play">Play</button>
       <button class="pause">Pause</button>
     </div>
