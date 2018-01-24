@@ -1459,9 +1459,8 @@ anime({
       Timelines let you synchronise multiple animations together.<br>
       By default each child animation will start after the previous one ends.
     </p>
-<pre>
-<code>var myTimeline = anime.timeline(parameters);
-</code>
+    <pre>
+<code>var myTimeline = anime.timeline(parameters);</code>
     </pre>
     <table>
       <thead>
@@ -1477,9 +1476,8 @@ anime({
         <td>Optional</td>
       </tr>
     </table>
-<pre>
-<code>myTimeline.add(parameters, offset);
-</code>
+    <pre>
+<code>myTimeline.add(parameters, offset);</code>
     </pre>
     <table>
       <thead>
@@ -1691,9 +1689,23 @@ tl
   <h2 class="demos-title">Controls</h2>
 </header>
 
-<div id="playPause" class="demo controls">
+<div id="playPause" class="demo">
   <h3 class="demo-title">Play / Pause</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>Manualy play or pause the animation.</p>
+<pre>
+<code>var animation = anime({
+  targets: '.item',
+  translate: 250,
+  autoplay: false
+});
+
+animation.play();
+animation.pause();
+</code>
+</pre>
+  </div>
+  <div class="demo-content play-pause-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div class="small square el"></div>
@@ -1706,29 +1718,45 @@ tl
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
-    <div class="player">
+    <div class="line player">
       <button class="play">Play</button>
       <button class="pause">Pause</button>
     </div>
   </div>
-<script>var playPause = anime({
-  targets: '#playPause .el',
+  <script>var playPause = function() {
+/*DEMO*/
+var animation = anime({
+  targets: '.play-pause-demo .el',
   translateX: 250,
-  delay: function(el, i, l) { return i * 100; },
+  delay: function(el, i) { return i * 100; },
   direction: 'alternate',
   loop: true,
   autoplay: false
 });
 
-document.querySelector('#playPause .play').onclick = playPause.play;
-document.querySelector('#playPause .pause').onclick = playPause.pause;
+document.querySelector('.play-pause-demo .play').onclick = animation.play;
+document.querySelector('.play-pause-demo .pause').onclick = animation.pause;
+/*DEMO*/
+}
 
 </script>
 </div>
 
 <div id="restartAnim" class="demo">
   <h3 class="demo-title">Restart</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>Restart the animation from the default values</p>
+<pre>
+<code>var animation = anime({
+  targets: '.item',
+  translate: 250
+});
+
+animation.restart();
+</code>
+</pre>
+  </div>
+  <div class="demo-content restart-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div class="small square el"></div>
@@ -1745,22 +1773,38 @@ document.querySelector('#playPause .pause').onclick = playPause.pause;
       <button class="restart">Restart</button>
     </div>
   </div>
-<script>var restartAnim = anime({
-  targets: '#restartAnim .el',
+  <script>var restartAnim = function() {
+/*DEMO*/
+var animation = anime({
+  targets: '.restart-demo .el',
   translateX: 250,
-  delay: function(el, i, l) { return i * 100; },
+  delay: function(el, i) { return i * 100; },
   direction: 'alternate',
   loop: true
 });
 
-document.querySelector('#restartAnim .restart').onclick = restartAnim.restart;
+document.querySelector('.restart-demo .restart').onclick = animation.restart;
+/*DEMO*/
+}
+  </script>
 
-</script>
 </div>
 
 <div id="reverseAnim" class="demo controls">
   <h3 class="demo-title">Reverse</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>Reverse the animation direction</p>
+<pre>
+<code>var animation = anime({
+  targets: '.item',
+  translate: 250
+});
+
+animation.reverse();
+</code>
+</pre>
+  </div>
+  <div class="demo-content reverse-anim-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div class="small square el"></div>
@@ -1777,24 +1821,53 @@ document.querySelector('#restartAnim .restart').onclick = restartAnim.restart;
       <button class="reverse">Reverse</button>
     </div>
   </div>
-<script>var reverseAnim = anime({
-  targets: '#reverseAnim .el',
+
+  <script>
+
+  var reverseAnimDemo = anime({
+    targets: '.reverse-anim-demo .el',
+    translateX: 250,
+    duration: 2000,
+    direction: 'reverse',
+    delay: function(el, i) { return i * 200; }
+  });
+
+  document.querySelector('.reverse-anim-demo .reverse').onclick = function() {
+    reverseAnimDemo.play();
+    reverseAnimDemo.reverse();
+  }
+
+  var reverseAnim = function() {
+/*DEMO*/
+var animation = anime({
+  targets: '.reverse-anim-demo .el',
   translateX: 250,
   duration: 2000,
-  delay: function(el, i, l) { return i * 200; }
+  delay: function(el, i) { return i * 200; }
 });
 
-document.querySelector('#reverseAnim .reverse').onclick = function() {
-  reverseAnim.play();
-  reverseAnim.reverse();
+document.querySelector('.reverse-anim-demo .reverse').onclick = animation.reverse;
+/*DEMO*/
 }
+  </script>
 
-</script>
 </div>
 
-<div id="seekAnim" class="demo controls">
+<div id="seekAnim" class="demo">
   <h3 class="demo-title">Seek</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>Jump to a specific time of the animation</p>
+<pre>
+<code>var animation = anime({
+  targets: '.item',
+  translate: 250
+});
+
+animation.seek(500);
+</code>
+</pre>
+  </div>
+  <div class="demo-content seek-anim-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div class="small square el"></div>
@@ -1811,25 +1884,32 @@ document.querySelector('#reverseAnim .reverse').onclick = function() {
       <input class="progress" step=".001" type="range" min="0" max="100" value="0"></input>
     </div>
   </div>
-<script>var seekAnim = anime({
-  targets: '#seekAnim .el',
+  <script>var seekAnim = function() {
+/*DEMO*/
+var animation = anime({
+  targets: '.seek-anim-demo .el',
   translateX: 250,
-  delay: function(el, i, l) { return i * 100; },
+  delay: function(el, i) { return i * 100; },
   elasticity: 200,
   autoplay: false
 });
 
-var seekProgressEl = document.querySelector('#seekAnim .progress');
-document.querySelector('#seekAnim .progress').oninput = function() {
-  seekAnim.seek(seekAnim.duration * (seekProgressEl.value / 100));
+var seekProgressEl = document.querySelector('.seek-anim-demo .progress');
+seekProgressEl.oninput = function() {
+  animation.seek(animation.duration * (seekProgressEl.value / 100));
 };
+/*DEMO*/
+}
+  </script>
 
-</script>
 </div>
 
 <div id="TLcontrols" class="demo controls">
   <h3 class="demo-title">Timeline controls</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>Timelines can be controled like any other anime instance</p>
+  </div>
+  <div class="demo-content timeline-controls-demo">
     <div class="line">
       <div class="square shadow"></div>
       <div class="square el"></div>
@@ -1849,39 +1929,45 @@ document.querySelector('#seekAnim .progress').oninput = function() {
       <input class="progress" step=".001" type="range" min="0" max="100" value="0"></input>
     </div>
   </div>
-<script>var controlsProgressEl = document.querySelector('#TLcontrols .progress');
+  <script>var TLcontrols = function() {
+/*DEMO*/
+var controlsProgressEl = document.querySelector('.timeline-controls-demo .progress');
 
-var TLcontrols = anime.timeline({
+var tl = anime.timeline({
   direction: 'alternate',
   loop: true,
   duration: 500,
   update: function(anim) {
-    controlsProgressEl.value = anim.progress;
+    controlsProgressEl.value = tl.progress;
   }
 });
 
-TLcontrols
-  .add({
-    targets: '#TLcontrols .square.el',
-    translateX: 250,
-  })
-  .add({
-    targets: '#TLcontrols .circle.el',
-    translateX: 250,
-  }, '-=100')
-  .add({
-    targets: '#TLcontrols .triangle.el',
-    translateX: 250,
-  }, '-=100');
+tl
+.add({
+  targets: '.timeline-controls-demo .square.el',
+  translateX: 250,
+})
+.add({
+  targets: '.timeline-controls-demo .circle.el',
+  translateX: 250,
+}, '-=100')
+.add({
+  targets: '.timeline-controls-demo .triangle.el',
+  translateX: 250,
+}, '-=100');
 
-document.querySelector('#TLcontrols .play').onclick = TLcontrols.play;
-document.querySelector('#TLcontrols .pause').onclick = TLcontrols.pause;
-document.querySelector('#TLcontrols .restart').onclick = TLcontrols.restart;
+document.querySelector('.timeline-controls-demo .play').onclick = tl.play;
+document.querySelector('.timeline-controls-demo .pause').onclick = tl.pause;
+document.querySelector('.timeline-controls-demo .restart').onclick = tl.restart;
 
 controlsProgressEl.addEventListener('input', function() {
-  TLcontrols.seek(TLcontrols.duration * (controlsProgressEl.value / 100));
+  console.log('seek');
+  tl.seek(tl.duration * (controlsProgressEl.value / 100));
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="animStates" class="demo controls">

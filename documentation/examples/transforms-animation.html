@@ -35,8 +35,8 @@
       margin: -.5em 0 0 -.5em;
       border: 1px solid currentColor;
       background-color: currentColor;
-      font-size: 30px;
-      /*border-radius: 50%;*/
+      font-size: 20px;
+      border-radius: 50%;
     }
 
   </style>
@@ -54,20 +54,13 @@
       const angle = anime.random(-360, 360);
       el.classList.add('el');
       el.style.color = 'hsl(' +  anime.random(0, 50) + ', 70%, 70%)';
+      el.style.transform = 'rotate(' + angle + 'deg)';
       anime({
         targets: el,
-        rotate: [angle, angle],
         translateX: anime.random(300, 350),
-        scale: [{
-          value: [0, .5],
-          duration: duration / 2
-        }, {
-          value: 0,
-          duration: duration / 2
-        }],
-        startTime: i * (duration / numberOfEls),
+        scale: [0, 1],
+        delay: i * (duration / numberOfEls),
         loop: true,
-        direction: 'reverse',
         easing: 'easeInOutSine',
         duration: duration
       });
