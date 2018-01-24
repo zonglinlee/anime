@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DOM stress test | anime.js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:title" content="anime.js">
+  <meta property="og:url" content="http://animejs.com">
+  <meta property="og:description" content="Javascript Animation Engine">
+  <meta property="og:image" content="http://animejs.com/documentation/assets/img/icons/og.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="anime.js">
+  <meta name="twitter:site" content="@juliangarnier">
+  <meta name="twitter:description" content="Javascript Animation Engine">
+  <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
+  <link href="../assets/css/anime.css" rel="stylesheet">
+  <script src="../../anime.js"></script>
+  <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
+  <!-- <script src="../assets/js/anime/anime.2.0.2.js"></script> -->
+  <!-- <script src="../assets/js/anime/anime.1.0.js"></script> -->
+  <style>
+
+    body {
+      overflow: hidden;
+    }
+
+    .el {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1em;
+      height: 1em;
+      margin: -.5em 0 0 -.5em;
+      border: 1px solid currentColor;
+      background-color: currentColor;
+      font-size: 30px;
+      /*border-radius: 50%;*/
+    }
+
+  </style>
+</head>
+<body></body>
+<script>
+
+    const wrapperEl = document.body;
+    const numberOfEls = 500;
+    const duration = 2000;
+
+    function createEl(i) {
+      let el = document.createElement('div');
+      const hue = Math.round(50 / numberOfEls * i);
+      const angle = anime.random(-360, 360);
+      el.classList.add('el');
+      el.style.color = 'hsl(' +  anime.random(0, 50) + ', 70%, 70%)';
+      anime({
+        targets: el,
+        rotate: [angle, angle],
+        translateX: anime.random(300, 350),
+        scale: [{
+          value: [0, .5],
+          duration: duration / 2
+        }, {
+          value: 0,
+          duration: duration / 2
+        }],
+        startTime: i * (duration / numberOfEls),
+        loop: true,
+        direction: 'reverse',
+        easing: 'easeInOutSine',
+        duration: duration
+      });
+      wrapperEl.appendChild(el);
+    };
+
+    for (let i = 0; i < numberOfEls; i++) createEl(i);
+
+  </script>
+  <script src="../assets/js/vendors/stats.min.js"></script>
+</html>

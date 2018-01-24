@@ -33,7 +33,7 @@
     <section class="pane demos">
 
 <!-- TARGETS -->
-<article id="targets" class="color-01">
+<article id="targets" class="color-targets">
   <header>
     <h2 class="demos-title">Targets</h2>
   </header>
@@ -60,18 +60,22 @@
     </tr>
   </table>
   </div>
-  <div class="demo-content">
+  <div class="demo-content css-selector-demo">
     <div class="line">
       <div class="square shadow"></div>
       <div class="square el"></div>
     </div>
   </div>
-
-<script>var cssSelector = anime({
-  targets: '#cssSelector .el',
+  <script>var cssSelector = function() {
+/*DEMO*/
+anime({
+  targets: '.css-selector-demo .el',
   translateX: 250
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="domNode" class="demo">
@@ -99,7 +103,7 @@
     </tr>
   </table>
   </div>
-  <div class="demo-content">
+  <div class="demo-content dom-node-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div class="small square el"></div>
@@ -113,13 +117,17 @@
       <div class="small square el"></div>
     </div>
   </div>
-<script>var els = document.querySelectorAll('#domNode .el');
+  <script>var domNode = function() {
+/*DEMO*/
+var elements = document.querySelectorAll('.dom-node-demo .el');
 
-var domNode = anime({
-  targets: els,
+anime({
+  targets: elements,
   translateX: 250
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="JSobject" class="demo">
@@ -144,25 +152,35 @@ var domNode = anime({
   </table>
   </div>
   <div class="demo-content">
-    <pre>{"charged":"0"}</pre>
+    <pre class="battery-log">{"charged":"0%","cycles":120}</pre>
   </div>
-<script>var obj = { charged: '0%' };
+  <script>var JSobject = function() {
+/*DEMO*/
+var battery = {
+  charged: '0%',
+  cycles: 120
+}
 
-var JSobject = anime({
-  targets: obj,
+anime({
+  targets: battery,
   charged: '100%',
+  cycles: 130,
   round: 1,
   easing: 'linear',
   update: function() {
-    var el = document.querySelector('#JSobject pre');
-    el.innerHTML = JSON.stringify(obj);
+    var el = document.querySelector('.battery-log');
+    el.innerHTML = JSON.stringify(battery);
   }
 });
+/*DEMO*/
+}
+  </script>
+<script>
 </script>
 </div>
 
 <div id="mixedArray" class="demo">
-  <h3 class="demo-title">JavaScript Array</h3>
+  <h3 class="demo-title">Mixed Array</h3>
   <div class="demo-description">
     <p>
       An array containing different type of targets
@@ -178,34 +196,39 @@ var JSobject = anime({
     </tr>
   </table>
   </div>
-  <div class="demo-content">
+  <div class="demo-content mixed-array-demo">
     <div class="line">
       <div class="square shadow"></div>
-      <div class="square el-01"></div>
+      <div class="square el el-01"></div>
     </div>
     <div class="line">
       <div class="square shadow"></div>
-      <div class="square el-02"></div>
+      <div class="square el el-02"></div>
     </div>
     <div class="line">
       <div class="square shadow"></div>
-      <div class="square el-03"></div>
+      <div class="square el el-03"></div>
     </div>
   </div>
-<script>var el = document.querySelector('#mixedArray .el-01');
+  <script>var mixedArray = function() {
+/*DEMO*/
+var el = document.querySelector('.mixed-array-demo .el-01');
 
-var mixedArray = anime({
-  targets: [el, '#mixedArray .el-02', '#mixedArray .el-03'],
+anime({
+  targets: [el, '.mixed-array-demo .el-02', '.mixed-array-demo .el-03'],
   translateX: 250
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 </article>
 <!-- -->
 
 <!-- ANIMATABLE PROPERTIES -->
-<article id="properties" class="color-02">
+<article id="properties" class="color-properties">
 <header>
   <h2 class="demos-title">Properties</h2>
 </header>
@@ -216,7 +239,7 @@ var mixedArray = anime({
     <p>
       Any CSS properties can be animated.
       Note that most CSS properties will cause layout changes or repaint, and will result in choppy animation.
-      Prroritize <code>'opacity', 'translate', 'rotate', 'scale'</code> as much as possible.
+      Prroritize <code>'opacity'</code>, <code>'translate'</code>, <code>'rotate'</code>, <code>'scale'</code> as much as possible.
     </p>
     <table>
       <thead>
@@ -234,18 +257,22 @@ var mixedArray = anime({
     </table>
     <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
   </div>
-  <div class="demo-content">
+  <div class="demo-content css-prop-demo">
     <div class="large square shadow"></div>
     <div class="large square el"></div>
   </div>
-<script>var cssProperties = anime({
-  targets: '#cssProperties .el',
+  <script>var cssProperties = function() {
+/*DEMO*/
+anime({
+  targets: '.css-prop-demo .el',
   left: '240px',
   backgroundColor: '#FFF',
   borderRadius: ['0%', '50%'],
   easing: 'easeInOutQuad'
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="CSStransforms" class="demo">
@@ -277,17 +304,21 @@ var mixedArray = anime({
     </table>
     <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
   </div>
-  <div class="demo-content">
+  <div class="demo-content css-transforms-demo">
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
-<script>var CSStransforms = anime({
-  targets: '#CSStransforms .el',
+  <script>var CSStransforms = function() {
+/*DEMO*/
+anime({
+  targets: '.css-transforms-demo .el',
   translateX: 250,
   scale: 2,
   rotate: '1turn'
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="JSobjProp" class="demo">
@@ -312,23 +343,30 @@ var mixedArray = anime({
     </table>
     <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
   </div>
-<div class="demo-content"><pre>{"myProperty":"0"}</pre></div>
-<script>var myObject = {
+  <div class="demo-content">
+    <pre class="js-object-log">{"myProperty":"0"}</pre>
+  </div>
+  <script>var JSobjProp = function() {
+/*DEMO*/
+var myObject = {
   prop1: 0,
   prop2: '0%'
 }
-var JSobjProp = anime({
+
+anime({
   targets: myObject,
   prop1: 50,
   prop2: '100%',
   easing: 'linear',
   round: 1,
   update: function() {
-    var el = document.querySelector('#JSobjProp pre');
+    var el = document.querySelector('.js-object-log');
     el.innerHTML = JSON.stringify(myObject);
   }
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="domAttr" class="demo">
@@ -353,23 +391,27 @@ var JSobjProp = anime({
     </table>
     <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
   </div>
-  <div class="demo-content">
-    <input class="text-output" value="0"></input>
+  <div class="demo-content dom-attribute-demo">
+    <input class="el text-output" value="0"></input>
   </div>
-<script>var domAttr = anime({
-  targets: '#domAttr input',
-  value: 1000,
+  <script>var domAttr = function() {
+/*DEMO*/
+anime({
+  targets: '.dom-attribute-demo input',
+  value: [0, 1000],
   round: 1,
   easing: 'easeInOutExpo'
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="svgAttr" class="demo">
   <h3 class="demo-title">SVG Attributes</h3>
   <div class="demo-description">
     <p>
-      Like any other <a class="color-02" href="#domAttr">DOM Attribute</a> all SVG attributes can be animated.
+      Like any other <a class="color-properties" href="#domAttr">DOM Attribute</a> all SVG attributes can be animated.
     </p>
     <table>
       <thead>
@@ -391,17 +433,26 @@ var JSobjProp = anime({
     </table>
     <p>More details about accepted values in the <a class="color-06" href="#unitlessValue">Values</a> section.</p>
   </div>
-  <div class="demo-content align-center">
+  <div class="demo-content align-center svg-attributes-demo">
 <svg width="128" height="128" viewBox="0 0 128 128">
   <filter id="displacementFilter">
     <feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turbulence"/>
-    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"/>
   </filter>
   <polygon points="64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100" style="filter: url(#displacementFilter)" fill="currentColor"/>
 </svg>
   </div>
-<script>var svgAttr = anime({
-  targets: ['#svgAttr polygon', '#svgAttr feTurbulence', 'feDisplacementMap'],
+  <script>var svgAttr = function() {
+  // Needed to reset demo
+  var polyEl = document.querySelector('.svg-attributes-demo polygon');
+  var feTurbulenceEl = document.querySelector('feTurbulence');
+  var feDisplacementMap = document.querySelector('feDisplacementMap');
+  polyEl.setAttribute('points', '64 68.64 8.574 100 63.446 67.68 64 4 64.554 67.68 119.426 100');
+  feTurbulenceEl.setAttribute('baseFrequency', '.05');
+  feDisplacementMap.setAttribute('scale', '15');
+/*DEMO*/
+anime({
+  targets: ['.svg-attributes-demo polygon', 'feTurbulence', 'feDisplacementMap'],
   points: '64 128 8.574 96 8.574 32 64 0 119.426 32 119.426 96',
   baseFrequency: 0,
   scale: 1,
@@ -409,14 +460,17 @@ var JSobjProp = anime({
   direction: 'alternate',
   easing: 'easeInOutExpo'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 </article>
 <!-- -->
 
 <!-- PROPERTY PARAMETERS -->
-<article id="propertyParameters" class="color-03">
+<article id="propertyParameters" class="color-prop-params">
   <header>
     <h2 class="demos-title">Property parameters</h2>
   </header>
@@ -451,20 +505,24 @@ var JSobjProp = anime({
       <tr>
         <td><code>Function</code></td>
         <td><code>(el, i, t) => i * 200</code></td>
-        <td>More info on <a class="color-03" href="#functionBasedParameters">Function based parameters</a></td>
+        <td>More info on <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a></td>
       </tr>
     </table>
   </div>
-  <div class="demo-content">
+  <div class="demo-content duration-demo">
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
-<script>var duration = anime({
-  targets: '#duration .el',
+  <script>var duration = function() {
+/*DEMO*/
+anime({
+  targets: '.duration-demo .el',
   translateX: 250,
   duration: 3000
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="delay" class="demo">
@@ -497,20 +555,24 @@ var JSobjProp = anime({
       <tr>
         <td><code>Function</code></td>
         <td><code>(el, i, t) => i * 200</code></td>
-        <td>More info on <a class="color-03" href="#functionBasedParameters">Function based parameters</a></td>
+        <td>More info on <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a></td>
       </tr>
     </table>
   </div>
-  <div class="demo-content">
-<div class="square shadow"></div>
-<div class="square el"></div>
+  <div class="demo-content delay-demo">
+    <div class="square shadow"></div>
+    <div class="square el"></div>
   </div>
-<script>var delay = anime({
-  targets: '#delay .el',
+  <script>var delay = function() {
+/*DEMO*/
+anime({
+  targets: '.delay-demo .el',
   translateX: 250,
   delay: 1000
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="endDelay" class="demo">
@@ -543,21 +605,26 @@ var JSobjProp = anime({
       <tr>
         <td><code>Function</code></td>
         <td><code>(el, i, t) => i * 200</code></td>
-        <td>More info on <a class="color-03" href="#functionBasedParameters">Function based parameters</a></td>
+        <td>More info on <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a></td>
       </tr>
     </table>
   </div>
-  <div class="demo-content">
-<div class="square shadow"></div>
-<div class="square el"></div>
+  <div class="demo-content end-delay-demo">
+    <div class="square shadow"></div>
+    <div class="square el"></div>
   </div>
-<script>var endDelay = anime({
-  targets: '#endDelay .el',
+  <script>var endDelay = function() {
+/*DEMO*/
+anime({
+  targets: '.end-delay-demo .el',
   translateX: 250,
   endDelay: 1000,
   direction: 'alternate'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="easing" class="demo">
@@ -577,48 +644,43 @@ var JSobjProp = anime({
       </tr>
     </table>
     <p>
-      For a complete list of available easing and their parameters, check out the <a class="color-07" href="#PennerEasings">Easings</a> section.
+      Check out the <a class="color-07" href="#PennerEasings">Easings</a> section for a complete list of available easing and parameters.
     </p>
   </div>
-  <div class="demo-content">
+  <div class="demo-content easing-demo">
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
-<script>var easing = anime({
-  targets: '#easing .el',
+  <script>var easing = function() {
+/*DEMO*/
+anime({
+  targets: '.easing-demo .el',
   translateX: 250,
   easing: 'easeInOutQuart'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
-<div id="specificPropertyParameters" class="demo">
+<div id="specificPropParameters" class="demo">
   <h3 class="demo-title">Specific property parameters</h3>
   <div class="demo-description">
     <p>
-      By default, all properties will inherit the same parameters.
-      But you can defin unique parameters to a specific property using an <code>Object</code> as value.
-    </p>
-    <table>
-      <thead>
-        <td>Accepts</td>
-        <td>Default</td>
-      </thead>
-      <tr>
-        <td><code>String</code></td>
-        <td><code>'easeOutElastic(1, .5)'</code></td>
-      </tr>
-    </table>
-    <p>
-      For a complete list of available easing and their parameters, check out the <a class="color-07" href="#PennerEasings">Easings</a> section.
+      Define unique parameters to each properties of the animation using an <code>Object</code> as value.<br>
+      The property value is set using the <code>value</code> property.<br>
+      Other properties that aren't specified in the <code>Object</code> will be inheritted from the main parameters.
     </p>
   </div>
-  <div class="demo-content">
+  <div class="demo-content specific-prop-params-demo">
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
-<script>var specificPropertyParameters = anime({
-  targets: '#specificPropertyParameters .el',
+  <script>var specificPropParameters = function() {
+/*DEMO*/
+anime({
+  targets: '.specific-prop-params-demo .el',
   translateX: {
     value: 250,
     duration: 800
@@ -636,382 +698,651 @@ var JSobjProp = anime({
   },
   delay: 250 // All properties except 'scale' inherit 250ms delay
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
-</article>
-<!-- -->
-
-<!-- FUNCTION BASED PARAMETERS -->
-<article id="functionBasedParameters" class="color-04">
-<header>
-  <h2 class="demos-title">Function based parameters</h2>
-</header>
-
-<div id="functionBasedDuration" class="demo">
-  <h3 class="demo-title">Duration</h3>
-  <div class="demo-content">
+<div id="functionBasedParameters" class="demo">
+  <h3 class="demo-title">Function based parameters</h3>
+  <div class="demo-description">
+    <p>
+      Get different values for every target and property of the animation.<br>
+      The function accepts 3 arguments:
+    </p>
+    <table>
+      <thead>
+        <td>Arguments</td>
+        <td>Infos</td>
+      </thead>
+      <tr>
+        <td><code>target</code></td>
+        <td>The curently animated targeted element</td>
+      </tr>
+      <tr>
+        <td><code>index</code></td>
+        <td>The index of the animated targeted element</td>
+      </tr>
+      <tr>
+        <td><code>targetsLength</code></td>
+        <td>The total number of animated targets</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content function-based-params-demo">
     <div class="line">
+      <div class="small label">delay = 0 * 100</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="small label">delay = 1 * 100</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="small label">delay = 2 * 100</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
   </div>
-<script>var functionBasedDuration = anime({
-  targets: '#functionBasedDuration .el',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  duration: function(el, i, l) {
-    return 1000 + (i * 1000);
-  }
-});
-</script>
-</div>
-
-<div id="functionBasedDelay" class="demo">
-  <h3 class="demo-title">Delay</h3>
-  <div class="demo-content">
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-  </div>
-<script>var functionBasedDelay = anime({
-  targets: '#functionBasedDelay .el',
+  <script>var functionBasedParameters = function() {
+/*DEMO*/
+anime({
+  targets: '.function-based-params-demo .el',
   translateX: 250,
   direction: 'alternate',
   loop: true,
   delay: function(el, i, l) {
     return i * 100;
+  },
+  endDelay: function(el, i, l) {
+    return (l - i) * 100;
   }
 });
-</script>
-</div>
+/*DEMO*/
+}
+  </script>
 
-<div id="functionBasedElasticity" class="demo">
-  <h3 class="demo-title">Elasticity</h3>
-  <div class="demo-content">
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-  </div>
-<script>var functionBasedElasticity = anime({
-  targets: '#functionBasedElasticity .el',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  elasticity: function(el, i, l) {
-    return (200 + i * 200);
-  }
-});
-</script>
-</div>
-
-<div id="combinedFunctionBasedProp" class="demo">
-  <h3 class="demo-title">Combined</h3>
-  <div class="demo-content">
-    <div class="line">
-      <div class="square shadow"></div>
-      <div data-duration="2000" class="square el"></div>
-    </div>
-    <div class="line">
-      <div class="square shadow"></div>
-      <div data-duration="1500" class="square el"></div>
-    </div>
-    <div class="line">
-      <div class="square shadow"></div>
-      <div data-duration="1000" class="square el"></div>
-    </div>
-  </div>
-<script>var combinedFunctionBasedProp = anime({
-  targets: '#combinedFunctionBasedProp .el',
-  translateX: 100,
-  translateX: 250,
-  rotate: 180,
-  duration: function(target) {
-    // Duration based on every div 'data-duration' attribute
-    return target.getAttribute('data-duration');
-  },
-  delay: function(target, index) {
-    // 100ms delay multiplied by every div index, in ascending order
-    return index * 100;
-  },
-  elasticity: function(target, index, totalTargets) {
-    // Elasticity multiplied by every div index, in descending order
-    return 200 + ((totalTargets - index) * 200);
-  },
-  direction: 'alternate',
-  loop: true
-});
-</script>
 </div>
 
 </article>
 <!-- -->
 
 <!-- ANIMATION PARAMETERS -->
-<article id="animationParameters" class="color-05">
+<article id="animationParameters" class="color-anim-params">
   <header>
     <h2 class="demos-title">Animation parameters</h2>
   </header>
 
-<div id="alternate" class="demo">
-  <h3 class="demo-title">Direction alternate</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+<div id="direction" class="demo">
+  <h3 class="demo-title">Direction</h3>
+  <div class="demo-description">
+    <p>
+      Define the direction of the animation.
+    </p>
+    <table>
+      <thead>
+        <td>Default</td>
+      </thead>
+      <tr>
+        <td><code>'normal'</code></td>
+      </tr>
+    </table>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Infos</td>
+      </thead>
+      <tr>
+        <td><code>'normal'</code></td>
+        <td>Animation progress goes from 0 to 100%</td>
+      </tr>
+      <tr>
+        <td><code>'reverse'</code></td>
+        <td>Animation progress goes from 100% to 0%</td>
+      </tr>
+      <tr>
+        <td><code>'alternate'</code></td>
+        <td>Animation progress goes from 0% to 100% then go back to 0%</td>
+      </tr>
+    </table>
   </div>
-<script>var alternate = anime({
-  targets: '#alternate .el',
-  translateX: 250,
-  direction: 'alternate'
+  <div class="demo-content">
+    <div class="line">
+      <div class="label">normal</div>
+      <div class="square shadow"></div>
+      <div class="square el dir-normal"></div>
+    </div>
+    <div class="line">
+      <div class="label">reverse</div>
+      <div class="square shadow"></div>
+      <div class="square el dir-reverse"></div>
+    </div>
+    <div class="line">
+      <div class="label">alternate</div>
+      <div class="square shadow"></div>
+      <div class="square el dir-alternate"></div>
+    </div>
+  </div>
+  <script>var direction = function() {
+/*DEMO*/
+anime({
+  targets: '.dir-normal',
+  translateX: 250
 });
-</script>
-</div>
 
-<div id="reverse" class="demo">
-  <h3 class="demo-title">Direction reverse</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
-  </div>
-<script>var reverse = anime({
-  targets: '#reverse .el',
+anime({
+  targets: '.dir-reverse',
   translateX: 250,
   direction: 'reverse'
 });
-</script>
+
+anime({
+  targets: '.dir-alternate',
+  translateX: 250,
+  direction: 'alternate'
+});
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="loop" class="demo">
-  <h3 class="demo-title">Loop (x times)</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+  <h3 class="demo-title">Loop</h3>
+  <div class="demo-description">
+    <p>
+      Define the number of iterations of your animation
+    </p>
+    <table>
+      <thead>
+        <td>Default</td>
+      </thead>
+      <tr>
+        <td><code>1</code></td>
+      </tr>
+    </table>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Infos</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td>The number of iterations</td>
+      </tr>
+      <tr>
+        <td><code>true</code></td>
+        <td>Loop indefinitely</td>
+      </tr>
+      <tr>
+        <td><code>Infinity</code></td>
+        <td>Loop indefinitely</td>
+      </tr>
+    </table>
   </div>
-<script>var loop = anime({
-  targets: '#loop .el',
+  <div class="demo-content">
+    <div class="line">
+      <div class="small label">3 times</div>
+      <div class="small square shadow"></div>
+      <div class="small square el loop"></div>
+    </div>
+    <div class="line">
+      <div class="small label">reverse 3 times</div>
+      <div class="small square shadow"></div>
+      <div class="small square el loop-reverse"></div>
+    </div>
+    <div class="line">
+      <div class="small label">alternate 3 times</div>
+      <div class="small square shadow"></div>
+      <div class="small square el loop-alternate"></div>
+    </div>
+    <div class="line">
+      <div class="small label">inifinite</div>
+      <div class="small square shadow"></div>
+      <div class="small square el loop-infinity"></div>
+    </div>
+    <div class="line">
+      <div class="small label">inifinite reverse</div>
+      <div class="small square shadow"></div>
+      <div class="small square el loop-reverse-infinity"></div>
+    </div>
+    <div class="line">
+      <div class="small label">inifinite alternate</div>
+      <div class="small square shadow"></div>
+      <div class="small square el loop-alternate-infinity"></div>
+    </div>
+  </div>
+  <script>var loop = function() {
+/*DEMO*/
+anime({
+  targets: '.loop',
   translateX: 250,
   loop: 3
 });
-</script>
-</div>
 
-<div id="loopAlternate" class="demo">
-  <h3 class="demo-title">Loop alternate (x times)</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
-  </div>
-<script>var loopAlternate = anime({
-  targets: '#loopAlternate .el',
+anime({
+  targets: '.loop-infinity',
   translateX: 250,
-  loop: 3,
-  direction: 'alternate'
+  loop: true
 });
-</script>
-</div>
 
-<div id="loopReverse" class="demo">
-  <h3 class="demo-title">Loop reverse (x times)</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
-  </div>
-<script>var loopReverse = anime({
-  targets: '#loopReverse .el',
+anime({
+  targets: '.loop-reverse',
   translateX: 250,
-  loop: 3,
   direction: 'reverse'
 });
-</script>
-</div>
 
-<div id="infiniteLoop" class="demo">
-  <h3 class="demo-title">Infinite loop</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
-  </div>
-<script>var infiniteLoop = anime({
-  targets: '#infiniteLoop .el',
-  translateX: 250,
-  loop: true
-});
-</script>
-</div>
-
-<div id="infiniteLoopAlternate" class="demo">
-  <h3 class="demo-title">Infinite loop alternate</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
-  </div>
-<script>var infiniteLoopAlternate = anime({
-  targets: '#infiniteLoopAlternate .el',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true
-});
-</script>
-</div>
-
-<div id="infiniteLoopReverse" class="demo">
-  <h3 class="demo-title">Infinite loop reverse</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
-  </div>
-<script>var infiniteLoopReverse = anime({
-  targets: '#infiniteLoopReverse .el',
+anime({
+  targets: '.loop-reverse-infinity',
   translateX: 250,
   direction: 'reverse',
   loop: true
 });
-</script>
+
+anime({
+  targets: '.loop-alternate',
+  translateX: 250,
+  direction: 'alternate'
+});
+
+anime({
+  targets: '.loop-alternate-infinity',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="autoplay" class="demo">
+  <h3 class="demo-title">Autoplay</h3>
+  <div class="demo-description">
+    <p>
+      Define if the animation should automatically start or not.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Default</td>
+      </thead>
+      <tr>
+        <td><code>Boolean</code></td>
+        <td><code>true</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content">
+    <div class="line">
+      <div class="label">autoplay: true</div>
+      <div class="square shadow"></div>
+      <div class="square el autoplay-true"></div>
+    </div>
+    <div class="line">
+      <div class="label">autoplay: false</div>
+      <div class="square shadow"></div>
+      <div class="square el autoplay-false"></div>
+    </div>
+  </div>
+  <script>var autoplay = function() {
+/*DEMO*/
+anime({
+  targets: '.autoplay-true',
+  translateX: 250,
+  autoplay: true
+});
+
+anime({
+  targets: '.autoplay-false',
+  translateX: 250,
+  autoplay: false
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="startTime" class="demo">
+  <h3 class="demo-title">StartTime</h3>
+  <div class="demo-description">
+    <p>
+      Force the animation to start at a certain time.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Default</td>
+        <td>Unit</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td><code>0</code></td>
+        <td>ms</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content start-time-demo">
+    <div class="line">
+      <div class="label">startTime: 0</div>
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">startTime: 75</div>
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">startTime: 150</div>
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+  </div>
+  <script>var startTime = function() {
+/*DEMO*/
+var els = document.querySelectorAll('.start-time-demo .el');
+
+for (var i = 0; i < els.length; i++) {
+  anime({
+    targets: els[i],
+    translateX: 250,
+    direction: 'alternate',
+    loop: true,
+    easing: 'easeOutSine',
+    duration: 600,
+    startTime: i * 75
+  });
+}
+/*DEMO*/
+}
+  </script>
 </div>
 
 </article>
 <!-- -->
 
 <!-- VALUES -->
-<article id="values" class="color-06">
+<article id="values" class="color-values">
 <header>
   <h2 class="demos-title">Values</h2>
 </header>
 
 <div id="unitlessValue" class="demo">
   <h3 class="demo-title">Unitless</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+  <div class="demo-description">
+    <p>
+      If the original value has a unit, it will be automatically added to the animated value.
+    </p>
   </div>
-<script>var unitlessValue = anime({
-  targets: '#unitlessValue .el',
-  translateX: 250,
-  rotate: 540
+  <div class="demo-content unitless-values-demo">
+    <div class="large square shadow"></div>
+    <div class="large square el"></div>
+  </div>
+  <script>var unitlessValue = function() {
+/*DEMO*/
+anime({
+  targets: '.unitless-values-demo .el',
+  translateX: 250, // -> '250px'
+  rotate: 540 // -> '540deg'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="specificUnitValue" class="demo">
   <h3 class="demo-title">Specific unit</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      Force the animation to use a certain unit.<br>
+      It's important to note that anime will not automatically convert units.<br>
+      For example, if the target initial value is <code>'100px'</code> and your animation value is <code>'3rem'</code>, the animation will starts at <code>'100rem'</code>.<br>
+      If you need your animation to starts from a specific value, check out the <a href="#fromToValues" class="color-values">From To values</a> section.
+    </p>
+  </div>
+  <div class="demo-content specific-unit-values-demo">
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
-<script>var specificUnitValue = anime({
-  targets: '#specificUnitValue .el',
-  translateX: '20em',
-  rotate: '1.5turn'
+  <script>var specificUnitValue = function() {
+/*DEMO*/
+anime({
+  targets: '.specific-unit-values-demo .el',
+  translateX: '20em', // -> from '0em' to '20em'
+  rotate: '1.5turn' // -> from '0turn' to '20turn'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="relativeValues" class="demo">
   <h3 class="demo-title">Relative</h3>
+  <div class="demo-description">
+    <p>
+      Add, substract or multiply the original value.<br>
+      Default units are preserved.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Effect</td>
+      </thead>
+      <tr>
+        <td><code>'+='</code></td>
+        <td>Add</td>
+      </tr>
+      <tr>
+        <td><code>'-='</code></td>
+        <td>Substract</td>
+      </tr>
+      <tr>
+        <td><code>'*='</code></td>
+        <td>Multiply</td>
+      </tr>
+    </table>
+  </div>
   <div class="demo-content">
     <div class="square shadow"></div>
-    <div class="square el" style="transform: translateX(100px)"></div>
+    <div class="square el relative-values"></div>
   </div>
-<script>var relativeValues = anime({
-  targets: '#relativeValues .el',
+  <script>var relativeValues = function() {
+/*DEMO*/
+var relativeEl = document.querySelector('.el.relative-values');
+relativeEl.style.transform = 'translateX(100px)';
+
+anime({
+  targets: '.el.relative-values',
   translateX: {
-    value: '+=150',
+    value: '+=150', // 100 + 150 = '250px'
     duration: 1000
   },
   width: {
-    value: '-=10',
+    value: '-=20', // 28 - 20 = '8px'
     duration: 1800,
     easing: 'easeInOutSine'
   },
-  height: {
-    value: '*=4',
+  rotate: {
+    value: '+=2turn', // 0 * 2 = '2turn'
     duration: 1800,
     easing: 'easeInOutSine'
   },
   direction: 'alternate'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="colors" class="demo">
   <h3 class="demo-title">Colors</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Haxadecimal</td>
+        <td><code>'#FFF'</code> or <code>'#FFFFFF'</code></td>
+      </tr>
+      <tr>
+        <td>RGB</td>
+        <td><code>'rgb(255, 255, 255)'</code></td>
+      </tr>
+      <tr>
+        <td>RGBA</td>
+        <td><code>'rgba(255, 255, 255, 1)'</code></td>
+      </tr>
+      <tr>
+        <td>HSL</td>
+        <td><code>'hsl(0, 100%, 100%)'</code></td>
+      </tr>
+      <tr>
+        <td>HSLA</td>
+        <td><code>'hsla(0, 100%, 100%, 1)'</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content colors-demo">
     <div class="line">
-      <div class="square shadow"></div>
-      <div class="square el"></div>
+      <div class="small label">HEX</div>
+      <div class="small square shadow"></div>
+      <div class="small square el color-hex"></div>
     </div>
     <div class="line">
-      <div class="square shadow"></div>
-      <div class="square el"></div>
+      <div class="small label">RGB</div>
+      <div class="small square shadow"></div>
+      <div class="small square el color-rgb"></div>
     </div>
     <div class="line">
-      <div class="square shadow"></div>
-      <div class="square el"></div>
+      <div class="small label">HSL</div>
+      <div class="small square shadow"></div>
+      <div class="small square el color-hsl"></div>
+    </div>
+    <div class="line">
+      <div class="small label">RGBA</div>
+      <div class="small square shadow"></div>
+      <div class="small square el color-rgba"></div>
+    </div>
+    <div class="line">
+      <div class="small label">HSLA</div>
+      <div class="small square shadow"></div>
+      <div class="small square el color-hsla"></div>
     </div>
   </div>
-<script>
-
-var colors = anime({
-  targets: '#colors .el',
-  translateX: 250,
-  backgroundColor: [
-    {value: '#FFF'}, // Or #FFFFFF
-    {value: 'rgb(255, 0, 0)'},
-    {value: 'hsl(100, 60%, 60%)'}
-  ],
+  <script>var colors = function() {
+/*DEMO*/
+anime({
+  targets: '.color-hex',
+  backgroundColor: '#FFF',
   easing: 'linear',
-  direction: 'alternate',
   duration: 2000
 });
-</script>
+
+anime({
+  targets: '.color-rgb',
+  backgroundColor: 'rgb(255,255,255)',
+  easing: 'linear',
+  duration: 2000
+});
+
+anime({
+  targets: '.color-hsl',
+  backgroundColor: 'hsl(0, 100%, 100%)',
+  easing: 'linear',
+  duration: 2000
+});
+
+anime({
+  targets: '.color-rgba',
+  backgroundColor: 'rgba(255,255,255, .5)',
+  easing: 'linear',
+  duration: 2000
+});
+
+anime({
+  targets: '.color-hsla',
+  backgroundColor: 'hsla(0, 100%, 100%, .5)',
+  easing: 'linear',
+  duration: 2000
+});
+/*DEMO*/
+}
+  </script>
+
 </div>
 
-<div id="specificInitialValue" class="demo">
-  <h3 class="demo-title">Specific initial value</h3>
+<div id="fromToValues" class="demo">
+  <h3 class="demo-title">From To</h3>
+  <div class="demo-description">
+    <p>
+      Force the animation to starts at a specified value.
+    </p>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Array</code></td>
+        <td><code>[FromValue, toValue]</code></td>
+      </tr>
+    </table>
+  </div>
   <div class="demo-content">
     <div class="square shadow"></div>
-    <div class="square el"></div>
+    <div class="square el from-to-values"></div>
   </div>
-<script>var specificInitialValue = anime({
-  targets: '#specificInitialValue .el',
-  translateX: [100, 250],
+  <script>var fromToValues = function() {
+/*DEMO*/
+anime({
+  targets: '.el.from-to-values',
+  translateX: [100, 250], // from 100 to 250
   delay: 500,
   direction: 'alternate',
   loop: true
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="functionBasedPropVal" class="demo">
   <h3 class="demo-title">Function based values</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      Get different values for every target and property of the animation.<br>
+      The function accepts 3 arguments:
+    </p>
+    <table>
+      <thead>
+        <td>Arguments</td>
+        <td>Infos</td>
+      </thead>
+      <tr>
+        <td><code>target</code></td>
+        <td>The curently animated targeted element</td>
+      </tr>
+      <tr>
+        <td><code>index</code></td>
+        <td>The index of the animated targeted element</td>
+      </tr>
+      <tr>
+        <td><code>targetsLength</code></td>
+        <td>The total number of animated targets</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content function-based-values-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div data-x="160" class="small square el"></div>
@@ -1025,8 +1356,10 @@ var colors = anime({
       <div data-x="250" class="small square el"></div>
     </div>
   </div>
-<script>var functionBasedPropVal = anime({
-  targets: '#functionBasedPropVal .el',
+  <script>var functionBasedPropVal = function() {
+/*DEMO*/
+anime({
+  targets: '.function-based-values-demo .el',
   translateX: function(el) {
     return el.getAttribute('data-x');
   },
@@ -1043,17 +1376,38 @@ var colors = anime({
   direction: 'alternate',
   loop: true
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="keyframes" class="demo">
   <h3 class="demo-title">Keyframes</h3>
-  <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+  <div class="demo-description">
+    <p>
+      Keyframes are defined using an <code>Array</code> of property <code>Object</code>.<br>
+      Instance's <code>duration</code> is divided by the number of keyframes of each properties if not specified.
+    </p>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Array</code></td>
+        <td><code>[{value: val01}, {value: val02}, {value: val03}]</code></td>
+      </tr>
+    </table>
   </div>
-<script>var keyframes = anime({
-  targets: '#keyframes .el',
+  <div class="demo-content keyframes-demo">
+    <div class="square shadow"></div>
+    <div class="square el keyframes"></div>
+  </div>
+  <script>var keyframes = function() {
+/*DEMO*/
+anime({
+  targets: '.el.keyframes',
   translateX: [
     { value: 250, duration: 1000, delay: 500, elasticity: 0 },
     { value: 0, duration: 1000, delay: 500, elasticity: 0 }
@@ -1079,21 +1433,36 @@ var colors = anime({
   easing: 'easeOutElastic(1, .8)',
   loop: true
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 </article>
 <!-- -->
 
 <!-- TIMELINE -->
-<article id="timeline" class="color-07">
+<article id="timeline" class="color-tl">
 <header>
   <h2 class="demos-title">Timeline</h2>
 </header>
 
 <div id="basicTimeline" class="demo">
   <h3 class="demo-title">Basic timeline</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      Synchronise multiple animations.<br>
+      Parent animation parameters are not required.<br>
+      Children inherits their parent parameters.
+    </p>
+    <pre>
+<code>var myTimeline = anime.timeline(parameters);<br>
+myTimeline.add(parameters);
+</code>
+    </pre>
+  </div>
+  <div class="demo-content basic-timeline-demo">
     <div class="line">
       <div class="square shadow"></div>
       <div class="square el"></div>
@@ -1107,26 +1476,41 @@ var colors = anime({
       <div class="triangle el"></div>
     </div>
   </div>
-<script>var basicTimeline = anime.timeline();
+  <script>var basicTimeline = function() {
+/*DEMO*/
+// Create a timeline with default parameters
+var basicTimeline = anime.timeline({
+  targets: '.basic-timeline-demo .el',
+  easing: 'easeOutExpo',
+  duration: 750
+});
 
+// Add children
 basicTimeline
   .add({
-    targets: '#basicTimeline .square.el',
     translateX: 250,
-    easing: 'easeOutExpo'
   })
   .add({
-    targets: '#basicTimeline .circle.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
+    rotate: 180,
   })
   .add({
-    targets: '#basicTimeline .triangle.el',
-    translateX: 250,
-    easing: 'easeOutExpo'
-  });
+    // Override targets parameter
+    targets: '.basic-timeline-demo .el.square',
+    translateY: -60
+  })
+  .add({
+    targets: '.basic-timeline-demo .el.circle',
+    translateY: 30
+  })
+  .add({
+    targets: '.basic-timeline-demo .el.triangle',
+    translateY: 30
+  })
 
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="relativeOffset" class="demo">
@@ -2235,9 +2619,9 @@ var customEasingFunction = anime({
     ga('create', 'UA-79927007-1', 'auto');
     ga('send', 'pageview');
   </script>
-  <script src="assets/js/split.min.js"></script>
-  <script src="assets/js/highlight.pack.js"></script>
-  <script src="assets/js/beautify-html.js"></script>
+  <script src="assets/js/vendors/split.min.js"></script>
+  <script src="assets/js/vendors/highlight.pack.js"></script>
+  <script src="assets/js/vendors/beautify-html.js"></script>
   <script src="assets/js/documentation.js"></script>
 </body>
 </html>

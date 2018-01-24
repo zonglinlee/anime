@@ -66,7 +66,7 @@ header {
   height: 60px;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.7);
+  border-bottom: 1px solid rgba(0,0,0,.35);
 }
 
 .logo, h2 {
@@ -93,7 +93,7 @@ header {
 .sidebar {
   width: 240px;
   padding-top: 60px;
-  border-right: 1px solid rgba(0,0,0,.7);
+  border-right: 1px solid rgba(0,0,0,.35);
 }
 
 .navigation {
@@ -131,7 +131,7 @@ header {
 
 .navigation a {
   display: block;
-  padding-left: 15px;
+  padding-left: 10px;
   color: #FFF;
   text-decoration: none;
   font-size: 12px;
@@ -187,12 +187,12 @@ header {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border-left: 1px solid rgba(0,0,0,.7);
+  border-left: 1px solid rgba(0,0,0,.35);
 }
 
 .code-pane {
   position: relative;
-  border-bottom: 1px solid rgba(0,0,0,.7);
+  border-bottom: 1px solid rgba(0,0,0,.35);
 }
 
 .code-pane-api { height: 40%; }
@@ -241,6 +241,38 @@ code {
   margin-bottom: 20px;
 }
 
+.api-output code.hljs {
+  font-size: 14px;
+}
+
+.api-output pre code {
+  display: block;
+  position: relative;
+  padding: 20px;
+  background-color: rgba(0,0,0,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 0px;
+}
+
+.api-output p code {
+  display: inline;
+  position: relative;
+  padding: 0 3px;
+  background-color: rgba(0,0,0,.2);
+}
+
+.api-output p code:after {
+  content: "";
+  opacity: .3;
+  position: absolute;
+  left: 0px;
+  bottom: -2px;
+  right: 0px;
+  top: -2px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+}
+
 .api-output table {
   margin-bottom: 20px;
 }
@@ -255,11 +287,6 @@ code {
 .api-output tr, .api-output td {
   border: 1px solid #6e6d72;
   padding: 6px 8px;
-}
-
-.api-output code.hljs {
-  display: inline;
-  font-size: 14px;
 }
 
 .code-output {
@@ -324,7 +351,7 @@ article {
   width: 100%;
   min-height: 200px;
   padding-top: 35px;
-  border-bottom: 1px solid rgba(0,0,0,.7);
+  border-bottom: 1px solid rgba(0,0,0,.35);
   cursor: pointer;
 }
 
@@ -548,6 +575,28 @@ input.progress {
 .shadow {
   position: absolute;
   opacity: .2;
+}
+
+.label {
+  position: absolute;
+  opacity: .2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  width: 100%;
+  height: 28px;
+  padding-left: 38px;
+}
+
+.small.label {
+  height: 18px;
+  padding-left: 28px;
+}
+
+.large.label {
+  height: 48px;
+  padding-left: 58px;
 }
 
 .motion-path {

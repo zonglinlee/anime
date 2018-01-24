@@ -12,7 +12,7 @@ Split(['.code-pane-api', '.code-pane-js', '.code-pane-html'], {
   direction: 'vertical',
   gutterSize: 60,
   snapOffset: 0,
-  sizes: [58, 38, 4],
+  sizes: [48, 48, 4],
   minSize: [60, 0, 0]
 })
 
@@ -53,8 +53,13 @@ function parseHTML(el, parentId) {
   });
 }
 
+function parseJS(JScode) {
+  var split = JScode.split('/*DEMO*/\n');
+  return split[1] || '';
+}
+
 function outputCode(JScode, HTMLcode, title, APIdecription) {
-  var js = document.createTextNode(JScode);
+  var js = document.createTextNode(parseJS(JScode));
   var html = document.createTextNode(HTMLcode);
   jsOutputEl.innerHTML = '';
   htmlOutputEl.innerHTML = '';
@@ -92,10 +97,18 @@ function toggleSectionLink(ulEl) {
   });
 }
 
+function resetDemo(demoEl) {
+  var els = demoEl.querySelectorAll('.el');
+  for (var i = 0; i < els.length; i++) {
+    anime.remove(els[i]);
+    els[i].style = '';
+  }
+}
+
 function resetDemos() {
-  demos.forEach(function(demo) {
-    demo.anim.pause();
-    demo.anim.seek(0);
+  anime.running.forEach(function(anim) {
+    anim.pause();
+    anim.seek(0);
   });
   document.body.classList.add('ready');
 }
@@ -111,6 +124,10 @@ function createDemo(el) {
   var JScode = scriptEl ? scriptEl.innerHTML : '';
   var HTMLcode = demoContentEl ? parseHTML(demoContentEl, id) : '';
   var APIdescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
+  function restart() {
+    resetDemo(el);
+    demoAnim();
+  }
   function highlightDemo(e, push) {
     if (e) e.preventDefault();
     if (!el.classList.contains('active')) {
@@ -120,7 +137,7 @@ function createDemo(el) {
         var d = demos[i];
         d.el.classList.remove('active');
         linkEls[i].parentNode.classList.remove('active');
-        d.anim.pause();
+        //d.anim.pause();
       }
       outputCode(JScode, HTMLcode, title, APIdescription);
       var linkEl = document.querySelector('a[href="#'+id+'"]');
@@ -129,22 +146,21 @@ function createDemo(el) {
       el.classList.add('active');
       scrollTo('#'+id, 60, function() {
         toggleSectionLink(ulEl);
-        if (!el.classList.contains('controls')) demoAnim.restart();
+        if (!el.classList.contains('controls')) restart();
       });
       if (push) history.pushState(null, null, '#'+id);
     } else {
-      if (!el.classList.contains('controls')) demoAnim.restart();
+      if (!el.classList.contains('controls')) restart();
     }
   }
   function enterDemo() {
     if (!el.classList.contains('active')) {
-      demoAnim.restart();
+      restart();
     }
   }
   function leaveDemo() {
     if (!el.classList.contains('active')) {
-      demoAnim.pause();
-      demoAnim.seek(0);
+      resetDemo(el);
     }
   }
   el.addEventListener('click', function(e) {
@@ -215,7 +231,7 @@ for (var i = 0; i < articleEls.length; i++) {
 
 navigationEl.appendChild(fragment);
 
-function updateDemos(e) {
+function updateDemos() {
   var hash = window.location.hash;
   if (hash) {
     var id = hash.replace('#','');

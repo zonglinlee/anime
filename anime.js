@@ -1028,7 +1028,7 @@
       setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
     }
 
-    if (instance.autoplay && instance.animations.length) instance.play();
+    if (instance.autoplay) instance.play();
 
     return instance;
 
