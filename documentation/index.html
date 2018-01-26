@@ -1904,7 +1904,7 @@ seekProgressEl.oninput = function() {
 
 </div>
 
-<div id="TLcontrols" class="demo controls">
+<div id="TLcontrols" class="demo">
   <h3 class="demo-title">Timeline controls</h3>
   <div class="demo-description">
     <p>Timelines can be controled like any other anime instance</p>
@@ -1961,7 +1961,6 @@ document.querySelector('.timeline-controls-demo .pause').onclick = tl.pause;
 document.querySelector('.timeline-controls-demo .restart').onclick = tl.restart;
 
 controlsProgressEl.addEventListener('input', function() {
-  console.log('seek');
   tl.seek(tl.duration * (controlsProgressEl.value / 100));
 });
 /*DEMO*/
@@ -1972,6 +1971,12 @@ controlsProgressEl.addEventListener('input', function() {
 
 <div id="animStates" class="demo controls">
   <h3 class="demo-title">States</h3>
+  <div class="demo-description">
+    <p>
+      You can add states to your animations.<br>
+      Each states inherit the first animation parameters but can be overrided.
+    </p>
+  </div>
   <div class="demo-content">
     <div class="line">
       <div class="square shadow"></div>

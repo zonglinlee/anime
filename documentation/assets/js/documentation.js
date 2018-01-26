@@ -129,7 +129,13 @@ function createDemo(el) {
     demoAnim();
   }
   function highlightDemo(e, push) {
-    if (e) e.preventDefault();
+    var canRestart = !el.classList.contains('controls');
+    if (e) {
+      e.preventDefault();
+      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+        canRestart = false;
+      }
+    }
     if (!el.classList.contains('active')) {
       resetDemos();
       var linkEls = document.querySelectorAll('.demo-link');
@@ -146,11 +152,11 @@ function createDemo(el) {
       el.classList.add('active');
       scrollTo('#'+id, 60, function() {
         toggleSectionLink(ulEl);
-        if (!el.classList.contains('controls')) restart();
+        if (canRestart) restart();
       });
       if (push) history.pushState(null, null, '#'+id);
     } else {
-      if (!el.classList.contains('controls')) restart();
+      if (canRestart) restart();
     }
   }
   function enterDemo() {
