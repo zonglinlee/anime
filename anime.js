@@ -830,6 +830,11 @@
       return instance.reversed ? instance.duration - time : time;
     }
 
+    function updateInstanceTime(insTime) {
+      instance.currentTime = insTime;
+      instance.progress = (insTime / instance.duration) * 100;
+    }
+
     function syncInstanceChildren(time) {
       if (time >= instance.currentTime) {
         for (let i = 0; i < childrenLength; i++) children[i].seek(time - children[i].timelineOffset);
@@ -896,8 +901,6 @@
         anim.currentValue = progress;
         i++;
       }
-      instance.currentTime = insTime;
-      instance.progress = (insTime / instance.duration) * 100;
     }
 
     function setCallback(cb) {
@@ -922,14 +925,17 @@
         }
         setCallback('run');
       }
+      updateInstanceTime(insTime);
       if (insTime > insDelay && insTime < insDuration) {
         setAnimationsProgress(insTime);
       } else {
         if (insTime <= insDelay && instance.currentTime !== 0) {
+          updateInstanceTime(insTime);
           setAnimationsProgress(0);
           if (instance.reversed) countIteration();
         }
         if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
+          updateInstanceTime(insDuration);
           setAnimationsProgress(insDuration);
           if (!instance.reversed) countIteration();
         }
@@ -1007,7 +1013,6 @@
       const nextState = instance.states[stateName];
       const defaultState = instance.states.default;
       const params = mergeObjects(paramsOverrides, mergeObjects(nextState, defaultState));
-      anime.remove(params.targets);
       const animation = anime(params);
       if (!bypassAnimation) {
         animation.play();
@@ -1016,7 +1021,7 @@
       }
     }
 
-    instance.switchTo = function(stateName, paramsOverrides) {
+    instance.goTo = function(stateName, paramsOverrides) {
       instance.animateTo(stateName, paramsOverrides, true);
     }
 
