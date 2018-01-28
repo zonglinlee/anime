@@ -245,6 +245,10 @@ code {
   font-size: 14px;
 }
 
+.api-output pre {
+  margin-bottom: 20px;
+}
+
 .api-output pre code {
   display: inline-block;
   position: relative;
@@ -266,9 +270,9 @@ code {
   opacity: .3;
   position: absolute;
   left: 0px;
-  bottom: -2px;
+  bottom: -1px;
   right: 0px;
-  top: -2px;
+  top: -1px;
   border: 1px solid currentColor;
   border-radius: 3px;
 }
@@ -652,6 +656,10 @@ input.progress[value]::-webkit-slider-thumb {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.add-states-demo .el {
+  border: 1px solid rgba(0,0,0,0);
 }
 
 #cssProperties .el {

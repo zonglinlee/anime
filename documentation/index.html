@@ -1922,7 +1922,7 @@ seekProgressEl.oninput = function() {
       <div class="triangle shadow"></div>
       <div class="triangle el"></div>
     </div>
-    <div class="line player align-items">
+    <div class="line player">
       <button class="play">Play</button>
       <button class="pause">Pause</button>
       <button class="restart">Restart</button>
@@ -1952,7 +1952,7 @@ tl
   translateX: 250,
 }, '-=100')
 .add({
-  targets: '.timeline-controls-demo .triangle.el',
+  targets: '.timeline-controls-demo .cirlce.el',
   translateX: 250,
 }, '-=100');
 
@@ -1969,75 +1969,137 @@ controlsProgressEl.addEventListener('input', function() {
 
 </div>
 
-<div id="animStates" class="demo controls">
-  <h3 class="demo-title">States</h3>
+</article>
+<!-- -->
+
+<!-- STATES -->
+<article id="states" class="color-09">
+<header>
+  <h2 class="demos-title">States</h2>
+</header>
+
+<div id="addStates" class="demo">
+  <h3 class="demo-title">Adding states</h3>
   <div class="demo-description">
     <p>
-      You can add states to your animations.<br>
-      Each states inherit the first animation parameters but can be overrided.
+      States let you define and store multiple set of properties for one animation.<br>
     </p>
+    <p>
+      Go directly to a specific state :
+    </p>
+<pre><code>animation.states.goTo(stateName);</pre></code>
+    <p>
+      Or animate to a state :
+    </p>
+<pre><code>animation.states.animateTo(stateName);</pre></code>
   </div>
-  <div class="demo-content">
+  <div class="demo-content add-states-demo">
     <div class="line">
       <div class="square shadow"></div>
       <div class="square el"></div>
     </div>
     <div class="line player align-items">
-      <button class="state-red">Red</button>
-      <button class="state-green">Green</button>
-      <button class="state-small">Small</button>
-      <button class="state-medium">Medium</button>
-      <button class="state-large">Large</button>
+      <button class="state-animate-outline">Outline</button>
+      <button class="state-animate-fill">Fill</button>
+      <button class="state-animate-middle">Middle</button>
+      <button class="state-animate-right">Right</button>
     </div>
   </div>
-<script>/* 
-Animation states
-————————————————
-You can add states to your animations.
-Each states inherit the first animation parameters but can be overrided.
-*/
-
-// First create a basic anime instance with the default parameters
-// This animation parameters are automaticaly stored as the 'default' state
-var animStates = anime({
-  targets: '#animStates .el',
-  transformOrigin: [0, 0],
-  duration: 500,
-  autoplay: false
+  <script>var addStates = function() {
+/*DEMO*/
+var animation = anime({
+  targets: '.add-states-demo .el'
 });
 
-// Define your animation states inside the states object
-animStates.states.small = { scaleX: 1};
-animStates.states.medium = { scaleX: 5};
-animStates.states.large = { scaleX: 10};
-animStates.states.red = {
-  backgroundColor: '#FF1461',
-  easing: 'easeOutQuad' // You can override default parameters
-}
-animStates.states.green = { backgroundColor: '#18FF92' };
-
-// Animate to a state by using the animateTo(stateName) function
-animStates.animateTo('medium');
-// Or go directly to the sate without animation using the swithTo(stateName) function
-animStates.switchTo('small');
-
-document.body.querySelector('#animStates .state-small').onclick = function() {
-  animStates.animateTo('small');
-}
-document.body.querySelector('#animStates .state-medium').onclick = function() {
-  animStates.animateTo('medium', {duration: 2000});
-}
-document.body.querySelector('#animStates .state-large').onclick = function() {
-  animStates.animateTo('large');
-}
-document.body.querySelector('#animStates .state-red').onclick = function() {
-  animStates.animateTo('red');
-}
-document.body.querySelector('#animStates .state-green').onclick = function() {
-  animStates.animateTo('green');
+animation.states.outline = {
+  backgroundColor: 'rgba(97,195,255,0)',
+  borderColor: 'rgb(97,195,255)',
+  easing: 'linear'
 }
 
-</script>
+animation.states.fill = {
+  backgroundColor: 'rgb(97,195,255)',
+  borderColor: 'rgba(97,195,255,0)',
+  easing: 'linear'
+}
+
+animation.states.middle = {
+  translateX: 120,
+  easing: 'easeOutQuad'
+}
+
+animation.states.right = {
+  translateX: 240,
+  easing: 'easeOutQuad'
+}
+
+//animation.animateTo('rotated');
+
+document.body.querySelector('.state-animate-outline').onclick = function() {
+  animation.animateTo('outline');
+}
+document.body.querySelector('.state-animate-fill').onclick = function() {
+  animation.animateTo('fill');
+}
+document.body.querySelector('.state-animate-middle').onclick = function() {
+  animation.animateTo('middle');
+}
+document.body.querySelector('.state-animate-right').onclick = function() {
+  animation.animateTo('right');
+}
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="stateParameters" class="demo">
+  <h3 class="demo-title">Parameters inheritance</h3>
+  <div class="demo-description">
+    <p>
+      By default, only the properties specified in the state will be changed.<br>
+      You can specify default properties that all states will inherit.<br>
+      You can override these properties when defining or animating a state.
+    </p>
+  </div>
+  <div class="demo-content state-parameters-demo">
+    <div class="line">
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+    <div class="line player align-items">
+      <button class="state-animate-move">Move</button>
+      <button class="state-animate-rotate">Rotate</button>
+    </div>
+  </div>
+  <script>var stateParameters = function() {
+/*DEMO*/
+var animation = anime({
+  targets: '.state-parameters-demo .el',
+  translateX: 0,
+  rotate: 0,
+  easing: 'easeOutExpo',
+  autoplay: false // needed if you don't want the default animation to trigger
+});
+
+animation.states.move = {
+  translateX: 250
+}
+
+animation.states.rotate = {
+  rotate: 315
+}
+
+//animation.animateTo('rotated');
+
+document.body.querySelector('.state-animate-move').onclick = function() {
+  animation.animateTo('move');
+}
+document.body.querySelector('.state-animate-rotate').onclick = function() {
+  animation.animateTo('rotate');
+}
+/*DEMO*/
+}
+  </script>
 </div>
 
 </article>
@@ -2046,63 +2108,32 @@ document.body.querySelector('#animStates .state-green').onclick = function() {
 <!-- CALLBACKS -->
 <article id="callbacks" class="color-09">
 <header>
-  <h2 class="demos-title">Callbacks</h2>
+  <h2 class="demos-title">Callbacks & Promises</h2>
 </header>
-
-<div id="allCallbacks" class="demo">
-  <h3 class="demo-title">All callbacks</h3>
-  <div class="demo-content">
-    <div class="logs">
-      <input class="log update-log"></input>
-      <input class="log began-log"></input>
-      <input class="log completed-log"></input>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line player align-items"></div>
-  </div>
-<script>var updateLogEl2 = document.querySelector('#allCallbacks .update-log');
-var beganLogEl2 = document.querySelector('#allCallbacks .began-log');
-var completedLogEl2 = document.querySelector('#allCallbacks .completed-log');
-
-var allCallbacks = anime({
-  targets: '#allCallbacks .el',
-  translateX: 250,
-  delay: function(el, i) { return 1000 + (i * 100); },
-  duration: function(el, i) { return 500 + (i * 500); }
-});
-
-allCallbacks.update = function(anim) {
-  if (!anim.began) {
-    updateLogEl2.value = 'begins in ' + Math.round(anim.delay - anim.currentTime) + 'ms';
-    beganLogEl2.value = '';
-  } else {
-    updateLogEl2.value = 'begins in 0ms';
-  }
-  if (!anim.completed) {
-    completedLogEl2.value = '';
-  }
-}
-
-allCallbacks.begin =  function() { beganLogEl2.value = 'began'; };
-allCallbacks.complete = function() { completedLogEl2.value = 'completed'; };
-
-</script>
-</div>
 
 <div id="update" class="demo">
   <h3 class="demo-title">Update</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      <code>update()</code> callback is triggered on every frames as soon as the animation starts playing.
+    </p>
+    <p>
+      Note that <code>Promises</code> are not suported in IE < 11.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Function</code></td>
+        <td>animation</td>
+        <td>Return the current animation <code>Object</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content update-demo">
     <div class="logs">
       <input class="log current-time-log"></input>
       <input class="log progress-log"></input>
@@ -2110,53 +2141,98 @@ allCallbacks.complete = function() { completedLogEl2.value = 'completed'; };
     <div class="large square shadow"></div>
     <div class="large square el"></div>
   </div>
-<script>var updateLogEl = document.querySelector('#update .current-time-log');
-var progressLogEl = document.querySelector('#update .progress-log');
+  <script>var update = function() {
+/*DEMO*/
+var updateLogEl = document.querySelector('.update-demo .current-time-log');
+var progressLogEl = document.querySelector('.update-demo .progress-log');
 
-var update = anime({
-  targets: '#callbacks .el',
+anime({
+  targets: '.update-demo .el',
   translateX: 250,
   delay: 1000,
+  direction: 'alternate',
+  loop: true,
   update: function(anim) {
     updateLogEl.value = 'current time : ' + Math.round(anim.currentTime) + 'ms';
     progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
   }
 });
-</script>
+/*DEMO*/
+}
+  </script>
 </div>
 
 <div id="begin" class="demo">
   <h3 class="demo-title">Begin</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      <code>begin()</code> callback is triggered when the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.<br>
+      It's also called if the animation <code>duration</code> is <code>0</code>.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Function</code></td>
+        <td>animation</td>
+        <td>Return the current animation <code>Object</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content begin-demo">
     <div class="logs">
       <input class="log began-log" value="began : false"></input>
+      <input class="log progress-log"></input>
     </div>
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+    <div class="large square shadow"></div>
+    <div class="large square el"></div>
   </div>
-<script>var beganLogEl = document.querySelector('#begin .began-log');
+  <script>var begin = function() {
+/*DEMO*/
+var beganLogEl = document.querySelector('.begin-demo .began-log');
+var progressLogEl = document.querySelector('.begin-demo .progress-log');
 
-var begin = anime({
-  targets: '#begin .el',
+anime({
+  targets: '.begin-demo .el',
   translateX: 250,
   delay: 1000,
   begin: function(anim) {
+    anim.animatables[0].target.style.backgroundColor = 'green';
+  },
+  update: function (anim) {
     beganLogEl.value = 'began : ' + anim.began;
+    progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
   }
 });
-</script>
-<script>
-begin.update = function(anim) {
-  if (!anim.began) {
-    beganLogEl.value = 'began : ' + anim.began;
-  }
+/*DEMO*/
 }
-</script>
+  </script>
+
 </div>
 
 <div id="run" class="demo">
   <h3 class="demo-title">Run</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      <code>run()</code> callback is triggered on every frames if the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Function</code></td>
+        <td>animation</td>
+        <td>Return the current animation <code>Object</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content run-demo">
     <div class="logs">
       <input class="log current-time-log" value="not running"></input>
       <input class="log progress-log" value="progress : 0%"></input>
@@ -2164,75 +2240,99 @@ begin.update = function(anim) {
     <div class="large square shadow"></div>
     <div class="large square el"></div>
   </div>
-<script>var runLogEl = document.querySelector('#run .current-time-log');
-var runProgressLogEl = document.querySelector('#run .progress-log');
+  <script>var run = function() {
+/*DEMO*/
+var runLogEl = document.querySelector('.run-demo .current-time-log');
+var runProgressLogEl = document.querySelector('.run-demo .progress-log');
 
-var run = anime({
-  targets: '#run .el',
+anime({
+  targets: '.run-demo .el',
   translateX: 250,
   delay: 1000,
   run: function(anim) {
-    runLogEl.value = 'running';
+    anim.animatables[0].target.style.backgroundColor = 'green';
+  },
+  update: function(anim) {
+    if (anim.began) runLogEl.value = 'running';
     runProgressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
   },
   complete: function(anim) {
+    anim.animatables[0].target.style.backgroundColor = '';
     runLogEl.value = 'not running';
-    runProgressLogEl.value = 'progress : 100%';
   }
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 <div id="complete" class="demo">
   <h3 class="demo-title">Complete</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      <code>complete()</code> callback is triggered when the animation finished.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Function</code></td>
+        <td>animation</td>
+        <td>Return the current animation <code>Object</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content complete-demo">
     <div class="logs">
       <input class="log completed-log" value="completed : false"></input>
     </div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
-<script>var completedLogEl = document.querySelector('#complete .completed-log');
+  <script>var complete = function() {
+/*DEMO*/
+var completedLogEl = document.querySelector('.completed-log');
 
-var complete = anime({
-  targets: '#complete .el',
+anime({
+  targets: '.complete-demo .el',
   translateX: 250,
+  begin: function(anim) {
+    completedLogEl.value = 'completed : ' + anim.completed;
+  },
   complete: function(anim) {
     completedLogEl.value = 'completed : ' + anim.completed;
   }
 });
-</script>
-<script>
-complete.update = function(anim) {
-  if (!anim.completed) {
-    completedLogEl.value = 'completed : ' + anim.completed;
-  }
+/*DEMO*/
 }
-</script>
+  </script>
+
 </div>
 
-</article>
-<!-- -->
-
-<!-- PROMISES -->
-<article id="promises" class="color-10">
-<header>
-  <h2 class="demos-title">Promises</h2>
-</header>
-
 <div id="finishedPromise" class="demo">
-  <h3 class="demo-title">Finished</h3>
-  <div class="demo-content">
+  <h3 class="demo-title">Finished promise</h3>
+  <div class="demo-description">
+    <p>
+      Every animation instances return a <code>finished</code> promise when the animation finised.
+    </p>
+  </div>
+  <div class="demo-content promise-demo">
     <div class="logs">
       <input class="log finished-log"></input>
     </div>
-    <div class="large square shadow"></div>
-    <div class="large square el"></div>
+    <div class="square shadow"></div>
+    <div class="square el"></div>
   </div>
-<script>var finishedLogEl = document.querySelector('#finishedPromise .finished-log');
+  <script>var finishedPromise = function() {
+/*DEMO*/
+var finishedLogEl = document.querySelector('.promise-demo .finished-log');
 
 var finishedPromise = anime({
-  targets: '#promises .el',
+  targets: '.promise-demo .el',
   translateX: 250,
   delay: 1000
 });
@@ -2253,7 +2353,10 @@ finishedPromise.update = function(anim) {
     finishedLogEl.value = '';
   }
 }
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 </article>
