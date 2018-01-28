@@ -242,6 +242,7 @@ code {
 }
 
 .api-output code.hljs {
+  display: inline-block;
   font-size: 14px;
 }
 

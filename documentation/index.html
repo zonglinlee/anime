@@ -2370,7 +2370,32 @@ finishedPromise.update = function(anim) {
 
 <div id="motionPath" class="demo">
   <h3 class="demo-title">Motion path</h3>
-  <div class="demo-content">
+  <div class="demo-description">
+    <p>
+      <code>var path = anime.path(pathEl)</code> return an <code>Function</code> that converts svg path data into animatable values.<br>
+    </p>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td rowspan="3"><code>Function</code></td>
+        <td><code>'x'</code></td>
+        <td>Return the current x value in <code>'px'</code> of the SVG path</td>
+      </tr>
+      <tr>
+        <td><code>'y'</code></td>
+        <td>Return the current y value in <code>'px'</code> of the SVG path</td>
+      </tr>
+      <tr>
+        <td><code>'angle'</code></td>
+        <td>Return the current angle value in <code>'degres'</code> of the SVG path</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content motion-path-demo">
     <div class="motion-path">
       <div class="small square shadow follow-path"></div>
       <div class="small square el follow-path"></div>
@@ -2379,10 +2404,12 @@ finishedPromise.update = function(anim) {
       </svg>
     </div>
   </div>
-<script>var path = anime.path('#motionPath path');
+  <script>var motionPath = function() {
+/*DEMO*/
+var path = anime.path('.motion-path-demo path');
 
-var motionPath = anime({
-  targets: '#motionPath .el',
+anime({
+  targets: '.motion-path-demo .el',
   translateX: path('x'),
   translateY: path('y'),
   rotate: path('angle'),
@@ -2390,13 +2417,20 @@ var motionPath = anime({
   duration: 2000,
   loop: true
 });
+/*DEMO*/
+}
+  </script>
 
-</script>
 </div>
 
 <div id="morphing" class="demo">
   <h3 class="demo-title">Morphing</h3>
-  <div class="demo-content align-center">
+  <div class="demo-description">
+    <p>
+      You can morph multiple svg shapes togerther as long as they have the same number of point.
+    </p>
+  </div>
+  <div class="demo-content align-center morphing-demo">
     <svg width="140" height="140" viewBox="0 0 140 140">
       <g fill="none" fill-rule="evenodd">
         <g fill="currentColor" fill-opacity=".15" transform="translate(0 6)">
@@ -2409,10 +2443,15 @@ var motionPath = anime({
       </g>
     </svg>
   </div>
-<script>var morphing = anime({
-  targets: '#morphing .polymorph',
+  <script>var morphing = function() {
+/*DEMO*/
+anime({
+  targets: '.morphing-demo .polymorph',
   points: [
-    { value: '70 41 118.574 59.369 111.145 132.631 60.855 84.631 20.426 60.369' },
+    { value: [
+      '70 24 119.574 60.369 100.145 117.631 50.855 101.631 3.426 54.369',
+      '70 41 118.574 59.369 111.145 132.631 60.855 84.631 20.426 60.369']
+    },
     { value: '70 6 119.574 60.369 100.145 117.631 39.855 117.631 55.426 68.369' },
     { value: '70 57 136.574 54.369 89.145 100.631 28.855 132.631 38.426 64.369' },
     { value: '70 24 119.574 60.369 100.145 117.631 50.855 101.631 3.426 54.369' }
@@ -2421,13 +2460,32 @@ var motionPath = anime({
   duration: 2000,
   loop: true
 });
+/*DEMO*/
+}
+  </script>
 
-</script>
 </div>
 
 <div id="lineDrawing" class="demo">
   <h3 class="demo-title">Line drawing</h3>
-  <div class="demo-content align-center">
+  <div class="demo-description">
+    <p>
+      <code>anime.setDashoffset(pathEl)</code> will set the <code>'dash-offset'</code> attribute value of an SVG path element to the path length.
+    </p>
+    <table>
+      <thead>
+        <td>Accepts</td>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Function</code></td>
+        <td>animation</td>
+        <td>Return the current animation <code>Object</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content align-center line-drawing-demo">
     <svg viewBox="0 0 280 100">
       <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="1" class="lines">
         <path d="M58 80V50.12C57.7 41.6 51.14 35 43 35a15 15 0 0 0 0 30h7.5v15H43a30 30 0 1 1 0-60c16.42 0 29.5 13.23 30 29.89V80H58z"/>
@@ -2440,8 +2498,10 @@ var motionPath = anime({
       </g>
     </svg>
   </div>
-<script>var lineDrawing = anime({
-  targets: '#lineDrawing .lines path',
+  <script>var lineDrawing = function() {
+/*DEMO*/
+anime({
+  targets: '.line-drawing-demo .lines path',
   strokeDashoffset: [anime.setDashoffset, 0],
   easing: 'easeInOutSine',
   duration: 1500,
@@ -2449,8 +2509,10 @@ var motionPath = anime({
   direction: 'alternate',
   loop: true
 });
+/*DEMO*/
+}
+  </script>
 
-</script>
 </div>
 
 </article>
