@@ -183,10 +183,7 @@ header {
 
 .code-examples {
   width: 50%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   border-left: 1px solid rgba(0,0,0,.35);
 }
 
@@ -195,7 +192,7 @@ header {
   border-bottom: 1px solid rgba(0,0,0,.35);
 }
 
-.code-pane-api { height: 40%; }
+.code-pane-description { height: 40%; }
 .code-pane-js { height: 40%; }
 .code-pane-html { height: 20%; }
 
@@ -205,15 +202,20 @@ header {
   top: -60px;
 }
 
-.code-header:hover {
+.gutter {
   cursor: ns-resize;
+  transition: background-color .25s ease;
+}
+
+.gutter:hover {
+  background-color: rgba(255,255,255,.05)
 }
 
 .gutter {
   z-index: 1;
 }
 
-.code-pane-api .code-header {
+.code-pane-description .code-header {
   top: 0;
 }
 
@@ -227,74 +229,84 @@ code {
   font-size: 14px;
   line-height: 20px;
   white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -o-pre-wrap;
 }
 
-.api-output {
-  color: #C5C2CB;
+.code-pane-description {
+  color: rgba(255,255,255,.8);
   font-size: 15px;
   line-height: 20px;
 }
 
-.api-output p {
+.code-pane-description p {
   margin-bottom: 20px;
+  letter-spacing: .5px;
 }
 
-.api-output code.hljs {
+p.warning {
+  color: #FF7C72;
+  display: inline-block;
+  position: relative;
+  padding: 8px 12px;
+}
+
+p.warning:after {
+  content: "";
+  color: #FBF38C;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: currentColor;
+  border-radius: 3px;
+  opacity: .1;
+}
+
+.code-pane-description code.hljs {
   display: inline-block;
   font-size: 14px;
 }
 
-.api-output pre {
+.code-pane-description pre {
   margin-bottom: 20px;
 }
 
-.api-output pre code {
+.code-pane-description pre code {
   display: inline-block;
   position: relative;
   padding: 8px 12px;
-  background-color: rgba(0,0,0,.1);
-  border: 1px solid rgba(0,0,0,.3);
-  border-radius: 0px;
-}
-
-.api-output p code {
-  display: inline;
-  position: relative;
-  padding: 0 3px;
-  background-color: rgba(0,0,0,.2);
-}
-
-.api-output p code:after {
-  content: "";
-  opacity: .3;
-  position: absolute;
-  left: 0px;
-  bottom: -1px;
-  right: 0px;
-  top: -1px;
-  border: 1px solid currentColor;
+  background-color: rgba(0,0,0,.3);
+  border: 1px solid rgba(0,0,0,.5);
   border-radius: 3px;
 }
 
-.api-output table {
+.code-pane-description p code {
+  display: inline;
+  position: relative;
+  padding: 0px 3px;
+  background-color: rgba(0,0,0,.3);
+  border: 1px solid rgba(0,0,0,.5);
+  border-radius: 3px;
+}
+
+.code-pane-description table {
   margin-bottom: 20px;
 }
 
-.api-output thead {
+.code-pane-description thead {
   font-size: 12px;
   line-height: 20px;
   text-transform: uppercase;
   opacity: .6;
 }
 
-.api-output tr, .api-output td {
+.code-pane-description tr, .code-pane-description td {
   border: 1px solid #6e6d72;
   padding: 6px 8px;
 }
 
-.api-output a:visited {
+.code-pane-description a:visited {
   color: currentColor;
 }
 
@@ -306,12 +318,13 @@ code {
   width: 100%;
   height: 100%;
   padding: 20px;
-  background-color: rgba()
+  background-color: rgba(0,0,0,.3);
 }
 
-.code-pane-api .code-output {
+.code-pane-description .code-output {
   top: 60px;
   height: calc(100% - 60px);
+  background-color: rgba(0,0,0,0);
 }
 
 /* Demos */
@@ -324,21 +337,11 @@ code {
 
 article {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .demos-title {
@@ -348,15 +351,10 @@ article {
 .demo {
   position: relative;
   z-index: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  flex-pack: center;
+  justify-content: center;
   width: 100%;
   min-height: 200px;
   padding-top: 35px;

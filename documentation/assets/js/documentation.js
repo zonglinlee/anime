@@ -2,17 +2,17 @@ var navigationEl = document.querySelector('.navigation');
 var demosEl = document.querySelector('.demos');
 var articleEls = document.querySelectorAll('article');
 var APIOutputEl = document.querySelector('.api-output');
-var APITitleEl = document.querySelector('.code-pane-api h2');
+var APITitleEl = document.querySelector('.code-pane-description h2');
 var jsOutputEl = document.querySelector('.js-output');
 var htmlOutputEl = document.querySelector('.html-output');
 var ulHeight = 20;
 var demos = [];
 
-Split(['.code-pane-api', '.code-pane-js', '.code-pane-html'], {
+Split(['.code-pane-description', '.code-pane-js', '.code-pane-html'], {
   direction: 'vertical',
   gutterSize: 60,
   snapOffset: 0,
-  sizes: [48, 48, 4],
+  sizes: [58, 38, 4],
   minSize: [60, 0, 0]
 })
 
@@ -97,15 +97,12 @@ function toggleSectionLink(ulEl) {
   });
 }
 
-function resetDemo(demoEl) {
-  var els = demoEl.querySelectorAll('.el');
+function resetDemos() {
+  var els = document.querySelectorAll('.el');
   for (var i = 0; i < els.length; i++) {
     anime.remove(els[i]);
     els[i].style = '';
   }
-}
-
-function resetDemos() {
   anime.running.forEach(function(anim) {
     anim.pause();
     anim.seek(0);
@@ -125,7 +122,7 @@ function createDemo(el) {
   var HTMLcode = demoContentEl ? parseHTML(demoContentEl, id) : '';
   var APIdescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
   function restart() {
-    resetDemo(el);
+    resetDemos();
     demoAnim();
   }
   function highlightDemo(e, push) {
@@ -166,7 +163,7 @@ function createDemo(el) {
   }
   function leaveDemo() {
     if (!el.classList.contains('active')) {
-      resetDemo(el);
+      resetDemos();
     }
   }
   el.addEventListener('click', function(e) {
