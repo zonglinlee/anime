@@ -490,18 +490,8 @@ anime({
   <h3 class="demo-title">Duration</h3>
   <div class="demo-description">
     <p>
-      Defines the duration in milliseconds of the animation.
+      Defines the duration in milliseconds of the animation, default: <code>1000</code>.
     </p>
-    <table>
-      <thead>
-        <td>Default</td>
-        <td>unit</td>
-      </thead>
-      <tr>
-        <td><code>1000</code></td>
-        <td>Milliseconds</td>
-      </tr>
-    </table>
     <table>
       <thead>
         <td>Accepts</td>
@@ -515,13 +505,13 @@ anime({
       </tr>
       <tr>
         <td><code>Function</code></td>
-        <td><code>(el, i, t) => i * 200</code></td>
+        <td><code>(el, i) => i * 200</code></td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
       </tr>
     </table>
   </div>
   <div class="demo-content duration-demo">
-    <div class="label">3000ms</div>
+    <div class="label">3000 ms</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -541,18 +531,8 @@ anime({
   <h3 class="demo-title">Delay</h3>
   <div class="demo-description">
     <p>
-      Defines the delay of the animation.
+      Defines the delay in Milliseconds of the animation, default: <code>0</code>.
     </p>
-    <table>
-      <thead>
-        <td>Default</td>
-        <td>unit</td>
-      </thead>
-      <tr>
-        <td><code>0</code></td>
-        <td>Milliseconds</td>
-      </tr>
-    </table>
     <table>
       <thead>
         <td>Accepts</td>
@@ -566,13 +546,13 @@ anime({
       </tr>
       <tr>
         <td><code>Function</code></td>
-        <td><code>(el, i, t) => i * 200</code></td>
+        <td><code>(el, i) => i * 200</code></td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
       </tr>
     </table>
   </div>
   <div class="demo-content delay-demo">
-    <div class="label">1000ms</div>
+    <div class="label">1000 ms</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -592,18 +572,8 @@ anime({
   <h3 class="demo-title">end delay</h3>
   <div class="demo-description">
     <p>
-      Add some extra time at the end of the animation.<br>
+      Add some extra time in Milliseconds at the end of the animation, default: <code>0</code>.
     </p>
-    <table>
-      <thead>
-        <td>Default</td>
-        <td>unit</td>
-      </thead>
-      <tr>
-        <td><code>0</code></td>
-        <td>Milliseconds</td>
-      </tr>
-    </table>
     <table>
       <thead>
         <td>Accepts</td>
@@ -617,13 +587,13 @@ anime({
       </tr>
       <tr>
         <td><code>Function</code></td>
-        <td><code>(el, i, t) => i * 200</code></td>
+        <td><code>(el, i) => i * 200</code></td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
       </tr>
     </table>
   </div>
   <div class="demo-content end-delay-demo">
-    <div class="label">1000ms</div>
+    <div class="label">1000 ms</div>
     <div class="square shadow"></div>
     <div class="square el"></div>
   </div>
@@ -683,10 +653,9 @@ anime({
   <h3 class="demo-title">Specific property parameters</h3>
   <div class="demo-description">
     <p>
-      Define unique parameters to each property of the animation.<br>
-      using an <code>Object</code> as value.<br>
+      Define specific parameters to each property of the animation using an Object as value.<br>
       The property value is set using the <code>value</code> property.<br>
-      Other properties that aren't specified in the <code>Object</code> will be inheritted from the main parameters.
+      Other properties that aren't specified in the Object are inheritted from the main animation.
     </p>
 <pre><code>anime({
   targets: '.specific-prop-params-demo .el',
@@ -813,16 +782,8 @@ anime({
   <h3 class="demo-title">Direction</h3>
   <div class="demo-description">
     <p>
-      Define the direction of the animation.
+      Define the direction of the animation, default <code>'normal'</code>.
     </p>
-    <table>
-      <thead>
-        <td>Default</td>
-      </thead>
-      <tr>
-        <td><code>'normal'</code></td>
-      </tr>
-    </table>
     <table>
       <thead>
         <td>Accepts</td>
@@ -863,19 +824,22 @@ anime({
 /*DEMO*/
 anime({
   targets: '.dir-normal',
-  translateX: 250
+  translateX: 250,
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.dir-reverse',
   translateX: 250,
-  direction: 'reverse'
+  direction: 'reverse',
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.dir-alternate',
   translateX: 250,
-  direction: 'alternate'
+  direction: 'alternate',
+  easing: 'easeInOutSine'
 });
 /*DEMO*/
 }
@@ -887,16 +851,8 @@ anime({
   <h3 class="demo-title">Loop</h3>
   <div class="demo-description">
     <p>
-      Define the number of iterations of your animation
+      Define the number of iterations of your animation, default <code>1</code>.
     </p>
-    <table>
-      <thead>
-        <td>Default</td>
-      </thead>
-      <tr>
-        <td><code>1</code></td>
-      </tr>
-    </table>
     <table>
       <thead>
         <td>Accepts</td>
@@ -953,39 +909,45 @@ anime({
 anime({
   targets: '.loop',
   translateX: 250,
-  loop: 3
+  loop: 3,
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-infinity',
   translateX: 250,
-  loop: true
+  loop: true,
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-reverse',
   translateX: 250,
-  direction: 'reverse'
+  direction: 'reverse',
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-reverse-infinity',
   translateX: 250,
   direction: 'reverse',
-  loop: true
+  loop: true,
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-alternate',
   translateX: 250,
-  direction: 'alternate'
+  direction: 'alternate',
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-alternate-infinity',
   translateX: 250,
   direction: 'alternate',
-  loop: true
+  loop: true,
+  easing: 'easeInOutSine'
 });
 /*DEMO*/
 }
@@ -996,16 +958,20 @@ anime({
   <h3 class="demo-title">Autoplay</h3>
   <div class="demo-description">
     <p>
-      Define if the animation should automatically start or not.
+      Define if the animation should automatically start or not, default <code>true</code>.
     </p>
     <table>
       <thead>
         <td>Accepts</td>
-        <td>Default</td>
+        <td>Infos</td>
       </thead>
       <tr>
-        <td><code>Boolean</code></td>
         <td><code>true</code></td>
+        <td>Automatically starts the animation</td>
+      </tr>
+      <tr>
+        <td><code>false</code></td>
+        <td>Animation is paused by default</td>
       </tr>
     </table>
   </div>
@@ -1026,13 +992,15 @@ anime({
 anime({
   targets: '.autoplay-true',
   translateX: 250,
-  autoplay: true
+  autoplay: true,
+  easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.autoplay-false',
   translateX: 250,
-  autoplay: false
+  autoplay: false,
+  easing: 'easeInOutSine'
 });
 /*DEMO*/
 }
@@ -1043,18 +1011,18 @@ anime({
   <h3 class="demo-title">StartTime</h3>
   <div class="demo-description">
     <p>
-      Force the animation to start at a certain time.
+      Force the animation to start at a certain time in Milliseconds, default: <code>0</code>.
     </p>
     <table>
       <thead>
         <td>Accepts</td>
-        <td>Default</td>
-        <td>Unit</td>
+        <td>Example</td>
+        <td>Info</td>
       </thead>
       <tr>
         <td><code>Number</code></td>
-        <td><code>0</code></td>
-        <td>ms</td>
+        <td><code>2000</code></td>
+        <td>Milliseconds</td>
       </tr>
     </table>
   </div>
@@ -1112,8 +1080,8 @@ for (var i = 0; i < els.length; i++) {
     </p>
   </div>
   <div class="demo-content unitless-values-demo">
-    <div class="large square shadow"></div>
-    <div class="large square el"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el"></div>
   </div>
   <script>var unitlessValue = function() {
 /*DEMO*/
@@ -1132,15 +1100,19 @@ anime({
   <h3 class="demo-title">Specific unit</h3>
   <div class="demo-description">
     <p>
-      Force the animation to use a certain unit.<br>
-      It's important to note that anime will not automatically convert units.<br>
-      For example, if the target initial value is <code>'100px'</code> and your animation value is <code>'3rem'</code>, the animation will starts at <code>'100rem'</code>.<br>
+      Force the animation to use a certain unit.
+    </p>
+    <p class="warning">
+      <i>Anime</i> will not automatically convert units!<br>
+      For example, if the target initial value is <code>'100px'</code> and your animation value is <code>'3rem'</code>, the animation will starts at <code>'100rem'</code>.
+    </p>
+    <p>
       If you need your animation to starts from a specific value, check out the <a href="#fromToValues" class="color-values">From To values</a> section.
     </p>
   </div>
   <div class="demo-content specific-unit-values-demo">
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el"></div>
   </div>
   <script>var specificUnitValue = function() {
 /*DEMO*/
@@ -1182,8 +1154,8 @@ anime({
     </table>
   </div>
   <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el relative-values"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el relative-values"></div>
   </div>
   <script>var relativeValues = function() {
 /*DEMO*/
@@ -1247,28 +1219,28 @@ anime({
   <div class="demo-content colors-demo">
     <div class="line">
       <div class="small label">HEX</div>
-      <div class="small square shadow"></div>
-      <div class="small square el color-hex"></div>
+      <div class="small circle shadow"></div>
+      <div class="small circle el color-hex"></div>
     </div>
     <div class="line">
       <div class="small label">RGB</div>
-      <div class="small square shadow"></div>
-      <div class="small square el color-rgb"></div>
+      <div class="small circle shadow"></div>
+      <div class="small circle el color-rgb"></div>
     </div>
     <div class="line">
       <div class="small label">HSL</div>
-      <div class="small square shadow"></div>
-      <div class="small square el color-hsl"></div>
+      <div class="small circle shadow"></div>
+      <div class="small circle el color-hsl"></div>
     </div>
     <div class="line">
       <div class="small label">RGBA</div>
-      <div class="small square shadow"></div>
-      <div class="small square el color-rgba"></div>
+      <div class="small circle shadow"></div>
+      <div class="small circle el color-rgba"></div>
     </div>
     <div class="line">
       <div class="small label">HSLA</div>
-      <div class="small square shadow"></div>
-      <div class="small square el color-hsla"></div>
+      <div class="small circle shadow"></div>
+      <div class="small circle el color-hsla"></div>
     </div>
   </div>
   <script>var colors = function() {
@@ -1276,36 +1248,46 @@ anime({
 anime({
   targets: '.color-hex',
   backgroundColor: '#FFF',
+  endDelay: 1000,
   easing: 'linear',
-  duration: 2000
+  direction: 'alternate',
+  loop: true
 });
 
 anime({
   targets: '.color-rgb',
   backgroundColor: 'rgb(255,255,255)',
+  endDelay: 1000,
   easing: 'linear',
-  duration: 2000
+  direction: 'alternate',
+  loop: true
 });
 
 anime({
   targets: '.color-hsl',
   backgroundColor: 'hsl(0, 100%, 100%)',
+  endDelay: 1000,
   easing: 'linear',
-  duration: 2000
+  direction: 'alternate',
+  loop: true
 });
 
 anime({
   targets: '.color-rgba',
   backgroundColor: 'rgba(255,255,255, .5)',
+  endDelay: 1000,
   easing: 'linear',
-  duration: 2000
+  direction: 'alternate',
+  loop: true
 });
 
 anime({
   targets: '.color-hsla',
   backgroundColor: 'hsla(0, 100%, 100%, .5)',
+  endDelay: 1000,
   easing: 'linear',
-  duration: 2000
+  direction: 'alternate',
+  loop: true
 });
 /*DEMO*/
 }
@@ -1331,8 +1313,8 @@ anime({
     </table>
   </div>
   <div class="demo-content">
-    <div class="square shadow"></div>
-    <div class="square el from-to-values"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el from-to-values"></div>
   </div>
   <script>var fromToValues = function() {
 /*DEMO*/
@@ -1377,16 +1359,16 @@ anime({
   </div>
   <div class="demo-content function-based-values-demo">
     <div class="line">
-      <div class="small square shadow"></div>
-      <div data-x="160" class="small square el"></div>
+      <div class="small circle shadow"></div>
+      <div data-x="160" class="small circle el"></div>
     </div>
     <div class="line">
-      <div class="small square shadow"></div>
-      <div data-x="80" class="small square el"></div>
+      <div class="small circle shadow"></div>
+      <div data-x="80" class="small circle el"></div>
     </div>
     <div class="line">
-      <div class="small square shadow"></div>
-      <div data-x="250" class="small square el"></div>
+      <div class="small circle shadow"></div>
+      <div data-x="250" class="small circle el"></div>
     </div>
   </div>
   <script>var functionBasedPropVal = function() {
@@ -1403,9 +1385,9 @@ anime({
     return (l - i) + .25;
   },
   rotate: function() { return anime.random(-360, 360); },
+  borderRadius: function() { return ['50%', anime.random(10, 35) + '%']; },
   duration: function() { return anime.random(1200, 1800); },
-  duration: function() { return anime.random(800, 1600); },
-  delay: function() { return anime.random(0, 1000); },
+  delay: function() { return anime.random(0, 400); },
   direction: 'alternate',
   loop: true
 });
@@ -1419,7 +1401,7 @@ anime({
   <h3 class="demo-title">Keyframes</h3>
   <div class="demo-description">
     <p>
-      Keyframes are defined using an <code>Array</code> of property <code>Object</code>.<br>
+      Keyframes are defined using an Array of property Object.<br>
       Instance's <code>duration</code> is divided by the number of keyframes of each properties if not specified.
     </p>
     <table>
@@ -1432,10 +1414,13 @@ anime({
         <td><code>[{value: val01}, {value: val02}, {value: val03}]</code></td>
       </tr>
     </table>
+    <p>
+      More details on Object values in the <a class="color-anim-params" href="#specificPropParameters">Sspecific property parameters</a>.
+    </p>
   </div>
   <div class="demo-content keyframes-demo">
-    <div class="square shadow"></div>
-    <div class="square el keyframes"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el keyframes"></div>
   </div>
   <script>var keyframes = function() {
 /*DEMO*/
