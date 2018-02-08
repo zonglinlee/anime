@@ -83,10 +83,10 @@
   function spring(string, duration) {
 
     const params = parseEasingParameters(string);
-    const mass = is.und(params[0]) ? 1 : params[0];
-    const stiffness = is.und(params[1]) ? 100 : params[1];
-    const damping = is.und(params[2]) ? 10 : params[2];
-    const velocity =  is.und(params[3]) ? 0 : params[3];
+    const mass = minMaxValue(is.und(params[0]) ? 1 : params[0], .1, 100);
+    const stiffness = minMaxValue(is.und(params[1]) ? 100 : params[1], .1, 100);
+    const damping = minMaxValue(is.und(params[2]) ? 10 : params[2], .1, 100);
+    const velocity =  minMaxValue(is.und(params[3]) ? 0 : params[3], .1, 100);
     const w0 = Math.sqrt(stiffness / mass);
     const zeta = damping / (2 * Math.sqrt(stiffness * mass));
     const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
@@ -830,11 +830,6 @@
       return instance.reversed ? instance.duration - time : time;
     }
 
-    function updateInstanceTime(insTime) {
-      instance.currentTime = insTime;
-      instance.progress = (insTime / instance.duration) * 100;
-    }
-
     function syncInstanceChildren(time) {
       if (time >= instance.currentTime) {
         for (let i = 0; i < childrenLength; i++) children[i].seek(time - children[i].timelineOffset);
@@ -901,6 +896,7 @@
         anim.currentValue = progress;
         i++;
       }
+      instance.currentTime = insTime;
     }
 
     function setCallback(cb) {
@@ -917,6 +913,7 @@
       const insDuration = instance.duration;
       const insDelay = instance.delay;
       const insTime = adjustTime(engineTime);
+      instance.progress = minMaxValue((insTime / insDuration) * 100, 0, 100);
       if (children) syncInstanceChildren(insTime);
       if (insTime >= insDelay || !insDuration) {
         if (!instance.began) {
@@ -925,17 +922,14 @@
         }
         setCallback('run');
       }
-      updateInstanceTime(insTime);
       if (insTime > insDelay && insTime < insDuration) {
         setAnimationsProgress(insTime);
       } else {
         if (insTime <= insDelay && instance.currentTime !== 0) {
-          updateInstanceTime(insTime);
           setAnimationsProgress(0);
           if (instance.reversed) countIteration();
         }
         if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
-          updateInstanceTime(insDuration);
           setAnimationsProgress(insDuration);
           if (!instance.reversed) countIteration();
         }
