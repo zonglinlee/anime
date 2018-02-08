@@ -1952,7 +1952,7 @@ tl
   translateX: 250,
 }, '-=100')
 .add({
-  targets: '.timeline-controls-demo .cirlce.el',
+  targets: '.timeline-controls-demo .triangle.el',
   translateX: 250,
 }, '-=100');
 
@@ -2117,9 +2117,6 @@ document.body.querySelector('.state-animate-rotate').onclick = function() {
     <p>
       <code>update()</code> callback is triggered on every frames as soon as the animation starts playing.
     </p>
-    <p>
-      Note that <code>Promises</code> are not suported in IE < 11.
-    </p>
     <table>
       <thead>
         <td>Accepts</td>
@@ -2135,15 +2132,13 @@ document.body.querySelector('.state-animate-rotate').onclick = function() {
   </div>
   <div class="demo-content update-demo">
     <div class="logs">
-      <input class="log current-time-log"></input>
       <input class="log progress-log"></input>
     </div>
-    <div class="large square shadow"></div>
-    <div class="large square el"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el"></div>
   </div>
   <script>var update = function() {
 /*DEMO*/
-var updateLogEl = document.querySelector('.update-demo .current-time-log');
 var progressLogEl = document.querySelector('.update-demo .progress-log');
 
 anime({
@@ -2153,7 +2148,6 @@ anime({
   direction: 'alternate',
   loop: true,
   update: function(anim) {
-    updateLogEl.value = 'current time : ' + Math.round(anim.currentTime) + 'ms';
     progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
   }
 });
@@ -2187,8 +2181,8 @@ anime({
       <input class="log began-log" value="began : false"></input>
       <input class="log progress-log"></input>
     </div>
-    <div class="large square shadow"></div>
-    <div class="large square el"></div>
+    <div class="large circle shadow"></div>
+    <div class="large circle el"></div>
   </div>
   <script>var begin = function() {
 /*DEMO*/
@@ -2200,7 +2194,7 @@ anime({
   translateX: 250,
   delay: 1000,
   begin: function(anim) {
-    anim.animatables[0].target.style.backgroundColor = 'green';
+    anim.animatables[0].target.style.backgroundColor = '#18FF92';
   },
   update: function (anim) {
     beganLogEl.value = 'began : ' + anim.began;
@@ -2237,8 +2231,8 @@ anime({
       <input class="log current-time-log" value="not running"></input>
       <input class="log progress-log" value="progress : 0%"></input>
     </div>
-    <div class="large square shadow"></div>
-    <div class="large square el"></div>
+    <div class="large circle shadow"></div>
+    <div class="large circle el"></div>
   </div>
   <script>var run = function() {
 /*DEMO*/
@@ -2250,7 +2244,7 @@ anime({
   translateX: 250,
   delay: 1000,
   run: function(anim) {
-    anim.animatables[0].target.style.backgroundColor = 'green';
+    anim.animatables[0].target.style.backgroundColor = '#18FF92';
   },
   update: function(anim) {
     if (anim.began) runLogEl.value = 'running';
@@ -2290,8 +2284,8 @@ anime({
     <div class="logs">
       <input class="log completed-log" value="completed : false"></input>
     </div>
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el"></div>
   </div>
   <script>var complete = function() {
 /*DEMO*/
@@ -2305,6 +2299,7 @@ anime({
   },
   complete: function(anim) {
     completedLogEl.value = 'completed : ' + anim.completed;
+    anim.animatables[0].target.style.backgroundColor = '#18FF92';
   }
 });
 /*DEMO*/
@@ -2319,13 +2314,16 @@ anime({
     <p>
       Every animation instances return a <code>finished</code> promise when the animation finised.
     </p>
+    <p>
+      Note that <code>Promises</code> are not suported in IE < 11.
+    </p>
   </div>
   <div class="demo-content promise-demo">
     <div class="logs">
       <input class="log finished-log"></input>
     </div>
-    <div class="square shadow"></div>
-    <div class="square el"></div>
+    <div class="circle shadow"></div>
+    <div class="circle el"></div>
   </div>
   <script>var finishedPromise = function() {
 /*DEMO*/
@@ -2488,13 +2486,13 @@ anime({
   <div class="demo-content align-center line-drawing-demo">
     <svg viewBox="0 0 280 100">
       <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="1" class="lines">
-        <path d="M58 80V50.12C57.7 41.6 51.14 35 43 35a15 15 0 0 0 0 30h7.5v15H43a30 30 0 1 1 0-60c16.42 0 29.5 13.23 30 29.89V80H58z"/>
-        <path d="M73 80V20H58v60h15z"/>
-        <path d="M58 80V49.77C58.5 33.23 71.58 20 88 20a30 30 0 0 1 30 30v30h-15V50a15 15 0 0 0-15-15c-8.14 0-14.7 6.6-15 15.12V80H58zm75 0V20h-15v60h15z"/>
-        <path d="M118 80V49.77C118.5 33.23 131.58 20 148 20a30 30 0 0 1 30 30v30h-15V50a15 15 0 0 0-15-15c-8.14 0-14.7 6.6-15 15.12V80h-15zm-7.5-60a7.5 7.5 0 1 1-7.48 8v-1c.25-3.9 3.5-7 7.48-7z"/>
-        <path d="M133 65a15 15 0 0 1-15-15v-7.5h-15V50a30 30 0 0 0 30 30V65zm30 15V49.77C163.5 33.23 176.58 20 193 20a30 30 0 0 1 30 30v30h-15V50a15 15 0 0 0-15-15c-8.14 0-14.7 6.6-15 15.12V80h-15z"/>
-        <path d="M238 65a15 15 0 0 1 0-30c8.1 0 14.63 6.53 15 15h-15v15h30V49.89C267.5 33.23 254.42 20 238 20a30 30 0 0 0 0 60V65z"/>
-        <path d="M260.48 65a7.5 7.5 0 1 1-7.48 8v-1c.26-3.9 3.5-7 7.48-7z"/>
+        <path class="el" d="M58 80V50.12C57.7 41.6 51.14 35 43 35a15 15 0 0 0 0 30h7.5v15H43a30 30 0 1 1 0-60c16.42 0 29.5 13.23 30 29.89V80H58z"/>
+        <path class="el" d="M73 80V20H58v60h15z"/>
+        <path class="el" d="M58 80V49.77C58.5 33.23 71.58 20 88 20a30 30 0 0 1 30 30v30h-15V50a15 15 0 0 0-15-15c-8.14 0-14.7 6.6-15 15.12V80H58zm75 0V20h-15v60h15z"/>
+        <path class="el" d="M118 80V49.77C118.5 33.23 131.58 20 148 20a30 30 0 0 1 30 30v30h-15V50a15 15 0 0 0-15-15c-8.14 0-14.7 6.6-15 15.12V80h-15zm-7.5-60a7.5 7.5 0 1 1-7.48 8v-1c.25-3.9 3.5-7 7.48-7z"/>
+        <path class="el" d="M133 65a15 15 0 0 1-15-15v-7.5h-15V50a30 30 0 0 0 30 30V65zm30 15V49.77C163.5 33.23 176.58 20 193 20a30 30 0 0 1 30 30v30h-15V50a15 15 0 0 0-15-15c-8.14 0-14.7 6.6-15 15.12V80h-15z"/>
+        <path class="el" d="M238 65a15 15 0 0 1 0-30c8.1 0 14.63 6.53 15 15h-15v15h30V49.89C267.5 33.23 254.42 20 238 20a30 30 0 0 0 0 60V65z"/>
+        <path class="el" d="M260.48 65a7.5 7.5 0 1 1-7.48 8v-1c.26-3.9 3.5-7 7.48-7z"/>
       </g>
     </svg>
   </div>
@@ -2519,334 +2517,336 @@ anime({
 <!-- -->
 
 <!-- EASINGS -->
-<article id="easings" class="color-12">
+<article id="easings" class="color-easings">
   <header>
     <h2 class="demos-title">Easings</h2>
   </header>
 
-<div id="penner" class="demo">
-  <h3 class="demo-title">Built in equations</h3>
-  <div class="demo-content">
+<div id="linearEasing" class="demo">
+  <h3 class="demo-title">Linear</h3>
+  <div class="demo-description">
+    <p>
+      <code>'linear'</code> will not apply any easing timing to your animation.<br>
+      Works best with opacity and colors values.
+    </p>
+  </div>
+  <div class="demo-content linear-easing-demo">
     <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square linear"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InQuad"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InCubic"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InQuart"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InQuint"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InSine"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InExpo"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InCirc"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InBack"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutQuad"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutCubic"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutQuart"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutQuint"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutSine"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutExpo"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutCirc"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square OutBack"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutQuad"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutCubic"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutQuart"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutQuint"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutSine"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutExpo"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutCirc"></div>
-    </div>
-    <div class="line">
-      <div class="small stretched square shadow"></div>
-      <div class="small stretched square InOutBack"></div>
+      <div class="square shadow"></div>
+      <div class="square el"></div>
     </div>
   </div>
-<script>var penner = anime.timeline();
-penner
-  .add({
-    targets: '#penner .linear', translateX: 250, easing: 'linear'
-  }, 0)
-  .add({
-    targets: '#penner .InQuad', translateX: 250, easing: 'easeInQuad'
-  }, 0)
-  .add({
-    targets: '#penner .InCubic', translateX: 250, easing: 'easeInCubic'
-  }, 0)
-  .add({
-    targets: '#penner .InQuart', translateX: 250, easing: 'easeInQuart'
-  }, 0)
-  .add({
-    targets: '#penner .InQuint', translateX: 250, easing: 'easeInQuint'
-  }, 0)
-  .add({
-    targets: '#penner .InSine', translateX: 250, easing: 'easeInSine'
-  }, 0)
-  .add({
-    targets: '#penner .InExpo', translateX: 250, easing: 'easeInExpo'
-  }, 0)
-  .add({
-    targets: '#penner .InCirc', translateX: 250, easing: 'easeInCirc'
-  }, 0)
-  .add({
-    targets: '#penner .InBack', translateX: 250, easing: 'easeInBack'
-  }, 0)
-  .add({
-    targets: '#penner .OutQuad', translateX: 250, easing: 'easeOutQuad'
-  }, 0)
-  .add({
-    targets: '#penner .OutCubic', translateX: 250, easing: 'easeOutCubic'
-  }, 0)
-  .add({
-    targets: '#penner .OutQuart', translateX: 250, easing: 'easeOutQuart'
-  }, 0)
-  .add({
-    targets: '#penner .OutQuint', translateX: 250, easing: 'easeOutQuint'
-  }, 0)
-  .add({
-    targets: '#penner .OutSine', translateX: 250, easing: 'easeOutSine'
-  }, 0)
-  .add({
-    targets: '#penner .OutExpo', translateX: 250, easing: 'easeOutExpo'
-  }, 0)
-  .add({
-    targets: '#penner .OutCirc', translateX: 250, easing: 'easeOutCirc'
-  }, 0)
-  .add({
-    targets: '#penner .OutBack', translateX: 250, easing: 'easeOutBack'
-  }, 0)
-  .add({
-    targets: '#penner .InOutQuad', translateX: 250, easing: 'easeInOutQuad'
-  }, 0)
-  .add({
-    targets: '#penner .InOutCubic', translateX: 250, easing: 'easeInOutCubic'
-  }, 0)
-  .add({
-    targets: '#penner .InOutQuart', translateX: 250, easing: 'easeInOutQuart'
-  }, 0)
-  .add({
-    targets: '#penner .InOutQuint', translateX: 250, easing: 'easeInOutQuint'
-  }, 0)
-  .add({
-    targets: '#penner .InOutSine', translateX: 250, easing: 'easeInOutSine'
-  }, 0)
-  .add({
-    targets: '#penner .InOutExpo', translateX: 250, easing: 'easeInOutExpo'
-  }, 0)
-  .add({
-    targets: '#penner .InOutCirc', translateX: 250, easing: 'easeInOutCirc'
-  }, 0)
-  .add({
-    targets: '#penner .InOutBack', translateX: 250, easing: 'easeInOutBack'
-  }), 0;
-</script>
-</div>
-
-<div id="elasticity" class="demo">
-  <h3 class="demo-title">Elasticity</h3>
-  <div class="demo-content">
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-0"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-100"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-200"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-300"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-400"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-500"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-600"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-700"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-800"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-900"></div>
-    </div>
-    <div class="line">
-      <div class="stretched square shadow"></div>
-      <div class="stretched square elasticity-1000"></div>
-    </div>
-  </div>
-<script>var elasticity = anime.timeline();
-elasticity.add({
-  targets: '#elasticity .elasticity-0', translateX: 250,
-  duration: 3000,
-  elasticity: 0,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-100', translateX: 250,
-  duration: 3000,
-  elasticity: 100,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-200', translateX: 250,
-  duration: 3000,
-  elasticity: 200,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-300', translateX: 250,
-  duration: 3000,
-  elasticity: 300,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-400', translateX: 250,
-  duration: 3000,
-  elasticity: 400,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-500', translateX: 250,
-  duration: 3000,
-  elasticity: 500,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-600', translateX: 250,
-  duration: 3000,
-  elasticity: 600,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-700', translateX: 250,
-  duration: 3000,
-  elasticity: 700,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-800', translateX: 250,
-  duration: 3000,
-  elasticity: 800,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-900', translateX: 250,
-  duration: 3000,
-  elasticity: 900,
-}, 0)
-.add({
-  targets: '#elasticity .elasticity-1000', translateX: 250,
-  duration: 3000,
-  elasticity: 1000,
-}, 0);
-</script>
-</div>
-
-<div id="customBezier" class="demo">
-  <h3 class="demo-title">Custom Bézier curves</h3>
-  <div class="demo-content">
-    <div class="square large shadow"></div>
-    <div class="square large el"></div>
-  </div>
-<script>var customBezier = anime({
-  targets: '#customBezier .el',
+  <script>var linearEasing = function() {
+/*DEMO*/
+anime({
+  targets: '.linear-easing-demo .el',
   translateX: 250,
-  easing: 'cubicBezier(.91, -0.54, .29, 1.56)'
+  direction: 'alternate',
+  loop: true,
+  easing: 'linear'
 });
-</script>
+/*DEMO*/
+}
+  </script>
+
 </div>
 
-<div id="customEasingFunction" class="demo">
-  <h3 class="demo-title">Custom easing function</h3>
-  <div class="demo-content">
-    <div class="square large shadow"></div>
-    <div class="square large el"></div>
+<div id="pennerFunctions" class="demo">
+  <h3 class="demo-title">Penner's functions</h3>
+  <div class="demo-description">
+    <p>
+      Built in <a href="http://robertpenner.com/easing/">Robert Penner's easing functions</a>.
+    </p>
+    <table>
+      <thead>
+        <td>in</td>
+        <td>out</td>
+        <td>in-out</td>
+      </thead>
+      <tr>
+        <td><code>'easeInQuad'</code></td>
+        <td><code>'easeOutQuad'</code></td>
+        <td><code>'easeInOutQuad'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInCubic'</code></td>
+        <td><code>'easeOutCubic'</code></td>
+        <td><code>'easeInOutCubic'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInQuart'</code></td>
+        <td><code>'easeOutQuart'</code></td>
+        <td><code>'easeInOutQuart'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInQuint'</code></td>
+        <td><code>'easeOutQuint'</code></td>
+        <td><code>'easeInOutQuint'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInSine'</code></td>
+        <td><code>'easeOutSine'</code></td>
+        <td><code>'easeInOutSine'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInExpo'</code></td>
+        <td><code>'easeOutExpo'</code></td>
+        <td><code>'easeInOutExpo'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInCirc'</code></td>
+        <td><code>'easeOutCirc'</code></td>
+        <td><code>'easeInOutCirc'</code></td>
+      </tr>
+      <tr>
+        <td><code>'easeInBack'</code></td>
+        <td><code>'easeOutBack'</code></td>
+        <td><code>'easeInOutBack'</code></td>
+      <tr>
+    </table>
   </div>
-<script>anime.easings['myCustomEasingName'] = function(arg1) {
-  return function(t) {
-    return Math.pow(Math.sin(t * arg1), arg1);
+  <div class="demo-content penner-equations-demo">
+
+  </div>
+  <script>var pennerFunctions = function() {
+/*DEMO*/
+var demoContentEl = document.querySelector('.penner-equations-demo');
+var fragment = document.createDocumentFragment();
+
+function createEasingDemo(easing) {
+  var demoEl = document.createElement('div');
+  demoEl.classList.add('stretched','square','el');
+  anime({
+    targets: demoEl,
+    translateX: 250,
+    direction: 'alternate',
+    loop: true,
+    easing: easing,
+  });
+  fragment.appendChild(demoEl);
+}
+
+for (var easeName in anime.easings) {
+  if (Array.isArray(anime.easings[easeName])) {
+    createEasingDemo(easeName);
   }
 }
 
-var customEasingFunction = anime({
-  targets: '#customEasingFunction .el',
+demoContentEl.innerHTML = '';
+demoContentEl.appendChild(fragment);
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="cubicBezier" class="demo">
+  <h3 class="demo-title">Cubic Bézier Curve</h3>
+  <div class="demo-description">
+    <p>
+      Use your own custom cubic Bézier curves <code>cubicBezier(x1, y1, x2, y2)</code>
+    </p>
+    <table>
+      <thead>
+        <td>Head 1</td>
+        <td>Head 2</td>
+      </thead>
+      <tr>
+        <td><code>'code'</code></td>
+        <td>Description</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content cubic-bezier-demo">
+    <div class="line">
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+  </div>
+  <script>var cubicBezier = function() {
+/*DEMO*/
+anime({
+  targets: '.cubic-bezier-demo .el',
   translateX: 250,
-  easing: 'myCustomEasingName(3)'
-});
-</script>
+  direction: 'alternate',
+  loop: true,
+  easing: 'cubicBezier(.5, .05, .1, .3)'
+})
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="springPhysics" class="demo">
+  <h3 class="demo-title">Spring</h3>
+  <div class="demo-description">
+    <p>
+      Physics based easing, can accepts 4 parameters <code>spring(mass, stiffness, damping, velocity)</code>
+    </p>
+    <p>
+      Spring easing will override the <code>duration</code> parameter
+      Spring easing uses  easing doesn't rely on dur inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js<br>
+    </p>
+    <table>
+      <thead>
+        <td>Parameter</td>
+        <td>Default</td>
+        <td>Min</td>
+        <td>Max</td>
+      </thead>
+      <tr>
+        <td>Mass</td>
+        <td><code>1</code></td>
+        <td><code>0</code></td>
+        <td><code>100</code></td>
+      </tr>
+      <tr>
+        <td>Stiffness</td>
+        <td><code>100</code></td>
+        <td><code>0</code></td>
+        <td><code>100</code></td>
+      </tr>
+      <tr>
+        <td>Damping</td>
+        <td><code>10</code></td>
+        <td><code>0</code></td>
+        <td><code>100</code></td>
+      </tr>
+      <tr>
+        <td>Velocity</td>
+        <td><code>0</code></td>
+        <td><code>0</code></td>
+        <td><code>100</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content spring-physics-demo">
+    <div class="line">
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+  </div>
+  <script>var springPhysics = function() {
+/*DEMO*/
+anime({
+  targets: '.spring-physics-demo .el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  easing: 'spring(1, 80, 10, 0)'
+})
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="stepEasing" class="demo">
+  <h3 class="demo-title">Steps</h3>
+  <div class="demo-description">
+    <p>
+      Defines the number of jumps an animation takes to arrive at its end value
+    </p>
+    <pre><code>steps(numberOfSteps)</code></pre>
+    <table>
+      <thead>
+        <td>Parameter</td>
+        <td>Default</td>
+        <td>Min</td>
+        <td>Max</td>
+      </thead>
+      <tr>
+        <td>Number of steps</td>
+        <td><code>10</code></td>
+        <td><code>1</code></td>
+        <td><code>∞</code></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content step-easing-demo">
+    <div class="line">
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+  </div>
+  <script>var stepEasing = function() {
+/*DEMO*/
+anime({
+  targets: '.step-easing-demo .el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  easing: 'steps(5)'
+})
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="demoName" class="demo">
+  <h3 class="demo-title">Demo Name</h3>
+  <div class="demo-description">
+    <p>
+      <code>var path = anime.path(pathEl)</code> return an <code>Function</code> that converts svg path data into animatable values.<br>
+    </p>
+    <table>
+      <thead>
+        <td>Head 1</td>
+        <td>Head 2</td>
+      </thead>
+      <tr>
+        <td><code>'code'</code></td>
+        <td>Description</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content demo-name-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var demoName = function() {
+/*DEMO*/
+
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="demoName" class="demo">
+  <h3 class="demo-title">Demo Name</h3>
+  <div class="demo-description">
+    <p>
+      <code>var path = anime.path(pathEl)</code> return an <code>Function</code> that converts svg path data into animatable values.<br>
+    </p>
+    <table>
+      <thead>
+        <td>Head 1</td>
+        <td>Head 2</td>
+      </thead>
+      <tr>
+        <td><code>'code'</code></td>
+        <td>Description</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content demo-name-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var demoName = function() {
+/*DEMO*/
+
+/*DEMO*/
+}
+  </script>
+
 </div>
 
 </article>

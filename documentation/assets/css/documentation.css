@@ -294,6 +294,10 @@ code {
   padding: 6px 8px;
 }
 
+.api-output a:visited {
+  color: currentColor;
+}
+
 .code-output {
   overflow-x: hidden;
   overflow-y: auto;
@@ -505,7 +509,7 @@ article {
 
 .log {
   width: 100%;
-  height: 22px;
+  height: 100%;
   background: transparent;
   color: currentColor;
   border: none;

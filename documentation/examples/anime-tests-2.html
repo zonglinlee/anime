@@ -41,25 +41,23 @@
   <div class="item color-02"></div>
   <div class="item color-03" style="transform: translateX(85px) translateY(300px);"></div>
   <script>
-    function mouseenter() {
-      var animation = anime({
-        targets: this,
-        scale: 2
-      });
-      console.log(animation.animations[0].tweens[0].from);
-    }
-    function mouseleave() {
-      var animation = anime({
-        targets: this,
-        scale: 1
-      });
-      console.log(animation.animations[0].tweens[0].from);
-    }
+    // function mouseenter() {
+    //   var animation = anime({
+    //     targets: this,
+    //     scale: 2
+    //   });
+    //   console.log(animation.animations[0].tweens[0].from);
+    // }
+    // function mouseleave() {
+    //   var animation = anime({
+    //     targets: this,
+    //     scale: 1
+    //   });
+    //   console.log(animation.animations[0].tweens[0].from);
+    // }
 
     anime.timeline({
       targets: '.color-02',
-      easing: 'spring 100 50',
-      loop: true,
       direction: 'alternate'
     }).add({
       translateX: 300
@@ -71,9 +69,9 @@
       scale: 0
     })
 
-    var el01 = document.querySelector('.color-01');
-    el01.addEventListener('mouseenter', mouseenter, false);
-    el01.addEventListener('mouseleave', mouseleave, false);
+    // var el01 = document.querySelector('.color-01');
+    // el01.addEventListener('mouseenter', mouseenter, false);
+    // el01.addEventListener('mouseleave', mouseleave, false);
   </script>
 </body>
 </html>
