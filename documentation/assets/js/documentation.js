@@ -97,12 +97,15 @@ function toggleSectionLink(ulEl) {
   });
 }
 
-function resetDemos() {
+function resetDemo(demoEl) {
   var els = document.querySelectorAll('.el');
   for (var i = 0; i < els.length; i++) {
     anime.remove(els[i]);
     els[i].style = '';
   }
+}
+
+function resetDemos() {
   anime.running.forEach(function(anim) {
     anim.pause();
     anim.seek(0);
@@ -122,7 +125,7 @@ function createDemo(el) {
   var HTMLcode = demoContentEl ? parseHTML(demoContentEl, id) : '';
   var APIdescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
   function restart() {
-    resetDemos();
+    resetDemo();
     demoAnim();
   }
   function highlightDemo(e, push) {
@@ -163,7 +166,7 @@ function createDemo(el) {
   }
   function leaveDemo() {
     if (!el.classList.contains('active')) {
-      resetDemos();
+      resetDemo();
     }
   }
   el.addEventListener('click', function(e) {

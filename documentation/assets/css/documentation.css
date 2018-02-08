@@ -1,13 +1,8 @@
 .content {
   overflow: hidden;
   opacity: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   width: 100%;
   height: 100%;
   transition: opacity 1s ease;
@@ -28,12 +23,8 @@ body.ready .content {
 }
 
 .logo {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   width: 240px;
   height: 60px;
   padding: 10px 0 10px 55px;
@@ -46,27 +37,17 @@ body.ready .content {
 }
 
 header {
-  position: -webkit-sticky;
-  position: -moz-sticky;
-  position: -o-sticky;
-  position: -ms-sticky;
   position: sticky;
   top: 0;
   z-index: 2;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   height: 60px;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.35);
+  border-bottom: 1px solid rgba(0,0,0,.25);
 }
 
 .logo, h2 {
@@ -91,9 +72,17 @@ header {
 /* Sidebar */
 
 .sidebar {
+  display: flex;
+  flex-direction: column;
   width: 240px;
   padding-top: 60px;
-  border-right: 1px solid rgba(0,0,0,.35);
+  border-right: 1px solid rgba(0,0,0,.25);
+}
+
+.sidebar-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .navigation {
@@ -184,12 +173,12 @@ header {
 .code-examples {
   width: 50%;
   flex-direction: column;
-  border-left: 1px solid rgba(0,0,0,.35);
+  border-left: 1px solid rgba(0,0,0,.25);
 }
 
 .code-pane {
   position: relative;
-  border-bottom: 1px solid rgba(0,0,0,.35);
+  border-bottom: 1px solid rgba(0,0,0,.25);
 }
 
 .code-pane-description { height: 40%; }
@@ -232,26 +221,25 @@ code {
 }
 
 .code-pane-description {
-  color: rgba(255,255,255,.8);
   font-size: 15px;
   line-height: 20px;
+  color: rgba(255,255,255,.7);
 }
 
 .code-pane-description p {
   margin-bottom: 20px;
-  letter-spacing: .5px;
 }
 
 p.warning {
-  color: #FF7C72;
   display: inline-block;
   position: relative;
   padding: 8px 12px;
+  color: #FBF38C;
 }
 
 p.warning:after {
   content: "";
-  color: #FBF38C;
+  color: currentColor;
   display: inline-block;
   position: absolute;
   top: 0;
@@ -260,7 +248,7 @@ p.warning:after {
   bottom: 0;
   background-color: currentColor;
   border-radius: 3px;
-  opacity: .1;
+  opacity: .05;
 }
 
 .code-pane-description code.hljs {
@@ -276,8 +264,8 @@ p.warning:after {
   display: inline-block;
   position: relative;
   padding: 8px 12px;
-  background-color: rgba(0,0,0,.3);
-  border: 1px solid rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.2);
+  border: 1px solid rgba(0,0,0,.4);
   border-radius: 3px;
 }
 
@@ -285,29 +273,39 @@ p.warning:after {
   display: inline;
   position: relative;
   padding: 0px 3px;
-  background-color: rgba(0,0,0,.3);
-  border: 1px solid rgba(0,0,0,.5);
+  background-color: rgba(0,0,0,.2);
+  border: 1px solid rgba(0,0,0,.4);
   border-radius: 3px;
 }
 
 .code-pane-description table {
   margin-bottom: 20px;
+  border: 1px solid #2E2E33;
+  border-spacing: 0;
+  border-radius: 3px;
 }
 
 .code-pane-description thead {
-  font-size: 12px;
-  line-height: 20px;
+  font-weight: 200;
   text-transform: uppercase;
-  opacity: .6;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.5);
 }
 
-.code-pane-description tr, .code-pane-description td {
-  border: 1px solid #6e6d72;
-  padding: 6px 8px;
-}
-
-.code-pane-description a:visited {
+.code-pane-description td {
+  vertical-align: middle;
+  padding: 8px 12px;
+  border-left: 1px solid #2E2E33;
+  border-top: 1px solid #2E2E33;
   color: currentColor;
+}
+
+.code-pane-description thead td {
+  border-top: none;
+}
+
+.code-pane-description td:first-child {
+  border-left: none;
 }
 
 .code-output {
@@ -318,7 +316,7 @@ p.warning:after {
   width: 100%;
   height: 100%;
   padding: 20px;
-  background-color: rgba(0,0,0,.3);
+  background-color: rgba(0,0,0,.2);
 }
 
 .code-pane-description .code-output {
@@ -358,7 +356,7 @@ article {
   width: 100%;
   min-height: 200px;
   padding-top: 35px;
-  border-bottom: 1px solid rgba(0,0,0,.35);
+  border-bottom: 1px solid rgba(0,0,0,.25);
   cursor: pointer;
 }
 
