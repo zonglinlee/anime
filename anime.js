@@ -129,10 +129,11 @@
   // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
 
   function elastic(amplitude = 1, period = .5) {
+    const a = minMaxValue(amplitude, 1, 10);
+    const p = minMaxValue(period, .1, 2);
     return t => {
-      const a = Math.max(amplitude, 1);
       return (t === 0 || t === 1) ? t : 
-        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (period / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / period);
+        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
     }
   }
 

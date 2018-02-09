@@ -2791,7 +2791,7 @@ anime({
   <h3 class="demo-title">Spring</h3>
   <div class="demo-description">
     <p>
-      Spring physics based easing. It accepts 4 parameters: <code>spring(mass, stiffness, damping, velocity)</code>
+      Spring physics based easing. It accepts 4 parameters: <code>'spring(mass, stiffness, damping, velocity)'</code>
     </p>
     <p class="warning">
       The duration of a spring animation if defined by the spring parameters.<br>
@@ -2855,7 +2855,7 @@ anime({
   <h3 class="demo-title">Elastic</h3>
   <div class="demo-description">
     <p>
-      Creates a similar effect to <a class="color-easings" href="#springPhysicsEasing">Spring easing</a> but with simplier parameters, and works with the <code>duration</code> parameter.
+      Accepts 2 parameters: <code>'easeOutElastic(amplitude, period)'</code>
     </p>
     <table>
       <thead>
@@ -2875,57 +2875,47 @@ anime({
         <td>Default</td>
         <td>Min</td>
         <td>Max</td>
+        <td>Info</td>
       </thead>
       <tr>
         <td>Amplitude</td>
         <td><code>1</code></td>
-        <td><code>0</code></td>
-        <td><code>100</code></td>
+        <td><code>1</code></td>
+        <td><code>10</code></td>
+        <td>Controls the overshoot of the curve</td>
       </tr>
       <tr>
         <td>Period</td>
-        <td><code>100</code></td>
-        <td><code>0</code></td>
-        <td><code>100</code></td>
+        <td><code>.5</code></td>
+        <td><code>0.1</code></td>
+        <td><code>2</code></td>
+        <td>Controls how many times the curve goes back and forth</td>
       </tr>
     </table>
   </div>
   <div class="demo-content elastic-easing-demo">
     <div class="line">
       <div class="small square shadow"></div>
-      <div class="small square el in-elastic"></div>
+      <div class="small square el" data-ease="easeInElastic(1, .6)"></div>
     </div>
     <div class="line">
       <div class="small square shadow"></div>
-      <div class="small square el out-elastic"></div>
+      <div class="small square el" data-ease="easeOutElastic(1, .6)"></div>
     </div>
     <div class="line">
       <div class="small square shadow"></div>
-      <div class="small square el in-out-elastic"></div>
+      <div class="small square el" data-ease="easeInOutElastic(1, .6)"></div>
     </div>
   </div>
   <script>var elasticEasing = function() {
 /*DEMO*/
 anime({
-  targets: '.in-elastic',
+  targets: '.elastic-easing-demo .el',
   translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  easing: 'easeInElastic(1, .5)'
-})
-anime({
-  targets: '.out-elastic',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  easing: 'easeOutElastic(1, .5)'
-})
-anime({
-  targets: '.in-out-elastic',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  easing: 'easeInOutElastic(1, .5)'
+  easing: function(el) {
+    return el.getAttribute('data-ease');
+  },
+  duration: 1000
 })
 /*DEMO*/
 }

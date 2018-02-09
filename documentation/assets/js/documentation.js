@@ -97,7 +97,7 @@ function toggleSectionLink(ulEl) {
   });
 }
 
-function resetDemo(demoEl) {
+function resetDemo() {
   var els = document.querySelectorAll('.el');
   for (var i = 0; i < els.length; i++) {
     anime.remove(els[i]);
@@ -106,10 +106,11 @@ function resetDemo(demoEl) {
 }
 
 function resetDemos() {
-  anime.running.forEach(function(anim) {
+  for (var i = 0; i < anime.running.length; i++) {
+    var anim = anime.running[i];
     anim.pause();
     anim.seek(0);
-  });
+  }
   document.body.classList.add('ready');
 }
 
