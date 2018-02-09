@@ -495,11 +495,11 @@
     return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
   }
 
-  // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes. 
+  // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes
   // adapted from https://gist.github.com/SebLambla/3e0550c496c236709744
 
   function getDistance(p1, p2) {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)); 
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
   }
 
   function getCircleLength(el) {
@@ -768,15 +768,19 @@
       raf = requestAnimationFrame(step);
     }
     function step(t) {
-      if (activeInstances.length) {
+      let activeInstancesLength = activeInstances.length;
+      if (activeInstancesLength) {
         let i = 0;
-        while (i < activeInstances.length) {
+        while (i < activeInstancesLength) {
           const activeInstance = activeInstances[i];
           if (!activeInstance.paused) {
             activeInstance.tick(t);
           } else {
             const instanceIndex = activeInstances.indexOf(activeInstance);
-            if (instanceIndex > -1) activeInstances.splice(instanceIndex, 1);
+            if (instanceIndex > -1) {
+              activeInstances.splice(instanceIndex, 1);
+              activeInstancesLength = activeInstances.length;
+            }
           }
           i++;
         }
@@ -799,7 +803,6 @@
   }
 
   document.addEventListener('visibilitychange', handleVisibilityChange);
-
 
   // Public Instance
 
