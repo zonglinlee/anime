@@ -482,10 +482,9 @@
     return transforms;
   }
 
-  function getTransformValue(el, propName, animatable, unit) {
+  function getTransformValue(el, propName, animatable) {
     const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
-    const transformValue = getElementTransforms(el).get(propName) || defaultVal;
-    const value =  unit ? convertCSSUnit(el, transformValue, unit) : transformValue;
+    const value = getElementTransforms(el).get(propName) || defaultVal;
     animatable.transforms.list.set(propName, value);
     animatable.transforms['last'] = propName;
     return value;
