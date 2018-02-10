@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tests | anime.js</title>
+  <title>Convert units | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
@@ -28,50 +28,36 @@
       min-height: 100vh;
     }
     .item {
-      width: 100px;
-      height: 100px;
-      border-radius: 15%;
       background-color: currentColor;
       margin: 10px;
+    }
+    .color-01 {
+      width: 5vw;
+      height: 40px;
+    }
+    .color-02 {
+      width: 10%;
+      height: 4rem;
     }
   </style>
 </head>
 <body>
-  <div class="item color-01" style="transform: translateX(45px) translateY(200px);"></div>
+  <div class="item color-01"></div>
   <div class="item color-02"></div>
-  <div class="item color-03" style="transform: translateX(85px) translateY(300px);"></div>
+  <div class="item color-03"></div>
   <script>
-    // function mouseenter() {
-    //   var animation = anime({
-    //     targets: this,
-    //     scale: 2
-    //   });
-    //   console.log(animation.animations[0].tweens[0].from);
-    // }
-    // function mouseleave() {
-    //   var animation = anime({
-    //     targets: this,
-    //     scale: 1
-    //   });
-    //   console.log(animation.animations[0].tweens[0].from);
-    // }
-
-    anime.timeline({
-      targets: '.color-02',
-      direction: 'alternate'
-    }).add({
-      translateX: 300
-    }).add({
-      translateY: 300
-    }).add({
-      rotate: 360
-    }).add({
-      scale: 0
+    var obj = {
+      data: '30px'
+    }
+    anime({
+      targets: '.color-01',
+      width: ['100vw', '2rem'],
+      easing: 'linear'
     })
-
-    // var el01 = document.querySelector('.color-01');
-    // el01.addEventListener('mouseenter', mouseenter, false);
-    // el01.addEventListener('mouseleave', mouseleave, false);
+    anime({
+      targets: obj,
+      data: '2rem'
+    })
   </script>
 </body>
 </html>

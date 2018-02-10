@@ -18,7 +18,7 @@
   <link href="../assets/css/anime.css" rel="stylesheet">
   <script src="../../anime.js"></script>
   <!-- <script src="../assets/js/anime.3.0.0-alpha.js"></script> -->
-  <!-- <script src="../assets/js/anime.2.2.0.js"></script> -->
+  <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
   <!-- <script src="../assets/js/anime.2.0.1.js"></script> -->
   <!-- <script src="../assets/js/anime.1.3.js"></script> -->
   <style>
@@ -49,7 +49,7 @@
 <body>
   <script>
 
-    var numberOfEls = 200;
+    var numberOfEls = 500;
     var duration = 4000;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
@@ -61,21 +61,35 @@
       var el = document.createElement('div');
       el.classList.add('particule');
       el.style.backgroundColor = 'hsl(' + hue + ', 100%, 50%)';
+      el.style.transform = 'rotate(' + i * 1 + 'deg) translateX(1000vw)';
+
+      document.body.appendChild(el);
 
       anime({
         targets: el,
-        rotate: [i * 1, '+=360'],
-        loop: true,
+        //rotate: '+=2turn',
+        translateX: '10vw',
+        // scaleY: [
+        //   {value: [1, .1]},
+        //   {value: 1}
+        // ],
+        // height: [
+        //   {value: ['10rem', '1rem']},
+        //   {value: '1rem'}
+        // ],
+        // height: [
+        //   {value: '10px'},
+        //   {value: anime.getValue(el, 'height', 'px')}
+        // ],
         easing: 'linear',
-        duration: duration
+        //direction: 'alternate',
+        duration: duration,
+        loop: true
       });
 
-      fragment.appendChild(el);
     }
 
-    document.body.appendChild(fragment);
-
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <script src="../assets/js/vendors/stats.min.js"></script>
 </body>
 </html>
