@@ -1099,26 +1099,24 @@ anime({
   <h3 class="demo-title">Specific unit</h3>
   <div class="demo-description">
     <p>
-      Force the animation to use a certain unit.
-    </p>
-    <p class="warning">
-      <i>Anime</i> will not automatically convert units!<br>
-      For example if the target initial value is <code>'100px'</code> and the animation end value is <code>'3rem'</code>, <code>'100px'</code> will be converted to <code>'100rem'</code>.
+      Force the animation to use a certain unit and will automatically convert the initial target value.
     </p>
     <p>
-      If you need your animation to starts from a specific value, check out the <a href="#fromToValues" class="color-values">From To values</a> section.
+      You can also defines the initial value of the animation directly using an array, see <a href="#fromToValues" class="color-values">From To values</a> section.
     </p>
   </div>
   <div class="demo-content specific-unit-values-demo">
-    <div class="circle shadow"></div>
-    <div class="circle el"></div>
+    <div class="square shadow"></div>
+    <div class="square el"></div>
   </div>
   <script>var specificUnitValue = function() {
 /*DEMO*/
 anime({
   targets: '.specific-unit-values-demo .el',
-  translateX: '20em', // -> from '0em' to '20em'
-  rotate: '1.5turn' // -> from '0turn' to '20turn'
+  width: '100%', // -> from '28px' to '100%',
+  easing: 'easeInOutQuad',
+  direction: 'alternate',
+  loop: true
 });
 /*DEMO*/
 }
@@ -1308,7 +1306,7 @@ anime({
       Force the animation to starts at a specified value.
     </p>
     <p class="warning">
-      Units must be identical for both values.
+      Units must be identical for both values (<code>['50%', '100%']</code>).
     </p>
     <table>
       <thead>

@@ -12,7 +12,7 @@ Split(['.code-pane-description', '.code-pane-js', '.code-pane-html'], {
   direction: 'vertical',
   gutterSize: 60,
   snapOffset: 0,
-  sizes: [58, 38, 4],
+  sizes: [68, 28, 4],
   minSize: [60, 0, 0]
 })
 
