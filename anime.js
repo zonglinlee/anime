@@ -1099,7 +1099,7 @@
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
-  anime.get = getOriginalTargetValue;
+  anime.getValue = getOriginalTargetValue;
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
   anime.timeline = timeline;
