@@ -46,6 +46,13 @@
 
   const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skew', 'skewX', 'skewY', 'perspective'];
 
+  // Caching
+
+  const cache = {
+    CSS: {},
+    springs: {}
+  }
+
   // Utils
 
   function stringContains(str, text) {
@@ -78,8 +85,6 @@
 
   // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
 
-  const springCache = {};
-
   function spring(string, duration) {
 
     const params = parseEasingParameters(string);
@@ -105,7 +110,8 @@
     }
 
     function getDuration() {
-      if (springCache[string]) return springCache[string];
+      const cached = cache.springs[string];
+      if (cached) return cached;
       const frame = 1/6;
       let elapsed = 0;
       let rest = 0;
@@ -118,8 +124,9 @@
           rest = 0;
         }
       }
-      springCache[string] = elapsed * frame * 1000;
-      return springCache[string];
+      const duration = elapsed * frame * 1000;
+      cache.springs[string] = duration;
+      return duration;
     }
 
     return duration ? solver : getDuration;
@@ -435,10 +442,27 @@
     return el.getAttribute(prop);
   }
 
-  function getCSSValue(el, prop) {
+  function convertCSSUnit(el, value, unit) {
+    const cached = cache.CSS[value+unit];
+    if(cached) return cached;
+    const baseline = 100;
+    const tempEl = document.createElement(el.tagName);
+    const parentEl = el.parentNode || document.body;
+    parentEl.appendChild(tempEl);
+    tempEl.style.position = 'absolute';
+    tempEl.style.width = baseline + unit;
+    const factor = baseline / tempEl.offsetWidth;
+    parentEl.removeChild(tempEl);
+    const convertedUnit = factor * parseFloat(value);
+    cache.CSS[value+unit] = convertedUnit;
+    return convertedUnit;
+  }
+
+  function getCSSValue(el, prop, unit) {
     if (prop in el.style) {
-      return el.style[prop] || 
-        getComputedStyle(el).getPropertyValue(prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()) || '0';
+      const uppercasePropName = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+      const value = el.style[prop] || getComputedStyle(el).getPropertyValue(uppercasePropName) || '0';
+      return unit ? convertCSSUnit(el, value, unit) : value;
     }
   }
 
@@ -458,18 +482,19 @@
     return transforms;
   }
 
-  function getTransformValue(el, propName, animatable) {
+  function getTransformValue(el, propName, animatable, unit) {
     const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
-    const prop = getElementTransforms(el).get(propName) || defaultVal;
-    animatable.transforms.list.set(propName, prop);
+    const transformValue = getElementTransforms(el).get(propName) || defaultVal;
+    const value =  unit ? convertCSSUnit(el, transformValue, unit) : transformValue;
+    animatable.transforms.list.set(propName, value);
     animatable.transforms['last'] = propName;
-    return prop;
+    return value;
   }
 
-  function getOriginalTargetValue(target, propName, animatable) {
+  function getOriginalTargetValue(target, propName, unit, animatable) {
     switch (getAnimationType(target, propName)) {
-      case 'transform': return getTransformValue(target, propName, animatable);
-      case 'css': return getCSSValue(target, propName);
+      case 'transform': return getTransformValue(target, propName, animatable, unit);
+      case 'css': return getCSSValue(target, propName, unit);
       case 'attribute': return getAttribute(target, propName);
       default: return target[propName] || 0;
     }
@@ -669,13 +694,15 @@
     return prop.tweens.map(t => {
       const tween = normalizeTweenValues(t, animatable);
       const tweenValue = tween.value;
-      const originalValue = getOriginalTargetValue(animatable.target, prop.name, animatable);
+      const to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
+      const toUnit = getUnit(to);
+      const originalValue = getOriginalTargetValue(animatable.target, prop.name, toUnit, animatable);
       const previousValue = previousTween ? previousTween.to.original : originalValue;
       const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
-      const to = getRelativeValue(is.arr(tweenValue) ? tweenValue[1] : tweenValue, from);
-      const unit = getUnit(to) || getUnit(from) || getUnit(originalValue);
+      const fromUnit = getUnit(from) || getUnit(originalValue);
+      const unit = toUnit || fromUnit;
       tween.from = decomposeValue(from, unit);
-      tween.to = decomposeValue(to, unit);
+      tween.to = decomposeValue(getRelativeValue(to, from), unit);
       tween.start = previousTween ? previousTween.end : 0;
       tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
       tween.easing = parseEasings(tween);
