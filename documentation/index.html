@@ -2029,24 +2029,43 @@ animation.states.stateName = {
       <div class="large square shadow"></div>
       <div class="large square el"></div>
     </div>
+    <div class="line player align-items">
+      <button class="state-a-button">Animate to A</button>
+      <button class="state-b-button">Animate to B</button>
+    </div>
   </div>
   <script>var statesInitialisation = function() {
 /*DEMO*/
 var animation = anime({
   targets: '.states-demo .el',
-  easing: 'easeInOutCirc' // defin default easing applied to all states
+  duration: 2000,
+  easing: 'easeInOutCirc' // define default easing applied to all states
 });
 
-animation.states.alignedRight = { translateX: 250 };
-animation.states.alignedLeft = { translateX: 0 };
+animation.states.stateA = { 
+  translateX: 0,
+  borderRadius: '0%'
+}
 
-// Go to state A instantly
-animation.goTo('alignedRight');
+animation.states.stateB = {
+  translateX: 250,
+  borderRadius: '50%'
+}
 
-// Animate to state B with a duration of 2000
-animation.animateTo('alignedLeft', {
-  duration: 2000
-});
+// Go to state B instantly
+animation.goTo('stateB');
+
+document.body.querySelector('.states-demo .state-a-button').onclick = function() {
+  // Animate to state A with default parameters
+  animation.animateTo('stateA');
+}
+
+document.body.querySelector('.states-demo .state-b-button').onclick = function() {
+  // Animate to state B with custom easing parameter
+  animation.animateTo('stateB', {
+    easing: 'easeOutExpo'
+  });
+}
 
 /*DEMO*/
 }

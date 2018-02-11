@@ -61,14 +61,14 @@
       var el = document.createElement('div');
       el.classList.add('particule');
       el.style.backgroundColor = 'hsl(' + hue + ', 100%, 50%)';
-      el.style.transform = 'rotate(' + i * 1 + 'deg) translateX(1000vw)';
+      el.style.transform = 'rotate(' + i * 1 + 'deg) translateX(100px)';
 
       document.body.appendChild(el);
 
       anime({
         targets: el,
         //rotate: '+=2turn',
-        translateX: '10vw',
+        translateX: '1rem',
         // scaleY: [
         //   {value: [1, .1]},
         //   {value: 1}
@@ -82,7 +82,7 @@
         //   {value: anime.getValue(el, 'height', 'px')}
         // ],
         easing: 'linear',
-        //direction: 'alternate',
+        direction: 'alternate',
         duration: duration,
         loop: true
       });
