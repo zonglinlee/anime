@@ -442,7 +442,7 @@
     return el.getAttribute(prop);
   }
 
-  function convertCSSUnit(el, value, unit) {
+  function convertPxToUnit(el, value, unit) {
     const cached = cache.CSS[value+unit];
     if(cached) return cached;
     const baseline = 100;
@@ -462,7 +462,7 @@
     if (prop in el.style) {
       const uppercasePropName = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       const value = el.style[prop] || getComputedStyle(el).getPropertyValue(uppercasePropName) || '0';
-      return unit ? convertCSSUnit(el, value, unit) : value;
+      return unit && getUnit(value) !== unit ? convertPxToUnit(el, value, unit) : value;
     }
   }
 
