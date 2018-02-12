@@ -2492,9 +2492,12 @@ animation.update = function(anim) {
   <h3 class="demo-title">Motion path</h3>
   <div class="demo-description">
     <p>
-      Returns a Function that converts svg path data into animatable values:
+      Animate an element relative to the <code>x</code>, <code>y</code> and <code>angle</code> values of an SVG path element.
     </p>
-<pre><code>var myPath = anime.path('svg path');</code></pre>
+    <pre><code>var myPath = anime.path('svg path');</code></pre>
+    <p>
+      The path function returns a new Function that returns the specified property:
+    </p>
     <table>
       <thead>
         <td>Parameters</td>
@@ -2977,6 +2980,238 @@ anime({
   loop: true,
   easing: 'steps(5)'
 })
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+</article>
+<!-- -->
+
+<!-- HELPERS -->
+<article id="easings" class="color-helpers">
+  <header>
+    <h2 class="demos-title">Helpers</h2>
+  </header>
+
+<div id="running" class="demo">
+  <h3 class="demo-title">running</h3>
+  <div class="demo-description">
+    <p>
+      <code>anime.running()</code> returns an Array of all active <i>Anime</i> instances currently running.
+    </p>
+  </div>
+  <div class="demo-content running-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line">
+      <div class="small triangle shadow"></div>
+      <div class="small triangle el"></div>
+    </div>
+    <div class="line">
+      <pre class="bottom log running-log"></pre>
+    </div>
+  </div>
+  <script>var running = function() {
+/*DEMO*/
+var runninLogEl = document.querySelector('.running-log');
+
+anime({
+  targets: '.running-demo .square.el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  easing: 'linear'
+});
+
+anime({
+  targets: '.running-demo .circle.el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  easing: 'easeInOutCirc'
+});
+
+anime({
+  targets: '.running-demo .triangle.el',
+  translateX: 250,
+  direction: 'alternate',
+  easing: 'easeInOutQuad',
+  loop: true,
+  run: function() {
+    runninLogEl.innerHTML = 'there are currently ' + anime.running.length + ' instances running';
+  }
+});
+
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="remove" class="demo">
+  <h3 class="demo-title">remove</h3>
+  <div class="demo-description">
+    <p>
+      <code>anime.remove(targets)</code> let you remove targets from a running animation or timeline.<br>
+      The <code>targets</code> parameters accepts the same values as <a class="color-targets" href="#targets">Targets</a> property.
+    </p>
+    <code>anime.remove('.items');</code>
+  </div>
+  <div class="demo-content remove-demo">
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line player align-items">
+      <button class="remove-el-button">Remove second targert</button>
+    </div>
+  </div>
+  <script>var remove = function() {
+/*DEMO*/
+anime({
+  targets: '.remove-demo .el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  easing: 'easeInOutQuad'
+});
+
+document.querySelector('.remove-el-button').addEventListener('click', function() {
+  anime.remove('.remove-demo .line:nth-child(2) .el');
+});
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="getValue" class="demo">
+  <h3 class="demo-title">getValue</h3>
+  <div class="demo-description">
+    <p>
+      <code>anime.getValue(el, propertyName, unit)</code> let you get the original value of an element.<br>
+      Since <i>Anime</i> uses <a href="https://developer.mozilla.org/fr/docs/Web/API/Window/getComputedStyle">getComputedStyle</a> to access original CSS, the values are almost always returned in <code>'px'</code>, the third (optional) argument converts the value in the desired unit.
+    </p>
+    <pre><code>anime.getValue(domNode, 'width', 'rem');</code></pre>
+    <p class="warning">
+      Only inlined transforms values can be accessed <code>style="transform: rotate(45deg)"</code>
+    </p>
+  </div>
+  <div class="demo-content get-value-demo">
+    <div class="line">
+      <div class="large circle shadow"></div>
+      <div class="large circle el"></div>
+    </div>
+    <pre class="bottom log get-value-demo-log"></pre>
+  </div>
+  <script>var getValue = function() {
+/*DEMO*/
+var logEl = document.querySelector('.get-value-demo-log');
+var el = document.querySelector('.get-value-demo .el');
+
+logEl.innerHTML = '".el" width is ' + anime.getValue(el, 'width', 'rem') + 'rem';
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="random" class="demo">
+  <h3 class="demo-title">random</h3>
+  <div class="demo-description">
+    <p>
+      <code>anime.random(minValue, maxValue)</code> return a random integer within a specific range.
+    </p>
+    <pre><code>var randomValue = anime.random(-100, 100);</code></pre>
+  </div>
+  <div class="demo-content random-demo">
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+  </div>
+  <script>var random = function() {
+/*DEMO*/
+function randomValues() {
+  anime({
+    targets: '.random-demo .el',
+    translateX: function() {
+      return anime.random(0, 250);
+    },
+    easing: 'easeInOutQuad',
+    duration: 750,
+    complete: randomValues
+  });
+}
+
+randomValues();
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="tick" class="demo">
+  <h3 class="demo-title">tick</h3>
+  <div class="demo-description">
+    <p>
+      <code>animation.tick(time)</code> let you use an external requestANimationFrame loop.<br>
+    </p>
+    <p class="warning">
+      Don't forget to set the <code>autoplay</code> parameter to <code>false</code> to prevent the <i>Anime</i> built-in RAF loop to start.
+    </p>
+  </div>
+  <div class="demo-content tick-demo">
+    <div class="line">
+      <div class="circle shadow"></div>
+      <div class="circle el"></div>
+    </div>
+  </div>
+  <script>
+var customRAF = null;
+var tick = function() {
+if (customRAF) cancelAnimationFrame(customRAF);
+/*DEMO*/
+
+var animation = anime({
+  targets: '.tick-demo .el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  easing: 'easeInOutQuad',
+  autoplay: false
+});
+
+function loop(t) {
+  animation.tick(t);
+  customRAF = requestAnimationFrame(loop);
+}
+
+requestAnimationFrame(loop);
 /*DEMO*/
 }
   </script>
