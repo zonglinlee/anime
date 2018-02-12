@@ -44,22 +44,19 @@
 <div id="cssSelector" class="demo">
   <h3 class="demo-title">CSS Selector</h3>
   <div class="demo-description">
-    <p>Can be any CSS selector.</p>
-    <p class="warning">Pseudo elements cannot be animated in JavaScript.</p>
-  <table>
-    <thead>
-      <td>Accepts</td>
-      <td>Example</td>
-    </thead>
-    <tr>
-      <td>string</td>
-      <td><code>'.item'</code></td>
-    </tr>
-    <tr>
-      <td>array</td>
-      <td><code>['.item', '#thing']</code></td>
-    </tr>
-  </table>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>String</td>
+        <td><code>null</code></td>
+        <td><code>targets: '.item'</code></td>
+      </tr>
+    </table>
+    <p>Can be any CSS selector except pseudo elements (they can't be animated in JavaScript).</p>
   </div>
   <div class="demo-content css-selector-demo">
     <div class="line">
@@ -82,27 +79,26 @@ anime({
 <div id="domNode" class="demo">
   <h3 class="demo-title">DOM Node / NodeList</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>DOM Node</td>
+        <td><code>null</code></td>
+        <td><code>targets: el.querySelector('.item')</code></td>
+      </tr>
+      <tr>
+        <td>NodeList</td>
+        <td><code>null</code></td>
+        <td><code>targets: el.querySelectorAll('.item')</code></td>
+      </tr>
+    </table>
     <p>
       Can be any DOM Node or NodeList.
     </p>
-  <table>
-    <thead>
-      <td>Accepts</td>
-      <td>Example</td>
-    </thead>
-    <tr>
-      <td>DOM Node</td>
-      <td><code>el.querySelector('.item')</code></td>
-    </tr>
-    <tr>
-      <td>NodeList</td>
-      <td><code>el.querySelectorAll('.item')</code></td>
-    </tr>
-    <tr>
-      <td>array</td>
-      <td><code>[el.querySelector('.item'), el.getElementById('#thing')]</code></td>
-    </tr>
-  </table>
   </div>
   <div class="demo-content dom-node-demo">
     <div class="line">
@@ -134,23 +130,21 @@ anime({
 <div id="JSobject" class="demo">
   <h3 class="demo-title">JavaScript Object</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Object</td>
+        <td><code>null</code></td>
+        <td><code>targets: myObjectProp</code></td>
+      </tr>
+    </table>
     <p>
       A JavaScript Object with at least one property containing a numerical value.
     </p>
-  <table>
-    <thead>
-      <td>Accepts</td>
-      <td>Example</td>
-    </thead>
-    <tr>
-      <td><code>Object</code></td>
-      <td><code>const obj = { prop: '0%' }</code></td>
-    </tr>
-    <tr>
-      <td>array</td>
-      <td><code>[obj, obj2, obj3]</code></td>
-    </tr>
-  </table>
   </div>
   <div class="demo-content">
     <pre class="battery-log">{"charged":"0%","cycles":120}</pre>
@@ -180,22 +174,24 @@ anime({
 </script>
 </div>
 
-<div id="mixedArray" class="demo">
-  <h3 class="demo-title">Mixed Array</h3>
+<div id="array" class="demo">
+  <h3 class="demo-title">Array</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Array</td>
+        <td><code>null</code></td>
+        <td><code>targets: ['.item', el.getElementById('#thing')]</code></td>
+      </tr>
+    </table>
     <p>
-      An array containing different type of targets.
+      An array containing different multiple targets.
     </p>
-  <table>
-    <thead>
-      <td>Accepts</td>
-      <td>Example</td>
-    </thead>
-    <tr>
-      <td>array</td>
-      <td><code>['.item', document.getElementById('#thing')]</code></td>
-    </tr>
-  </table>
   </div>
   <div class="demo-content mixed-array-demo">
     <div class="line">
@@ -211,7 +207,7 @@ anime({
       <div class="square el el-03"></div>
     </div>
   </div>
-  <script>var mixedArray = function() {
+  <script>var array = function() {
 /*DEMO*/
 var el = document.querySelector('.mixed-array-demo .el-01');
 
@@ -240,7 +236,7 @@ anime({
     <p>
       Any CSS properties can be animated.
     </p>
-    <p class="warning">
+    <p class="bubble warning">
       Most CSS properties will cause layout changes or repaint, and will result in choppy animation.
       Prroritize opacity, and Transforms as much as possible.
     </p>
@@ -250,11 +246,11 @@ anime({
         <td>value</td>
       </thead>
       <tr>
-        <td><code>'opacity'</code></td>
+        <td><code>opacity</code></td>
         <td><code>.5</code></td>
       </tr>
       <tr>
-        <td><code>'left'</code></td>
+        <td><code>left</code></td>
         <td><code>'100px'</code></td>
       </tr>
     </table>
@@ -284,8 +280,8 @@ anime({
     <p>
       Animate CSS transforms properties indivudaly.
     </p>
-    <p>
-      Tt's possible to specify different timing for each transforms properties, more details in the <a class="color-properties" href="#specificPropParameters">specific property parameters</a> section.
+    <p class="bubble info">
+      It's possible to specify different timing for each transforms properties, more details in the <a class="color-properties" href="#specificPropParameters">specific property parameters</a> section.
     </p>
     <table>
       <thead>
@@ -331,7 +327,7 @@ anime({
   <h3 class="demo-title">Object properties</h3>
   <div class="demo-description">
     <p>
-      Any Object property containing a numerical value can be animated:
+      Any Object property containing a numerical value can be animated.
     </p>
     <table>
       <thead>
@@ -343,17 +339,19 @@ anime({
         <td><code>50</code></td>
       </tr>
       <tr>
-        <td><code>'prop-2'</code></td>
+        <td><code>'prop2'</code></td>
         <td><code>'100%'</code></td>
       </tr>
     </table>
     <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
   </div>
   <div class="demo-content">
-    <pre class="js-object-log">{"myProperty":"0"}</pre>
+    <pre class="js-object-log">{"prop1":0,"prop2":"0%"}</pre>
   </div>
   <script>var JSobjProp = function() {
 /*DEMO*/
+var objPropLogEl = document.querySelector('.js-object-log');
+
 var myObject = {
   prop1: 0,
   prop2: '0%'
@@ -366,8 +364,7 @@ anime({
   easing: 'linear',
   round: 1,
   update: function() {
-    var el = document.querySelector('.js-object-log');
-    el.innerHTML = JSON.stringify(myObject);
+    objPropLogEl.innerHTML = JSON.stringify(myObject);
   }
 });
 /*DEMO*/
@@ -441,7 +438,7 @@ anime({
         <td><code>0</code></td>
       </tr>
     </table>
-    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section and SVG animation in the <a class="color-svg" href="#svg">SVG</a> section</p>
+    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section and SVG animation in the <a class="color-svg" href="#motionPath">SVG</a> section</p>
   </div>
   <div class="demo-content align-center svg-attributes-demo">
 <svg width="128" height="128" viewBox="0 0 128 128">
@@ -488,26 +485,26 @@ anime({
 <div id="duration" class="demo">
   <h3 class="demo-title">Duration</h3>
   <div class="demo-description">
-    <p>
-      Defines the duration in milliseconds of the animation, default: <code>1000</code>.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
+        <td>Default</td>
         <td>Example</td>
-        <td>Info</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td><code>2000</code></td>
-        <td>Milliseconds</td>
+        <td>Number</td>
+        <td><code>1000</code></td>
+        <td><code>duration: 3000</code></td>
       </tr>
       <tr>
-        <td><code>Function</code></td>
-        <td><code>(el, i) => i * 200</code></td>
+        <td>Function</td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
+        <td><code>duration: (el, i) => i * 500</code></td>
       </tr>
     </table>
+    <p>
+      Defines the duration in milliseconds of the animation.
+    </p>
   </div>
   <div class="demo-content duration-demo">
     <div class="label">3000 ms</div>
@@ -529,26 +526,26 @@ anime({
 <div id="delay" class="demo">
   <h3 class="demo-title">Delay</h3>
   <div class="demo-description">
-    <p>
-      Defines the delay in milliseconds of the animation, default: <code>0</code>.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
+        <td>Default</td>
         <td>Example</td>
-        <td>Info</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td><code>1000</code></td>
-        <td>Milliseconds</td>
+        <td>Number</td>
+        <td><code>0</code></td>
+        <td><code>delay: 1000</code></td>
       </tr>
       <tr>
-        <td><code>Function</code></td>
-        <td><code>(el, i) => i * 200</code></td>
+        <td>Function</td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
+        <td><code>delay: (el, i) => i * 150</code></td>
       </tr>
     </table>
+    <p>
+      Defines the delay in milliseconds of the animation.
+    </p>
   </div>
   <div class="demo-content delay-demo">
     <div class="label">1000 ms</div>
@@ -570,26 +567,27 @@ anime({
 <div id="endDelay" class="demo">
   <h3 class="demo-title">end delay</h3>
   <div class="demo-description">
-    <p>
-      Add some extra time in milliseconds at the end of the animation, default: <code>0</code>.
-    </p>
+    <pre><code>endDelay: 2000</code></pre>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
+        <td>Default</td>
         <td>Example</td>
-        <td>Info</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td><code>2000</code></td>
-        <td>Milliseconds</td>
+        <td>Number</td>
+        <td><code>0</code></td>
+        <td><code>endDelay: 1000</code></td>
       </tr>
       <tr>
-        <td><code>Function</code></td>
-        <td><code>(el, i) => i * 200</code></td>
+        <td>Function</td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
+        <td><code>endDelay: (el, i, t) => (t - i) * 150</code></td>
       </tr>
     </table>
+    <p>
+      Add some extra time in milliseconds at the end of the animation.
+    </p>
   </div>
   <div class="demo-content end-delay-demo">
     <div class="label">1000 ms</div>
@@ -613,20 +611,22 @@ anime({
 <div id="easing" class="demo">
   <h3 class="demo-title">Easing</h3>
   <div class="demo-description">
-    <p>
-      Defines the timing function of the animation.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
         <td>Default</td>
+        <td>Example</td>
       </thead>
       <tr>
-        <td><code>String</code></td>
+        <td>String</td>
         <td><code>'easeOutElastic(1, .5)'</code></td>
+        <td><code>easing: 'easeInOutQuad'</code></td>
       </tr>
     </table>
     <p>
+      Defines the timing function of the animation.
+    </p>
+    <p class="bubble info">
       Check out the <a class="color-easings" href="#linearEasing">Easings</a> section for a complete list of available easing and parameters.
     </p>
   </div>
@@ -648,25 +648,58 @@ anime({
 
 </div>
 
+<div id="round" class="demo">
+  <h3 class="demo-title">Round</h3>
+  <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Number</td>
+        <td><code>0</code></td>
+        <td><code>round: 10</code></td>
+      </tr>
+    </table>
+    <p>
+      Rounds the value to x decimals.
+    </p>
+  </div>
+  <div class="demo-content">
+    <pre class="round-log">0</pre>
+  </div>
+  <script>var round = function() {
+/*DEMO*/
+var roundLogEl = document.querySelector('.round-log');
+
+anime({
+  targets: roundLogEl,
+  innerHTML: [0, 10000],
+  easing: 'linear',
+  round: 10 // Will round the animated value to 1 decimal
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
 <div id="specificPropParameters" class="demo">
   <h3 class="demo-title">Specific property parameters</h3>
   <div class="demo-description">
     <p>
       Define specific parameters to each property of the animation using an Object as value.<br>
-      The property value is set using the <code>value</code> property.<br>
       Other properties that aren't specified in the Object are inheritted from the main animation.
     </p>
-<pre><code>anime({
-  targets: '.specific-prop-params-demo .el',
-  translateX: {
-    value: 250,
-    duration: 800 // overrides duration
-    // Since no easing is specified, the animation will inherits 'easeOutExpo'
-  },
-  rotate: 360,
-  duration: 2000,
-  easing: 'easeOutExpo'
-});</code></pre>
+<pre><code>translateX: {
+  value: 250,
+  duration: 800
+},
+rotate: {
+  value: 360,
+  duration: 1600
+}</code></pre>
   </div>
   <div class="demo-content specific-prop-params-demo">
     <div class="square shadow"></div>
@@ -704,14 +737,13 @@ anime({
   <div class="demo-description">
     <p>
       Get different values for every target and property of the animation.<br>
+    </p>
+<pre><code>translateX: function(target, index, targetsLength) {
+  return (targetsLength - index) * 200;
+}</code></pre>
+    <p>
       The function accepts 3 arguments:
     </p>
-<pre><code>anime({
-  targets: '.specific-prop-params-demo .el',
-  translateX: function(element, index, totalLength) {
-    return (totalLength - index) * 200;
-  }
-});</code></pre>
     <table>
       <thead>
         <td>Arguments</td>
@@ -780,8 +812,20 @@ anime({
 <div id="direction" class="demo">
   <h3 class="demo-title">Direction</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>String</td>
+        <td><code>'normal'</code></td>
+        <td><code>direction: 'alternate'</code></td>
+      </tr>
+    </table>
     <p>
-      Define the direction of the animation, default <code>'normal'</code>.
+      Defines the direction of the animation.
     </p>
     <table>
       <thead>
@@ -849,8 +893,20 @@ anime({
 <div id="loop" class="demo">
   <h3 class="demo-title">Loop</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Number | Boolean</td>
+        <td><code>'normal'</code></td>
+        <td><code>loop: 3</code></td>
+      </tr>
+    </table>
     <p>
-      Define the number of iterations of your animation, default <code>1</code>.
+      Define the number of iterations of your animation.
     </p>
     <table>
       <thead>
@@ -956,8 +1012,21 @@ anime({
 <div id="autoplay" class="demo">
   <h3 class="demo-title">Autoplay</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Default</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Boolean</td>
+        <td><code>true</code></td>
+        <td><code>autoplay: false</code></td>
+      </tr>
+    </table>
     <p>
-      Define if the animation should automatically start or not, default <code>true</code>.
+    <p>
+      Define if the animation should automatically start or not.
     </p>
     <table>
       <thead>
@@ -1009,21 +1078,21 @@ anime({
 <div id="startTime" class="demo">
   <h3 class="demo-title">StartTime</h3>
   <div class="demo-description">
-    <p>
-      Force the animation to start at a certain time in milliseconds, default: <code>0</code>.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
+        <td>Default</td>
         <td>Example</td>
-        <td>Info</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td><code>2000</code></td>
-        <td>Milliseconds</td>
+        <td>Number</td>
+        <td><code>0</code></td>
+        <td><code>startTime: 2000</code></td>
       </tr>
     </table>
+    <p>
+      Force the animation to start at a certain time in milliseconds.
+    </p>
   </div>
   <div class="demo-content start-time-demo">
     <div class="line">
@@ -1074,6 +1143,16 @@ for (var i = 0; i < els.length; i++) {
 <div id="unitlessValue" class="demo">
   <h3 class="demo-title">Unitless</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Number</td>
+        <td><code>translateX: 250</code></td>
+      </tr>
+    </table>
     <p>
       If the original value has a unit, it will be automatically added to the animated value.
     </p>
@@ -1098,10 +1177,20 @@ anime({
 <div id="specificUnitValue" class="demo">
   <h3 class="demo-title">Specific unit</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>String</td>
+        <td><code>width: '100%'</code></td>
+      </tr>
+    </table>
     <p>
       Force the animation to use a certain unit and will automatically convert the initial target value.
     </p>
-    <p class="warning">
+    <p class="bubble warning">
       Conversion accuracy can vary depending of the unit used.<br>
       You can also define the initial value of the animation directly using an array, see the <a href="#fromToValues" class="color-values">From To values</a> section.
     </p>
@@ -1128,10 +1217,6 @@ anime({
 <div id="relativeValues" class="demo">
   <h3 class="demo-title">Relative</h3>
   <div class="demo-description">
-    <p>
-      Add, substract or multiply the original value.<br>
-      Default units are preserved.
-    </p>
     <table>
       <thead>
         <td>Accepts</td>
@@ -1154,6 +1239,10 @@ anime({
         <td><code>'*=10'</code></td>
       </tr>
     </table>
+    <p>
+      Add, substract or multiply the original value.<br>
+      Default units are preserved.
+    </p>
   </div>
   <div class="demo-content">
     <div class="circle shadow"></div>
@@ -1191,9 +1280,6 @@ anime({
 <div id="colors" class="demo">
   <h3 class="demo-title">Colors</h3>
   <div class="demo-description">
-    <p>
-      <i>Anime</i> accepts and can converts Haxadecimal, RGB, RGBA, HSL, and HSLA color values.
-    </p>
     <table>
       <thead>
         <td>Accepts</td>
@@ -1220,6 +1306,9 @@ anime({
         <td><code>'hsla(0, 100%, 100%, 1)'</code></td>
       </tr>
     </table>
+    <p>
+      <i>Anime</i> accepts and converts Haxadecimal, RGB, RGBA, HSL, and HSLA color values.
+    </p>
   </div>
   <div class="demo-content colors-demo">
     <div class="line">
@@ -1253,8 +1342,9 @@ anime({
 anime({
   targets: '.color-hex',
   backgroundColor: '#FFF',
+  translateX: 250,
   endDelay: 1000,
-  easing: 'linear',
+  easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
 });
@@ -1262,8 +1352,9 @@ anime({
 anime({
   targets: '.color-rgb',
   backgroundColor: 'rgb(255,255,255)',
+  translateX: 250,
   endDelay: 1000,
-  easing: 'linear',
+  easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
 });
@@ -1271,26 +1362,29 @@ anime({
 anime({
   targets: '.color-hsl',
   backgroundColor: 'hsl(0, 100%, 100%)',
+  translateX: 250,
   endDelay: 1000,
-  easing: 'linear',
+  easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
 });
 
 anime({
   targets: '.color-rgba',
-  backgroundColor: 'rgba(255,255,255, .5)',
+  backgroundColor: 'rgba(255,255,255, .25)',
+  translateX: 250,
   endDelay: 1000,
-  easing: 'linear',
+  easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
 });
 
 anime({
   targets: '.color-hsla',
-  backgroundColor: 'hsla(0, 100%, 100%, .5)',
+  backgroundColor: 'hsla(0, 100%, 100%, .25)',
+  translateX: 250,
   endDelay: 1000,
-  easing: 'linear',
+  easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
 });
@@ -1303,22 +1397,22 @@ anime({
 <div id="fromToValues" class="demo">
   <h3 class="demo-title">From To</h3>
   <div class="demo-description">
-    <p>
-      Force the animation to starts at a specified value.
-    </p>
-    <p class="warning">
-      Units must be identical for both values (<code>['50%', '100%']</code>).
-    </p>
     <table>
       <thead>
         <td>Type</td>
-        <td>Info</td>
+        <td>Example</td>
       </thead>
       <tr>
         <td><code>Array</code></td>
-        <td><code>[FromValue, toValue]</code></td>
+        <td><code>['50%', '100%']</code></td>
       </tr>
     </table>
+    <p>
+      Force the animation to starts at a specified value.
+    </p>
+    <p class="bubble warning">
+      Values must have identical units <code>['50%', '100%']</code>, or no units <code>[50, 100]</code>.
+    </p>
   </div>
   <div class="demo-content">
     <div class="circle shadow"></div>
@@ -1342,6 +1436,16 @@ anime({
 <div id="functionBasedPropVal" class="demo">
   <h3 class="demo-title">Function based values</h3>
   <div class="demo-description">
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Function</td>
+        <td><code>(el, i, t) => (t - i) * 200</code></td>
+      </tr>
+    </table>
     <p>
       Get different values for every target and property of the animation.<br>
       The function accepts 3 arguments:
@@ -1408,9 +1512,6 @@ anime({
 <div id="keyframes" class="demo">
   <h3 class="demo-title">Keyframes</h3>
   <div class="demo-description">
-    <p>
-      Keyframes are defined using an Array of property Object.
-    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -1426,9 +1527,10 @@ anime({
       </tr>
     </table>
     <p>
-      More details on Object values in the <a class="color-anim-params" href="#specificPropParameters">Sspecific property parameters</a>.
+      Keyframes are defined using an Array of property Object.<br>
+      More details on Object values in the <a class="color-anim-params" href="#specificPropParameters">Specific property parameters</a>.
     </p>
-    <p class="warning">
+    <p class="bubble info">
       If their is no duration specified inside the keyframes of one property, each keyframe duration will be equal to the animation total duration divided by the number of keyframes:
     </p>
 <pre><code>anime({
@@ -1587,33 +1689,37 @@ tl
 <div id="timelineOffsets" class="demo">
   <h3 class="demo-title">Time Offsets</h3>
   <div class="demo-description">
-    <p>
-      Time offset can be specified as a second optional parameter in the timeline <code>.add()</code> Function.<br>
-      It defines when a animation starts in the timeline, if no offset is specifed, the animation will starts after the previous animation ends.<br>
-      An offset can be relative to the last animation or absolute to the whole timeline.
-    </p>
     <table>
       <thead>
         <td>Type</td>
         <td>Offset</td>
         <td>Example</td>
+        <td>Infos</td>
       </thead>
       <tr>
-        <td>Relative</td>
+        <td>String</td>
         <td><code>'+='</code></td>
-        <td><code>'+=200'</code> (Starts 200ms after the previous animation ends)</td>
+        <td><code>'+=200'</code></td>
+        <td>Starts 200ms after the previous animation ends</td>
       </tr>
       <tr>
-        <td>Relative</td>
+        <td>String</td>
         <td><code>'-='</code></td>
-        <td><code>'-=200'</code> (Starts 200ms before the previous animation ends)</td>
+        <td><code>'-=200'</code></td>
+        <td>Starts 200ms before the previous animation ends</td>
       </tr>
       <tr>
-        <td>Absolute</td>
+        <td>Number</td>
         <td><code>Number</code></td>
-        <td><code>100</code> (Starts at 100ms, reagardless of the animtion position in the timeline)</td>
+        <td><code>100</code></td>
+        <td>Starts at 100ms, reagardless of the animtion position in the timeline</td>
       </tr>
     </table>
+    <p>
+      Time offset can be specified as a second optional parameter in the timeline <code>.add()</code> Function.<br>
+      It defines when a animation starts in the timeline, if no offset is specifed, the animation will starts after the previous animation ends.<br>
+      An offset can be relative to the last animation or absolute to the whole timeline.
+    </p>
   </div>
   <div class="demo-content offsets-demo">
     <div class="line">
@@ -1743,11 +1849,10 @@ tl
 <div id="playPause" class="demo">
   <h3 class="demo-title">Play / Pause</h3>
   <div class="demo-description">
-    <p>Manualy play or pause the animation.</p>
-    <p>Play a paused animation, or if the animation <code>autoplay</code> parameters is set to <code>true</code>:</p>
-<pre><code>animation.play();</code></pre>
-    <p>Pause a running animation:</p>
-<pre><code>animation.pause();</code></pre>
+    <pre><code>animation.play();</code></pre>
+    <p>Play a paused animation, or if the animation <code>autoplay</code> parameters is set to <code>true</code>/.</p>
+    <pre><code>animation.pause();</code></pre>
+    <p>Pause a running animation.</p>
   </div>
   <div class="demo-content play-pause-demo">
     <div class="line">
@@ -1790,8 +1895,8 @@ document.querySelector('.play-pause-demo .pause').onclick = animation.pause;
 <div id="restartAnim" class="demo">
   <h3 class="demo-title">Restart</h3>
   <div class="demo-description">
-    <p>Restart an animation from its initial values:</p>
-<pre><code>animation.restart();</code></pre>
+    <pre><code>animation.restart();</code></pre>
+    <p>Restart an animation from its initial values.</p>
   </div>
   <div class="demo-content restart-demo">
     <div class="line">
@@ -1831,8 +1936,8 @@ document.querySelector('.restart-demo .restart').onclick = animation.restart;
 <div id="reverseAnim" class="demo">
   <h3 class="demo-title">Reverse</h3>
   <div class="demo-description">
-    <p>Reverse the direction of an animation (running or not):</p>
-<pre><code>animation.reverse();</code></pre>
+    <pre><code>animation.reverse();</code></pre>
+    <p>Reverse the direction of an animation (running or not).</p>
   </div>
   <div class="demo-content reverse-anim-demo">
     <div class="line">
@@ -1886,10 +1991,10 @@ document.querySelector('.reverse-anim-demo .reverse').onclick = animation.revers
 <div id="seekAnim" class="demo">
   <h3 class="demo-title">Seek</h3>
   <div class="demo-description">
-    <p>Jump to a specific time (in milliseconds):</p>
-<pre><code>animation.seek(500);</code></pre>
+    <pre><code>animation.seek(timeStamp);</code></pre>
+    <p>Jump to a specific time (in milliseconds).</p>
     <p>Can also be used to control an animation while scrolling:</p>
-<pre><code>animation.seek((scrollPercent / 100) * animation.duration);</code></pre>
+    <pre><code>animation.seek((scrollPercent / 100) * animation.duration);</code></pre>
   </div>
   <div class="demo-content seek-anim-demo">
     <div class="line">
@@ -1932,7 +2037,12 @@ seekProgressEl.oninput = function() {
 <div id="TLcontrols" class="demo">
   <h3 class="demo-title">Timeline controls</h3>
   <div class="demo-description">
-    <p>Timelines can be controled like any other anime instance</p>
+<pre><code>timeline.play();
+timeline.pause();
+timeline.restart();
+timeline.seek(timeStamp);
+</code></pre>
+    <p>Timelines can be controled like any other anime instance.</p>
   </div>
   <div class="demo-content timeline-controls-demo">
     <div class="line">
@@ -2173,7 +2283,7 @@ animation.states.stateB = {
       Since state B doesn't override state A properties, the element will keep the initial transformation from state A.
     </p>
 <pre><code>animation.states.animateTo(stateB);</pre></code>
-    <p class="warning">
+    <p class="bubble warning">
       CSS transforms order is relative to the order in which the states are called. If the new states apply a new transform proerty, the first animation will be canceled.
     </p>
   </div>
@@ -2233,21 +2343,21 @@ document.body.querySelector('.states-inheritance-demo .state-rounded').onclick =
 <div id="update" class="demo">
   <h3 class="demo-title">Update</h3>
   <div class="demo-description">
-    <p>
-      <code>update()</code> callback is triggered on every frames as soon as the animation starts playing.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
         <td>Parameters</td>
         <td>Info</td>
       </thead>
       <tr>
-        <td><code>Function</code></td>
+        <td>Function</td>
         <td>animation</td>
         <td>Return the current animation Object</td>
       </tr>
     </table>
+    <p>
+      <code>update()</code> callback is triggered on every frame as soon as the animation starts playing.
+    </p>
   </div>
   <div class="demo-content update-demo">
     <div class="logs">
@@ -2278,22 +2388,22 @@ anime({
 <div id="begin" class="demo">
   <h3 class="demo-title">Begin</h3>
   <div class="demo-description">
-    <p>
-      <code>begin()</code> callback is triggered when the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.<br>
-      It's also called if the animation <code>duration</code> is <code>0</code>.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
         <td>Parameters</td>
         <td>Info</td>
       </thead>
       <tr>
-        <td><code>Function</code></td>
+        <td>Function</td>
         <td>animation</td>
         <td>Return the current animation Object</td>
       </tr>
     </table>
+    <p>
+      <code>begin()</code> callback is triggered when the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.<br>
+      It's also called if the animation <code>duration</code> is <code>0</code>.
+    </p>
   </div>
   <div class="demo-content begin-demo">
     <div class="logs">
@@ -2329,21 +2439,21 @@ anime({
 <div id="run" class="demo">
   <h3 class="demo-title">Run</h3>
   <div class="demo-description">
-    <p>
-      <code>run()</code> callback is triggered on every frames if the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
         <td>Parameters</td>
         <td>Info</td>
       </thead>
       <tr>
-        <td><code>Function</code></td>
+        <td>Function</td>
         <td>animation</td>
         <td>Return the current animation Object</td>
       </tr>
     </table>
+    <p>
+      <code>run()</code> callback is triggered on every frame if the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.
+    </p>
   </div>
   <div class="demo-content run-demo">
     <div class="logs">
@@ -2383,21 +2493,21 @@ anime({
 <div id="complete" class="demo">
   <h3 class="demo-title">Complete</h3>
   <div class="demo-description">
-    <p>
-      <code>complete()</code> callback is triggered when the animation finished.
-    </p>
     <table>
       <thead>
-        <td>Accepts</td>
+        <td>Type</td>
         <td>Parameters</td>
         <td>Info</td>
       </thead>
       <tr>
-        <td><code>Function</code></td>
+        <td>Function</td>
         <td>animation</td>
         <td>Return the current animation Object</td>
       </tr>
     </table>
+    <p>
+      <code>complete()</code> callback is triggered when the animation has finished.
+    </p>
   </div>
   <div class="demo-content complete-demo">
     <div class="logs">
@@ -2430,11 +2540,14 @@ anime({
 <div id="finishedPromise" class="demo">
   <h3 class="demo-title">Finished promise</h3>
   <div class="demo-description">
+<pre><code>animation.finished.then(function() {
+  // Do things...
+});</code></pre>
     <p>
       Every animation instances return a <code>finished</code> promise when the animation finised.
     </p>
-    <p class="warning">
-      <code>Promises</code> are not suported in IE < 11.
+    <p class="bubble warning">
+      Promises are not suported in IE < 11.
     </p>
   </div>
   <div class="demo-content promise-demo">
@@ -2555,7 +2668,7 @@ anime({
     <p>
       Creates transition between two svg shapes.
     </p>
-    <p class="warning">
+    <p class="bubble warning">
       Shapes must have the same number of points!
     </p>
   </div>
@@ -2779,10 +2892,11 @@ demoContentEl.appendChild(fragment);
 <div id="cubicBezier" class="demo">
   <h3 class="demo-title">Cubic Bézier Curve</h3>
   <div class="demo-description">
+    <pre><code>easing: 'cubicBezier(.5, .05, .1, .3)'</code></pre>
     <p>
       Use your own custom cubic Bézier curves <code>cubicBezier(x1, y1, x2, y2):</code>
     </p>
-    <p class="warning">
+    <p class="bubble warning">
       You can use Bézier curves generator like <a href="https://matthewlein.com/tools/ceaser">Ceaser</a>.
     </p>
   </div>
@@ -2810,10 +2924,11 @@ anime({
 <div id="springPhysicsEasing" class="demo">
   <h3 class="demo-title">Spring</h3>
   <div class="demo-description">
+     <pre><code>easing: 'spring(mass, stiffness, damping, velocity)'</code></pre>
     <p>
-      Spring physics based easing. It accepts 4 parameters: <code>'spring(mass, stiffness, damping, velocity)'</code>
+      Spring physics based easing.
     </p>
-    <p class="warning">
+    <p class="bubble warning">
       The duration of a spring animation if defined by the spring parameters.<br>
       The animation <code>duration</code> parameter will not be taken into account.
     </p>
@@ -2874,9 +2989,8 @@ anime({
 <div id="elasticEasing" class="demo">
   <h3 class="demo-title">Elastic</h3>
   <div class="demo-description">
-    <p>
-      Accepts 2 parameters: <code>'easeOutElastic(amplitude, period)'</code>
-    </p>
+    <pre><code>easing: 'easeOutElastic(amplitude, period)'</code></pre>
+    <p>Elastic easing.</p>
     <table>
       <thead>
         <td>in</td>
@@ -2946,10 +3060,10 @@ anime({
 <div id="stepEasing" class="demo">
   <h3 class="demo-title">Steps</h3>
   <div class="demo-description">
+    <pre><code>easing: 'steps(numberOfSteps)'</code></pre>
     <p>
-      Defines the number of jumps an animation takes to arrive at its end value
+      Defines the number of jumps an animation takes to arrive at its end value.
     </p>
-    <pre><code>steps(numberOfSteps)</code></pre>
     <table>
       <thead>
         <td>Parameter</td>
@@ -2998,8 +3112,9 @@ anime({
 <div id="running" class="demo">
   <h3 class="demo-title">running</h3>
   <div class="demo-description">
+    <pre><code>anime.running()</code></pre>
     <p>
-      <code>anime.running()</code> returns an Array of all active <i>Anime</i> instances currently running.
+      Returns an Array of all active <i>Anime</i> instances currently running.
     </p>
   </div>
   <div class="demo-content running-demo">
@@ -3059,11 +3174,12 @@ anime({
 <div id="remove" class="demo">
   <h3 class="demo-title">remove</h3>
   <div class="demo-description">
+    <pre><code>anime.remove(targets)</code></pre>
     <p>
-      <code>anime.remove(targets)</code> let you remove targets from a running animation or timeline.<br>
-      The <code>targets</code> parameters accepts the same values as <a class="color-targets" href="#targets">Targets</a> property.
+      Removes targets from a running animation or timeline.<br>
+      The <code>targets</code> parameters accepts the same values as <a class="color-targets" href="#cssSelector">Targets</a> property.
     </p>
-    <code>anime.remove('.items');</code>
+    <pre><code>anime.remove(document.querySelector('.item'));</code></pre>
   </div>
   <div class="demo-content remove-demo">
     <div class="line">
@@ -3104,13 +3220,14 @@ document.querySelector('.remove-el-button').addEventListener('click', function()
 <div id="getValue" class="demo">
   <h3 class="demo-title">getValue</h3>
   <div class="demo-description">
+    <pre><code>anime.getValue(el, propertyName, unit)</code></pre>
     <p>
-      <code>anime.getValue(el, propertyName, unit)</code> let you get the original value of an element.<br>
+      Returns the original value of an element.<br>
       Since <i>Anime</i> uses <a href="https://developer.mozilla.org/fr/docs/Web/API/Window/getComputedStyle">getComputedStyle</a> to access original CSS, the values are almost always returned in <code>'px'</code>, the third (optional) argument converts the value in the desired unit.
     </p>
     <pre><code>anime.getValue(domNode, 'width', 'rem');</code></pre>
-    <p class="warning">
-      Only inlined transforms values can be accessed <code>style="transform: rotate(45deg)"</code>
+    <p class="bubble warning">
+      Only inlined transforms values can be accessed.
     </p>
   </div>
   <div class="demo-content get-value-demo">
@@ -3135,8 +3252,9 @@ logEl.innerHTML = '".el" width is ' + anime.getValue(el, 'width', 'rem') + 'rem'
 <div id="random" class="demo">
   <h3 class="demo-title">random</h3>
   <div class="demo-description">
+    <pre><code>anime.random(minValue, maxValue)</code></pre>
     <p>
-      <code>anime.random(minValue, maxValue)</code> return a random integer within a specific range.
+      Returns a random integer within a specific range.
     </p>
     <pre><code>var randomValue = anime.random(-100, 100);</code></pre>
   </div>
@@ -3178,10 +3296,11 @@ randomValues();
 <div id="tick" class="demo">
   <h3 class="demo-title">tick</h3>
   <div class="demo-description">
+    <pre><code>animation.tick(time)</code></pre>
     <p>
-      <code>animation.tick(time)</code> let you use an external requestANimationFrame loop.<br>
+      Let you use an external requestAnimationFrame loop.<br>
     </p>
-    <p class="warning">
+    <p class="bubble warning">
       Don't forget to set the <code>autoplay</code> parameter to <code>false</code> to prevent the <i>Anime</i> built-in RAF loop to start.
     </p>
   </div>
