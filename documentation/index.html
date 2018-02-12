@@ -3315,7 +3315,6 @@ var customRAF = null;
 var tick = function() {
 if (customRAF) cancelAnimationFrame(customRAF);
 /*DEMO*/
-
 var animation = anime({
   targets: '.tick-demo .el',
   translateX: 250,
@@ -3341,25 +3340,11 @@ requestAnimationFrame(loop);
 <!-- -->
 
     </section>
-    <section class="pane code-examples">
-      <div class="code-pane code-pane-description">
-        <header class="code-header">
-          <h2><span></span></h2>
-        </header>
-        <div class="code-output"><div class="api-output"></div></div>
-      </div>
-      <div class="code-pane code-pane-js">
-        <header class="code-header is-draggable">
-          <h2>JS Example</h2>
-        </header>
-        <pre class="code-output"><code class="js-output"></code></pre>
-      </div>
-      <div class="code-pane code-pane-html">
-        <header class="code-header is-draggable">
-          <h2>HTML Example</h2>
-        </header>
-        <pre class="code-output"><code class="html-output"></code></pre>
-      </div>
+    <section class="pane demo-info">
+      <header class="description-header">
+        <h2><span></span></h2>
+      </header>
+      <div class="info-output"></div>
     </section>
   </div>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -3371,7 +3356,6 @@ requestAnimationFrame(loop);
     ga('create', 'UA-79927007-1', 'auto');
     ga('send', 'pageview');
   </script>
-  <script src="assets/js/vendors/split.min.js"></script>
   <script src="assets/js/vendors/highlight.pack.js"></script>
   <script src="assets/js/vendors/beautify-html.js"></script>
   <script src="assets/js/documentation.js"></script>

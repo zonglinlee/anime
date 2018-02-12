@@ -1,20 +1,11 @@
 var navigationEl = document.querySelector('.navigation');
 var demosEl = document.querySelector('.demos');
 var articleEls = document.querySelectorAll('article');
-var APIOutputEl = document.querySelector('.api-output');
-var APITitleEl = document.querySelector('.code-pane-description h2');
-var jsOutputEl = document.querySelector('.js-output');
-var htmlOutputEl = document.querySelector('.html-output');
+var demoInfoEl = document.querySelector('.demo-info');
+var descriptionEl = document.querySelector('.info-output');
+var descriptionTitleEl = document.querySelector('.demo-info h2');
 var ulHeight = 20;
 var demos = [];
-
-Split(['.code-pane-description', '.code-pane-js', '.code-pane-html'], {
-  direction: 'vertical',
-  gutterSize: 60,
-  snapOffset: 0,
-  sizes: [68, 28, 4],
-  minSize: [60, 0, 0]
-})
 
 function getScrollTop() {
   return document.body.scrollTop || document.documentElement.scrollTop;
@@ -53,26 +44,34 @@ function parseHTML(el, parentId) {
   });
 }
 
-function parseJS(JScode) {
-  var split = JScode.split('/*DEMO*/\n');
+function parseJS(demoCode) {
+  var split = demoCode.split('/*DEMO*/\n');
   return split[1] || '';
 }
 
-function outputCode(JScode, HTMLcode, title, APIdecription) {
-  var js = document.createTextNode(parseJS(JScode));
-  var html = document.createTextNode(HTMLcode);
-  jsOutputEl.innerHTML = '';
-  htmlOutputEl.innerHTML = '';
-  jsOutputEl.appendChild(js);
-  htmlOutputEl.appendChild(html);
-  APIOutputEl.innerHTML = APIdecription;
-  APITitleEl.innerHTML = title;
-  APIOutputCodeEls = APIOutputEl.querySelectorAll('code');
-  for (var i = 0; i < APIOutputCodeEls.length; i++) {
-    hljs.highlightBlock(APIOutputCodeEls[i]);
+function createCodePreview(code) {
+  var previewEl = document.createElement('div');
+  var preEl = document.createElement('pre');
+  var codeEl = document.createElement('code');
+  previewEl.classList.add('code-preview');
+  previewEl.innerHTML = '<h2>Code example</h2>';
+  codeEl.appendChild(code);
+  preEl.appendChild(codeEl);
+  previewEl.appendChild(preEl);
+  return previewEl;
+}
+
+function outputCode(demoCode, demoTitle, demoDecription, demoColorClass) {
+  var js = document.createTextNode(parseJS(demoCode));
+  demoInfoEl.classList.remove(demoInfoEl.classList[2]);
+  demoInfoEl.classList.add(demoColorClass);
+  descriptionEl.innerHTML = demoDecription;
+  descriptionEl.appendChild(createCodePreview(js));
+  descriptionTitleEl.innerHTML = demoTitle;
+  codeEls = descriptionEl.querySelectorAll('code');
+  for (var i = 0; i < codeEls.length; i++) {
+    hljs.highlightBlock(codeEls[i]);
   }
-  hljs.highlightBlock(jsOutputEl);
-  hljs.highlightBlock(htmlOutputEl);
 }
 
 function toggleSectionLink(ulEl) {
@@ -116,15 +115,15 @@ function resetDemos() {
 
 function createDemo(el) {
   var demo = {};
+  var demoColorClass = el.parentNode.classList[0];
   var scriptEl = el.querySelector('script');
   var demoContentEl = el.querySelector('.demo-content');
   var descriptionContentEl = el.querySelector('.demo-description');
-  var title = el.querySelector('h3').innerHTML;
+  var demoTitle = el.querySelector('h3').innerHTML;
   var id = el.id;
   var demoAnim = window[id];
-  var JScode = scriptEl ? scriptEl.innerHTML : '';
-  var HTMLcode = demoContentEl ? parseHTML(demoContentEl, id) : '';
-  var APIdescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
+  var demoCode = scriptEl ? scriptEl.innerHTML : '';
+  var demoDescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
   function restart() {
     resetDemo();
     demoAnim();
@@ -146,7 +145,7 @@ function createDemo(el) {
         linkEls[i].parentNode.classList.remove('active');
         //d.anim.pause();
       }
-      outputCode(JScode, HTMLcode, title, APIdescription);
+      outputCode(demoCode, demoTitle, demoDescription, demoColorClass);
       var linkEl = document.querySelector('a[href="#'+id+'"]');
       var ulEl = linkEl.parentNode.parentNode;
       linkEl.parentNode.classList.add('active');
@@ -176,7 +175,7 @@ function createDemo(el) {
   resetDemos();
   return {
     el: el,
-    title: title,
+    title: demoTitle,
     id: id,
     anim: demoAnim,
     highlight: highlightDemo
