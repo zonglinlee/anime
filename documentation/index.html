@@ -2214,7 +2214,7 @@ animation.states.stateB = {
     </div>
     <div class="line player align-items">
       <button class="state-moved">Move</button>
-      <button class="state-rotated">Rotate</button>
+      <button class="state-skewed">Skew</button>
       <button class="state-rounded">Round</button>
       <button class="state-default">Default</button>
     </div>
@@ -2224,7 +2224,7 @@ animation.states.stateB = {
 var animation = anime({
   targets: '.default-states-demo .el',
   translateX: 0,
-  rotate: 0,
+  skew: 0,
   borderRadius: 0,
   easing: 'easeInOutCirc'
 });
@@ -2233,8 +2233,8 @@ animation.states.moved = {
   translateX: 250
 }
 
-animation.states.rotated = {
-  rotate: 45
+animation.states.skewed = {
+  skew: -45
 }
 
 animation.states.rounded = {
@@ -2244,8 +2244,8 @@ animation.states.rounded = {
 document.body.querySelector('.default-states-demo .state-moved').onclick = function() {
   animation.animateTo('moved');
 }
-document.body.querySelector('.default-states-demo .state-rotated').onclick = function() {
-  animation.animateTo('rotated');
+document.body.querySelector('.default-states-demo .state-skewed').onclick = function() {
+  animation.animateTo('skewed');
 }
 document.body.querySelector('.default-states-demo .state-rounded').onclick = function() {
   animation.animateTo('rounded');
@@ -2295,7 +2295,7 @@ animation.states.stateB = {
     </div>
     <div class="line player align-items">
       <button class="state-moved">Move</button>
-      <button class="state-rotated">Rotate</button>
+      <button class="state-skewed">Skew</button>
       <button class="state-rounded">Round Corners</button>
     </div>
   </div>
@@ -2310,8 +2310,8 @@ animation.states.moved = {
   translateX: 250
 }
 
-animation.states.rotated = {
-  rotate: 45
+animation.states.skewed = {
+  skew: -45
 }
 
 animation.states.rounded = {
@@ -2321,8 +2321,8 @@ animation.states.rounded = {
 document.body.querySelector('.states-inheritance-demo .state-moved').onclick = function() {
   animation.animateTo('moved');
 }
-document.body.querySelector('.states-inheritance-demo .state-rotated').onclick = function() {
-  animation.animateTo('rotated');
+document.body.querySelector('.states-inheritance-demo .state-skewed').onclick = function() {
+  animation.animateTo('skewed');
 }
 document.body.querySelector('.states-inheritance-demo .state-rounded').onclick = function() {
   animation.animateTo('rounded');
@@ -3196,7 +3196,7 @@ anime({
       <div class="small circle el"></div>
     </div>
     <div class="line player align-items">
-      <button class="remove-el-button">Remove second targert</button>
+      <button class="remove-el-button">Remove second target</button>
     </div>
   </div>
   <script>var remove = function() {
@@ -3235,15 +3235,15 @@ document.querySelector('.remove-el-button').addEventListener('click', function()
     <div class="line">
       <div class="large circle shadow"></div>
       <div class="large circle el"></div>
+      <div class="log get-value-demo-log"></div>
     </div>
-    <pre class="bottom log get-value-demo-log"></pre>
   </div>
   <script>var getValue = function() {
 /*DEMO*/
 var logEl = document.querySelector('.get-value-demo-log');
 var el = document.querySelector('.get-value-demo .el');
 
-logEl.innerHTML = '".el" width is ' + anime.getValue(el, 'width', 'rem') + 'rem';
+logEl.innerHTML = '".el" width is "' + anime.getValue(el, 'width', 'rem') + 'rem"';
 /*DEMO*/
 }
   </script>
