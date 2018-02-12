@@ -443,7 +443,8 @@
   }
 
   function convertPxToUnit(el, value, unit) {
-    const cached = cache.CSS[value+unit];
+    if (getUnit(value) === unit) return value;
+    const cached = cache.CSS[value + unit];
     if(cached) return cached;
     const baseline = 100;
     const tempEl = document.createElement(el.tagName);
@@ -454,7 +455,7 @@
     const factor = baseline / tempEl.offsetWidth;
     parentEl.removeChild(tempEl);
     const convertedUnit = factor * parseFloat(value);
-    cache.CSS[value+unit] = convertedUnit;
+    cache.CSS[value + unit] = convertedUnit;
     return convertedUnit;
   }
 
@@ -462,7 +463,7 @@
     if (prop in el.style) {
       const uppercasePropName = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
       const value = el.style[prop] || getComputedStyle(el).getPropertyValue(uppercasePropName) || '0';
-      return unit && getUnit(value) !== unit ? convertPxToUnit(el, value, unit) : value;
+      return unit ? convertPxToUnit(el, value, unit) : value;
     }
   }
 
@@ -482,12 +483,12 @@
     return transforms;
   }
 
-  function getTransformValue(el, propName, animatable) {
+  function getTransformValue(el, propName, animatable, unit) {
     const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
     const value = getElementTransforms(el).get(propName) || defaultVal;
     animatable.transforms.list.set(propName, value);
     animatable.transforms['last'] = propName;
-    return value;
+    return unit ? convertPxToUnit(el, value, unit) : value;
   }
 
   function getOriginalTargetValue(target, propName, unit, animatable) {
