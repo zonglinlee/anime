@@ -443,7 +443,8 @@
   }
 
   function convertPxToUnit(el, value, unit) {
-    if (getUnit(value) === unit) return value;
+    const valueUnit = getUnit(value);
+    if (arrayContains([unit, 'deg', 'rad', 'turn'], valueUnit)) return value;
     const cached = cache.CSS[value + unit];
     if(cached) return cached;
     const baseline = 100;
