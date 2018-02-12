@@ -25,10 +25,10 @@
   // Defaults
 
   const defaultInstanceSettings = {
-    update: undefined,
-    begin: undefined,
-    run: undefined,
-    complete: undefined,
+    update: null,
+    begin: null,
+    run: null,
+    complete: null,
     loop: 1,
     direction: 'normal',
     autoplay: true,
