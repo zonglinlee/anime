@@ -151,6 +151,8 @@ anime({
   </div>
   <script>var JSobject = function() {
 /*DEMO*/
+var logEl = document.querySelector('.battery-log');
+
 var battery = {
   charged: '0%',
   cycles: 120
@@ -163,8 +165,7 @@ anime({
   round: 1,
   easing: 'linear',
   update: function() {
-    var el = document.querySelector('.battery-log');
-    el.innerHTML = JSON.stringify(battery);
+    logEl.innerHTML = JSON.stringify(battery);
   }
 });
 /*DEMO*/
