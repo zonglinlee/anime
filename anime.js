@@ -855,7 +855,7 @@
 
     function resetTime() {
       startTime = 0;
-      lastTime = adjustTime(instance.currentTime);
+      lastTime = adjustTime(instance.currentTime) * (1 / anime.speed);
     }
 
     function adjustTime(time) {
