@@ -1,8 +1,9 @@
 var navigationEl = document.querySelector('.navigation');
 var demosEl = document.querySelector('.demos');
 var articleEls = document.querySelectorAll('article');
-var jsOutputEl = document.querySelector('.js-output');
-var htmlOutputEl = document.querySelector('.html-output');
+var demoInfoEl = document.querySelector('.demo-info');
+var descriptionEl = document.querySelector('.info-output');
+var descriptionTitleEl = document.querySelector('.demo-info h2');
 var ulHeight = 20;
 var demos = [];
 
@@ -43,15 +44,34 @@ function parseHTML(el, parentId) {
   });
 }
 
-function outputCode(JScode, HTMLcode) {
-  var js = document.createTextNode(JScode);
-  var html = document.createTextNode(HTMLcode);
-  jsOutputEl.innerHTML = '';
-  htmlOutputEl.innerHTML = '';
-  jsOutputEl.appendChild(js);
-  htmlOutputEl.appendChild(html);
-  hljs.highlightBlock(jsOutputEl);
-  hljs.highlightBlock(htmlOutputEl);
+function parseJS(demoCode) {
+  var split = demoCode.split('/*DEMO*/\n');
+  return split[1] || '';
+}
+
+function createCodePreview(code) {
+  var previewEl = document.createElement('div');
+  var preEl = document.createElement('pre');
+  var codeEl = document.createElement('code');
+  previewEl.classList.add('code-preview');
+  previewEl.innerHTML = '<h2>Code example</h2>';
+  codeEl.appendChild(code);
+  preEl.appendChild(codeEl);
+  previewEl.appendChild(preEl);
+  return previewEl;
+}
+
+function outputCode(demoCode, demoTitle, demoDecription, demoColorClass) {
+  var js = document.createTextNode(parseJS(demoCode));
+  demoInfoEl.classList.remove(demoInfoEl.classList[2]);
+  demoInfoEl.classList.add(demoColorClass);
+  descriptionEl.innerHTML = demoDecription;
+  descriptionEl.appendChild(createCodePreview(js));
+  descriptionTitleEl.innerHTML = demoTitle;
+  codeEls = descriptionEl.querySelectorAll('code');
+  for (var i = 0; i < codeEls.length; i++) {
+    hljs.highlightBlock(codeEls[i]);
+  }
 }
 
 function toggleSectionLink(ulEl) {
@@ -76,25 +96,46 @@ function toggleSectionLink(ulEl) {
   });
 }
 
+function resetDemo() {
+  var els = document.querySelectorAll('.el');
+  for (var i = 0; i < els.length; i++) {
+    anime.remove(els[i]);
+    els[i].style = '';
+  }
+}
+
 function resetDemos() {
-  demos.forEach(function(demo) {
-    demo.anim.pause();
-    demo.anim.seek(0);
-  });
+  for (var i = 0; i < anime.running.length; i++) {
+    var anim = anime.running[i];
+    anim.pause();
+    anim.seek(0);
+  }
   document.body.classList.add('ready');
 }
 
 function createDemo(el) {
   var demo = {};
+  var demoColorClass = el.parentNode.classList[0];
   var scriptEl = el.querySelector('script');
   var demoContentEl = el.querySelector('.demo-content');
-  var title = el.querySelector('h3').innerHTML;
+  var descriptionContentEl = el.querySelector('.demo-description');
+  var demoTitle = el.querySelector('h3').innerHTML;
   var id = el.id;
   var demoAnim = window[id];
-  var JScode = scriptEl ? scriptEl.innerHTML : '';
-  var HTMLcode = demoContentEl ? parseHTML(demoContentEl, id) : '';
+  var demoCode = scriptEl ? scriptEl.innerHTML : '';
+  var demoDescription = descriptionContentEl ? descriptionContentEl.innerHTML : '';
+  function restart() {
+    resetDemo();
+    demoAnim();
+  }
   function highlightDemo(e, push) {
-    if (e) e.preventDefault();
+    var canRestart = !el.classList.contains('controls');
+    if (e) {
+      e.preventDefault();
+      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+        canRestart = false;
+      }
+    }
     if (!el.classList.contains('active')) {
       resetDemos();
       var linkEls = document.querySelectorAll('.demo-link');
@@ -102,31 +143,30 @@ function createDemo(el) {
         var d = demos[i];
         d.el.classList.remove('active');
         linkEls[i].parentNode.classList.remove('active');
-        d.anim.pause();
+        //d.anim.pause();
       }
-      outputCode(JScode, HTMLcode);
+      outputCode(demoCode, demoTitle, demoDescription, demoColorClass);
       var linkEl = document.querySelector('a[href="#'+id+'"]');
       var ulEl = linkEl.parentNode.parentNode;
       linkEl.parentNode.classList.add('active');
       el.classList.add('active');
       scrollTo('#'+id, 60, function() {
         toggleSectionLink(ulEl);
-        if (!el.classList.contains('controls')) demoAnim.restart();
+        if (canRestart) restart();
       });
       if (push) history.pushState(null, null, '#'+id);
     } else {
-      if (!el.classList.contains('controls')) demoAnim.restart();
+      if (canRestart) restart();
     }
   }
   function enterDemo() {
     if (!el.classList.contains('active')) {
-      demoAnim.restart();
+      restart();
     }
   }
   function leaveDemo() {
     if (!el.classList.contains('active')) {
-      demoAnim.pause();
-      demoAnim.seek(0);
+      resetDemo();
     }
   }
   el.addEventListener('click', function(e) {
@@ -135,7 +175,7 @@ function createDemo(el) {
   resetDemos();
   return {
     el: el,
-    title: title,
+    title: demoTitle,
     id: id,
     anim: demoAnim,
     highlight: highlightDemo
@@ -197,7 +237,7 @@ for (var i = 0; i < articleEls.length; i++) {
 
 navigationEl.appendChild(fragment);
 
-function updateDemos(e) {
+function updateDemos() {
   var hash = window.location.hash;
   if (hash) {
     var id = hash.replace('#','');

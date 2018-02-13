@@ -30,65 +30,59 @@
     .item {
       width: 100px;
       height: 100px;
-      border-radius: 15%;
+      border-radius: 50%;
       background-color: currentColor;
       margin: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="item color-01" style="transform: translateX(45px) translateY(200px);"></div>
-  <div class="item color-02"></div>
-  <div class="item color-03" style="transform: translateX(85px) translateY(300px);"></div>
+  <div class="item color-01"></div>
+  <div class="item color-01"></div>
+  <div class="item color-03"></div>
+  <div class="item color-03"></div>
   <script>
-    function mouseenter() {
-      var animation = anime({
-        targets: this,
-        scale: 2
-      });
-      console.log(animation.animations[0].tweens[0].from);
-    }
-    function mouseleave() {
-      var animation = anime({
-        targets: this,
-        scale: 1
-      });
-      console.log(animation.animations[0].tweens[0].from);
-    }
-    // anime({
-    //   targets: '.color-03',
-    //   scale: 1.5,
-    //   duration: 1000
-    // })
-    // var animation = anime({
-    //   targets: '.color-03',
-    //   scale: 2,
-    //   translateX: 100,
-    //   translateY: 50,
-    //   rotate: 50,
-    //   skew: 45,
-    //   duration: 3000,
-    //   autoplay: false
-    // });
 
-    anime.timeline({
-      targets: '.color-02',
-      easing: 'easeInOutSine',
-      loop: true,
-      direction: 'alternate'
-    }).add({
-      translateX: 300
-    }).add({
-      translateY: 300
-    }).add({
-      rotate: 360
-    }).add({
-      scale: 0
+    var animation = anime({
+      targets: '.color-01',
+      translateX: 0,
+      translateY: 0,
+      scale: 1,
+      duration: 2000,
+      easing: 'easeOutExpo',
+      autoplay: false,
+      update: function() {
+        console.log('animation updating')
+      }
     })
 
-    var el01 = document.querySelector('.color-01');
-    el01.addEventListener('mouseenter', mouseenter, false);
-    el01.addEventListener('mouseleave', mouseleave, false);
+    animation.states.left = {
+      translateX: -100,
+      duration: 1000,
+      easing: 'easeInOutQuad'
+    }
+
+    animation.states.right = {
+      translateX: 100
+    }
+
+    animation.states.top = {
+      translateY: -100
+    }
+
+    animation.states.bottom = {
+      translateY: 100
+    }
+
+    var timeline = anime.timeline({
+      targets: '.color-03',
+      easing: 'easeOutExpo',
+      autoplay: false,
+      update: function() {
+        console.log('timeline updating')
+      }
+    })
+
   </script>
 </body>
 </html>

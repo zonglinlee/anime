@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tests | anime.js</title>
+  <title>Convert units | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
@@ -28,69 +28,36 @@
       min-height: 100vh;
     }
     .item {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
       background-color: currentColor;
       margin: 10px;
+    }
+    .color-01 {
+      width: 5vw;
+      height: 40px;
+    }
+    .color-02 {
+      width: 10%;
+      height: 4rem;
     }
   </style>
 </head>
 <body>
-<svg width="400" height="400" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-  <filter id="displacementFilter">
-    <feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turbulence"/>
-    <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G"/>
-  </filter>
-
-  <circle cx="80" cy="80" r="80" fill="yellow" style="filter: url(#displacementFilter)"/>
-</svg>
   <div class="item color-01"></div>
   <div class="item color-02"></div>
   <div class="item color-03"></div>
   <script>
-    var color01El = document.querySelector('.color-01');
-    var color02El = document.querySelector('.color-02');
-    color01El.addEventListener('mouseenter', function() {
-      anime({ targets: this, scale: 2 });
-    }, false);
-    color01El.addEventListener('mouseleave', function() {
-      anime({ targets: this, scale: 1 });
-    }, false);
-    var animation = anime({
-      targets: '.color-02',
-      duration: 500,
-      scale: {
-        value: 2,
-        duration: 700
-      },
-      loop: true
-    });
+    var obj = {
+      data: '30px'
+    }
     anime({
-      targets: '.color-03',
-      duration: 500,
-      width: 400,
-      height: 200,
-      scale: {
-        value: 2,
-        duration: 700
-      },
-      loop: true
-    });
-    anime({
-      targets: 'feTurbulence',
-      baseFrequency: [.05, 1],
-      direction: 'alternate',
-      easing: 'linear',
-      loop: true
+      targets: '.color-01',
+      width: ['100vw', '2rem'],
+      easing: 'linear'
     })
     anime({
-      targets: 'feDisplacementMap',
-      scale: 50
+      targets: obj,
+      data: '2rem'
     })
-    color02El.addEventListener('mouseenter', function() {
-      anime.remove(this);
-    }, false);
   </script>
 </body>
 </html>
