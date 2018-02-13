@@ -7,14 +7,14 @@ const pkg = require('./package');
 
 const umd = pkg['umd:main'];
 const date = new Date();
-const version = pkg.version;
 
 const banner = `/*
- anime.js v${ version }
- © ${ date.getFullYear() } Julian Garnier
- Released under the MIT license
- animejs.com
-*/`;
+ * anime.js v${ pkg.version }
+ * © ${ date.getFullYear() } Julian Garnier
+ * Released under the MIT license
+ * animejs.com
+ */
+`;
 
 console.info('Compiling... 😤');
 
