@@ -16,7 +16,8 @@
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png">
   <link href="../assets/css/anime.css" rel="stylesheet">
-  <script src="../../anime.min.js"></script>
+  <script src="../../lib/anime.min.js"></script>
+  <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
   <style>
 
     html,
@@ -225,10 +226,6 @@
         if (target.classList.contains('diag-left')) translate =  y / 3;
         return [translate, 0];
       },
-      scale: {
-        value: [6, 1],
-        duration: 500,
-      },
       stroke: '#F9C100',
       opacity: {
         value: [0, 1],
@@ -236,10 +233,10 @@
       },
       delay: (t, i) => (i * 25),
       duration: 500,
-      easing: 'easeOutQuart',
+      easing: 'easeOutSine',
     }, 0);
 
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <script src="../assets/js/vendors/stats.min.js"></script>
 </body>
 </html>

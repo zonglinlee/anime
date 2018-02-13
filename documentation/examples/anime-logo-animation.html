@@ -16,8 +16,8 @@
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png">
   <link href="../assets/css/anime.css" rel="stylesheet">
-  <script src="../../anime.js"></script>
-  <!-- <script src="../assets/js/anime.2.2.0.js"></script> -->
+  <script src="../../lib/anime.min.js"></script>
+  <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
   <style>
     body {
       opacity: 0;
@@ -245,7 +245,7 @@
             easing: 'easeOutQuart'
           },
           stroke: {
-            value: ['#FFF', function(el) { return anime.get(el.parentNode, 'stroke') } ],
+            value: ['#FFF', function(el) { return anime.getValue(el.parentNode, 'stroke') } ],
             duration: 500,
             delay: 500,
             easing: 'easeInQuad'
@@ -302,7 +302,7 @@
             easing: 'easeInQuad'
           },
           stroke: {
-            value: ['#FFF', function(el) { return anime.get(el, 'stroke') } ],
+            value: ['#FFF', function(el) { return anime.getValue(el, 'stroke') } ],
             duration: 800,
             delay: 3400,
             easing: 'easeInQuad'
@@ -317,7 +317,6 @@
         
       function init() {
         document.body.classList.add('ready');
-        // logoTimeline.seek(4700);
         logoTimeline.play();
       }
 
@@ -332,6 +331,6 @@
     }
 
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <script src="../assets/js/vendors/stats.min.js"></script>
 </body>
 </html>

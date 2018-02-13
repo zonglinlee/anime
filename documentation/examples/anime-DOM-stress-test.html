@@ -16,14 +16,10 @@
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
   <link href="../assets/css/anime.css" rel="stylesheet">
-  <script src="../../anime.js"></script>
+  <script src="../../lib/anime.min.js"></script>
   <!-- <script src="../assets/js/anime/anime.2.0.2.js"></script> -->
-  <!-- <script src="../assets/js/anime.1.0.js"></script> -->
+  <!-- <script src="../assets/js/anime/anime.1.0.js"></script> -->
   <style>
-
-    body {
-      /*background-color: #000;*/
-    }
 
     .el {
       position: absolute;
@@ -32,7 +28,7 @@
       width: 1em;
       height: 1em;
       margin: -.5em 0 0 -.5em;
-      font-size: 40px;
+      font-size: 20px;
     }
 
   </style>
@@ -41,7 +37,8 @@
 <script>
 
   var wrapperEl = document.body;
-  var numberOfEls = 1000;
+  var numberOfEls = 500;
+  var duration = numberOfEls * 10;
   var radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
   var distance = (radius / 4 <= 150 ? 150 : radius / 2.5) / 16; 
 
@@ -50,7 +47,8 @@
     var hue = Math.round(360 / numberOfEls * i);
     var angle = i;
     el.classList.add('el');
-    el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
+    //el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
+    el.style.backgroundColor = 'hsl(' + hue + ', 50%, 50%)';
     wrapperEl.appendChild(el);
     anime({
       targets: el,
@@ -60,11 +58,10 @@
         {value: [0, 1]},
         {value: 0}
       ],
-      borderRadius: '50%',
       easing: 'easeInOutSine',
       loop: true,
-      duration: 1000,
-      delay: i * (8000 / numberOfEls)
+      duration: duration,
+      startTime: i * (duration / numberOfEls)
     });
   };
 
