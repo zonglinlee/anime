@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
   <link href="../assets/css/anime.css" rel="stylesheet">
   <script src="../../anime.js"></script>
-  <!-- <script src="../assets/js/anime.2.0.2.js"></script> -->
+  <!-- <script src="../assets/js/anime/anime.2.0.2.js"></script> -->
   <!-- <script src="../assets/js/anime.1.0.js"></script> -->
   <style>
 
@@ -32,11 +32,7 @@
       width: 1em;
       height: 1em;
       margin: -.5em 0 0 -.5em;
-      /*border: .05em solid currentColor;*/
-      /*background-color: currentColor;*/
       font-size: 40px;
-      /*border-radius: 50%;*/
-      transform: scale(0);
     }
 
   </style>
@@ -44,47 +40,38 @@
 <body></body>
 <script>
 
-    const wrapperEl = document.body;
-    const numberOfEls = 280;
-    const duration = 3000;
-    const delay = duration / numberOfEls;
-    const radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-    const distance = radius / 4 <= 150 ? 150 : radius / 3; 
+  anime.speed = -1;
 
-    let tl = anime.timeline({
-      duration: delay,
-      complete: function() { tl.restart(); }
-    });
+    const wrapperEl = document.body;
+    const numberOfEls = 1000;
+    const radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+    const distance = (radius / 4 <= 150 ? 150 : radius / 2.5) / 16; 
 
     function createEl(i) {
       let el = document.createElement('div');
       const hue = Math.round(360 / numberOfEls * i);
       const angle = i;
       el.classList.add('el');
-      el.style.backgroundColor = 'hsl(' + hue + ', 40%, 60%)';
-      tl.add({
-        begin: function() {
-          var randomDistance = anime.random(distance - 50, distance + 50);
-          anime({
-            targets: el,
-            // backgroundColor: ['#fff', '#000'],
-            translateX: [0, Math.sin(angle) * randomDistance],
-            translateY: [0,Math.cos(angle) * randomDistance],
-            scale: [
-              {value: [0, anime.random(5, 10) * .1], easing: 'easeOutBack'},
-              {value: 0, easing: 'easeInBack'},
-            ],
-            easing: 'easeInOutSine',
-            direction: 'reverse',
-            duration: duration
-          });
-        }
-      });
+      el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
       wrapperEl.appendChild(el);
+      anime({
+        targets: el,
+        translateX: Math.sin(angle) * distance + 'rem',
+        translateY: Math.cos(angle) * distance + 'rem',
+        scale: [
+          {value: [0, 1]},
+          {value: 0}
+        ],
+        borderRadius: '50%',
+        easing: 'easeInOutSine',
+        loop: true,
+        duration: 1000,
+        delay: i * (8000 / numberOfEls)
+      });
     };
 
     for (let i = 0; i < numberOfEls; i++) createEl(i);
 
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <script src="../assets/js/vendors/stats.min.js"></script>
 </html>

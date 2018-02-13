@@ -446,7 +446,7 @@
     const valueUnit = getUnit(value);
     if (arrayContains([unit, 'deg', 'rad', 'turn'], valueUnit)) return value;
     const cached = cache.CSS[value + unit];
-    if(cached) return cached;
+    if (!is.und(cached)) return cached;
     const baseline = 100;
     const tempEl = document.createElement(el.tagName);
     const parentEl = el.parentNode || document.body;
