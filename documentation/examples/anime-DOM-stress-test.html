@@ -40,37 +40,35 @@
 <body></body>
 <script>
 
-  anime.speed = -1;
+  var wrapperEl = document.body;
+  var numberOfEls = 1000;
+  var radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
+  var distance = (radius / 4 <= 150 ? 150 : radius / 2.5) / 16; 
 
-    const wrapperEl = document.body;
-    const numberOfEls = 1000;
-    const radius = window.innerWidth < window.innerHeight ? window.innerWidth : window.innerHeight;
-    const distance = (radius / 4 <= 150 ? 150 : radius / 2.5) / 16; 
+  function createEl(i) {
+    var el = document.createElement('div');
+    var hue = Math.round(360 / numberOfEls * i);
+    var angle = i;
+    el.classList.add('el');
+    el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
+    wrapperEl.appendChild(el);
+    anime({
+      targets: el,
+      translateX: Math.sin(angle) * distance + 'rem',
+      translateY: Math.cos(angle) * distance + 'rem',
+      scale: [
+        {value: [0, 1]},
+        {value: 0}
+      ],
+      borderRadius: '50%',
+      easing: 'easeInOutSine',
+      loop: true,
+      duration: 1000,
+      delay: i * (8000 / numberOfEls)
+    });
+  };
 
-    function createEl(i) {
-      let el = document.createElement('div');
-      const hue = Math.round(360 / numberOfEls * i);
-      const angle = i;
-      el.classList.add('el');
-      el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
-      wrapperEl.appendChild(el);
-      anime({
-        targets: el,
-        translateX: Math.sin(angle) * distance + 'rem',
-        translateY: Math.cos(angle) * distance + 'rem',
-        scale: [
-          {value: [0, 1]},
-          {value: 0}
-        ],
-        borderRadius: '50%',
-        easing: 'easeInOutSine',
-        loop: true,
-        duration: 1000,
-        delay: i * (8000 / numberOfEls)
-      });
-    };
-
-    for (let i = 0; i < numberOfEls; i++) createEl(i);
+  for (var i = 0; i < numberOfEls; i++) createEl(i);
 
   </script>
   <script src="../assets/js/vendors/stats.min.js"></script>
