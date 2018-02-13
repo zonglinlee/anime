@@ -6,31 +6,25 @@ var createBouncyButtons = (function() {
       anime.remove([pathEl, spanEl]);
       anime({
         targets: pathEl,
-        d: 'M10,10 C10,10 50,7 90,7 C130,7 170,10 170,10 C170,10 172,20 172,30 C172,40 170,50 170,50 C170,50 130,53 90,53 C50,53 10,50 10,50 C10,50 8,40 8,30 C8,20 10,10 10,10 Z',
-        elasticity: 700,
-        offset: 0
-      });
+        d: 'M10,10 C10,10 50,7 90,7 C130,7 170,10 170,10 C170,10 172,20 172,30 C172,40 170,50 170,50 C170,50 130,53 90,53 C50,53 10,50 10,50 C10,50 8,40 8,30 C8,20 10,10 10,10 Z'
+      }), 0;
       anime({
         targets: spanEl,
         scale: 1.15,
-        duration: 800,
-        offset: 0
-      });
+        duration: 800
+      }), 0;
     }
     function down() {
       anime.remove([pathEl, spanEl]);
       anime({
         targets: pathEl,
-        d: 'M10,10 C10,10 50,9.98999977 90,9.98999977 C130,9.98999977 170,10 170,10 C170,10 170.009995,20 170.009995,30 C170.009995,40 170,50 170,50 C170,50 130,50.0099983 90,50.0099983 C50,50.0099983 10,50 10,50 C10,50 9.98999977,40 9.98999977,30 C9.98999977,20 10,10 10,10 Z',
-        elasticity: 700,
-        offset: 0
-      });
+        d: 'M10,10 C10,10 50,9.98999977 90,9.98999977 C130,9.98999977 170,10 170,10 C170,10 170.009995,20 170.009995,30 C170.009995,40 170,50 170,50 C170,50 130,50.0099983 90,50.0099983 C50,50.0099983 10,50 10,50 C10,50 9.98999977,40 9.98999977,30 C9.98999977,20 10,10 10,10 Z'
+      }), 0;
       anime({
         targets: spanEl,
         scale: 1,
-        duration: 800,
-        offset: 0
-      });
+        duration: 800
+      }), 0;
     }
     el.onmouseenter = hover;
     el.onmousedown = down;
@@ -74,19 +68,17 @@ var logoAnimation = (function() {
         { value: 0, duration: 20, delay: 500, easing: 'easeInQuart' },
         { value: 1, duration: 200, delay: 1000, easing: 'easeOutQuart' },
         { value: 0, duration: 400, delay: 500, easing: 'easeInBack' }
-      ],
-      offset: 0
-    })
+      ]
+    }, 0)
     .add({
       targets: '.dot-i',
-      translateY: { value: [-200, 0], duration: 500, elasticity: 400 },
+      translateY: { value: [-200, 0], duration: 500 },
       scale: [
         { value: [0, 1], duration: 100, easing: 'easeOutQuart' },
         { value: 0, duration: 400, delay: 1400, easing: 'easeInBack' }
       ],
-      delay: 1200,
-      offset: 0
-    })
+      delay: 1200
+    }, 0)
     .add({
       targets: '.fill.in',
       strokeDashoffset: {
@@ -105,9 +97,8 @@ var logoAnimation = (function() {
         value: 0,
         duration: 1,
         delay: function(el, i, t) { return 1900 + ( i * 80 ); },
-      },
-      offset: 0
-    })
+      }
+    }, 0)
     .add({
       targets: '.fill.out',
       strokeDashoffset: [
@@ -118,9 +109,8 @@ var logoAnimation = (function() {
           delay: function(el, i) { return (i * 80); },
           easing: 'easeInQuart'
         }
-      ],
-      offset: 0
-    })
+      ]
+    }, 0)
     .add({
       targets: '.line.out',
       strokeDashoffset: {
@@ -134,16 +124,14 @@ var logoAnimation = (function() {
         delay: function(el, i, t) { return 2000 + ( i * 100 ); },
         duration: 200,
         easing: 'linear'
-      },
-      offset: 0
-    })
+      }
+    }, 0)
     .add({
       targets: '.icon',
       opacity: { value: 1, duration: 10, delay: 2800, easing: 'linear' },
       translateY: { value: 60, duration: 800 },
-      delay: 4200,
-      offset: 0
-    })
+      delay: 4200
+    }, 0)
     .add({
       targets: '.icon-line',
       strokeDashoffset: [
@@ -161,16 +149,14 @@ var logoAnimation = (function() {
         duration: 800,
         delay: 3400,
         easing: 'easeInQuad'
-      },
-      offset: 0
-    })
+      }
+    }, 0)
     .add({
       targets: ['.icon-text path', '.icon-text polygon'],
       translateY: [50, 0],
       opacity: { value: [0, 1], duration: 100, easing: 'linear' },
-      delay: function(el, i, t) { return 4200 + ( i * 20 ); },
-      offset: 0
-    })
+      delay: function(el, i, t) { return 4200 + ( i * 20 ); }
+    }, 0)
     .add({
       targets: ['.logo-animation', '.description', '.button', '.credits'],
       translateY: [50, 0],

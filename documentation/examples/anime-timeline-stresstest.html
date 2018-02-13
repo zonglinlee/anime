@@ -22,12 +22,18 @@
 
     body {
       display: flex;
-      flex-wrap: no-wrap;
-      justify-content: space-around;
-      align-items: center;
+      flex-wrap: wrap;
       position: absolute;
       width: 100%;
       height: 100%;
+    }
+
+    .wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      align-items: center;
+      height: calc(100vh - 100px);
     }
 
     .el {
@@ -35,6 +41,7 @@
       height: 10px;
       background: #FFF;
       margin: 10px;
+      border-radius: 50%;
     }
 
     .controls {
@@ -68,15 +75,7 @@
   </style>
 </head>
 <body>
-
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-
+  <div class="wrapper"></div>
   <div class="controls">
     <div class="buttons">
       <button class="play">Play</button>
@@ -87,18 +86,14 @@
       <input class="progress" type="range" min="0" max="100" step=".1" value="0">
     </div>
   </div>
-
 </body>
 <script>
 
-  var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
 
   var tl = anime.timeline({
-    targets: els,
+    autoplay: false,
     direction: 'alternate',
-    duration: 250,
-    delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
     },
@@ -114,50 +109,32 @@
   document.querySelector('.controls .pause').onclick = tl.pause;
   document.querySelector('.controls .restart').onclick = tl.restart;
 
-  tl
-  .add({
-    translateY: -100,
-    scale: 8,
-    background: '#FF1461',
-    begin: function() { console.log('animation 1 began')},
-    complete: function() { console.log('animation 1 completed')}
-  })
-  .add({
-    background: '#18FF92',
-    rotate: 45,
-    begin: function() { console.log('animation 2 began')},
-    complete: function() { console.log('animation 2 completed')}
-  })
-  .add({
-    background: '#5A87FF',
-    begin: function() { console.log('animation 3 began')},
-    complete: function() { console.log('animation 3 completed')}
-  })
-  .add({
-    background: '#FBF38C',
-    rotate: 90,
-    begin: function() { console.log('animation 4 began')},
-    complete: function() { console.log('animation 4 completed')}
-  })
-  .add({
-    scaleX: 3,
-    scaleY: .5,
-    background: '#FBF38C',
-    begin: function() { console.log('animation 5 began')},
-    complete: function() { console.log('animation 5 completed')}
-  });
+  var wrapperEl = document.querySelector('.wrapper');
+  var numberOfEls = 1000;
+  var fragment = document.createDocumentFragment();
+
+  function createEl(i) {
+    var el = document.createElement('div');
+    el.classList.add('el');
+    var hue = Math.round(180 / numberOfEls * i);
+    el.style.backgroundColor = 'hsl(' + hue + ', 60%, 60%)';
+    tl.add({
+      targets: el,
+      scale: [0, 2],
+      duration: 5000,
+      easing: 'easeOutElastic(1, .1)',
+    }, !i ? 0 : '-=4999');
+    fragment.appendChild(el);
+  };
+
+  for (let i = 0; i < numberOfEls; i++) createEl(i);
+
+  wrapperEl.appendChild(fragment);
 
   controlsProgressEl.addEventListener('input', function() {
     tl.seek(tl.duration * (controlsProgressEl.value / 100));
   });
 
-  for (var i = 0; i < els.length; i++) {
-    els[i].addEventListener('mouseenter', function() {
-      anime.remove(this);
-      this.style.backgroundColor = 'red';
-    }, false);
-  }
-
   </script>
-  <!-- <script src="../assets/js/stats.js"></script> -->
+  <script src="../assets/js/stats.js"></script>
 </html>

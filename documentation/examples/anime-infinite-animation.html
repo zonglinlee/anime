@@ -18,7 +18,7 @@
   <link href="../assets/css/anime.css" rel="stylesheet">
   <script src="../../anime.js"></script>
   <!-- <script src="../assets/js/anime.3.0.0-alpha.js"></script> -->
-  <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
+  <!-- <script src="../assets/js/anime.2.2.0.js"></script> -->
   <!-- <script src="../assets/js/anime.2.0.1.js"></script> -->
   <!-- <script src="../assets/js/anime.1.3.js"></script> -->
   <style>
@@ -30,66 +30,60 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 8em;
-      font-size: 24px;
+      font-size: 50px;
     }
     .wrapper {
       display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
+      flex-direction: row;
     }
     .particule {
-      width: 1px;
-      height: 10em;
-      margin-left: 1px;
-      transform-origin: 50 50%;
+      width: 1em;
+      height: 1em;
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
+  <div class="wrapper"></div>
   <script>
 
-    var numberOfEls = 500;
-    var duration = 4000;
+    var rows = 2;
+    var numberOfEls = rows * rows;
+    var duration = 1000;
+    var stagger = 100;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
     var fragment = document.createDocumentFragment();
+    var wrapperEl = document.querySelector('.wrapper');
+
+    wrapperEl.style.width = numberOfEls + 'em';
+    wrapperEl.style.height = rows + 'em';
 
     for (var i = 0; i < numberOfEls; i++) {
       var hue = 10 + Math.round(40 / numberOfEls * i);
       var el = document.createElement('div');
       el.classList.add('particule');
       el.style.backgroundColor = 'hsl(' + hue + ', 100%, 50%)';
-      el.style.transform = 'rotate(' + i * 1 + 'deg) translateX(100px)';
 
-      document.body.appendChild(el);
-
-      anime({
+      var anim = anime({
         targets: el,
-        //rotate: '+=2turn',
-        translateX: '1rem',
-        // scaleY: [
-        //   {value: [1, .1]},
-        //   {value: 1}
-        // ],
-        // height: [
-        //   {value: ['10rem', '1rem']},
-        //   {value: '1rem'}
-        // ],
-        // height: [
-        //   {value: '10px'},
-        //   {value: anime.getValue(el, 'height', 'px')}
-        // ],
-        easing: 'linear',
+        translateY: '2em',
+        scale: [.9, .1],
         direction: 'alternate',
+        loop: true,
+        easing: 'easeInOutQuad',
         duration: duration,
-        loop: true
+        startTime: ((numberOfEls + 1 - (i)) * stagger)
       });
+
+      fragment.appendChild(el);
 
     }
 
+    wrapperEl.appendChild(fragment);
+
   </script>
-  <script src="../assets/js/vendors/stats.min.js"></script>
+  <!-- <script src="../assets/js/stats.js"></script> -->
 </body>
 </html>

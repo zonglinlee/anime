@@ -11,13 +11,12 @@ fs.unlink(fileOut, (err) => {
     if (err) throw err;
     const flags = {
       jsCode: [{src: data}],
-      languageIn: 'ES6',
-      languageOut: 'ES5'
+      rewritePolyfills: false
     };
     const out = compile(flags);
     fs.writeFile(fileOut, out.compiledCode, function(err) {
       if (err) throw err;
-      console.info('Compilation was a success! 😎 🍺');
+      console.info('Compilation was a success! 😎');
     });
   });
 });

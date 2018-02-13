@@ -1,7 +1,7 @@
 /**
  * http://animejs.com
  * JavaScript animation engine
- * @version v3.0.0
+ * @version v3.0.0-alpha
  * @author Julian Garnier
  * @copyright ©2017 Julian Garnier
  * Released under the MIT license
@@ -25,42 +25,31 @@
   // Defaults
 
   const defaultInstanceSettings = {
-    update: null,
-    begin: null,
-    run: null,
-    complete: null,
+    update: undefined,
+    begin: undefined,
+    run: undefined,
+    complete: undefined,
     loop: 1,
     direction: 'normal',
     autoplay: true,
-    startTime: 0,
-    timelineOffset: 0
+    timeOffset: 0
   }
 
   const defaultTweenSettings = {
     duration: 1000,
     delay: 0,
     endDelay: 0,
-    easing: 'easeOutElastic(1, .5)',
+    easing: 'easeOutElastic',
+    elasticity: 500,
     round: 0
   }
 
   const validTransforms = ['translateX', 'translateY', 'translateZ', 'rotate', 'rotateX', 'rotateY', 'rotateZ', 'scale', 'scaleX', 'scaleY', 'scaleZ', 'skew', 'skewX', 'skewY', 'perspective'];
 
-  // Caching
-
-  const cache = {
-    CSS: {},
-    springs: {}
-  }
-
   // Utils
 
   function stringContains(str, text) {
     return str.indexOf(text) > -1;
-  }
-
-  function applyArguments(func, args) {
-    return func.apply(null, args);
   }
 
   const is = {
@@ -78,78 +67,6 @@
     col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
   }
 
-  function parseEasingParameters(string) {
-    const match = /\(([^)]+)\)/.exec(string);
-    return match ? match[1].split(',').map(p => parseFloat(p)) : [];
-  }
-
-  // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
-
-  function spring(string, duration) {
-
-    const params = parseEasingParameters(string);
-    const mass = minMaxValue(is.und(params[0]) ? 1 : params[0], .1, 100);
-    const stiffness = minMaxValue(is.und(params[1]) ? 100 : params[1], .1, 100);
-    const damping = minMaxValue(is.und(params[2]) ? 10 : params[2], .1, 100);
-    const velocity =  minMaxValue(is.und(params[3]) ? 0 : params[3], .1, 100);
-    const w0 = Math.sqrt(stiffness / mass);
-    const zeta = damping / (2 * Math.sqrt(stiffness * mass));
-    const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
-    const a = 1;
-    const b = zeta < 1 ? (zeta * w0 + -velocity) / wd : -velocity + w0;
-
-    function solver(t) {
-      let progress = duration ? (duration * t) / 1000 : t;
-      if (zeta < 1) {
-        progress = Math.exp(-progress * zeta * w0) * (a * Math.cos(wd * progress) + b * Math.sin(wd * progress));
-      } else {
-        progress = (a + b * progress) * Math.exp(-progress * w0);
-      }
-      if (t === 0 || t === 1) return t;
-      return 1 - progress;
-    }
-
-    function getDuration() {
-      const cached = cache.springs[string];
-      if (cached) return cached;
-      const frame = 1/6;
-      let elapsed = 0;
-      let rest = 0;
-      while(true) {
-        elapsed += frame;
-        if (solver(elapsed) === 1) {
-          rest++;
-          if (rest >= 16) break;
-        } else {
-          rest = 0;
-        }
-      }
-      const duration = elapsed * frame * 1000;
-      cache.springs[string] = duration;
-      return duration;
-    }
-
-    return duration ? solver : getDuration;
-
-  }
-
-  // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
-
-  function elastic(amplitude = 1, period = .5) {
-    const a = minMaxValue(amplitude, 1, 10);
-    const p = minMaxValue(period, .1, 2);
-    return t => {
-      return (t === 0 || t === 1) ? t : 
-        -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
-    }
-  }
-
-  // Basic steps easing implementation https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function
-
-  function steps(steps = 10) {
-    return t => Math.round(t * steps) * (1 / steps);
-  }
-
   // BezierEasing https://github.com/gre/bezier-easing
 
   const bezier = (() => {
@@ -157,14 +74,14 @@
     const kSplineTableSize = 11;
     const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
 
-    function A(aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1 };
-    function B(aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1 };
-    function C(aA1)      { return 3.0 * aA1 };
+    function A (aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1 };
+    function B (aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1 };
+    function C (aA1)      { return 3.0 * aA1 };
 
-    function calcBezier(aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT };
-    function getSlope(aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1) };
+    function calcBezier (aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT };
+    function getSlope (aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1) };
 
-    function binarySubdivide(aX, aA, aB, mX1, mX2) {
+    function binarySubdivide (aX, aA, aB, mX1, mX2) {
       let currentX, currentT, i = 0;
       do {
         currentT = aA + (aB - aA) / 2.0;
@@ -174,7 +91,7 @@
       return currentT;
     }
 
-    function newtonRaphsonIterate(aX, aGuessT, mX1, mX2) {
+    function newtonRaphsonIterate (aX, aGuessT, mX1, mX2) {
       for (let i = 0; i < 4; ++i) {
         const currentSlope = getSlope(aGuessT, mX1, mX2);
         if (currentSlope === 0.0) return aGuessT;
@@ -223,7 +140,8 @@
 
       return x => {
         if (mX1 === mY1 && mX2 === mY2) return x;
-        if (x === 0 || x === 1) return x;
+        if (x === 0) return 0;
+        if (x === 1) return 1;
         return calcBezier(getTForX(x), mY1, mY2);
       }
 
@@ -237,72 +155,68 @@
 
     const names = ['Quad', 'Cubic', 'Quart', 'Quint', 'Sine', 'Expo', 'Circ', 'Back', 'Elastic'];
 
+    // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
+
+    function elastic(t, p) {
+      return t === 0 || t === 1 ? t :
+      -Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2.0) * Math.asin(1))) * (Math.PI * 2)) / p );
+    }
+
     // Approximated Penner equations http://matthewlein.com/ceaser/
 
-    const penner = {
+    const equations = {
       In: [
-        [0.550, 0.085, 0.680, 0.530], /* inQuad */
-        [0.550, 0.055, 0.675, 0.190], /* inCubic */
-        [0.895, 0.030, 0.685, 0.220], /* inQuart */
-        [0.755, 0.050, 0.855, 0.060], /* inQuint */
-        [0.470, 0.000, 0.745, 0.715], /* inSine */
-        [0.950, 0.050, 0.795, 0.035], /* inExpo */
-        [0.600, 0.040, 0.980, 0.335], /* inCirc */
-        [0.600,-0.280, 0.735, 0.045], /* inBack */
-        elastic /* inElastic */
-      ],
-      Out: [
-        [0.250, 0.460, 0.450, 0.940], /* outQuad */
-        [0.215, 0.610, 0.355, 1.000], /* outCubic */
-        [0.165, 0.840, 0.440, 1.000], /* outQuart */
-        [0.230, 1.000, 0.320, 1.000], /* outQuint */
-        [0.390, 0.575, 0.565, 1.000], /* outSine */
-        [0.190, 1.000, 0.220, 1.000], /* outExpo */
-        [0.075, 0.820, 0.165, 1.000], /* outCirc */
-        [0.175, 0.885, 0.320, 1.275], /* outBack */
-        (a, p) => t => 1 - elastic(a, p)(1 - t) /* outElastic */
-      ],
-      InOut: [
-        [0.455, 0.030, 0.515, 0.955], /* inOutQuad */
-        [0.645, 0.045, 0.355, 1.000], /* inOutCubic */
-        [0.770, 0.000, 0.175, 1.000], /* inOutQuart */
-        [0.860, 0.000, 0.070, 1.000], /* inOutQuint */
-        [0.445, 0.050, 0.550, 0.950], /* inOutSine */
-        [1.000, 0.000, 0.000, 1.000], /* inOutExpo */
-        [0.785, 0.135, 0.150, 0.860], /* inOutCirc */
-        [0.680,-0.550, 0.265, 1.550], /* inOutBack */
-        (a, p) => t => t < .5 ? elastic(a, p)(t * 2) / 2 : 1 - elastic(a, p)(t * -2 + 2) / 2 /* inOutElastic */
+        [0.550, 0.085, 0.680, 0.530], /* InQuad */
+        [0.550, 0.055, 0.675, 0.190], /* InCubic */
+        [0.895, 0.030, 0.685, 0.220], /* InQuart */
+        [0.755, 0.050, 0.855, 0.060], /* InQuint */
+        [0.470, 0.000, 0.745, 0.715], /* InSine */
+        [0.950, 0.050, 0.795, 0.035], /* InExpo */
+        [0.600, 0.040, 0.980, 0.335], /* InCirc */
+        [0.600, -0.280, 0.735, 0.045], /* InBack */
+        elastic /* InElastic */
+      ], Out: [
+        [0.250, 0.460, 0.450, 0.940], /* OutQuad */
+        [0.215, 0.610, 0.355, 1.000], /* OutCubic */
+        [0.165, 0.840, 0.440, 1.000], /* OutQuart */
+        [0.230, 1.000, 0.320, 1.000], /* OutQuint */
+        [0.390, 0.575, 0.565, 1.000], /* OutSine */
+        [0.190, 1.000, 0.220, 1.000], /* OutExpo */
+        [0.075, 0.820, 0.165, 1.000], /* OutCirc */
+        [0.175, 0.885, 0.320, 1.275], /* OutBack */
+        (t, f) => 1 - elastic(1 - t, f) /* OutElastic */
+      ], InOut: [
+        [0.455, 0.030, 0.515, 0.955], /* InOutQuad */
+        [0.645, 0.045, 0.355, 1.000], /* InOutCubic */
+        [0.770, 0.000, 0.175, 1.000], /* InOutQuart */
+        [0.860, 0.000, 0.070, 1.000], /* InOutQuint */
+        [0.445, 0.050, 0.550, 0.950], /* InOutSine */
+        [1.000, 0.000, 0.000, 1.000], /* InOutExpo */
+        [0.785, 0.135, 0.150, 0.860], /* InOutCirc */
+        [0.680, -0.550, 0.265, 1.550], /* InOutBack */
+        (t, f) => t < .5 ? elastic(t * 2, f) / 2 : 1 - elastic(t * -2 + 2, f) / 2 /* InOutElastic */
       ]
     }
 
-    let eases = { 
-      linear: [0.250, 0.250, 0.750, 0.750]
+    let functions = {
+      linear: bezier(0.250, 0.250, 0.750, 0.750)
     }
 
-    for (let equation in penner) {
-      penner[equation].forEach((ease, i) => { 
-        eases['ease'+equation+names[i]] = ease;
+    for (let type in equations) {
+      equations[type].forEach((f, i) => {
+        functions['ease'+type+names[i]] = is.fnc(f) ? f : bezier.apply(this, f);
       });
     }
 
-    return eases;
+    return functions;
 
   })();
 
-  function parseEasings(tween) {
-    const string = tween.easing;
-    const name = string.split('(')[0];
-    const args = parseEasingParameters(string);
-    const ease = easings[name];
-    switch (name) {
-      case 'spring' : return spring(string, tween.duration);
-      case 'cubicBezier' : return applyArguments(bezier, args);
-      case 'steps' : return applyArguments(steps, args);
-      default : return is.fnc(ease) ? applyArguments(ease, args) : applyArguments(bezier, ease);
-    }
-  }
-
   // Strings
+
+  function stringToHyphens(str) {
+    return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+  }
 
   function selectString(str) {
     try {
@@ -438,39 +352,15 @@
     return val(animatable.target, animatable.id, animatable.total);
   }
 
-  function getAttribute(el, prop) {
-    return el.getAttribute(prop);
-  }
-
-  function convertPxToUnit(el, value, unit) {
-    const valueUnit = getUnit(value);
-    if (arrayContains([unit, 'deg', 'rad', 'turn'], valueUnit)) return value;
-    const cached = cache.CSS[value + unit];
-    if (!is.und(cached)) return cached;
-    const baseline = 100;
-    const tempEl = document.createElement(el.tagName);
-    const parentEl = el.parentNode || document.body;
-    parentEl.appendChild(tempEl);
-    tempEl.style.position = 'absolute';
-    tempEl.style.width = baseline + unit;
-    const factor = baseline / tempEl.offsetWidth;
-    parentEl.removeChild(tempEl);
-    const convertedUnit = factor * parseFloat(value);
-    cache.CSS[value + unit] = convertedUnit;
-    return convertedUnit;
-  }
-
-  function getCSSValue(el, prop, unit) {
+  function getCSSValue(el, prop) {
     if (prop in el.style) {
-      const uppercasePropName = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-      const value = el.style[prop] || getComputedStyle(el).getPropertyValue(uppercasePropName) || '0';
-      return unit ? convertPxToUnit(el, value, unit) : value;
+      return el.style[prop] || getComputedStyle(el).getPropertyValue(stringToHyphens(prop)) || '0';
     }
   }
 
   function getAnimationType(el, prop) {
-    if (is.dom(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
     if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
+    if (is.dom(el) && (el.getAttribute(prop) || (is.svg(el) && el[prop]))) return 'attribute';
     if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
     if (el[prop] != null) return 'object';
   }
@@ -484,19 +374,19 @@
     return transforms;
   }
 
-  function getTransformValue(el, propName, animatable, unit) {
+  function getTransformValue(el, propName, animatable) {
     const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
-    const value = getElementTransforms(el).get(propName) || defaultVal;
-    animatable.transforms.list.set(propName, value);
+    const prop = getElementTransforms(el).get(propName) || defaultVal;
+    animatable.transforms.list.set(propName, prop);
     animatable.transforms['last'] = propName;
-    return unit ? convertPxToUnit(el, value, unit) : value;
+    return prop;
   }
 
-  function getOriginalTargetValue(target, propName, unit, animatable) {
+  function getOriginalTargetValue(target, propName, animatable) {
     switch (getAnimationType(target, propName)) {
-      case 'transform': return getTransformValue(target, propName, animatable, unit);
-      case 'css': return getCSSValue(target, propName, unit);
-      case 'attribute': return getAttribute(target, propName);
+      case 'transform': return getTransformValue(target, propName, animatable);
+      case 'css': return getCSSValue(target, propName);
+      case 'attribute': return target.getAttribute(propName);
       default: return target[propName] || 0;
     }
   }
@@ -521,25 +411,25 @@
     return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
   }
 
-  // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes
+  // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes. 
   // adapted from https://gist.github.com/SebLambla/3e0550c496c236709744
 
   function getDistance(p1, p2) {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)); 
   }
 
   function getCircleLength(el) {
-    return Math.PI * 2 * getAttribute(el, 'r');
+    return 2 * Math.PI * el.getAttribute('r');
   }
 
   function getRectLength(el) {
-    return (getAttribute(el, 'width') * 2) + (getAttribute(el, 'height') * 2);
+    return (el.getAttribute('width') * 2) + (el.getAttribute('height') * 2);
   }
 
   function getLineLength(el) {
     return getDistance(
-      {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')}, 
-      {x: getAttribute(el, 'x2'), y: getAttribute(el, 'y2')}
+      {x: el.getAttribute('x1'), y: el.getAttribute('y1')}, 
+      {x: el.getAttribute('x2'), y: el.getAttribute('y2')}
     );
   }
 
@@ -638,8 +528,6 @@
 
   function normalizePropertyTweens(prop, tweenSettings) {
     let settings = cloneObject(tweenSettings);
-    // Override duration if easing is a spring
-    if (/^spring/.test(settings.easing)) settings.duration = spring(settings.easing);
     if (is.arr(prop)) {
       const l = prop.length;
       const isFromTo = (l === 2 && !is.obj(prop[0]));
@@ -653,19 +541,24 @@
     }
     const propArray = is.arr(prop) ? prop : [prop];
     return propArray.map((v, i) => {
-      const obj = (is.obj(v) && !is.pth(v)) ? v : {value: v};
       // Default delay value should be applied only on the first tween
-      if (is.und(obj.delay)) obj.delay = !i ? tweenSettings.delay : 0;
+      const delay = !i ? tweenSettings.delay : 0;
+      // Use path object as a tween value
+      let obj = is.obj(v) && !is.pth(v) ? v : {value: v};
+      // Set default delay value
+      if (is.und(obj.delay)) obj.delay = delay;
       return obj;
     }).map(k => mergeObjects(k, settings));
   }
 
   function getProperties(instanceSettings, tweenSettings, params) {
     let properties = [];
+    const settings = mergeObjects(instanceSettings, tweenSettings);
     for (let p in params) {
-      if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets') {
+      if (!settings.hasOwnProperty(p) && p !== 'targets') {
         properties.push({
           name: p,
+          offset: settings['timeOffset'],
           tweens: normalizePropertyTweens(params[p], tweenSettings)
         });
       }
@@ -690,23 +583,26 @@
     return t;
   }
 
+  function normalizeEasing(val) {
+    return is.arr(val) ? bezier.apply(this, val) : easings[val];
+  }
+
   function normalizeTweens(prop, animatable) {
     let previousTween;
     return prop.tweens.map(t => {
-      const tween = normalizeTweenValues(t, animatable);
+      let tween = normalizeTweenValues(t, animatable);
       const tweenValue = tween.value;
-      const to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
-      const toUnit = getUnit(to);
-      const originalValue = getOriginalTargetValue(animatable.target, prop.name, toUnit, animatable);
+      const originalValue = getOriginalTargetValue(animatable.target, prop.name, animatable);
       const previousValue = previousTween ? previousTween.to.original : originalValue;
       const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
-      const fromUnit = getUnit(from) || getUnit(originalValue);
-      const unit = toUnit || fromUnit;
+      const to = getRelativeValue(is.arr(tweenValue) ? tweenValue[1] : tweenValue, from);
+      const unit = getUnit(to) || getUnit(from) || getUnit(originalValue);
       tween.from = decomposeValue(from, unit);
-      tween.to = decomposeValue(getRelativeValue(to, from), unit);
-      tween.start = previousTween ? previousTween.end : 0;
+      tween.to = decomposeValue(to, unit);
+      tween.start = previousTween ? previousTween.end : prop.offset;
       tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
-      tween.easing = parseEasings(tween);
+      tween.easing = normalizeEasing(tween.easing);
+      tween.elasticity = (1000 - minMaxValue(tween.elasticity, 1, 999)) / 1000;
       tween.isPath = is.pth(tweenValue);
       tween.isColor = is.col(tween.from.original);
       if (tween.isColor) tween.round = 1;
@@ -725,12 +621,26 @@
       transforms.list.set(p, v);
       if (p === transforms.last || manual) {
         let str = '';
-        transforms.list.forEach((value, prop) => {
+        for (let [prop, value] of transforms.list) {
           str += `${prop}(${value}) `;
-        });
+        }
         t.style.transform = str;
       }
     }
+  }
+
+  function setTargetValue(targets, properties) {
+    const animatables = getAnimatables(targets);
+    animatables.forEach(animatable => {
+      for (var property in properties) {
+        const value = properties[property];
+        const originalValue = getOriginalTargetValue(animatable.target, property, animatable);
+        const unit = getUnit(value) || getUnit(originalValue);
+        const to = getRelativeValue(validateValue(value, unit), originalValue);
+        const animType = getAnimationType(animatable.target, property);
+        setProgressValue[animType](animatable.target, property, to, animatable.transforms, true);
+      }
+    });
   }
 
   // Animations
@@ -760,12 +670,12 @@
 
   // Create Instance
 
-  function getInstanceTimings(type, animations, tweenSettings) {
+  function getInstanceTimings(type, animations, instanceSettings, tweenSettings) {
     const isDelay = (type === 'delay');
     if (animations.length) {
       return (isDelay ? Math.min : Math.max).apply(Math, animations.map(anim => anim[type]));
     } else {
-      return isDelay ? tweenSettings.delay : tweenSettings.delay + tweenSettings.duration;
+      return isDelay ? tweenSettings.delay : instanceSettings.timeOffset + tweenSettings.delay + tweenSettings.duration;
     }
   }
 
@@ -776,39 +686,33 @@
     const properties = getProperties(instanceSettings, tweenSettings, params);
     const animations = getAnimations(animatables, properties);
     return mergeObjects(instanceSettings, {
-      states: {default: params},
       children: [],
       animatables: animatables,
       animations: animations,
-      duration: getInstanceTimings('duration', animations, tweenSettings),
-      delay: getInstanceTimings('delay', animations, tweenSettings)
+      duration: getInstanceTimings('duration', animations, instanceSettings, tweenSettings),
+      delay: getInstanceTimings('delay', animations, instanceSettings, tweenSettings)
     });
   }
 
   // Core
 
   let activeInstances = [];
-  let pausedInstances = [];
   let raf;
 
   const engine = (() => {
     function play() { 
       raf = requestAnimationFrame(step);
-    }
+    };
     function step(t) {
-      let activeInstancesLength = activeInstances.length;
-      if (activeInstancesLength) {
+      if (activeInstances.length) {
         let i = 0;
-        while (i < activeInstancesLength) {
+        while (i < activeInstances.length) {
           const activeInstance = activeInstances[i];
           if (!activeInstance.paused) {
             activeInstance.tick(t);
           } else {
             const instanceIndex = activeInstances.indexOf(activeInstance);
-            if (instanceIndex > -1) {
-              activeInstances.splice(instanceIndex, 1);
-              activeInstancesLength = activeInstances.length;
-            }
+            if (instanceIndex > -1) activeInstances.splice(instanceIndex, 1);
           }
           i++;
         }
@@ -820,24 +724,13 @@
     return play;
   })();
 
-  function handleVisibilityChange() {
-    if (document.hidden) {
-      activeInstances.forEach(ins => ins.pause());
-      pausedInstances = activeInstances.slice(0);
-      activeInstances = [];
-    } else {
-      pausedInstances.forEach(ins => ins.play());
-    }
-  }
-
-  document.addEventListener('visibilitychange', handleVisibilityChange);
 
   // Public Instance
 
   function anime(params = {}) {
 
-    let startTime = 0, lastTime = 0, now = 0;
-    let children, childrenLength = 0;
+    let now, startTime, lastTime = 0;
+
     let resolve = null;
 
     function makePromise() {
@@ -850,23 +743,22 @@
 
     function toggleInstanceDirection() {
       instance.reversed = !instance.reversed;
+      const children = instance.children;
       children.forEach(child => child.reversed = instance.reversed);
-    }
-
-    function resetTime() {
-      startTime = 0;
-      lastTime = adjustTime(instance.currentTime) * (1 / anime.speed);
     }
 
     function adjustTime(time) {
       return instance.reversed ? instance.duration - time : time;
     }
 
-    function syncInstanceChildren(time) {
-      if (time >= instance.currentTime) {
-        for (let i = 0; i < childrenLength; i++) children[i].seek(time - children[i].timelineOffset);
+    function syncInstanceChildren(time, manual) {
+      const children = instance.children;
+      const childrenLength = children.length;
+      if (!manual || time >= instance.currentTime) {
+        for (let i = 0; i < childrenLength; i++) children[i].seek(time);
       } else {
-        for (let i = childrenLength; i--;) children[i].seek(time - children[i].timelineOffset);
+        // Manual backward seeking requires looping in reverse
+        for (let i = childrenLength; i--;) children[i].seek(time);
       }
     }
 
@@ -883,12 +775,12 @@
         // Only check for keyframes if there is more than one tween
         if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
         const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
-        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed);
+        const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed, tween.elasticity);
         const strings = tween.to.strings;
         const round = tween.round;
         const numbers = [];
-        const toNumbersLength = tween.to.numbers.length;
         let progress;
+        const toNumbersLength = tween.to.numbers.length;
         for (let n = 0; n < toNumbersLength; n++) {
           let value;
           const toNumber = tween.to.numbers[n];
@@ -929,6 +821,7 @@
         i++;
       }
       instance.currentTime = insTime;
+      instance.progress = (insTime / instance.duration) * 100;
     }
 
     function setCallback(cb) {
@@ -941,23 +834,22 @@
       }
     }
 
-    function setInstanceProgress(engineTime) {
+    function setInstanceProgress(engineTime, manual) {
+      const insOffset = instance.timeOffset;
       const insDuration = instance.duration;
-      const insDelay = instance.delay;
       const insTime = adjustTime(engineTime);
-      instance.progress = minMaxValue((insTime / insDuration) * 100, 0, 100);
-      if (children) syncInstanceChildren(insTime);
-      if (insTime >= insDelay || !insDuration) {
+      if (instance.children.length) syncInstanceChildren(insTime, manual);
+      if (insTime >= (insOffset + instance.delay) || !insDuration) {
         if (!instance.began) {
           instance.began = true;
           setCallback('begin');
         }
         setCallback('run');
       }
-      if (insTime > insDelay && insTime < insDuration) {
+      if (insTime > insOffset && insTime < insDuration) {
         setAnimationsProgress(insTime);
       } else {
-        if (insTime <= insDelay && instance.currentTime !== 0) {
+        if (insTime <= insOffset && instance.currentTime !== 0) {
           setAnimationsProgress(0);
           if (instance.reversed) countIteration();
         }
@@ -968,7 +860,6 @@
       }
       setCallback('update');
       if (engineTime >= insDuration) {
-        lastTime = 0;
         if (instance.remaining) {
           startTime = now;
           if (instance.direction === 'alternate') toggleInstanceDirection();
@@ -983,6 +874,7 @@
             }
           }
         }
+        lastTime = 0;
       }
     }
 
@@ -996,20 +888,21 @@
       instance.completed = false;
       instance.reversed = direction === 'reverse';
       instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
-      children = instance.children;
-      childrenLength = children.length;
-      for (let i = childrenLength; i--;) instance.children[i].reset();
       setAnimationsProgress(0);
+      for (let i = instance.children.length; i--; ){
+        instance.children[i].reset();
+      }
     }
 
     instance.tick = function(t) {
       now = t;
       if (!startTime) startTime = now;
-      setInstanceProgress((now + (lastTime - startTime)) * anime.speed);
+      const engineTime = (lastTime + now - startTime) * anime.speed;
+      setInstanceProgress(engineTime);
     }
 
     instance.seek = function(time) {
-      setInstanceProgress(adjustTime(time));
+      setInstanceProgress(adjustTime(time), true);
     }
 
     instance.pause = function() {
@@ -1019,14 +912,16 @@
     instance.play = function() {
       if (!instance.paused) return;
       instance.paused = false;
-      resetTime();
+      startTime = 0;
+      lastTime = adjustTime(instance.currentTime);
       activeInstances.push(instance);
       if (!raf) engine();
     }
 
     instance.reverse = function() {
       toggleInstanceDirection();
-      resetTime();
+      startTime = 0;
+      lastTime = adjustTime(instance.currentTime);
     }
 
     instance.restart = function() {
@@ -1035,29 +930,9 @@
       instance.play();
     }
 
-    instance.animateTo = function(stateName, paramsOverrides = {}, bypassAnimation) {
-      const nextState = instance.states[stateName];
-      const defaultState = instance.states.default;
-      const params = mergeObjects(paramsOverrides, mergeObjects(nextState, defaultState));
-      const animation = anime(params);
-      if (!bypassAnimation) {
-        animation.play();
-      } else {
-        animation.seek(animation.duration);
-      }
-    }
-
-    instance.goTo = function(stateName, paramsOverrides) {
-      instance.animateTo(stateName, paramsOverrides, true);
-    }
-
     instance.finished = promise;
 
     instance.reset();
-
-    if (instance.startTime) {
-      setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
-    }
 
     if (instance.autoplay) instance.play();
 
@@ -1067,28 +942,17 @@
 
   // Remove targets from animation
 
-  function removeTargetsFromAnimations(targetsArray, animations) {
-    for (let a = animations.length; a--;) {
-      if (arrayContains(targetsArray, animations[a].animatable.target)) {
-        animations.splice(a, 1);
-      }
-    }
-  }
-
   function removeTargets(targets) {
     const targetsArray = parseTargets(targets);
     for (let i = activeInstances.length; i--;) {
       const instance = activeInstances[i];
       const animations = instance.animations;
-      const children = instance.children;
-      removeTargetsFromAnimations(targetsArray, animations);
-      for (let c = children.length; c--;) {
-        const child = children[c];
-        const childAnimations = child.animations;
-        removeTargetsFromAnimations(targetsArray, childAnimations);
-        if (!childAnimations.length && !child.children.length) children.splice(c, 1);
+      for (let a = animations.length; a--;) {
+        if (arrayContains(targetsArray, animations[a].animatable.target)) {
+          animations.splice(a, 1);
+          if (!animations.length) instance.pause();
+        }
       }
-      if (!animations.length && !children.length) instance.pause();
     }
   }
 
@@ -1098,22 +962,21 @@
     let tl = anime(params);
     tl.pause();
     tl.duration = 0;
-    tl.add = function(instanceParams, timelineOffset) {
-      function passThrough(ins) { ins.began = true;  ins.completed = true; };
-      tl.children.forEach(passThrough);
+    tl.add = function(instanceParams, timeOffset) {
+      tl.children.forEach(i => { i.began = true; i.completed = true; });
       let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
       insParams.targets = insParams.targets || params.targets;
       const tlDuration = tl.duration;
       insParams.autoplay = false;
       insParams.direction = tl.direction;
-      insParams.timelineOffset = is.und(timelineOffset) ? tlDuration : getRelativeValue(timelineOffset, tlDuration);
-      passThrough(tl);
-      tl.seek(insParams.timelineOffset);
+      insParams.timeOffset = is.und(timeOffset) ? tlDuration : getRelativeValue(timeOffset, tlDuration);
+      tl.began = true;
+      tl.completed = true;
+      tl.seek(insParams.timeOffset);
       const ins = anime(insParams);
-      passThrough(ins);
-      const totalDuration = ins.duration + insParams.timelineOffset;
-      if (is.fnc(tl.delay)) tl.delay = ins.delay;
-      if (is.fnc(tlDuration) || totalDuration > tlDuration) tl.duration = totalDuration;
+      ins.began = true;
+      ins.completed = true;
+      if (ins.duration > tlDuration) tl.duration = ins.duration;
       tl.children.push(ins);
       tl.seek(0);
       tl.reset();
@@ -1123,15 +986,17 @@
     return tl;
   }
 
-  anime.version = '3.0.0';
+  anime.version = '3.0.0-alpha';
   anime.speed = 1;
   anime.running = activeInstances;
   anime.remove = removeTargets;
-  anime.getValue = getOriginalTargetValue;
+  anime.get = getOriginalTargetValue;
+  anime.set = setTargetValue;
   anime.path = getPath;
   anime.setDashoffset = setDashoffset;
-  anime.timeline = timeline;
+  anime.bezier = bezier;
   anime.easings = easings;
+  anime.timeline = timeline;
   anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   return anime;
