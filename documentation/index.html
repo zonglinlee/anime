@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
   <link href="assets/css/anime-theme.css" rel="stylesheet">
   <link href="assets/css/documentation.css" rel="stylesheet">
-  <script src="../anime.js"></script>
+  <script src="../lib/anime.min.js"></script>
 </head>
 <body>
   <div class="content">
@@ -2068,8 +2068,6 @@ timeline.seek(timeStamp);
   <script>var TLcontrols = function() {
 /*DEMO*/
 var controlsProgressEl = document.querySelector('.timeline-controls-demo .progress');
-
-anime.speed = .1;
 
 var tl = anime.timeline({
   direction: 'alternate',
