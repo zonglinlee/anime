@@ -176,7 +176,9 @@ header {
 .navigation ul li a,
 .navigation ul li:before {
   opacity: .4;
-  -webkit-transition:opacity .4s ease, color .4s ease;
+}
+
+.navigation ul li a {
   transition: opacity .4s ease, color .4s ease;
 }
 
@@ -186,7 +188,6 @@ header {
 
 .navigation ul li:hover a,
 .navigation ul li:hover:before {
-  -webkit-transition:none;
   transition: none;
   opacity: 1;
 }
