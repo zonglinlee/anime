@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 124">
+  <g id="Page-2" fill="none" fill-rule="evenodd">
+    <g id="letter-a">
+      <path id="line" stroke="#61C3FF" stroke-width="6" d="M8 8h104c13.255 0 24 10.745 24 24v64c0 13.255-10.745 24-24 24H32c-13.255 0-24-10.745-24-24V64c0-13.255 10.745-24 24-24h72"/>
+      <path id="line" stroke="#1CE2B2" stroke-width="6" d="M103.932 48.009H31.994c-8.836 0-16 7.163-16 16V96c0 8.837 7.164 16 16 16l79.921-.014c8.831 0 15.992-7.155 16-15.986L128 32c0-8.837-7.163-16-16-16L8 16.012"/>
+      <path id="line" stroke="#FF1461" stroke-width="6" d="M8 24h104a8 8 0 0 1 8 8l-.068 64.008a8 8 0 0 1-8 7.992H31.99a8 8 0 0 1-8-8V64a8 8 0 0 1 8-8h71.946"/>
+      <path id="fill" stroke="#FFFFFF" stroke-width="24" d="M108 48H32c-8.837-.134-16 7.009-16 16v32c0 8.857 7.163 16 16 16h80c8.837 0 16-7.143 16-16V32c0-8.857-7.163-16-16-16H4"/>
+    </g>
+  </g>
+</svg>

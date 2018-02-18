@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 124">
+  <g id="Page-2" fill="none" fill-rule="evenodd">
+    <g id="letter-i">
+      <path id="line" stroke="#61C3FF" stroke-width="6" d="M8 120V8"/>
+      <path id="line" stroke="#1CE2B2" stroke-width="6" d="M16 8v112"/>
+      <path id="line" stroke="#FF1461" stroke-width="6" d="M24 120V8"/>
+      <path id="fill" stroke="#FFFFFF" stroke-width="24" d="M16 32v92"/>
+    </g>
+  </g>
+</svg>

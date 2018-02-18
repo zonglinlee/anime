@@ -88,7 +88,7 @@ var logoAnimation = (function() {
         easing: 'easeOutQuart'
       },
       stroke: {
-        value: ['#FFF', function(el) { return anime.getValue(el.parentNode, 'stroke') } ],
+        value: ['#FFF', function(el) { return anime.get(el.parentNode, 'stroke') } ],
         duration: 500,
         delay: 500,
         easing: 'easeInQuad'
@@ -145,7 +145,7 @@ var logoAnimation = (function() {
         easing: 'easeInQuad'
       },
       stroke: {
-        value: ['#FFF', function(el) { return anime.getValue(el, 'stroke') } ],
+        value: ['#FFF', function(el) { return anime.get(el, 'stroke') } ],
         duration: 800,
         delay: 3400,
         easing: 'easeInQuad'
