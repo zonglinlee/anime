@@ -709,6 +709,24 @@ const setProgressValue = {
   }
 }
 
+// Set Value helper
+
+function setTargetValue(targets, properties) {
+  const animatables = getAnimatables(targets);
+  animatables.forEach(animatable => {
+    for (var property in properties) {
+      const value = properties[property];
+      const target = animatable.target;
+      const valueUnit = getUnit(value);
+      const originalValue = getOriginalTargetValue(target, property, valueUnit, animatable);
+      const unit = valueUnit || getUnit(originalValue);
+      const to = getRelativeValue(validateValue(value, unit), originalValue);
+      const animType = getAnimationType(target, property);
+      setProgressValue[animType](target, property, to, animatable.transforms, true);
+    }
+  });
+}
+
 // Animations
 
 function createAnimation(animatable, prop) {
@@ -1103,7 +1121,8 @@ anime.version = '3.0.0';
 anime.speed = 1;
 anime.running = activeInstances;
 anime.remove = removeTargets;
-anime.getValue = getOriginalTargetValue;
+anime.get = getOriginalTargetValue;
+anime.set = setTargetValue;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
 anime.timeline = timeline;
