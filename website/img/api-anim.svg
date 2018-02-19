@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 360">
+  <g id="Page-2" fill="none" fill-rule="evenodd">
+    <g id="api-anim">
+      <path id="Path-15" stroke="#1CE2B2" stroke-width="12" d="M14 20h112"/>
+      <path id="parenthese" stroke="#FFFFFF" stroke-width="3" d="M148.128 32A19.416 19.416 0 0 1 144 20c0-4.526 1.542-8.691 4.128-12" stroke-linecap="square"/>
+      <path id="bracket" stroke="#FFFFFF" stroke-width="3" d="M164 32a4 4 0 0 1-4-4v-4a4 4 0 0 0-4-4h-2 2a4 4 0 0 0 4-4v-4a4 4 0 0 1 4-4" stroke-linecap="square"/>
+      <path id="code" stroke="#FF1461" stroke-width="12" d="M46 52h160"/>
+      <path id="code" stroke="#FF1461" stroke-width="12" d="M218 52h132"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M46 84h136"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M194 84h76"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M46 116h152"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M210 116h92"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M46 148h160"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M218 148h116"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M46 180h168"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M226 180h92"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M46 212h144"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M202 212h76"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M46 244h160"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M218 244h100"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M46 276h136"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M194 276h140"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M46 308h152"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M210 308h92"/>
+      <path id="bracket" stroke="#FFFFFF" stroke-width="3" d="M16 328a4 4 0 0 1 4 4v4a4 4 0 0 0 4 4h2-2a4 4 0 0 0-4 4v4a4 4 0 0 1-4 4" stroke-linecap="square"/>
+      <path id="parenthese" stroke="#FFFFFF" stroke-width="3" d="M32 328a19.416 19.416 0 0 1 4.128 12c0 4.526-1.541 8.691-4.128 12" stroke-linecap="square"/>
+      <path id="Path-20" stroke="#FFFFFF" stroke-width="3" d="M46 333v3"/>
+      <path id="parenthese-copy" stroke="#FFFFFF" stroke-width="3" d="M46 340.002c0 1.76-.233 3.466-.67 5.088" stroke-linecap="square"/>
+    </g>
+  </g>
+</svg>
