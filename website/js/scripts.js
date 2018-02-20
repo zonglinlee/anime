@@ -35,11 +35,7 @@ var logoAnimation = (function() {
     translateY: -100
   });
   anime.set('.sphere path', {opacity: 0});
-  anime.set('.logo-nav a', {
-    transformOrigin: '100% 0%',
-    scaleX: 0
-  });
-  anime.set('.logo-nav a span', {opacity: 0});
+  anime.set('.logo-links a span', {opacity: 0});
 
   function sphereAnimation() {
 
@@ -54,30 +50,57 @@ var logoAnimation = (function() {
       }
     });
 
-    var pathLenght = spherePathEls.length;
+    var pathLength = spherePathEls.length;
 
-    for (var i = 0; i < pathLenght; i++) {
-      anime({
+    // for (var i = 0; i < pathLength; i++) {
+    //   anime({
+    //     targets: spherePathEls[i],
+    //     strokeWidth: [
+    //       {value: [4, 16]},
+    //       {value: 4, delay: 150 }
+    //     ],
+    //     translateX: [
+    //       {value: 20},
+    //       {value: 0, delay: 150 }
+    //     ],
+    //     translateY: [
+    //       {value: 20},
+    //       {value: 0, delay: 150 }
+    //     ],
+    //     translateZ: 0,
+    //     easing: 'easeOutSine',
+    //     duration: 3000,
+    //     loop: true,
+    //     startTime: i * 100
+    //   });
+    // }
+
+    var aimations = [];
+
+    for (var i = 0; i < pathLength; i++) {
+      aimations.push(anime({
         targets: spherePathEls[i],
-        strokeWidth: [
-          {value: [4, 16]},
-          {value: 4, delay: 150 }
-        ],
-        translateX: [
-          {value: 20},
-          {value: 0, delay: 150 }
-        ],
-        translateY: [
-          {value: 20},
-          {value: 0, delay: 150 }
-        ],
+        strokeWidth: [4, 16],
+        translateX: [-10, 10],
+        translateY: [-10, 10],
         translateZ: 0,
         easing: 'easeOutSine',
-        duration: 3000,
-        loop: true,
-        startTime: i * 100
-      })
+        delay: 150,
+        duration: 1500,
+        autoplay: false
+      }))
     }
+
+    anime({
+      update: function(ins) {
+        for (var i = 0; i < pathLength; i++) {
+          var animation = aimations[i];
+          var percent = (1 - Math.sin((i * .25) + (.0017 * ins.currentTime))) / 2;
+          animation.seek(animation.duration * percent);
+        }
+      },
+      duration: Infinity
+    });
 
   }
 
@@ -93,7 +116,7 @@ var logoAnimation = (function() {
     strokeDashoffset: [anime.setDashoffset, 0],
     easing: 'easeInOutSine',
     duration: function(el) { return getPathDuration(el, 2) },
-    delay: function(el, i) { return anime.random(0, 200) }
+    delay: function(el, i) { return 500 + anime.random(0, 200) }
   })
   .add({
     targets: '#blur feGaussianBlur',
@@ -109,7 +132,8 @@ var logoAnimation = (function() {
   .add({
     targets: '.letter-m .line',
     strokeDasharray: 0,
-    duration: 1,
+    easing: 'linear',
+    duration: .1,
   }, '-=100')
   .add({
     targets: '.dot',
@@ -153,7 +177,6 @@ var logoAnimation = (function() {
       {value: 262, duration: 100, easing: 'easeOutSine'},
       {value: 242, duration: 1000, easing: 'easeOutElastic(1, .8)'}
     ],
-    complete: sphereAnimation
   })
   .add({
     targets: '.letter-m .line',
@@ -187,23 +210,36 @@ var logoAnimation = (function() {
     translateY: [-20, 0],
     opacity: 1,
     easing: 'easeOutElastic(1, .6)',
-    duration: 1000
+    duration: 1000,
   }, '-=1000')
   .add({
-    targets: ['.logo-nav a'],
-    skew: [-45, 0],
-    scaleX: 1,
-    easing: 'easeInOutCirc',
-    duration: 500,
-    delay: function(el, i, t) { return (t - i) * 100 }
-  }, '-=250')
+    duration: 1000,
+    delay: 500,
+    begin: sphereAnimation
+  }, '-=1000')
   .add({
-    targets: ['.logo-nav a span'],
-    opacity: 1,
+    targets: '.logo-links',
+    opacity: [0, 1],
     easing: 'linear',
-    duration: 500,
-    delay: function(el, i, t) { return (t - i) * 100 }
-  }, '-=250');
+    duration: 750,
+    delay: function(el, i, t) { return (t - i) * 50 }
+  }, '-=100')
+  .add({
+    targets: '.scroll-down-arrow polyline',
+    strokeDashoffset: [anime.setDashoffset, 0],
+    duration: 800,
+    easing: 'easeInOutCirc'
+  }, '-=400')
+  .add({
+    targets: '.scroll-down-arrow',
+    translateY: [-10, 0],
+    duration: 800,
+    easing: 'easeOutSine'
+  }, '-=800')
+
+  logoAnimationTL.pause();
+  //logoAnimationTL.seek(4000);
+  logoAnimationTL.play();
 
   logoAnimationEl.classList.add('is-visible');
 
@@ -219,12 +255,12 @@ var APIAnimation = (function() {
   var pathEls = animationEl.querySelectorAll('path');
   var pathsLength = pathEls.length;
 
-  var APIAnimationTL = anime.timeline({
+  var animationTL = anime.timeline({
     easing: 'easeInOutQuad'
   });
 
   for (var i = 0; i < pathsLength; i++) {
-    APIAnimationTL
+    animationTL
     .add({
       targets: pathEls[i],
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -234,45 +270,157 @@ var APIAnimation = (function() {
 
   animationEl.classList.add('is-visible');
 
-  isElementInViewport(animationEl, APIAnimationTL.play, APIAnimationTL.pause);
+  isElementInViewport(animationEl, animationTL.play, animationTL.pause);
 
-  return APIAnimationTL;
+  return animationTL;
 
 })();
 
-var swissKnifeAnimation = (function() {
+var tokyoAnimation = (function() {
 
-  var animationEl = document.querySelector('.swissknife-illustration');
+  var animationEl = document.querySelector('.tokyo-illustration');
   var pathEls = animationEl.querySelectorAll('path');
   var pathsLength = pathEls.length;
 
-  var SKAnimations = [];
+  var animations = [];
 
   for (var i = 0; i < pathsLength; i++) {
-    SKAnimations.push(anime({
+    animations.push(anime({
       targets: pathEls[i],
       easing: 'easeInOutSine',
-      autoplay: false,
       strokeDashoffset: [anime.setDashoffset, 0],
-      duration: function(el) { return getPathDuration(el, 3); },
-      delay: anime.random(0, 1000),
+      duration: function(el) { return getPathDuration(el, 4); },
+      delay: anime.random(0, 1500),
       loop: true,
-      direction: 'alternate'
+      direction: 'alternate',
+      autoplay: false
     }));
   }
 
   animationEl.classList.add('is-visible');
 
   function play() {
-    for (var i = 0; i < pathsLength; i++) SKAnimations[i].play();
+    for (var i = 0; i < pathsLength; i++) animations[i].play();
   }
 
   function pause() {
-    for (var i = 0; i < pathsLength; i++) SKAnimations[i].pause();
+    for (var i = 0; i < pathsLength; i++) animations[i].pause();
   }
 
   isElementInViewport(animationEl, play, pause);
 
-  return SKAnimation;
+  return animations;
+
+})();
+
+var timeAnimation = (function() {
+
+  var animationEl = document.querySelector('.time-illustration');
+  var pathEls = animationEl.querySelectorAll('path');
+  var cursorEl = animationEl.querySelector('.time-cursor');
+  var timeEl = animationEl.querySelector('.time-stamp');
+
+  var curorAnimation = anime({
+    targets: cursorEl,
+    left: '100%',
+    translateZ: 0,
+    easing: 'linear',
+    duration: 200,
+    update: function(anim) {
+      timeEl.innerHTML = Math.round(anim.currentTime);
+    },
+    autoplay: false
+  });
+
+  var updateScrollPosition = anime({
+    duration: Infinity,
+    update: function() {
+      var rect = animationEl.getBoundingClientRect();
+      var percent = (rect.top - window.innerHeight) * -.0011;
+      curorAnimation.seek(curorAnimation.duration * percent);
+    }
+  })
+
+  var linesAnimation = anime({
+    targets: pathEls,
+    strokeDashoffset: [anime.setDashoffset, 0],
+    duration: function(el) { return getPathDuration(el, 3); },
+    delay: function(el, i) { return i * 75 },
+    easing: 'easeInOutSine',
+    autoplay: false
+  });
+
+  function play() {
+    linesAnimation.play();
+    updateScrollPosition.play();
+  }
+
+  function pause() {
+    linesAnimation.pause();
+    updateScrollPosition.pause();
+  }
+
+  animationEl.classList.add('is-visible');
+
+  isElementInViewport(animationEl, play, pause);
+
+  return linesAnimation;
+
+})();
+
+var easingsAnimation = (function() {
+
+  var animationEl = document.querySelector('.easings-illustration');
+  var pathsGroupEls = animationEl.querySelectorAll('.easings-group');
+  var pathsGroupLength = pathsGroupEls.length;
+  var animations = [];
+
+  function createeasingAnimation(pathsGroupEl) {
+    var pathEls = pathsGroupEl.querySelectorAll('polyline');
+    var pathsLength = pathEls.length;
+
+    var animationTL = anime.timeline({
+      targets: pathEls[0],
+      autoplay: false,
+      easing: 'easeOutSine',
+      loop: true
+    });
+
+    for (var i = 1; i < pathsLength; i++) {
+      var index = anime.random(0, pathsLength-1);
+      animationTL.add({
+        points: pathEls[i].getAttribute('points'),
+        duration: anime.random(50, 100)
+      })
+    }
+
+    animationTL.add({
+      points: pathEls[0].getAttribute('points')
+    })
+
+    return animationTL;
+
+  }
+
+  for (var i = 0; i < pathsGroupLength; i++) {
+    var animation = createeasingAnimation(pathsGroupEls[i]);
+    animation.seek(i * (animation.duration / pathsGroupLength));
+    console.log(i * (animation.duration / pathsGroupLength));
+    animations.push(animation);
+  }
+
+  animationEl.classList.add('is-visible');
+
+  function play() {
+    for (var i = 0; i < pathsGroupLength; i++) animations[i].play();
+  }
+
+  function pause() {
+    for (var i = 0; i < pathsGroupLength; i++) animations[i].pause();
+  }
+
+  isElementInViewport(animationEl, play, pause);
+
+  return animations;
 
 })();

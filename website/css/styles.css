@@ -10,10 +10,22 @@ body {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #FFF;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  /* Anime is a lightweig: */
+  font-family: RoobertTRIAL-Regular;
+  font-size: 20px;
+  line-height: 24px;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: currentColor;
 }
 
 .color-targets { color: #FF1461; } /* Red */
@@ -32,6 +44,7 @@ body {
 /* Logo animation */
 
 .logo-animation {
+  position: relative;
   visibility: hidden;
   display: flex;
   flex-direction: column;
@@ -39,9 +52,8 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  min-height: 600px;
-  max-height: 800px;
+  height: 90vh;
+  min-height: 580px;
 }
 
 .logo-animation.is-visible {
@@ -54,55 +66,25 @@ body {
   flex-direction: column;
   width: 720px;
 }
+
 .anime-logo-signs {
   display: flex;
   position: relative;
   width: 100%;
   height: 128px;
-  margin-bottom: 16px;
+  margin-top: 48px;
+  margin-bottom: 12px;
 }
 
 .anime-logo h2 {
   opacity: 0;
   position: relative;
   width: 100%;
-  margin-bottom: 16px;
   text-transform: uppercase;
   font-size: 20px;
-  letter-spacing: 15.65px;
+  letter-spacing: 16.4px;
   white-space: nowrap;
   text-align: center;
-}
-
-.logo-nav {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  width: 100%;
-}
-
-.logo-nav a {
-  cursor: pointer;
-  flex: 1;
-  display: block;
-  height: 40px;
-  margin: 0 4px;
-  text-decoration: none;
-  text-align: center;
-  background-color: #FFF;
-  transition: border-radius 1s ease-out;
-}
-
-.logo-nav a span {
-  font-size: 16px;
-  line-height: 40px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #000;
-}
-
-.logo-nav a:hover {
-  transition: border-radius .25s ease-out;
 }
 
 .logo-letter {
@@ -110,12 +92,8 @@ body {
 }
 
 @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
-  .sphere {
-    filter: url(#sphereBlur);
-  }
-  .logo-letter {
-    filter: url(#blur);
-  }
+  .sphere { filter: url(#sphereBlur); }
+  .logo-letter { filter: url(#blur); }
 }
 
 .bounce {
@@ -163,23 +141,104 @@ body {
   margin: -200px 0 0 -200px;
 }
 
+/* Logo nav */
+
+.logo-nav {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  top: 128px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.logo-links {
+  display: flex;
+  width: 100%;
+}
+
+.logo-links a {
+  flex: 1;
+  display: block;
+  position: relative;
+  height: 44px;
+  margin: 0 8px;
+  padding: 0 8px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 41px;
+  letter-spacing: .05em;
+  border: 1px solid currentColor;
+  color: #FFF;
+}
+
+.logo-links a:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFF;
+  mix-blend-mode: difference;
+  transform-origin: 100% 50%;
+  transform: scaleX(0);
+  transition: transform .25s ease-in-out;
+}
+
+.logo-links a:hover:after {
+  transform: scaleX(1);
+  transform-origin: 0% 50%;
+}
+
+.credits {
+  text-align: center;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: .05em;
+  color: #8C8C91;
+}
+
+.credits a {
+  transition: color .5s ease;
+}
+
+.credits a:hover {
+  color: #FFF;
+  transition: none;
+}
+
+.scroll-down-arrow {
+  margin: 0 auto;
+  opacity: .5;
+  transition: opacity .5s ease;
+}
+
+.scroll-down-arrow:hover {
+  opacity: 1;
+  transition: none;
+}
+
 /* Features */
 
 .feature {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80px 0;
+  width: 100%;
+  padding: 100px 0 0 0;
 }
 
 .feature-title {
   width: 100%;
   margin-bottom: 32px;
   text-align: center;
-  font-size: 72px;
-  font-weight: 900;
-  color: #FFFFFF;
-  line-height: 80px;
+  font-family: RoobertTRIAL-Bold;
+  font-size: 48px;
+  line-height: 56px;
 }
 
 .feature-text {
@@ -187,9 +246,8 @@ body {
   max-width: 520px;
   margin-bottom: 64px;
   text-align: center;
-  font-size: 24px;
-  color: #FFFFFF;
-  line-height: 32px;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 .feature-illustration {
@@ -204,18 +262,63 @@ body {
   width: 100%;
 }
 
-/* API Illustration */
+/* API illustration */
 
 .api-illustration {
   width: 100%;
   max-width: 400px;
 }
 
+/* Tokyo illustration */
 
-/* SP Illustration */
-
-.swissknife-illustration {
+.tokyo-illustration {
   overflow: hidden;
   width: 100%;
-  max-height: 800px;
+  max-width: 800px;
+}
+
+/* Time illustration */
+
+.time-illustration {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+}
+
+.time-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+}
+
+.time-cursor svg {
+  overflow: visible;
+  width: 48px;
+  margin-left: -24px;
+}
+
+.time-stamp {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: -24px;
+  width: 48px;
+  height: 48px;
+}
+
+/* Easings illustration */
+
+.easings-illustration {
+  width: 100%;
+  max-width: 640px;
+}
+
+
+.easings-illustration polyline:not(:first-child) {
+  opacity: 0;
+  visibility: hidden;
 }
