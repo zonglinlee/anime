@@ -1,31 +1,12 @@
-/* Ontersection observer */
-
-!function(t,e){"use strict";function n(t){this.time=t.time,this.target=t.target,this.rootBounds=t.rootBounds,this.boundingClientRect=t.boundingClientRect,this.intersectionRect=t.intersectionRect||a(),this.isIntersecting=!!t.intersectionRect;var e=this.boundingClientRect,n=e.width*e.height,i=this.intersectionRect,o=i.width*i.height;n?this.intersectionRatio=o/n:this.intersectionRatio=this.isIntersecting?1:0}function i(t,e){var n=e||{};if("function"!=typeof t)throw new Error("callback must be a function");if(n.root&&1!=n.root.nodeType)throw new Error("root must be an Element");this._checkForIntersections=r(this._checkForIntersections.bind(this),this.THROTTLE_TIMEOUT),this._callback=t,this._observationTargets=[],this._queuedEntries=[],this._rootMarginValues=this._parseRootMargin(n.rootMargin),this.thresholds=this._initThresholds(n.threshold),this.root=n.root||null,this.rootMargin=this._rootMarginValues.map(function(t){return t.value+t.unit}).join(" ")}function o(){return t.performance&&performance.now&&performance.now()}function r(t,e){var n=null;return function(){n||(n=setTimeout(function(){t(),n=null},e))}}function s(t,e,n,i){"function"==typeof t.addEventListener?t.addEventListener(e,n,i||!1):"function"==typeof t.attachEvent&&t.attachEvent("on"+e,n)}function h(t,e,n,i){"function"==typeof t.removeEventListener?t.removeEventListener(e,n,i||!1):"function"==typeof t.detatchEvent&&t.detatchEvent("on"+e,n)}function c(t,e){var n=Math.max(t.top,e.top),i=Math.min(t.bottom,e.bottom),o=Math.max(t.left,e.left),r=Math.min(t.right,e.right),s=r-o,h=i-n;return s>=0&&h>=0&&{top:n,bottom:i,left:o,right:r,width:s,height:h}}function u(t){var e;try{e=t.getBoundingClientRect()}catch(n){}return e?(e.width&&e.height||(e={top:e.top,right:e.right,bottom:e.bottom,left:e.left,width:e.right-e.left,height:e.bottom-e.top}),e):a()}function a(){return{top:0,bottom:0,left:0,right:0,width:0,height:0}}function l(t,e){for(var n=e;n;){if(n==t)return!0;n=p(n)}return!1}function p(t){var e=t.parentNode;return e&&11==e.nodeType&&e.host?e.host:e}if("IntersectionObserver"in t&&"IntersectionObserverEntry"in t&&"intersectionRatio"in t.IntersectionObserverEntry.prototype)return void("isIntersecting"in t.IntersectionObserverEntry.prototype||Object.defineProperty(t.IntersectionObserverEntry.prototype,"isIntersecting",{get:function(){return this.intersectionRatio>0}}));var f=[];i.prototype.THROTTLE_TIMEOUT=100,i.prototype.POLL_INTERVAL=null,i.prototype.observe=function(t){var e=this._observationTargets.some(function(e){return e.element==t});if(!e){if(!t||1!=t.nodeType)throw new Error("target must be an Element");this._registerInstance(),this._observationTargets.push({element:t,entry:null}),this._monitorIntersections(),this._checkForIntersections()}},i.prototype.unobserve=function(t){this._observationTargets=this._observationTargets.filter(function(e){return e.element!=t}),this._observationTargets.length||(this._unmonitorIntersections(),this._unregisterInstance())},i.prototype.disconnect=function(){this._observationTargets=[],this._unmonitorIntersections(),this._unregisterInstance()},i.prototype.takeRecords=function(){var t=this._queuedEntries.slice();return this._queuedEntries=[],t},i.prototype._initThresholds=function(t){var e=t||[0];return Array.isArray(e)||(e=[e]),e.sort().filter(function(t,e,n){if("number"!=typeof t||isNaN(t)||0>t||t>1)throw new Error("threshold must be a number between 0 and 1 inclusively");return t!==n[e-1]})},i.prototype._parseRootMargin=function(t){var e=t||"0px",n=e.split(/\s+/).map(function(t){var e=/^(-?\d*\.?\d+)(px|%)$/.exec(t);if(!e)throw new Error("rootMargin must be specified in pixels or percent");return{value:parseFloat(e[1]),unit:e[2]}});return n[1]=n[1]||n[0],n[2]=n[2]||n[0],n[3]=n[3]||n[1],n},i.prototype._monitorIntersections=function(){this._monitoringIntersections||(this._monitoringIntersections=!0,this.POLL_INTERVAL?this._monitoringInterval=setInterval(this._checkForIntersections,this.POLL_INTERVAL):(s(t,"resize",this._checkForIntersections,!0),s(e,"scroll",this._checkForIntersections,!0),"MutationObserver"in t&&(this._domObserver=new MutationObserver(this._checkForIntersections),this._domObserver.observe(e,{attributes:!0,childList:!0,characterData:!0,subtree:!0}))))},i.prototype._unmonitorIntersections=function(){this._monitoringIntersections&&(this._monitoringIntersections=!1,clearInterval(this._monitoringInterval),this._monitoringInterval=null,h(t,"resize",this._checkForIntersections,!0),h(e,"scroll",this._checkForIntersections,!0),this._domObserver&&(this._domObserver.disconnect(),this._domObserver=null))},i.prototype._checkForIntersections=function(){var t=this._rootIsInDom(),e=t?this._getRootRect():a();this._observationTargets.forEach(function(i){var r=i.element,s=u(r),h=this._rootContainsTarget(r),c=i.entry,a=t&&h&&this._computeTargetAndRootIntersection(r,e),l=i.entry=new n({time:o(),target:r,boundingClientRect:s,rootBounds:e,intersectionRect:a});c?t&&h?this._hasCrossedThreshold(c,l)&&this._queuedEntries.push(l):c&&c.isIntersecting&&this._queuedEntries.push(l):this._queuedEntries.push(l)},this),this._queuedEntries.length&&this._callback(this.takeRecords(),this)},i.prototype._computeTargetAndRootIntersection=function(n,i){if("none"!=t.getComputedStyle(n).display){for(var o=u(n),r=o,s=p(n),h=!1;!h;){var a=null,l=1==s.nodeType?t.getComputedStyle(s):{};if("none"==l.display)return;if(s==this.root||s==e?(h=!0,a=i):s!=e.body&&s!=e.documentElement&&"visible"!=l.overflow&&(a=u(s)),a&&(r=c(a,r),!r))break;s=p(s)}return r}},i.prototype._getRootRect=function(){var t;if(this.root)t=u(this.root);else{var n=e.documentElement,i=e.body;t={top:0,left:0,right:n.clientWidth||i.clientWidth,width:n.clientWidth||i.clientWidth,bottom:n.clientHeight||i.clientHeight,height:n.clientHeight||i.clientHeight}}return this._expandRectByRootMargin(t)},i.prototype._expandRectByRootMargin=function(t){var e=this._rootMarginValues.map(function(e,n){return"px"==e.unit?e.value:e.value*(n%2?t.width:t.height)/100}),n={top:t.top-e[0],right:t.right+e[1],bottom:t.bottom+e[2],left:t.left-e[3]};return n.width=n.right-n.left,n.height=n.bottom-n.top,n},i.prototype._hasCrossedThreshold=function(t,e){var n=t&&t.isIntersecting?t.intersectionRatio||0:-1,i=e.isIntersecting?e.intersectionRatio||0:-1;if(n!==i)for(var o=0;o<this.thresholds.length;o++){var r=this.thresholds[o];if(r==n||r==i||n>r!=i>r)return!0}},i.prototype._rootIsInDom=function(){return!this.root||l(e,this.root)},i.prototype._rootContainsTarget=function(t){return l(this.root||e,t)},i.prototype._registerInstance=function(){f.indexOf(this)<0&&f.push(this)},i.prototype._unregisterInstance=function(){var t=f.indexOf(this);-1!=t&&f.splice(t,1)},t.IntersectionObserver=i,t.IntersectionObserverEntry=n}(window,document);
-
-/* Helpers */
-
-function isElementInViewport(el, inFunc, outFunc) {
-  function handleIntersect(entries, observer) {
-    var entry = entries[0];
-    if (entry.isIntersecting) {
-      inFunc();
-    } else {
-      outFunc();
-    }
-  }
-  var observer = new IntersectionObserver(handleIntersect);
-  observer.observe(el);
-}
-
-function getPathDuration(el, speed) {
-  return anime.setDashoffset(el) * speed;
-}
-
 var logoAnimation = (function() {
 
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
   var spherePathEls = logoAnimationEl.querySelectorAll('.sphere path');
+
+  function getPathDuration(el, speed) {
+    return anime.setDashoffset(el) * speed;
+  }
 
   anime.set('.fill', {opacity: 0});
   anime.set(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
@@ -51,29 +32,6 @@ var logoAnimation = (function() {
     });
 
     var pathLength = spherePathEls.length;
-
-    // for (var i = 0; i < pathLength; i++) {
-    //   anime({
-    //     targets: spherePathEls[i],
-    //     strokeWidth: [
-    //       {value: [4, 16]},
-    //       {value: 4, delay: 150 }
-    //     ],
-    //     translateX: [
-    //       {value: 20},
-    //       {value: 0, delay: 150 }
-    //     ],
-    //     translateY: [
-    //       {value: 20},
-    //       {value: 0, delay: 150 }
-    //     ],
-    //     translateZ: 0,
-    //     easing: 'easeOutSine',
-    //     duration: 3000,
-    //     loop: true,
-    //     startTime: i * 100
-    //   });
-    // }
 
     var aimations = [];
 
@@ -116,7 +74,7 @@ var logoAnimation = (function() {
     strokeDashoffset: [anime.setDashoffset, 0],
     easing: 'easeInOutSine',
     duration: function(el) { return getPathDuration(el, 2) },
-    delay: function(el, i) { return 500 + anime.random(0, 200) }
+    delay: function(el, i) { return 250 + anime.random(0, 200) }
   })
   .add({
     targets: '#blur feGaussianBlur',
@@ -175,7 +133,7 @@ var logoAnimation = (function() {
     targets: '.dot',
     translateY: [
       {value: 262, duration: 100, easing: 'easeOutSine'},
-      {value: 242, duration: 1000, easing: 'easeOutElastic(1, .8)'}
+      {value: 244, duration: 1000, easing: 'easeOutElastic(1, .8)'}
     ],
   })
   .add({
@@ -218,210 +176,44 @@ var logoAnimation = (function() {
     begin: sphereAnimation
   }, '-=1000')
   .add({
-    targets: '.logo-links',
+    targets: '.logo-links a',
     opacity: [0, 1],
     easing: 'linear',
     duration: 750,
-    delay: function(el, i, t) { return (t - i) * 50 }
+    delay: function(el, i, t) { return (t - i) * 75 }
   }, '-=100')
   .add({
-    targets: '.scroll-down-arrow polyline',
-    strokeDashoffset: [anime.setDashoffset, 0],
-    duration: 800,
-    easing: 'easeInOutCirc'
-  }, '-=400')
+    targets: '.credits',
+    opacity: [0, 1],
+    duration: 500,
+    easing: 'easeOutCubic'
+  }, '-=500')
   .add({
-    targets: '.scroll-down-arrow',
-    translateY: [-10, 0],
-    duration: 800,
-    easing: 'easeOutSine'
-  }, '-=800')
-
-  logoAnimationTL.pause();
-  //logoAnimationTL.seek(4000);
-  logoAnimationTL.play();
+    targets: '.version',
+    innerHTML: parseFloat(anime.version, 10),
+    duration: 2000,
+    easing: 'easeOutCubic',
+    update: function(a) {
+      var value = a.animatables[0].target.innerHTML;
+      value = parseFloat(value).toFixed(1);
+      a.animatables[0].target.innerHTML = value;
+    }
+  }, '-=500')
+  .add({
+    targets: '.date',
+    innerHTML: function() { 
+      var d = new Date(); 
+      return d.getFullYear(); 
+    },
+    round: 1,
+    duration: 2500,
+    easing: 'easeOutCubic'
+  }, '-=1000')
 
   logoAnimationEl.classList.add('is-visible');
-
-  isElementInViewport(logoAnimationEl, logoAnimationTL.play, logoAnimationTL.pause);
 
   return logoAnimationTL;
 
 })();
 
-var APIAnimation = (function() {
-
-  var animationEl = document.querySelector('.api-illustration');
-  var pathEls = animationEl.querySelectorAll('path');
-  var pathsLength = pathEls.length;
-
-  var animationTL = anime.timeline({
-    easing: 'easeInOutQuad'
-  });
-
-  for (var i = 0; i < pathsLength; i++) {
-    animationTL
-    .add({
-      targets: pathEls[i],
-      strokeDashoffset: [anime.setDashoffset, 0],
-      duration: anime.random(100, 300)
-    }, '-=100')
-  }
-
-  animationEl.classList.add('is-visible');
-
-  isElementInViewport(animationEl, animationTL.play, animationTL.pause);
-
-  return animationTL;
-
-})();
-
-var tokyoAnimation = (function() {
-
-  var animationEl = document.querySelector('.tokyo-illustration');
-  var pathEls = animationEl.querySelectorAll('path');
-  var pathsLength = pathEls.length;
-
-  var animations = [];
-
-  for (var i = 0; i < pathsLength; i++) {
-    animations.push(anime({
-      targets: pathEls[i],
-      easing: 'easeInOutSine',
-      strokeDashoffset: [anime.setDashoffset, 0],
-      duration: function(el) { return getPathDuration(el, 4); },
-      delay: anime.random(0, 1500),
-      loop: true,
-      direction: 'alternate',
-      autoplay: false
-    }));
-  }
-
-  animationEl.classList.add('is-visible');
-
-  function play() {
-    for (var i = 0; i < pathsLength; i++) animations[i].play();
-  }
-
-  function pause() {
-    for (var i = 0; i < pathsLength; i++) animations[i].pause();
-  }
-
-  isElementInViewport(animationEl, play, pause);
-
-  return animations;
-
-})();
-
-var timeAnimation = (function() {
-
-  var animationEl = document.querySelector('.time-illustration');
-  var pathEls = animationEl.querySelectorAll('path');
-  var cursorEl = animationEl.querySelector('.time-cursor');
-  var timeEl = animationEl.querySelector('.time-stamp');
-
-  var linesAnimation = anime({
-    targets: pathEls,
-    strokeDashoffset: [anime.setDashoffset, 0],
-    duration: function(el) { return getPathDuration(el, 3); },
-    delay: function(el, i) { return i * 40 },
-    easing: 'easeInOutSine',
-    duration: 200,
-    autoplay: false
-  });
-
-  var curorAnimation = anime({
-    targets: cursorEl,
-    left: '100%',
-    translateZ: 0,
-    easing: 'linear',
-    duration: 200,
-    update: function(anim) {
-      timeEl.innerHTML = Math.round(anim.currentTime);
-    },
-    autoplay: false
-  });
-
-  var updateScrollPosition = anime({
-    duration: Infinity,
-    update: function() {
-      var rect = animationEl.getBoundingClientRect();
-      var percent = (rect.top - window.innerHeight) * -.0011;
-      curorAnimation.seek(curorAnimation.duration * percent);
-      linesAnimation.seek(linesAnimation.duration * percent);
-    }
-  })
-
-  function play() {
-    // linesAnimation.play();
-    updateScrollPosition.play();
-  }
-
-  function pause() {
-    // linesAnimation.pause();
-    updateScrollPosition.pause();
-  }
-
-  animationEl.classList.add('is-visible');
-
-  isElementInViewport(animationEl, play, pause);
-
-  return linesAnimation;
-
-})();
-
-var easingsAnimation = (function() {
-
-  var animationEl = document.querySelector('.easings-illustration');
-  var pathsGroupEls = animationEl.querySelectorAll('.easings-group');
-  var pathEls = animationEl.querySelectorAll('polyline');
-  var cursorEl = animationEl.querySelectorAll('.easing-cursor');
-  var pathsGroupLength = pathsGroupEls.length;
-  var animations = [];
-
-  var animation;
-  var reversed = true;
-
-  function animateEase() {
-    var polyline = pathEls[anime.random(0, pathEls.length - 1)];
-    reversed = !reversed;
-    animation = anime({
-      targets: pathEls[0],
-      points: polyline.getAttribute('points'),
-      easing: 'easeOutSine',
-      duration: 2000,
-      update: function(anim) {
-        var path = anime.path(pathEls[0]);
-        var pathAnim = anime.timeline({
-          translateZ: [0, 0],
-          easing: 'linear',
-          duration: 2000,
-          autoplay: false
-        })
-        .add({
-          targets: cursorEl,
-          translateY: path('y')
-        }, 0)
-        .add({
-          targets: '.axis-x',
-          translateX: path('x')
-        }, 0)
-        .add({
-          targets: '.axis-y',
-          translateY: path('y')
-        }, 0)
-        pathAnim.seek(reversed ? anim.duration - anim.currentTime : anim.currentTime);
-      },
-      complete: animateEase,
-    })
-  }
-
-  animateEase();
-
-  animationEl.classList.add('is-visible');
-
-  isElementInViewport(animationEl, animation.play, animation.pause);
-
-  return animation;
-
-})();
+logoAnimation.play();
