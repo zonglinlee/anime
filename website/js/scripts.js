@@ -264,8 +264,8 @@ var APIAnimation = (function() {
     .add({
       targets: pathEls[i],
       strokeDashoffset: [anime.setDashoffset, 0],
-      duration: 250
-    }, '-=75')
+      duration: anime.random(100, 300)
+    }, '-=100')
   }
 
   animationEl.classList.add('is-visible');
@@ -320,6 +320,16 @@ var timeAnimation = (function() {
   var cursorEl = animationEl.querySelector('.time-cursor');
   var timeEl = animationEl.querySelector('.time-stamp');
 
+  var linesAnimation = anime({
+    targets: pathEls,
+    strokeDashoffset: [anime.setDashoffset, 0],
+    duration: function(el) { return getPathDuration(el, 3); },
+    delay: function(el, i) { return i * 40 },
+    easing: 'easeInOutSine',
+    duration: 200,
+    autoplay: false
+  });
+
   var curorAnimation = anime({
     targets: cursorEl,
     left: '100%',
@@ -338,25 +348,17 @@ var timeAnimation = (function() {
       var rect = animationEl.getBoundingClientRect();
       var percent = (rect.top - window.innerHeight) * -.0011;
       curorAnimation.seek(curorAnimation.duration * percent);
+      linesAnimation.seek(linesAnimation.duration * percent);
     }
   })
 
-  var linesAnimation = anime({
-    targets: pathEls,
-    strokeDashoffset: [anime.setDashoffset, 0],
-    duration: function(el) { return getPathDuration(el, 3); },
-    delay: function(el, i) { return i * 75 },
-    easing: 'easeInOutSine',
-    autoplay: false
-  });
-
   function play() {
-    linesAnimation.play();
+    // linesAnimation.play();
     updateScrollPosition.play();
   }
 
   function pause() {
-    linesAnimation.pause();
+    // linesAnimation.pause();
     updateScrollPosition.pause();
   }
 
@@ -372,55 +374,54 @@ var easingsAnimation = (function() {
 
   var animationEl = document.querySelector('.easings-illustration');
   var pathsGroupEls = animationEl.querySelectorAll('.easings-group');
+  var pathEls = animationEl.querySelectorAll('polyline');
+  var cursorEl = animationEl.querySelectorAll('.easing-cursor');
   var pathsGroupLength = pathsGroupEls.length;
   var animations = [];
 
-  function createeasingAnimation(pathsGroupEl) {
-    var pathEls = pathsGroupEl.querySelectorAll('polyline');
-    var pathsLength = pathEls.length;
+  var animation;
+  var reversed = true;
 
-    var animationTL = anime.timeline({
+  function animateEase() {
+    var polyline = pathEls[anime.random(0, pathEls.length - 1)];
+    reversed = !reversed;
+    animation = anime({
       targets: pathEls[0],
-      autoplay: false,
+      points: polyline.getAttribute('points'),
       easing: 'easeOutSine',
-      loop: true
-    });
-
-    for (var i = 1; i < pathsLength; i++) {
-      var index = anime.random(0, pathsLength-1);
-      animationTL.add({
-        points: pathEls[i].getAttribute('points'),
-        duration: anime.random(50, 100)
-      })
-    }
-
-    animationTL.add({
-      points: pathEls[0].getAttribute('points')
+      duration: 2000,
+      update: function(anim) {
+        var path = anime.path(pathEls[0]);
+        var pathAnim = anime.timeline({
+          translateZ: [0, 0],
+          easing: 'linear',
+          duration: 2000,
+          autoplay: false
+        })
+        .add({
+          targets: cursorEl,
+          translateY: path('y')
+        }, 0)
+        .add({
+          targets: '.axis-x',
+          translateX: path('x')
+        }, 0)
+        .add({
+          targets: '.axis-y',
+          translateY: path('y')
+        }, 0)
+        pathAnim.seek(reversed ? anim.duration - anim.currentTime : anim.currentTime);
+      },
+      complete: animateEase,
     })
-
-    return animationTL;
-
   }
 
-  for (var i = 0; i < pathsGroupLength; i++) {
-    var animation = createeasingAnimation(pathsGroupEls[i]);
-    animation.seek(i * (animation.duration / pathsGroupLength));
-    console.log(i * (animation.duration / pathsGroupLength));
-    animations.push(animation);
-  }
+  animateEase();
 
   animationEl.classList.add('is-visible');
 
-  function play() {
-    for (var i = 0; i < pathsGroupLength; i++) animations[i].play();
-  }
+  isElementInViewport(animationEl, animation.play, animation.pause);
 
-  function pause() {
-    for (var i = 0; i < pathsGroupLength; i++) animations[i].pause();
-  }
-
-  isElementInViewport(animationEl, play, pause);
-
-  return animations;
+  return animation;
 
 })();

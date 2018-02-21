@@ -313,12 +313,42 @@ a {
 /* Easings illustration */
 
 .easings-illustration {
+  position: relative;
   width: 100%;
-  max-width: 640px;
+  max-width: 706px;
 }
 
 
 .easings-illustration polyline:not(:first-child) {
   opacity: 0;
   visibility: hidden;
+}
+
+.easing-cursor {
+  position: absolute;
+  top: 0px;
+  right: 1px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #FFF;
+}
+
+.axis {
+  position: absolute;
+  left: 0px;
+  background-color: #FF1461;
+}
+
+.axis-x {
+  top: 138px;
+  width: 1px;
+  height: 320px;
+  background-color: #FF1461;
+}
+
+.axis-y {
+  width: 640px;
+  height: 1px;
+  top: 16px;
 }
