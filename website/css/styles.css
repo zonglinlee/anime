@@ -13,7 +13,11 @@ body {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
   color: #FFF;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   /* Anime is a lightweig: */
@@ -21,6 +25,10 @@ body {
   font-size: 20px;
   line-height: 24px;
   -webkit-font-smoothing: antialiased;
+}
+
+svg {
+  overflow: visible;
 }
 
 a {
@@ -44,6 +52,7 @@ a {
 /* Logo animation */
 
 .logo-animation {
+  flex-shrink: 0;
   position: relative;
   visibility: hidden;
   display: flex;
@@ -51,9 +60,8 @@ a {
   overflow: hidden;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 90vh;
-  min-height: 580px;
+  width: 740px;
+  height: 480px;
 }
 
 .logo-animation.is-visible {
@@ -150,14 +158,31 @@ a {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  top: 128px;
   width: 100%;
   max-width: 600px;
+  margin-bottom: 32px;
+}
+
+.logo-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 32px;
 }
 
 .logo-links {
   display: flex;
+  flex-direction: column;
   width: 100%;
+}
+
+@media (min-width: 800px) {
+  .logo-links {
+    flex-direction: row;
+  }
 }
 
 .logo-links a {

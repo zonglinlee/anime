@@ -1,3 +1,14 @@
+function fitToScreen(el, margins) {
+  var elWidth = el.offsetWidth;
+  var screenWidth = window.innerWidth;
+  var limitWidth = screenWidth - margins;
+  if (elWidth > limitWidth) {
+    var scaleRatio = limitWidth / elWidth;
+    console.log(scaleRatio);
+    anime.set(el, { scale: scaleRatio });
+  }
+}
+
 var logoAnimation = (function() {
 
   function getPathDuration(el, speed) {
@@ -7,6 +18,8 @@ var logoAnimation = (function() {
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
   var spherePathEls = logoAnimationEl.querySelectorAll('.sphere path');
+
+  fitToScreen(logoAnimationEl, 64);
 
   anime.set('.fill', {opacity: 0});
   anime.set(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
@@ -148,7 +161,7 @@ var logoAnimation = (function() {
   })
   .add({
     targets: '.letter-m .line',
-    easing: 'spring(.2, 200, 5, 60)',
+    easing: 'spring(.2, 200, 3, 60)',
     d: function(el) { return el.dataset.d3 }
   }, '-=1904')
   .add({
