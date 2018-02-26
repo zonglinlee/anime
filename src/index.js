@@ -886,7 +886,7 @@ function anime(params = {}) {
       for (let n = 0; n < toNumbersLength; n++) {
         let value;
         const toNumber = tween.to.numbers[n];
-        const fromNumber = tween.from.numbers[n];
+        const fromNumber = tween.from.numbers[n] || 0;
         if (!tween.isPath) {
           value = fromNumber + (eased * (toNumber - fromNumber));
         } else {
