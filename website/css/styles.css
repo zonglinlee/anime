@@ -102,8 +102,8 @@ a {
 /* blur effects only on Chrome */
 
 @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
-  .sphere { filter: url(#sphereBlur); }
-  .logo-letter { filter: url(#blur); }
+  .sphere.blurred { filter: url(#sphereBlur); }
+  .anime-logo-signs.blurred .logo-letter { filter: url(#blur); }
 }
 
 .bounce {

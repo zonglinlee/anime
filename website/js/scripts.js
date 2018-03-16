@@ -40,6 +40,9 @@ var logoAnimation = (function() {
       easing: 'easeInOutCirc',
       delay:  function(el, i) {
         return i * 35
+      },
+      begin: function() {
+        document.querySelector('.sphere').classList.add('blurred');
       }
     });
 
@@ -86,13 +89,19 @@ var logoAnimation = (function() {
     strokeDashoffset: [anime.setDashoffset, 0],
     easing: 'easeInOutSine',
     duration: function(el) { return getPathDuration(el, 2) },
-    delay: function(el, i) { return 250 + anime.random(0, 200) }
+    delay: function(el, i) { return 250 + anime.random(0, 200) },
+    begin: function() {
+      document.querySelector('.anime-logo-signs').classList.add('blurred');
+    }
   })
   .add({
     targets: '#blur feGaussianBlur',
     stdDeviation: 0,
     easing: 'linear',
     duration: 500,
+    complete: function() {
+      document.querySelector('.anime-logo-signs').classList.remove('blurred');
+    }
   }, '-=750')
   .add({
     targets: ['.logo-letter', '.dot'],
