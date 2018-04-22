@@ -879,7 +879,7 @@ Sets the 'stroke-dasharray' to the total path length and return its value.
 ```javascript
 anime({
   targets: '.shape path',
-  strokeDashoffset: [anime.pathDashoffset, 0]
+  strokeDashoffset: [anime.setDashoffset, 0]
 });
 ```
 
