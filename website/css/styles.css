@@ -97,13 +97,14 @@ a {
 
 .logo-letter {
   overflow: visible;
+  transform: translate3d(0,0,0);
 }
 
 /* blur effects only on Chrome */
 
 @media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
-  .sphere.blurred { filter: url(#sphereBlur); }
-  .anime-logo-signs.blurred .logo-letter { filter: url(#blur); }
+  .blurred { filter: url(#blur); }
+  .logo-letter.blurred { filter: url(#letterBlur); }
 }
 
 .bounce {
@@ -119,6 +120,7 @@ a {
 .line {
   stroke-width: 2;
   /*stroke: #FFF;*/
+  transform: translate3d(0,0,0);
 }
 
 .letter-a .line:nth-child(1) { stroke: #1CE2B2; }
@@ -149,6 +151,7 @@ a {
   width: 400px;
   height: 400px;
   margin: -200px 0 0 -200px;
+  transform: translate3d(0,0,0);
 }
 
 /* Logo nav */
