@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 304">
+  <g id="Page-3" fill="none" fill-rule="evenodd">
+    <g id="time-anim">
+      <path id="ruller" fill="#FFFFFF" d="M9 56H7v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm-8 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm-8 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm-312 0h-2V44h2v12zm160 0h-2V44h2v12zm160 0h-2V44h2v12zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2v-8h2v8zm-16 0h-2v-8h2v8zm24 0h-2v-4h2v4zm16 0h-2v-4h2v4zm8 0h-2V44h2v12zm-16 0h-2v-8h2v8zM1 56h-2V44h2v12z"/>
+      <path id="line" stroke="#FF7C72" stroke-width="4" d="M-.323 80h256" stroke-linejoin="round"/>
+      <path id="line" stroke="#FF7C72" stroke-width="4" d="M56 104h288" stroke-linejoin="round"/>
+      <path id="line" stroke="#FBF38C" stroke-width="4" d="M32 128h288" stroke-linejoin="round"/>
+      <path id="line" stroke="#A6FF8F" stroke-width="4" d="M160 152h320" stroke-linejoin="round"/>
+      <path id="line" stroke="#A6FF8F" stroke-width="4" d="M160 176h160" stroke-linejoin="round"/>
+      <path id="line" stroke="#18FF92" stroke-width="4" d="M240 200h352" stroke-linejoin="round"/>
+      <path id="line" stroke="#18FF92" stroke-width="4" d="M240 224h320" stroke-linejoin="round"/>
+      <path id="line" stroke="#18FF92" stroke-width="4" d="M264 248h296" stroke-linejoin="round"/>
+      <path id="line" stroke="#5EF3FB" stroke-width="4" d="M320 272h320" stroke-linejoin="round"/>
+      <path id="line" stroke="#5EF3FB" stroke-width="4" d="M448 296h192" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

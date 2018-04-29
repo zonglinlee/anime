@@ -715,7 +715,7 @@ function setTargetValue(targets, properties) {
   const animatables = getAnimatables(targets);
   animatables.forEach(animatable => {
     for (var property in properties) {
-      const value = properties[property];
+      const value = getFunctionValue(properties[property], animatable);
       const target = animatable.target;
       const valueUnit = getUnit(value);
       const originalValue = getOriginalTargetValue(target, property, valueUnit, animatable);
