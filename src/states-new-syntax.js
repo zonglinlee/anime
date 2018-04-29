@@ -1,20 +1,20 @@
-var animation = anime({
+var modal = anime({
   targets: '.modal',
   states: {
-    closed: {
+    close: {
       width: 100,
       height: 100,
       easing: 'easeInOutExpo'
     },
-    opened: {
-      width: '100vw',
-      height: '100vh'
+    open: {
+      width: 500,
+      height: 500
     }
   },
   duration: 2000,
   easing: 'easeOutExpo'
-})
+});
 
-animation.goTo('closed');
+modal.goTo('close');
 
-animation.animateTo('open');
+modal.animateTo('open');
