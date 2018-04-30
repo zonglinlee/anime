@@ -21,15 +21,16 @@ var logoAnimation = (function() {
   var spherePathEls = logoAnimationEl.querySelectorAll('.sphere path');
   var lineEls = document.querySelectorAll('.line');
   var strokeColors = ['#FF1461','#FF7C72','#FBF38C','#A6FF8F','#18FF92','#1CE2B2','#5EF3FB','#5A87FF','#B08CFF'];
+  var strokeColors = ['#FF1461','#FBF38C','#18FF92','#5EF3FB','#B08CFF'];
 
   var colorKeyframes = strokeColors.reverse().map(function(color, i) {
     var value = strokeColors[i + 1] ? [color, strokeColors[i + 1]] : [color, strokeColors[0]];
-    return {value: value, duration: 200}
+    return {value: value, duration: 250}
   });
 
   var neonColorsAnimation = anime.timeline({
     easing: 'linear',
-    loop: true,
+    loop: false,
     autoplay: false
   });
 
