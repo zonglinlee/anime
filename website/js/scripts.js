@@ -21,11 +21,11 @@ var logoAnimation = (function() {
   var spherePathEls = logoAnimationEl.querySelectorAll('.sphere path');
   var lineEls = document.querySelectorAll('.line');
   var strokeColors = ['#FF1461','#FF7C72','#FBF38C','#A6FF8F','#18FF92','#1CE2B2','#5EF3FB','#5A87FF','#B08CFF'];
-  var strokeColors = ['#FF1461','#FBF38C','#18FF92','#5EF3FB','#B08CFF'];
+  var strokeColors = ['#18FF92','#5EF3FB','#FF1461'];
 
   var colorKeyframes = strokeColors.reverse().map(function(color, i) {
     var value = strokeColors[i + 1] ? [color, strokeColors[i + 1]] : [color, strokeColors[0]];
-    return {value: value, duration: 250}
+    return {value: value, duration: 200}
   });
 
   var neonColorsAnimation = anime.timeline({
@@ -110,12 +110,12 @@ var logoAnimation = (function() {
 
   }
 
-  anime.speed = 1;
+  //anime.speed = .2;
 
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
     autoplay: false,
-    begin: neonColorsAnimation.play
+    // begin: neonColorsAnimation.play
   });
 
   logoAnimationTL
@@ -136,12 +136,12 @@ var logoAnimation = (function() {
       if (el.classList.contains('letter-e')) return [0, 0];
     },
     easing: 'easeOutElastic(.8, 1.5)',
-    duration: 1200,
+    duration: 1050,
     delay: function(el, i) { return i * 40 },
   })
   .add({
     targets: lineEls,
-    strokeWidth: [0, 4],
+    strokeWidth: [1, 4],
     strokeDashoffset: [anime.setDashoffset, 0],
     easing: 'easeInOutQuad',
     duration: function(el) { return 200 + getPathDuration(el, 2) },
