@@ -1,10 +1,11 @@
+import anime from '../../src/index.js';
+
 function fitToScreen(el, margins) {
   var elWidth = el.offsetWidth;
   var screenWidth = window.innerWidth;
   var limitWidth = screenWidth - margins;
   if (elWidth > limitWidth) {
     var scaleRatio = limitWidth / elWidth;
-    console.log(scaleRatio);
     anime.set(el, { scale: scaleRatio });
   }
 }
@@ -18,6 +19,27 @@ var logoAnimation = (function() {
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
   var spherePathEls = logoAnimationEl.querySelectorAll('.sphere path');
+  var lineEls = document.querySelectorAll('.line');
+  var strokeColors = ['#FF1461','#FF7C72','#FBF38C','#A6FF8F','#18FF92','#1CE2B2','#5EF3FB','#5A87FF','#B08CFF'];
+
+  var colorKeyframes = strokeColors.reverse().map(function(color, i) {
+    var value = strokeColors[i + 1] ? [color, strokeColors[i + 1]] : [color, strokeColors[0]];
+    return {value: value, duration: 200}
+  });
+
+  var neonColorsAnimation = anime.timeline({
+    easing: 'linear',
+    loop: true,
+    autoplay: false
+  });
+
+  for (var i = 0; i < lineEls.length; i++) {
+    colorKeyframes.push(colorKeyframes.shift());
+    neonColorsAnimation.add({
+      targets: lineEls[i],
+      stroke: colorKeyframes
+    }, 0);
+  }
 
   fitToScreen(logoAnimationEl, 64);
 
@@ -48,7 +70,7 @@ var logoAnimation = (function() {
             {value: 30, duration: 750, easing: 'easeOutSine'},
             {value: 10, duration: 800, easing: 'easeInOutSine'}
           ],
-          delay: 750,
+          delay: 950,
           begin: function() {
             document.querySelector('.sphere').classList.add('blurred');
           }
@@ -87,9 +109,12 @@ var logoAnimation = (function() {
 
   }
 
+  anime.speed = 1;
+
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
-    autoplay: false
+    autoplay: false,
+    begin: neonColorsAnimation.play
   });
 
   logoAnimationTL
@@ -109,12 +134,12 @@ var logoAnimation = (function() {
       if (el.classList.contains('letter-m')) return [200, 0];
       if (el.classList.contains('letter-e')) return [0, 0];
     },
-    easing: 'easeOutElastic(.8, 1.2)',
+    easing: 'easeOutElastic(.8, 1.5)',
     duration: 1200,
-    delay: function(el, i, t) { return i * 40 },
+    delay: function(el, i) { return i * 40 },
   })
   .add({
-    targets: '.line',
+    targets: lineEls,
     strokeWidth: [0, 4],
     strokeDashoffset: [anime.setDashoffset, 0],
     easing: 'easeInOutQuad',
@@ -126,7 +151,7 @@ var logoAnimation = (function() {
     strokeDasharray: 0,
     easing: 'linear',
     duration: .1,
-  }, '-=500')
+  }, '-=420')
   .add({
     targets: '.dot',
     easing: 'cubicBezier(0.350, 0.560, 0.305, 1)',
@@ -135,24 +160,24 @@ var logoAnimation = (function() {
     translateZ: 0,
     scaleY: [4, .7],
     scaleX: { value: 1.3, delay: 100, duration: 200},
-  }, '-=500')
+  }, '-=420')
   .add({
     targets: '.letter-m .line',
     easing: 'easeOutElastic(1, .8)',
     duration: 600,
     d: function(el) { return el.dataset.d2 }
-  }, '-=290')
+  }, '-=215')
   .add({
     targets: ['.letter-a', '.letter-n', '.letter-i'],
     translateX: 0,
-    easing: 'easeOutElastic(1, .7)',
+    easing: 'easeOutElastic(1, .8)',
     duration: 800,
     delay: function(el, i, t) { return (t - i) * 20 }
   }, '-=600')
   .add({
     targets: '.letter-e',
     translateX: 0,
-    easing: 'easeOutElastic(1, .7)',
+    easing: 'easeOutElastic(.8, .7)',
     duration: 800,
   }, '-=840')
   .add({
@@ -166,11 +191,11 @@ var logoAnimation = (function() {
     ],
     scaleY: [
       { value: [1, 1.5], duration: 50, easing: 'easeInSine' },
-      { value: 1, duration: 50, easing: 'easeOutSine' }
+      { value: 1, duration: 50, easing: 'easeOutExpo' }
     ],
-    easing: 'cubicBezier(0.000, 0.740, 1.000, 0.255)',
+    easing: 'cubicBezier(0, .74, 1, .255)',
     duration: 800,
-  }, '-=650')
+  }, '-=660')
   .add({
     targets: '.dot',
     scaleY: 1,
@@ -191,7 +216,8 @@ var logoAnimation = (function() {
     strokeDashoffset: [anime.setDashoffset, 0],
     duration: function(el) { return getPathDuration(el, 1.5) },
     easing: 'cubicBezier(0.400, 0.530, 0.070, 1)',
-    delay: function(el, i) { return Math.round(i / 2) * 150 }
+    delay: function(el, i) { return Math.round(i / 2) * 150 },
+    complete: neonColorsAnimation.pause
   }, '-=1100')
   .add({
     targets: '.letter-i .line',
@@ -213,7 +239,7 @@ var logoAnimation = (function() {
     opacity: 1,
     easing: 'easeOutElastic(1, .6)',
     duration: 1000,
-  }, '-=1000')
+  }, '-=1010')
   .add({
     duration: 1000,
     delay: 500,
@@ -252,10 +278,7 @@ var logoAnimation = (function() {
     round: 1,
     duration: 2500,
     easing: 'easeOutCubic'
-  }, '-=1000')
-
-  // logoAnimationTL.seek(1600);
-  // anime.speed = .1;
+  }, '-=1000');
 
   logoAnimationEl.classList.add('is-visible');
 

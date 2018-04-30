@@ -7,6 +7,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 html,
 body {
   background-color: #191923; /* Black */
+/*  background-image: linear-gradient(0deg, #0E0E12 0%, #191924 100%);*/
 }
 
 body {
@@ -20,7 +21,6 @@ body {
   min-height: 100vh;
   color: #FFF;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  /* Anime is a lightweig: */
   font-family: RoobertTRIAL-Regular;
   font-size: 20px;
   line-height: 24px;
