@@ -18,14 +18,19 @@ var logoAnimation = (function() {
 
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
+  var sphereEl = document.querySelector('.sphere');
   var spherePathEls = logoAnimationEl.querySelectorAll('.sphere path');
   var lineEls = document.querySelectorAll('.line');
-  var strokeColors = ['#FF1461','#FF7C72','#FBF38C','#A6FF8F','#18FF92','#1CE2B2','#5EF3FB','#5A87FF','#B08CFF'];
-  var strokeColors = ['#18FF92','#5EF3FB','#FF1461'];
+  var strokeColors = ['#A6FF8F','#18FF92','#1CE2B2','#5EF3FB','#5A87FF','#B08CFF', '#FF1461','#FF7C72','#FBF38C'];
+  //var strokeColors = ['#FBF38C', '#5A87FF', '#FF1461'];
+  //var strokeColors = ['#18FF92','#5EF3FB','#FF1461'];
+
+  // Cache the blur filter
+  sphereEl.classList.add('blurred');
 
   var colorKeyframes = strokeColors.reverse().map(function(color, i) {
     var value = strokeColors[i + 1] ? [color, strokeColors[i + 1]] : [color, strokeColors[0]];
-    return {value: value, duration: 200}
+    return {value: value, duration: 180}
   });
 
   var neonColorsAnimation = anime.timeline({
@@ -73,7 +78,7 @@ var logoAnimation = (function() {
           ],
           delay: 950,
           begin: function() {
-            document.querySelector('.sphere').classList.add('blurred');
+            sphereEl.classList.add('blurred');
           }
         })
       }
@@ -115,7 +120,9 @@ var logoAnimation = (function() {
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
     autoplay: false,
-    // begin: neonColorsAnimation.play
+    begin: function() {
+      sphereEl.classList.remove('blurred');
+    }
   });
 
   logoAnimationTL
@@ -137,15 +144,15 @@ var logoAnimation = (function() {
     },
     easing: 'easeOutElastic(.8, 1.5)',
     duration: 1050,
-    delay: function(el, i) { return i * 40 },
+    delay: function(el, i) { return i * 90 },
   })
   .add({
     targets: lineEls,
-    strokeWidth: [1, 4],
+    strokeWidth: [0, 4],
     strokeDashoffset: [anime.setDashoffset, 0],
     easing: 'easeInOutQuad',
-    duration: function(el) { return 200 + getPathDuration(el, 2) },
-    delay: function(el, i, t) { return ((Math.ceil((i+1)/3) * 1) * 1) + (i * 10) },
+    duration: function(el) { return 200 + getPathDuration(el, 1.5) },
+    delay: function(el, i, t) { return ((Math.ceil((i+1)/3) * 1) * 1) + (i * 30) },
   }, 0)
   .add({
     targets: '.letter-m .line',
@@ -252,7 +259,7 @@ var logoAnimation = (function() {
     easing: 'linear',
     duration: 750,
     delay: function(el, i, t) { return (t - i) * 75 }
-  }, '-=100')
+  }, '+=1000')
   .add({
     targets: '.credits',
     opacity: [0, 1],
