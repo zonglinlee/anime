@@ -425,7 +425,7 @@ function convertPxToUnit(el, value, unit) {
   if (!is.und(cached)) return cached;
   const baseline = 100;
   const tempEl = document.createElement(el.tagName);
-  const parentEl = el.parentNode || document.body;
+  const parentEl = (el.parentNode && (el.parentNode !== document)) ? el.parentNode : document.body;
   parentEl.appendChild(tempEl);
   tempEl.style.position = 'absolute';
   tempEl.style.width = baseline + unit;
