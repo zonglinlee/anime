@@ -1067,14 +1067,13 @@ function anime(params = {}) {
   instance.reset();
 
   if (instance.startTime) {
+    // if startTime > instance duration, simulate a loop
     setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
   }
 
   if (instance.states) {
-    for (let state in instance.states) {
-      instance.goTo(state);
-      break;
-    }
+    // Initialize default state
+    instance.goTo('default');
   }
 
   if (instance.autoplay && !instance.states) instance.play();
@@ -1145,8 +1144,8 @@ anime.version = '3.0.0';
 anime.speed = 1;
 anime.running = activeInstances;
 anime.remove = removeTargets;
-anime.get = getOriginalTargetValue;
-anime.set = setTargetValue;
+anime.getValue = getOriginalTargetValue;
+anime.setValue = setTargetValue;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
 anime.timeline = timeline;
