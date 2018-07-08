@@ -1340,55 +1340,18 @@ anime({
   </div>
   <script>var colors = function() {
 /*DEMO*/
-anime({
-  targets: '.color-hex',
-  backgroundColor: '#FFF',
-  translateX: 250,
+var colorsExamples = anime.timeline({
   endDelay: 1000,
   easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
-});
-
-anime({
-  targets: '.color-rgb',
-  backgroundColor: 'rgb(255,255,255)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
-
-anime({
-  targets: '.color-hsl',
-  backgroundColor: 'hsl(0, 100%, 100%)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
-
-anime({
-  targets: '.color-rgba',
-  backgroundColor: 'rgba(255,255,255, .25)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
-
-anime({
-  targets: '.color-hsla',
-  backgroundColor: 'hsla(0, 100%, 100%, .25)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
+})
+.add({ targets: '.color-hex',  background: '#FFF' }, 0)
+.add({ targets: '.color-rgb',  background: 'rgb(255,255,255)' }, 0)
+.add({ targets: '.color-hsl',  background: 'hsl(0, 100%, 100%)' }, 0)
+.add({ targets: '.color-rgba', background: 'rgba(255,255,255, .2)' }, 0)
+.add({ targets: '.color-hsla', background: 'hsla(0, 100%, 100%, .2)' }, 0)
+.add({ targets: '.colors-demo .el', translateX: 250 }, 0);
 /*DEMO*/
 }
   </script>

@@ -268,6 +268,6 @@ function keyboardNavigation(e) {
   }
 }
 
+updateDemos();
 window.onhashchange = updateDemos;
-window.onload = updateDemos;
 document.onkeydown = keyboardNavigation;
