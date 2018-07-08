@@ -449,7 +449,12 @@ article {
   padding: 1px 0px;
 }
 
-.player {
+.line.align-center {
+  display: flex;
+  justify-content: center;
+}
+
+.controls {
   opacity: .4;
   display: flex;
   align-items: center;
@@ -458,7 +463,7 @@ article {
   padding-bottom: 10px;
 }
 
-.player button {
+.controls button {
   position: relative;
   display: block;
   margin: 0 0 0 -1px;
@@ -470,17 +475,17 @@ article {
   color: currentColor;
 }
 
-.player button:focus {
+.controls button:focus {
   outline: none;
 }
 
-.active .player {
+.active .controls {
   opacity: 1;
 }
 
-.active .player button:hover:after {
+.active .controls button:after {
   content: '';
-  opacity: .3;
+  opacity: 0;
   position: absolute;
   left: 0;
   top: 0;
@@ -490,11 +495,20 @@ article {
   background-color: currentColor;
 }
 
-.player button:first-child {
+.active .controls button:hover:after {
+  opacity: .2;
+}
+
+.controls button.is-active:after,
+.controls button.is-active:hover:after {
+  opacity: .4;
+}
+
+.controls button:first-child {
   margin-left: 0;
 }
 
-.player input {
+.controls input {
   margin-left: 10px;
 }
 
@@ -585,6 +599,12 @@ input.progress[value]::-webkit-slider-thumb {
 
 .circle {
   border-radius: 50%;
+}
+
+.square.outline,
+.circle.outline {
+  background-color: transparent;
+  border: 1px solid currentColor;
 }
 
 .triangle {

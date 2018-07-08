@@ -639,7 +639,7 @@ function normalizePropertyTweens(prop, tweenSettings) {
 function getProperties(instanceSettings, tweenSettings, params) {
   let properties = [];
   for (let p in params) {
-    if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets') {
+    if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets' && p !== 'states') {
       properties.push({
         name: p,
         tweens: normalizePropertyTweens(params[p], tweenSettings)
@@ -714,7 +714,7 @@ const setProgressValue = {
 function setTargetValue(targets, properties) {
   const animatables = getAnimatables(targets);
   animatables.forEach(animatable => {
-    for (var property in properties) {
+    for (let property in properties) {
       const value = getFunctionValue(properties[property], animatable);
       const target = animatable.target;
       const valueUnit = getUnit(value);
@@ -763,6 +763,22 @@ function getInstanceTimings(type, animations, tweenSettings) {
   }
 }
 
+function getStates(params) {
+  const statesParams = params.states;
+  if (!statesParams) return;
+  let instanceParams = cloneObject(params);
+  delete instanceParams.states;
+  let states = {default: instanceParams};
+  for (let state in statesParams) {
+    states[state] = cloneObject(instanceParams);
+    let stateParams = statesParams[state];
+    for (let p in stateParams) {
+      states[state][p] = stateParams[p];
+    }
+  }
+  return states;
+}
+
 function createNewInstance(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
@@ -770,8 +786,9 @@ function createNewInstance(params) {
   const properties = getProperties(instanceSettings, tweenSettings, params);
   const animations = getAnimations(animatables, properties);
   return mergeObjects(instanceSettings, {
-    states: {default: params},
     children: [],
+    states: getStates(params),
+    currentState: null,
     animatables: animatables,
     animations: animations,
     duration: getInstanceTimings('duration', animations, tweenSettings),
@@ -1029,20 +1046,20 @@ function anime(params = {}) {
     instance.play();
   }
 
-  instance.animateTo = function(stateName, paramsOverrides = {}, bypassAnimation) {
-    const nextState = instance.states[stateName];
-    const defaultState = instance.states.default;
-    const params = mergeObjects(paramsOverrides, mergeObjects(nextState, defaultState));
-    const animation = anime(params);
-    if (!bypassAnimation) {
-      animation.play();
-    } else {
-      animation.seek(animation.duration);
-    }
+  instance.animateTo = function(stateName, paramsOverrides) {
+    let state = instance.states[stateName];
+    if (!state) return;
+    if (paramsOverrides) state = mergeObjects(paramsOverrides, state);
+    anime.remove(state.targets);
+    var animation = anime(state);
+    animation.currentState = stateName;
+    return animation;
   }
 
   instance.goTo = function(stateName, paramsOverrides) {
-    instance.animateTo(stateName, paramsOverrides, true);
+    const stateAnimation = instance.animateTo(stateName, paramsOverrides);
+    stateAnimation.seek(stateAnimation.duration);
+    return stateAnimation;
   }
 
   instance.finished = promise;
@@ -1053,7 +1070,14 @@ function anime(params = {}) {
     setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
   }
 
-  if (instance.autoplay) instance.play();
+  if (instance.states) {
+    for (let state in instance.states) {
+      instance.goTo(state);
+      break;
+    }
+  }
+
+  if (instance.autoplay && !instance.states) instance.play();
 
   return instance;
 
