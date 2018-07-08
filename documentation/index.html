@@ -2127,7 +2127,7 @@ controlsProgressEl.addEventListener('input', function() {
     scaleY: 1, // Default scaleY value
     borderRadius: '0%', // Default borderRadius value
     duration: 500, // Default duration
-    easing: 'easeInOutQuad', Default easing
+    easing: 'easeInOutQuad', //Default easing
     states: {
       circle: {
         borderRadius: '50%',
@@ -2168,11 +2168,6 @@ var statesDemoAnimation = anime({
   borderRadius: '0%',
   duration: 500,
   easing: 'easeInOutQuad',
-  begin: function(anim) {
-    var activeButton = document.querySelector('.states-demo button[value='+anim.currentState+']');
-    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
-    activeButton.classList.add('is-active');
-  },
   states: {
     circle: {
       borderRadius: '50%',
@@ -2192,6 +2187,11 @@ for (var i = 0; i < buttons.length; i++) {
   });
 }
 /*DEMO*/
+statesDemoAnimation.complete = function(anim) {
+  var activeButton = document.querySelector('.states-demo button[value='+anim.currentState+']');
+  for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
+  activeButton.classList.add('is-active');
+}
 }
   </script>
 </div>
@@ -2219,18 +2219,13 @@ for (var i = 0; i < buttons.length; i++) {
 /*DEMO*/
 var buttons = document.querySelectorAll('.states-overrides-demo button');
 
-var statesDemoAnimation = anime({
+var statesOverridesDemoAnimation = anime({
   targets: '.states-overrides-demo .el',
   scaleX: 1,
   scaleY: 1,
   borderRadius: '0%',
   duration: 500,
   easing: 'easeInOutQuad',
-  begin: function(anim) {
-    var activeButton = document.querySelector('.states-overrides-demo button[value='+anim.currentState+']');
-    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
-    if (activeButton) activeButton.classList.add('is-active');
-  },
   states: {
     circle: {
       borderRadius: '50%'
@@ -2242,11 +2237,11 @@ var statesDemoAnimation = anime({
   },
 });
 
-statesDemoAnimation.goTo('circle');
+statesOverridesDemoAnimation.goTo('circle');
 
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function() {
-    statesDemoAnimation.animateTo(this.value, {
+    statesOverridesDemoAnimation.animateTo(this.value, {
       translateX: anime.random(-40, 40),
       duration: anime.random(100, 1000),
       easing: anime.easings[anime.random(0, anime.easings.length-1)]
@@ -2254,6 +2249,11 @@ for (var i = 0; i < buttons.length; i++) {
   });
 }
 /*DEMO*/
+  statesOverridesDemoAnimation.complete = function(anim) {
+    var activeButton = document.querySelector('.states-overrides-demo button[value='+anim.currentState+']');
+    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
+    if (activeButton) activeButton.classList.add('is-active');
+  }
 }
   </script>
 </div>
@@ -3147,9 +3147,9 @@ document.querySelector('.remove-el-button').addEventListener('click', function()
 <div id="getValue" class="demo">
   <h3 class="demo-title">getValue</h3>
   <div class="demo-description">
-    <pre><code>anime.getValue(el, propertyName, unit)</code></pre>
+    <p>Returns the original value of an element:</p>
+    <pre><code>anime.getValue(target, propertyName, unit);</code></pre>
     <p>
-      Returns the original value of an element.<br>
       Since <i>Anime</i> uses <a href="https://developer.mozilla.org/fr/docs/Web/API/Window/getComputedStyle">getComputedStyle</a> to access original CSS, the values are almost always returned in <code>'px'</code>, the third (optional) argument converts the value in the desired unit.
     </p>
     <pre><code>anime.getValue(domNode, 'width', 'rem');</code></pre>
@@ -3170,6 +3170,40 @@ var logEl = document.querySelector('.get-value-demo-log');
 var el = document.querySelector('.get-value-demo .el');
 
 logEl.innerHTML = '".el" width is "' + anime.getValue(el, 'width', 'rem') + 'rem"';
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="setValue" class="demo">
+  <h3 class="demo-title">setValue</h3>
+  <div class="demo-description">
+    <p>
+      Imadiatly set values to the specified targets:<br>
+    </p>
+    <pre><code>anime.setValue(targets, {property: value});</code></pre>
+  </div>
+  <div class="demo-content set-value-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var setValue = function() {
+/*DEMO*/
+anime.setValue('.set-value-demo .el', {
+  translateX: function() { return anime.random(50, 250); },
+  rotate: function() { return anime.random(0, 360); },
+});
 /*DEMO*/
 }
   </script>
