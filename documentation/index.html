@@ -2111,8 +2111,8 @@ controlsProgressEl.addEventListener('input', function() {
         easing: 'easeInOutCirc'
       },
       rectangle: {
-        scaleX: 1.2,
-        scaleY: .7,
+        scaleX: 1.3,
+        scaleY: .6,
       }
     },
   });</pre></code>
@@ -2151,10 +2151,10 @@ var statesDemoAnimation = anime({
       easing: 'easeInOutCirc'
     },
     rectangle: {
-      scaleX: 1.2,
-      scaleY: .7
+      scaleX: 1.3,
+      scaleY: .6
     }
-  },
+  }
 });
 
 for (var i = 0; i < buttons.length; i++) {
@@ -2163,11 +2163,30 @@ for (var i = 0; i < buttons.length; i++) {
   });
 }
 /*DEMO*/
-statesDemoAnimation.complete = function(anim) {
-  var activeButton = document.querySelector('.states-demo button[value='+anim.currentState+']');
-  for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
-  activeButton.classList.add('is-active');
-}
+var statesDemoAnimation = anime({
+  targets: '.states-demo .el',
+  scaleX: 1,
+  scaleY: 1,
+  borderRadius: '0%',
+  duration: 500,
+  easing: 'easeInOutQuad',
+  states: {
+    circle: {
+      borderRadius: '50%',
+      duration: 1000,
+      easing: 'easeInOutCirc'
+    },
+    rectangle: {
+      scaleX: 1.3,
+      scaleY: .6
+    }
+  },
+  begin: function(anim) {
+    var activeButton = document.querySelector('.states-demo button[value='+anim.currentState+']');
+    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
+    activeButton.classList.add('is-active');
+  }
+});
 }
   </script>
 </div>
@@ -2207,8 +2226,8 @@ var statesOverridesDemoAnimation = anime({
       borderRadius: '50%'
     },
     rectangle: {
-      scaleX: 1.2,
-      scaleY: .7
+      scaleX: 1.3,
+      scaleY: .6
     }
   },
 });
@@ -2225,11 +2244,29 @@ for (var i = 0; i < buttons.length; i++) {
   });
 }
 /*DEMO*/
-  statesOverridesDemoAnimation.complete = function(anim) {
+var statesOverridesDemoAnimation = anime({
+  targets: '.states-overrides-demo .el',
+  scaleX: 1,
+  scaleY: 1,
+  borderRadius: '0%',
+  duration: 500,
+  easing: 'easeInOutQuad',
+  states: {
+    circle: {
+      borderRadius: '50%'
+    },
+    rectangle: {
+      scaleX: 1.3,
+      scaleY: .6
+    }
+  },
+  begin: function(anim) {
     var activeButton = document.querySelector('.states-overrides-demo button[value='+anim.currentState+']');
     for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
     if (activeButton) activeButton.classList.add('is-active');
   }
+});
+statesOverridesDemoAnimation.goTo('circle');
 }
   </script>
 </div>

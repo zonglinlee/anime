@@ -16,6 +16,7 @@ body {
   height: 100%;
   color: white;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: RoobertTRIAL-Light;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -146,10 +147,10 @@ header {
   content: "";
   display: block;
   position: absolute;
-  top: 3px;
+  top: 4px;
   left: 2px;
   width: 1px;
-  height: 14px;
+  height: calc(100% - 8px);
   background-color: white;
 }
 
@@ -162,8 +163,9 @@ header {
   padding-left: 10px;
   color: #FFF;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 20px;
+  letter-spacing: .5px;
   text-transform: uppercase;
 }
 
@@ -213,8 +215,8 @@ header {
 .demo-info {
   flex-direction: column;
   width: 50%;
-  font-size: 15px;
-  line-height: 25px;
+  font-size: 16px;
+  line-height: 24px;
   /*border-left: 1px solid rgba(0,0,0,.35);*/
 }
 
@@ -288,7 +290,7 @@ header {
 
 .demo-info code.hljs {
   display: inline-block;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .demo-info pre {
@@ -325,6 +327,7 @@ header {
   font-weight: 200;
   text-transform: uppercase;
   letter-spacing: .15em;
+  font-size: 14px;
   color: rgba(255,255,255,.5);
 }
 
@@ -449,7 +452,7 @@ article {
   left: 20px;
   width: calc(100% - 40px);
   padding: 23px 0;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #FFF;
@@ -485,7 +488,7 @@ article {
   display: block;
   margin: 0 0 0 -1px;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   border: 1px solid currentColor;
   background-color: transparent;
@@ -611,7 +614,7 @@ input.progress[value]::-webkit-slider-thumb {
   height: 28px;
   margin: 1px;
   background-color: currentColor;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .circle {
