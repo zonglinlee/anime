@@ -7,7 +7,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 html,
 body,
 header {
-  background-color: #16161c; /* Black */
+  background-color: #131415; /* Black */
 }
 
 body {
@@ -63,13 +63,13 @@ body {
   align-items: center;
   width: 240px;
   height: 60px;
-  padding: 10px 0 10px 55px;
   color: white;
   text-decoration: none;
-  background-image: url(../img/icons/icon-doc.png);
-  background-size: 32px;
-  background-position: 12px 13px;
-  background-repeat: no-repeat;
+}
+
+.logo svg {
+  width: 100%;
+  height: 100%;
 }
 
 header {
@@ -83,7 +83,7 @@ header {
   height: 60px;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(0,0,0,.35);
 }
 
 .logo, h2 {
@@ -115,7 +115,7 @@ header {
   flex-direction: column;
   width: 240px;
   padding-top: 60px;
-  border-right: 1px solid rgba(0,0,0,.25);
+  border-right: 1px solid rgba(0,0,0,.35);
 }
 
 .sidebar-info {
@@ -215,7 +215,7 @@ header {
   width: 50%;
   font-size: 15px;
   line-height: 25px;
-  /*border-left: 1px solid rgba(0,0,0,.25);*/
+  /*border-left: 1px solid rgba(0,0,0,.35);*/
 }
 
 .info-output {
@@ -400,7 +400,7 @@ article {
   width: 100%;
   min-height: 200px;
   padding-top: 35px;
-  border-bottom: 1px solid rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(0,0,0,.35);
   cursor: pointer;
 }
 
