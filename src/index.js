@@ -1146,6 +1146,7 @@ anime.running = activeInstances;
 anime.remove = removeTargets;
 anime.getValue = getOriginalTargetValue;
 anime.setValue = setTargetValue;
+anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
 anime.timeline = timeline;
