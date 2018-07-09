@@ -255,6 +255,17 @@ header {
   font-style: italic;
 }
 
+.demo-info a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.demo-info a:hover {
+  border-bottom: 1px solid currentColor;
+}
+
 .demo-info a[href^="http"]:visited {
   color: currentColor;
 }
