@@ -385,11 +385,11 @@ header {
 }
 
 .demos::-webkit-scrollbar-thumb {
-  background-color: rgba(255,255,255,.2);
+  background-color: rgba(255,255,255,.3);
 }
 
 .demos::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255,255,255,.4);
+  background-color: rgba(255,255,255,.6);
 }
 
 article {
