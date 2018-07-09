@@ -24,7 +24,20 @@
 <body>
   <div class="content">
     <header class="header">
-      <a class="logo" href="https://github.com/juliangarnier/anime/"><h1>anime.js</h1></a>
+      <a class="logo" href="https://github.com/juliangarnier/anime/">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60">
+          <g id="anime-docs-logo" fill="none" fill-rule="evenodd" stroke-linecap="square">
+            <g id="Group" stroke="#FFFFFF" stroke-width="2" transform="translate(23 24)">
+              <path id="a" d="M0 0h12c1.105 0 2 .893 2 1.994v8.012A1.997 1.997 0 0 1 12 12H2c-1.105 0-2-.893-2-1.994V5.978c0-1.102.895-1.995 2-1.995h8"/>
+              <path id="n" d="M18 12V2c0-1.105.893-2 1.995-2h10.01C31.107 0 32 .895 32 2v10"/>
+              <path id="i" d="M36.125 12V4"/>
+              <path id="." d="M36.125 0v.5"/>
+              <path id="m" d="M40 12V2c0-1.105.894-2 1.998-2H65.002C66.106 0 67 .895 67 2v10"/>
+              <path id="e" d="M85 12H73c-1.105 0-2-.893-2-1.994V1.994C71 .893 71.895 0 73 0h10c1.105 0 2 .893 2 1.994v3.99a1.997 1.997 0 0 1-2 1.994h-8"/>
+            </g>
+          </g>
+        </svg>
+      </a>
     </header>
     <section class="pane sidebar">
       <nav class="navigation"></nav>
@@ -1340,55 +1353,18 @@ anime({
   </div>
   <script>var colors = function() {
 /*DEMO*/
-anime({
-  targets: '.color-hex',
-  backgroundColor: '#FFF',
-  translateX: 250,
+var colorsExamples = anime.timeline({
   endDelay: 1000,
   easing: 'easeInOutQuad',
   direction: 'alternate',
   loop: true
-});
-
-anime({
-  targets: '.color-rgb',
-  backgroundColor: 'rgb(255,255,255)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
-
-anime({
-  targets: '.color-hsl',
-  backgroundColor: 'hsl(0, 100%, 100%)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
-
-anime({
-  targets: '.color-rgba',
-  backgroundColor: 'rgba(255,255,255, .25)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
-
-anime({
-  targets: '.color-hsla',
-  backgroundColor: 'hsla(0, 100%, 100%, .25)',
-  translateX: 250,
-  endDelay: 1000,
-  easing: 'easeInOutQuad',
-  direction: 'alternate',
-  loop: true
-});
+})
+.add({ targets: '.color-hex',  background: '#FFF' }, 0)
+.add({ targets: '.color-rgb',  background: 'rgb(255,255,255)' }, 0)
+.add({ targets: '.color-hsl',  background: 'hsl(0, 100%, 100%)' }, 0)
+.add({ targets: '.color-rgba', background: 'rgba(255,255,255, .2)' }, 0)
+.add({ targets: '.color-hsla', background: 'hsla(0, 100%, 100%, .2)' }, 0)
+.add({ targets: '.colors-demo .el', translateX: 250 }, 0);
 /*DEMO*/
 }
   </script>
@@ -1868,7 +1844,7 @@ tl
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
-    <div class="line player">
+    <div class="line controls">
       <button class="play">Play</button>
       <button class="pause">Pause</button>
     </div>
@@ -1912,7 +1888,7 @@ document.querySelector('.play-pause-demo .pause').onclick = animation.pause;
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
-    <div class="line player">
+    <div class="line controls">
       <button class="restart">Restart</button>
     </div>
   </div>
@@ -1953,7 +1929,7 @@ document.querySelector('.restart-demo .restart').onclick = animation.restart;
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
-    <div class="line player">
+    <div class="line controls">
       <button class="reverse">Reverse</button>
     </div>
   </div>
@@ -2010,7 +1986,7 @@ document.querySelector('.reverse-anim-demo .reverse').onclick = animation.revers
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
-    <div class="line player">
+    <div class="line controls">
       <input class="progress" step=".001" type="range" min="0" max="100" value="0"></input>
     </div>
   </div>
@@ -2058,7 +2034,7 @@ timeline.seek(timeStamp);
       <div class="small triangle shadow"></div>
       <div class="small triangle el"></div>
     </div>
-    <div class="line player">
+    <div class="line controls">
       <button class="play">Play</button>
       <button class="pause">Pause</button>
       <button class="restart">Restart</button>
@@ -2115,219 +2091,182 @@ controlsProgressEl.addEventListener('input', function() {
   <h2 class="demos-title">States</h2>
 </header>
 
-<div id="statesInitialisation" class="demo">
-  <h3 class="demo-title">Initialisation</h3>
+<div id="statesBasics" class="demo">
+  <h3 class="demo-title">Basics</h3>
   <div class="demo-description">
     <p>States let you define and store multiple set of properties for one animation.</p>
-    <p>Add states using the <code>states</code> object:</p>
+    <p class="bubble info">This is particullary useful when an element is animated multiple times with different parameters.</p>
+    <p>Add states using the <code>states</code> property:</p>
 <pre><code>var animation = anime({
-  targets: '.el',
-  easing: 'easeInOutCirc'
-});
-
-animation.states.stateName = {
-  translateX: 250,
-  duration: 1500,
-  easing: 'easeOutExpo'
-}</pre></code>
-    <p>Then go directly to a specific state:</p>
-<pre><code>animation.states.goTo(stateName);</pre></code>
-    <p>Or animate to a state with optional animation parameters:</p>
-<pre><code>animation.states.animateTo(stateName, animationParameters);</pre></code>
+    targets: statesExampleEl,
+    scaleX: 1, // Default scaleX value
+    scaleY: 1, // Default scaleY value
+    borderRadius: '0%', // Default borderRadius value
+    duration: 500, // Default duration
+    easing: 'easeInOutQuad', //Default easing
+    states: {
+      circle: {
+        borderRadius: '50%',
+        duration: 1000,
+        easing: 'easeInOutCirc'
+      },
+      rectangle: {
+        scaleX: 1.3,
+        scaleY: .6,
+      }
+    },
+  });</pre></code>
+    <p>When using states, the default values (in this case <code>scaleX: 1, scaleY: 1, borderRadius: '0%'</code>) will be automatically applied on initialization.</p>
+    <p>To instantanetly switch to a state, use <code>.goTo(stateName)</code></p>
+<pre><code>animation.goTo('circle');</pre></code>
+    <p>To animate to a state, use <code>.animateTo(stateName, parameters)</code> with optional animation parameters:</p>
+<pre><code>animation.animateTo('circle', {easing: 'easeInOutCirc'});</pre></code>
   </div>
   <div class="demo-content states-demo">
-    <div class="line">
-      <div class="large square shadow"></div>
-      <div class="large square el"></div>
+    <div class="line align-center">
+      <div class="large square outline shadow"></div>
+      <div class="large square outline el"></div>
     </div>
-    <div class="line player align-items">
-      <button class="state-a-button">Animate to A</button>
-      <button class="state-b-button">Animate to B</button>
+    <div class="line controls">
+      <button value="default">Default</button>
+      <button value="circle">Circle</button>
+      <button value="rectangle">Rectangle</button>
     </div>
   </div>
-  <script>var statesInitialisation = function() {
+  <script>var statesBasics = function() {
 /*DEMO*/
-var animation = anime({
+var buttons = document.querySelectorAll('.states-demo button');
+
+var statesDemoAnimation = anime({
   targets: '.states-demo .el',
-  duration: 2000,
-  easing: 'easeInOutCirc' // Defines default easing applied to all states
+  scaleX: 1,
+  scaleY: 1,
+  borderRadius: '0%',
+  duration: 500,
+  easing: 'easeInOutQuad',
+  states: {
+    circle: {
+      borderRadius: '50%',
+      duration: 1000,
+      easing: 'easeInOutCirc'
+    },
+    rectangle: {
+      scaleX: 1.3,
+      scaleY: .6
+    }
+  }
 });
 
-animation.states.stateA = { 
-  translateX: 0,
-  borderRadius: '0%'
-}
-
-animation.states.stateB = {
-  translateX: 250,
-  borderRadius: '50%'
-}
-
-// Go to state B instantly
-animation.goTo('stateB');
-
-document.body.querySelector('.states-demo .state-a-button').onclick = function() {
-  // Animate to state A with default parameters
-  animation.animateTo('stateA');
-}
-
-document.body.querySelector('.states-demo .state-b-button').onclick = function() {
-  // Animate to state B with custom easing parameter
-  animation.animateTo('stateB', {
-    easing: 'easeOutExpo'
+for (var i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click', function() {
+    statesDemoAnimation.animateTo(this.value);
   });
 }
-
 /*DEMO*/
+var statesDemoAnimation = anime({
+  targets: '.states-demo .el',
+  scaleX: 1,
+  scaleY: 1,
+  borderRadius: '0%',
+  duration: 500,
+  easing: 'easeInOutQuad',
+  states: {
+    circle: {
+      borderRadius: '50%',
+      duration: 1000,
+      easing: 'easeInOutCirc'
+    },
+    rectangle: {
+      scaleX: 1.3,
+      scaleY: .6
+    }
+  },
+  begin: function(anim) {
+    var activeButton = document.querySelector('.states-demo button[value='+anim.currentState+']');
+    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
+    activeButton.classList.add('is-active');
+  }
+});
 }
   </script>
 </div>
 
-<div id="statesDefaultProperties" class="demo">
-  <h3 class="demo-title">Default properties</h3>
+<div id="statesParametersOverrides" class="demo">
+  <h3 class="demo-title">Parameters Overrides</h3>
   <div class="demo-description">
-    <p>The initial animation properties and parameters are inherited by all the animation states.</p>
-    <p>Defines default properties and parameters:</p>
-<pre><code>var animation = anime({
-  targets: '.el',
-  translateX: 0, // will be inherited by every states
-  rotate: 0, // will be inherited by every states
+    <p>You can overide parameters or even animate other properties when animating to a state:</p>
+<pre><code>animation.animateTo('circle', {
+  translateX: 100,
   easing: 'easeInOutCirc'
-});
-
-animation.states.stateA = {
-  translateX: 250
-}
-
-animation.states.stateB = {
-  rotate: 45
-}</pre></code>
-    <p>Then go directly to a specific state:</p>
-<pre><code>animation.states.goTo(stateName);</pre></code>
-    <p>Or animate to a state with optional animation parameters:</p>
-<pre><code>animation.states.animateTo(stateName, animationParameters);</pre></code>
+});</pre></code>
   </div>
-  <div class="demo-content default-states-demo">
-    <div class="line">
-      <div class="square large shadow"></div>
-      <div class="square large el"></div>
+  <div class="demo-content states-overrides-demo">
+    <div class="line align-center">
+      <div class="large square outline shadow"></div>
+      <div class="large square outline el"></div>
     </div>
-    <div class="line player align-items">
-      <button class="state-moved">Move</button>
-      <button class="state-skewed">Skew</button>
-      <button class="state-rounded">Round</button>
-      <button class="state-default">Default</button>
+    <div class="line controls">
+      <button value="circle">Circle</button>
+      <button value="rectangle">Rectangle</button>
     </div>
   </div>
-  <script>var statesDefaultProperties= function() {
+  <script>var statesParametersOverrides = function() {
 /*DEMO*/
-var animation = anime({
-  targets: '.default-states-demo .el',
-  translateX: 0,
-  skew: 0,
-  borderRadius: 0,
-  easing: 'easeInOutCirc'
+var buttons = document.querySelectorAll('.states-overrides-demo button');
+
+var statesOverridesDemoAnimation = anime({
+  targets: '.states-overrides-demo .el',
+  scaleX: 1,
+  scaleY: 1,
+  borderRadius: '0%',
+  duration: 500,
+  easing: 'easeInOutQuad',
+  states: {
+    circle: {
+      borderRadius: '50%'
+    },
+    rectangle: {
+      scaleX: 1.3,
+      scaleY: .6
+    }
+  },
 });
 
-animation.states.moved = {
-  translateX: 250
-}
+statesOverridesDemoAnimation.goTo('circle');
 
-animation.states.skewed = {
-  skew: -45
-}
-
-animation.states.rounded = {
-  borderRadius: '40%'
-}
-
-document.body.querySelector('.default-states-demo .state-moved').onclick = function() {
-  animation.animateTo('moved');
-}
-document.body.querySelector('.default-states-demo .state-skewed').onclick = function() {
-  animation.animateTo('skewed');
-}
-document.body.querySelector('.default-states-demo .state-rounded').onclick = function() {
-  animation.animateTo('rounded');
-}
-document.body.querySelector('.default-states-demo .state-default').onclick = function() {
-  animation.animateTo('default');
+for (var i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener('click', function() {
+    statesOverridesDemoAnimation.animateTo(this.value, {
+      translateX: anime.random(-40, 40),
+      duration: anime.random(100, 1000),
+      easing: anime.easings[anime.random(0, anime.easings.length-1)]
+    });
+  });
 }
 /*DEMO*/
-}
-  </script>
-</div>
-
-<div id="statesParametersInheritance" class="demo">
-  <h3 class="demo-title">Parameters inheritance</h3>
-  <div class="demo-description">
-    <p>
-      By default, only the states properties and parameters are animated and previous states changes are not overrided by the new state.
-    </p>
-    <p>Defines default properties:</p>
-<pre><code>var animation = anime({
-  targets: '.el',
-  easing: 'easeInOutCirc'
+var statesOverridesDemoAnimation = anime({
+  targets: '.states-overrides-demo .el',
+  scaleX: 1,
+  scaleY: 1,
+  borderRadius: '0%',
+  duration: 500,
+  easing: 'easeInOutQuad',
+  states: {
+    circle: {
+      borderRadius: '50%'
+    },
+    rectangle: {
+      scaleX: 1.3,
+      scaleY: .6
+    }
+  },
+  begin: function(anim) {
+    var activeButton = document.querySelector('.states-overrides-demo button[value='+anim.currentState+']');
+    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('is-active');
+    if (activeButton) activeButton.classList.add('is-active');
+  }
 });
-
-animation.states.stateA = {
-  translateX: 250
-}
-
-animation.states.stateB = {
-  rotate: 45
-}</pre></code>
-    <p>Move the element by animating to state A:</p>
-<pre><code>animation.states.animateTo(stateA);</pre></code>
-    <p>
-      Then rotate the element by animating to state B.<br>
-      Since state B doesn't override state A properties, the element will keep the initial transformation from state A.
-    </p>
-<pre><code>animation.states.animateTo(stateB);</pre></code>
-    <p class="bubble warning">
-      CSS transforms order is relative to the order in which the states are called. If the new states apply a new transform proerty, the first animation will be canceled.
-    </p>
-  </div>
-  <div class="demo-content states-inheritance-demo">
-    <div class="line">
-      <div class="square large shadow"></div>
-      <div class="square large el"></div>
-    </div>
-    <div class="line player align-items">
-      <button class="state-moved">Move</button>
-      <button class="state-skewed">Skew</button>
-      <button class="state-rounded">Round Corners</button>
-    </div>
-  </div>
-  <script>var statesParametersInheritance= function() {
-/*DEMO*/
-var animation = anime({
-  targets: '.states-inheritance-demo .el',
-  easing: 'easeInOutCirc'
-});
-
-animation.states.moved = {
-  translateX: 250
-}
-
-animation.states.skewed = {
-  skew: -45
-}
-
-animation.states.rounded = {
-  borderRadius: '40%'
-}
-
-document.body.querySelector('.states-inheritance-demo .state-moved').onclick = function() {
-  animation.animateTo('moved');
-}
-document.body.querySelector('.states-inheritance-demo .state-skewed').onclick = function() {
-  animation.animateTo('skewed');
-}
-document.body.querySelector('.states-inheritance-demo .state-rounded').onclick = function() {
-  animation.animateTo('rounded');
-}
-/*DEMO*/
+statesOverridesDemoAnimation.goTo('circle');
 }
   </script>
 </div>
@@ -3195,7 +3134,7 @@ anime({
       <div class="small circle shadow"></div>
       <div class="small circle el"></div>
     </div>
-    <div class="line player align-items">
+    <div class="line controls">
       <button class="remove-el-button">Remove second target</button>
     </div>
   </div>
@@ -3221,9 +3160,9 @@ document.querySelector('.remove-el-button').addEventListener('click', function()
 <div id="getValue" class="demo">
   <h3 class="demo-title">getValue</h3>
   <div class="demo-description">
-    <pre><code>anime.getValue(el, propertyName, unit)</code></pre>
+    <p>Returns the original value of an element:</p>
+    <pre><code>anime.getValue(target, propertyName, unit);</code></pre>
     <p>
-      Returns the original value of an element.<br>
       Since <i>Anime</i> uses <a href="https://developer.mozilla.org/fr/docs/Web/API/Window/getComputedStyle">getComputedStyle</a> to access original CSS, the values are almost always returned in <code>'px'</code>, the third (optional) argument converts the value in the desired unit.
     </p>
     <pre><code>anime.getValue(domNode, 'width', 'rem');</code></pre>
@@ -3244,6 +3183,40 @@ var logEl = document.querySelector('.get-value-demo-log');
 var el = document.querySelector('.get-value-demo .el');
 
 logEl.innerHTML = '".el" width is "' + anime.getValue(el, 'width', 'rem') + 'rem"';
+/*DEMO*/
+}
+  </script>
+
+</div>
+
+<div id="setValue" class="demo">
+  <h3 class="demo-title">setValue</h3>
+  <div class="demo-description">
+    <p>
+      Imadiatly set values to the specified targets:<br>
+    </p>
+    <pre><code>anime.setValue(targets, {property: value});</code></pre>
+  </div>
+  <div class="demo-content set-value-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var setValue = function() {
+/*DEMO*/
+anime.setValue('.set-value-demo .el', {
+  translateX: function() { return anime.random(50, 250); },
+  rotate: function() { return anime.random(0, 360); },
+});
 /*DEMO*/
 }
   </script>

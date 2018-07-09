@@ -7,7 +7,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 html,
 body,
 header {
-  background-color: #16161c; /* Black */
+  background-color: #1A1C1E; /* Black */
 }
 
 body {
@@ -16,6 +16,7 @@ body {
   height: 100%;
   color: white;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: RoobertTRIAL-Regular;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -59,17 +60,22 @@ body {
 }
 
 .logo {
+  opacity: .6;
   display: flex;
   align-items: center;
   width: 240px;
   height: 60px;
-  padding: 10px 0 10px 55px;
   color: white;
   text-decoration: none;
-  background-image: url(../img/icons/icon-doc.png);
-  background-size: 32px;
-  background-position: 12px 13px;
-  background-repeat: no-repeat;
+}
+
+.logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.logo:hover {
+  opacity: 1;
 }
 
 header {
@@ -83,22 +89,15 @@ header {
   height: 60px;
   padding-left: 20px;
   padding-right: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(0,0,0,.35);
 }
 
-.logo, h2 {
-  font-size: 22px;
-  letter-spacing: 2px;
+h2 {
+  font-size: 16px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  font-weight: 200;
-}
-
-.logo {
-  opacity: .6;
-}
-
-.logo:hover {
-  opacity: 1;
+  /*font-weight: 200;*/
+  font-family: RoobertTRIAL-SemiBold;
 }
 
 /* Panes */
@@ -115,7 +114,7 @@ header {
   flex-direction: column;
   width: 240px;
   padding-top: 60px;
-  border-right: 1px solid rgba(0,0,0,.25);
+  border-right: 1px solid rgba(0,0,0,.35);
 }
 
 .sidebar-info {
@@ -146,10 +145,10 @@ header {
   content: "";
   display: block;
   position: absolute;
-  top: 3px;
+  top: 4px;
   left: 2px;
   width: 1px;
-  height: 14px;
+  height: calc(100% - 8px);
   background-color: white;
 }
 
@@ -162,8 +161,9 @@ header {
   padding-left: 10px;
   color: #FFF;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 20px;
+  letter-spacing: .5px;
   text-transform: uppercase;
 }
 
@@ -213,9 +213,9 @@ header {
 .demo-info {
   flex-direction: column;
   width: 50%;
-  font-size: 15px;
-  line-height: 25px;
-  border-left: 1px solid rgba(0,0,0,.25);
+  font-size: 16px;
+  line-height: 22px;
+  /*border-left: 1px solid rgba(0,0,0,.35);*/
 }
 
 .info-output {
@@ -236,7 +236,7 @@ header {
 .demo-info code {
   font-family: "Input Mono Reg", "Space Mono", monospace;
   font-size: 14px;
-  line-height: 25px;
+  line-height: 22px;
   white-space: pre-wrap;
 }
 
@@ -251,6 +251,17 @@ header {
 
 .demo-info i {
   font-style: italic;
+}
+
+.demo-info a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.demo-info a:hover {
+  border-bottom: 1px solid currentColor;
 }
 
 .demo-info a[href^="http"]:visited {
@@ -289,6 +300,7 @@ header {
 .demo-info code.hljs {
   display: inline-block;
   font-size: 14px;
+  line-height: 22px;
 }
 
 .demo-info pre {
@@ -316,26 +328,24 @@ header {
 
 .demo-info table {
   margin-bottom: 20px;
-  border: 1px solid #2E2E33;
+  border: 1px solid rgba(255,255,255,.15);
   border-spacing: 0;
   border-radius: 3px;
-}
-
-.demo-info thead {
-  font-weight: 200;
-  text-transform: uppercase;
-  letter-spacing: .15em;
-  color: rgba(255,255,255,.5);
 }
 
 .demo-info td {
   vertical-align: middle;
   padding: 8px 12px;
-  border-left: 1px solid #2E2E33;
-  border-top: 1px solid #2E2E33;
+  border-left: 1px solid rgba(255,255,255,.15);
+  border-top: 1px solid rgba(255,255,255,.15);
 }
 
 .demo-info thead td {
+  text-transform: uppercase;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.4);
   border-top: none;
 }
 
@@ -360,6 +370,23 @@ header {
   min-width: 330px;
 }
 
+.demos::-webkit-scrollbar {
+  width: 1px;
+  background-color: transparent;
+}
+
+.demos::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,.4);
+}
+
+.demos::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,.3);
+}
+
+.demos::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,.6);
+}
+
 article {
   width: 100%;
   display: flex;
@@ -367,10 +394,6 @@ article {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
-}
-
-.demos-title {
-  opacity: 1;
 }
 
 .demo {
@@ -383,7 +406,7 @@ article {
   width: 100%;
   min-height: 200px;
   padding-top: 35px;
-  border-bottom: 1px solid rgba(0,0,0,.25);
+  border-bottom: 1px solid rgba(0,0,0,.35);
   cursor: pointer;
 }
 
@@ -432,7 +455,7 @@ article {
   left: 20px;
   width: calc(100% - 40px);
   padding: 23px 0;
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #FFF;
@@ -449,7 +472,12 @@ article {
   padding: 1px 0px;
 }
 
-.player {
+.line.align-center {
+  display: flex;
+  justify-content: center;
+}
+
+.controls {
   opacity: .4;
   display: flex;
   align-items: center;
@@ -458,29 +486,29 @@ article {
   padding-bottom: 10px;
 }
 
-.player button {
+.controls button {
   position: relative;
   display: block;
   margin: 0 0 0 -1px;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   border: 1px solid currentColor;
   background-color: transparent;
   color: currentColor;
 }
 
-.player button:focus {
+.controls button:focus {
   outline: none;
 }
 
-.active .player {
+.active .controls {
   opacity: 1;
 }
 
-.active .player button:hover:after {
+.active .controls button:after {
   content: '';
-  opacity: .3;
+  opacity: 0;
   position: absolute;
   left: 0;
   top: 0;
@@ -490,11 +518,20 @@ article {
   background-color: currentColor;
 }
 
-.player button:first-child {
+.active .controls button:hover:after {
+  opacity: .2;
+}
+
+.controls button.is-active:after,
+.controls button.is-active:hover:after {
+  opacity: .4;
+}
+
+.controls button:first-child {
   margin-left: 0;
 }
 
-.player input {
+.controls input {
   margin-left: 10px;
 }
 
@@ -580,11 +617,17 @@ input.progress[value]::-webkit-slider-thumb {
   height: 28px;
   margin: 1px;
   background-color: currentColor;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .circle {
   border-radius: 50%;
+}
+
+.square.outline,
+.circle.outline {
+  background-color: transparent;
+  border: 1px solid currentColor;
 }
 
 .triangle {

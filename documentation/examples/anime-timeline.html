@@ -16,7 +16,7 @@
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
   <link href="../assets/css/documentation.css" rel="stylesheet">
-  <script src="../../lib/anime.min.js"></script>
+  <!-- <script src="../../lib/anime.min.js"></script> -->
   <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
   <style>
 
@@ -89,7 +89,9 @@
   </div>
 
 </body>
-<script>
+<script type="module">
+
+  import anime from '../../src/index.js';
 
   var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
