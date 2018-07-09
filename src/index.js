@@ -557,6 +557,30 @@ function setDashoffset(el) {
 
 // Motion path
 
+function getParentSVG(el) {
+  let parentEl = el.parentNode;
+  while (is.svg(parentEl)) {
+    parentEl = parentEl.parentNode;
+    if (!is.svg(parentEl.parentNode)) break;
+  }
+  return parentEl;
+}
+
+function getPathCoords(el) {
+  const parentSVG = getParentSVG(el);
+  const parentSVGRect = parentSVG.getBoundingClientRect();
+  const parentSVGWidth = parentSVGRect.width;
+  const parentSVGHeight = parentSVGRect.height;
+  const parentViewBox = parentSVG.getAttribute('viewBox');
+  const viewBoxData = parentViewBox ? parentViewBox.split(' ') : [0, 0, parentSVGWidth, parentSVGHeight];
+  return {
+    x: viewBoxData[0] / 1,
+    y: viewBoxData[1] / 1,
+    w: parentSVGWidth / viewBoxData[2],
+    h: parentSVGHeight / viewBoxData[3]
+  }
+}
+
 function getPath(path, percent) {
   const el = is.str(path) ? selectString(path)[0] : path;
   const p = percent || 100;
@@ -574,12 +598,13 @@ function getPathProgress(path, progress) {
     const l = progress + offset >= 1 ? progress + offset : 0;
     return path.el.getPointAtLength(l);
   }
+  const pathCoords = getPathCoords(path.el);
   const p = point();
   const p0 = point(-1);
   const p1 = point(+1);
   switch (path.property) {
-    case 'x': return p.x;
-    case 'y': return p.y;
+    case 'x': return (p.x - pathCoords.x) * pathCoords.w;
+    case 'y': return (p.y - pathCoords.y) * pathCoords.h;
     case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
   }
 }
