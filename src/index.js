@@ -1080,7 +1080,7 @@ function anime(params = {}) {
     if (!state) return;
     if (paramsOverrides) state = mergeObjects(paramsOverrides, state);
     anime.remove(state.targets);
-    var animation = anime(state);
+    const animation = anime(state);
     animation.currentState = stateName;
     return animation;
   }
