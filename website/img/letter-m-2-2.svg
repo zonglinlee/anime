@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 124">
+  <g id="Page-2" fill="none" fill-rule="evenodd">
+    <g id="letter-m-2-2" stroke-width="6">
+      <path id="line" stroke="#61C3FF" d="M64 120V32C64 18.745 74.745 8 88 8c24 0 8 53.1 40 53.1S144 8 168 8c13.255 0 24 10.745 24 24v88"/>
+      <path id="line" stroke="#1CE2B2" d="M184 120V32c-.014-8.752-7.168-16-16-16-16 0-4.741 51.1-40 51.1S104 16 88 16c-8.837 0-16 7.158-16 16v88"/>
+      <path id="line" stroke="#FF1461" d="M80 120V32c0-4.421 3.582-8 8-8 13.397 0 1.066 49.1 40 49.1S154.73 24 168 24c4.424 0 8 3.65 8 8v88"/>
+    </g>
+  </g>
+</svg>

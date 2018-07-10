@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 380">
+  <g id="Page-3" fill="none" fill-rule="evenodd">
+    <g id="api-anim">
+      <path id="code" stroke="#1CE2B2" stroke-width="12" d="M24 32h112"/>
+      <path id="parenthese" stroke="#787891" stroke-width="3" d="M153 42c-1.88-2.757-3-6.229-3-10s1.12-7.243 3-10" stroke-linecap="square"/>
+      <path id="bracket" stroke="#787891" stroke-width="3" d="M166 42c-1.767 0-3.2-1.492-3.2-3.333v-3.334c0-1.84-1.433-3.333-3.2-3.333H158h1.6c1.767 0 3.2-1.492 3.2-3.333v-3.334c0-1.84 1.433-3.333 3.2-3.333" stroke-linecap="square"/>
+      <path id="code" stroke="#FF1461" stroke-width="12" d="M56 56h160"/>
+      <path id="code" stroke="#FF1461" stroke-width="12" d="M228 56h132"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 80h136"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M204 80h76"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 104h152"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M220 104h92"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 128h160"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M228 128h116"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 152h168"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M236 152h92"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 176h144"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M212 176h76"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 200h136"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M205 200h76"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M56 224h152"/>
+      <path id="code" stroke="#5A87FF" stroke-width="12" d="M220 224h92"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M56 248h152"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M220 248h92"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M56 272h160"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M228 272h100"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M56 296h136"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M204 296h140"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M56 321h152"/>
+      <path id="code" stroke="#FBF38C" stroke-width="12" d="M220 321h92"/>
+      <path id="bracket" stroke="#787891" stroke-width="3" d="M26 334c1.767 0 3.2 1.492 3.2 3.333v3.334c0 1.84 1.433 3.333 3.2 3.333H34h-1.6c-1.767 0-3.2 1.492-3.2 3.333v3.334c0 1.84-1.433 3.333-3.2 3.333" stroke-linecap="square"/>
+      <path id="parenthese" stroke="#787891" stroke-width="3" d="M40 334c1.88 2.757 3 6.229 3 10s-1.12 7.243-3 10" stroke-linecap="square"/>
+      <path id="dot" stroke="#787891" stroke-width="3" d="M54 337v3"/>
+      <path id="coma" stroke="#787891" stroke-width="3" d="M53.67 345v1.692c0 1.49-.233 2.935-.67 4.308" stroke-linecap="square"/>
+    </g>
+  </g>
+</svg>
