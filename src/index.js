@@ -557,7 +557,7 @@ function setDashoffset(el) {
 
 // Motion path
 
-function getParentSVG(el) {
+function getParentSvgEl(el) {
   let parentEl = el.parentNode;
   while (is.svg(parentEl)) {
     parentEl = parentEl.parentNode;
@@ -566,29 +566,33 @@ function getParentSVG(el) {
   return parentEl;
 }
 
-function getPathCoords(el) {
-  const parentSVG = getParentSVG(el);
-  const parentSVGRect = parentSVG.getBoundingClientRect();
-  const parentSVGWidth = parentSVGRect.width;
-  const parentSVGHeight = parentSVGRect.height;
-  const parentViewBox = parentSVG.getAttribute('viewBox');
-  const viewBoxData = parentViewBox ? parentViewBox.split(' ') : [0, 0, parentSVGWidth, parentSVGHeight];
+function getParentSvg(pathEl, svgData) {
+  const svg = svgData || {};
+  const parentSvgEl = svg.el || getParentSvgEl(pathEl);
+  const rect = parentSvgEl.getBoundingClientRect();
+  const viewBoxAttr = parentSvgEl.getAttribute('viewBox');
+  const width = rect.width;
+  const height = rect.height;
+  const viewBox = svg.viewBox || (viewBoxAttr ? viewBoxAttr.split(' ') : [0, 0, width, height]);
   return {
-    x: viewBoxData[0] / 1,
-    y: viewBoxData[1] / 1,
-    w: parentSVGWidth / viewBoxData[2],
-    h: parentSVGHeight / viewBoxData[3]
+    el: parentSvgEl,
+    viewBox: viewBox,
+    x: viewBox[0] / 1,
+    y: viewBox[1] / 1,
+    w: width / viewBox[2],
+    h: height / viewBox[3]
   }
 }
 
 function getPath(path, percent) {
-  const el = is.str(path) ? selectString(path)[0] : path;
+  const pathEl = is.str(path) ? selectString(path)[0] : path;
   const p = percent || 100;
   return function(property) {
     return {
-      el,
       property,
-      totalLength: getTotalLength(el) * (p / 100)
+      el: pathEl,
+      svg: getParentSvg(pathEl),
+      totalLength: getTotalLength(pathEl) * (p / 100)
     }
   }
 }
@@ -598,13 +602,13 @@ function getPathProgress(path, progress) {
     const l = progress + offset >= 1 ? progress + offset : 0;
     return path.el.getPointAtLength(l);
   }
-  const pathCoords = getPathCoords(path.el);
+  const svg = getParentSvg(path.el, path.svg)
   const p = point();
   const p0 = point(-1);
   const p1 = point(+1);
   switch (path.property) {
-    case 'x': return (p.x - pathCoords.x) * pathCoords.w;
-    case 'y': return (p.y - pathCoords.y) * pathCoords.h;
+    case 'x': return (p.x - svg.x) * svg.w;
+    case 'y': return (p.y - svg.y) * svg.h;
     case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
   }
 }
