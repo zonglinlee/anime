@@ -7,147 +7,118 @@
   <meta property="og:title" content="anime.js">
   <meta property="og:url" content="http://animejs.com">
   <meta property="og:description" content="Javascript Animation Engine">
-  <meta property="og:image" content="http://animejs.com/documentation/assets/img/icons/og.png">
+  <meta property="og:image" content="http://animejs.com/website/img/icons/og.png">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="anime.js">
   <meta name="twitter:site" content="@juliangarnier">
   <meta name="twitter:description" content="Javascript Animation Engine">
-  <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
-  <link rel="apple-touch-icon-precomposed" href="documentation/assets/img/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" href="documentation/assets/img/icons/favicon.png" >
-  <link href="documentation/assets/css/anime.css" rel="stylesheet">
-  <link href="documentation/assets/css/site.css" rel="stylesheet">
+  <meta name="twitter:image" content="http://animejs.com/website/img/icons/twitter.png">
+  <link rel="apple-touch-icon-precomposed" href="website/img/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="website/img/icons/favicon.png" >
+  <link href="website/css/styles.css" rel="stylesheet">
 </head>
 <body>
-  <canvas class="fireworks"></canvas>
+  <svg class="filters" version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+    <filter id="blur" class="filter">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0" result="blur" />
+      <feBlend in="SourceGraphic" in2="blur" />
+    </filter>
+    </defs>
+  </svg>
   <div class="logo-animation">
-    <div class="letters">
-      <div class="letter letter-a">
-        <svg viewBox="0 0 162 162">
-          <g fill="none" fill-rule="evenodd" stroke="#5E89FB">
-            <path class="fill in" stroke-width="40" d="M101 141H81a60 60 0 1 1 0-120c33.14 0 59 26.86 60 60v80"/>
-            <path class="fill out" stroke-width="40" d="M141 161V81c-1-33.14-26.86-60-60-60a60 60 0 1 0 0 120h20"/>
-            <path class="line out" stroke-width="2" d="M121 161V81.33C120.18 58.59 102.7 41 81 41a40 40 0 1 0 0 80h20v40H81A80 80 0 1 1 81 1c43.8 0 78.66 35.27 80 79.7V161h-40z"/>
-          </g>
+
+    <div class="anime-logo">
+      <svg class="sphere" viewBox="0 0 1500 1500" width="100%" height="100%" fill="none" fill-rule="evenodd" stroke-width="2">
+        <path id="elipse" stroke="#FF1461" d="M1257.57 1255.07c-85.914 85.916-179.94 131.188-210.01 101.117-30.07-30.07 15.201-124.095 101.117-210.01 85.915-85.916 179.94-131.187 210.01-101.117 30.07 30.07-15.2 124.096-101.116 210.01z"/>
+        <path id="elipse" stroke="#FF7C72" d="M1254.743 1252.243c-128.483 128.482-269.046 196.23-313.956 151.32-44.91-44.91 22.838-185.473 151.321-313.955 128.482-128.483 269.045-196.231 313.955-151.32 44.91 44.91-22.838 185.472-151.32 313.955z"/>
+        <path id="elipse" stroke="#FB89FB" d="M1246.61 1243.404c-159.919 159.92-336.097 243.022-393.504 185.615-57.407-57.407 25.696-233.585 185.615-393.505 159.92-159.92 336.098-243.022 393.505-185.615 57.407 57.407-25.696 233.585-185.615 393.505z"/>
+        <path id="elipse" stroke="#61C3FF" d="M1223.63 1221.13c-185.89 185.89-391.352 281.814-458.912 214.253-67.561-67.56 28.363-273.023 214.253-458.912 185.89-185.89 391.351-281.814 458.912-214.253 67.56 67.56-28.364 273.022-214.253 458.912z"/>
+        <path id="elipse" stroke="#5EF3FB" d="M1196.053 1193.553c-209.712 209.711-441.45 317.982-517.603 241.83-76.152-76.152 32.12-307.89 241.831-517.602 209.712-209.712 441.45-317.983 517.602-241.83 76.152 76.152-32.119 307.89-241.83 517.602z"/>
+        <path id="elipse" stroke="#18FF92" d="M1161.05 1157.844c-229.432 229.433-483.015 347.835-566.392 264.458-83.377-83.377 35.025-336.96 264.458-566.393 229.433-229.433 483.016-347.835 566.393-264.458 83.377 83.377-35.025 336.96-264.458 566.393z"/>
+        <path id="elipse" stroke="#1CE2B2" d="M1120.392 1117.892c-245.249 245.25-516.877 371.25-606.697 281.429-89.821-89.82 36.179-361.449 281.428-606.698 245.25-245.25 516.877-371.249 606.698-281.428 89.82 89.82-36.18 361.448-281.429 606.697z"/>
+        <path id="elipse" stroke="#B08CFF" d="M1072.309 1069.809c-261.26 261.26-550.617 395.492-646.296 299.813-95.678-95.678 38.553-385.035 299.814-646.295 261.26-261.261 550.617-395.492 646.295-299.814 95.679 95.679-38.552 385.035-299.813 646.296z"/>
+        <path id="elipse" stroke="#FBF38C" d="M1012.205 1009.705c-269.071 269.071-567.134 407.26-665.741 308.652-98.608-98.607 39.58-396.67 308.652-665.741 269.071-269.071 567.134-407.26 665.741-308.652 98.607 98.607-39.58 396.67-308.652 665.74z"/>
+        <path id="elipse" stroke="#FF7C72" d="M940.787 938.287c-271.414 271.414-572.01 410.87-671.398 311.48-99.388-99.388 40.066-399.983 311.48-671.397 271.415-271.415 572.01-410.87 671.399-311.48 99.388 99.388-40.067 399.983-311.48 671.397z"/>
+        <path id="elipse" stroke="#FF48AB" d="M864.42 861.92c-269.072 269.07-567.134 407.26-665.741 308.652-98.608-98.608 39.58-396.67 308.652-665.741 269.07-269.072 567.133-407.26 665.74-308.652 98.608 98.607-39.58 396.67-308.651 665.74z"/>
+        <path id="elipse" stroke="#FF1461" d="M792.295 789.795c-261.261 261.26-550.617 395.491-646.296 299.813-95.678-95.678 38.553-385.035 299.813-646.296C707.073 182.052 996.43 47.821 1092.108 143.5c95.678 95.679-38.553 385.035-299.813 646.296z"/>
+        <path id="elipse" stroke="#A6FF8F" d="M723.705 721.205c-245.249 245.25-516.877 371.25-606.697 281.429-89.82-89.82 36.179-361.449 281.428-606.698 245.25-245.25 516.877-371.249 606.698-281.428 89.82 89.82-36.18 361.448-281.429 606.697z"/>
+        <path id="elipse" stroke="#FF7C72" d="M661.126 657.92C431.693 887.351 178.111 1005.753 94.734 922.376 11.357 839 129.759 585.417 359.192 355.985 588.625 126.552 842.207 8.15 925.584 91.527c83.377 83.377-35.025 336.96-264.458 566.392z"/>
+        <path id="elipse" stroke="#FBF38C" d="M595.719 593.219c-209.712 209.712-441.45 317.983-517.602 241.83-76.152-76.152 32.119-307.89 241.83-517.602C529.66 107.736 761.397-.535 837.55 75.617c76.152 76.152-32.12 307.89-241.831 517.602z"/>
+        <path id="elipse" stroke="#5A87FF" d="M537.03 534.53C351.14 720.418 145.677 816.342 78.116 748.781 10.557 681.222 106.48 475.76 292.37 289.87 478.26 103.98 683.722 8.056 751.282 75.617c67.561 67.56-28.363 273.023-214.253 458.912z"/>
+        <path id="elipse" stroke="#B08CFF" d="M477.986 474.779C318.066 634.699 141.888 717.8 84.48 660.394 27.074 602.987 110.177 426.81 270.096 266.89 430.016 106.97 606.194 23.867 663.601 81.274c57.407 57.407-25.696 233.585-185.615 393.505z"/>
+        <path id="elipse" stroke="#5EF3FB" d="M423.892 421.392C295.41 549.875 154.847 617.623 109.937 572.712c-44.91-44.91 22.838-185.472 151.32-313.955 128.483-128.482 269.046-196.23 313.956-151.32 44.91 44.91-22.838 185.473-151.321 313.955z"/>
+        <path id="elipse" stroke="#1CE2B2" d="M367.324 364.824c-85.916 85.915-179.94 131.186-210.011 101.116-30.07-30.07 15.2-124.096 101.116-210.01 85.915-85.916 179.94-131.188 210.01-101.117 30.071 30.07-15.2 124.095-101.115 210.01z"/>
+      </svg>
+      <div class="anime-logo-signs">
+        <svg class="logo-letter letter-a" viewBox="0 0 144 124" width="144" height="124" fill="none" fill-rule="evenodd">
+          <path class="line" d="M8 8h104c13.255 0 24 10.745 24 24v64c0 13.255-10.745 24-24 24H32c-13.255 0-24-10.745-24-24V64c0-13.255 10.745-24 24-24h72"/>
+          <path class="line" d="M103.932 48.009H31.994c-8.836 0-16 7.163-16 16V96c0 8.837 7.164 16 16 16l79.921-.014c8.831 0 15.992-7.155 16-15.986L128 32c0-8.837-7.163-16-16-16L8 16.012"/>
+          <path class="line" d="M8 24h104a8 8 0 0 1 8 8l-.068 64.008a8 8 0 0 1-8 7.992H31.99a8 8 0 0 1-8-8V64a8 8 0 0 1 8-8h71.946"/>
+          <path class="fill" stroke="#FFFFFF" stroke-width="24" d="M108 48H32c-8.837-.134-16 7.009-16 16v32c0 8.857 7.163 16 16 16h80c8.837 0 16-7.143 16-16V32c0-8.857-7.163-16-16-16H4"/>
         </svg>
-      </div>
-      <div class="letter letter-n">
-        <svg viewBox="0 0 162 162">
-          <g fill="none" fill-rule="evenodd" stroke="#FB155A">
-            <path class="fill in" stroke-width="40" d="M21 161V1"/>
-            <path class="fill out" stroke-width="40" d="M21 1v160"/>
-            <path class="fill in" stroke-width="40" d="M21 161V81c1-33.14 26.86-60 60-60a60 60 0 0 1 60 60v80"/>
-            <path class="fill out" stroke-width="40" d="M141 161V81a60 60 0 0 0-60-60c-33.14 0-59 26.86-60 60v80"/>
-            <path class="line out" stroke-width="2" d="M41 161V1H1v160h40z"/>
-            <path class="line out" stroke-width="2" d="M1 161V80.4C2.35 36.27 37.2 1 81 1a80 80 0 0 1 80 80v80h-40V81a40 40 0 0 0-40-40c-21.7 0-39.18 17.59-40 40.33V161H1z"/>
-          </g>
+        <svg class="logo-letter letter-n" viewBox="0 0 144 124" width="144" height="124" fill="none" fill-rule="evenodd">
+          <path class="line" d="M8 120V32C8 18.745 18.745 8 32 8h80c13.255 0 24 10.745 24 24v88"/>
+          <path class="line" d="M128 120V32c-.014-8.752-7.168-15.907-16-16H32c-8.837 0-16 7.158-16 16v88"/>
+          <path class="line" d="M24 120V32c0-4.421 3.582-8 8-8h80c4.423.073 8 3.65 8 8v88"/>
+          <path class="fill" stroke="#FFFFFF" stroke-width="24" d="M128 124V32c0-8.837-7.185-16-16-16H32c-8.815 0-16 7.163-16 16v92"/>
         </svg>
-      </div>
-      <div class="letter letter-i">
-        <svg viewBox="0 0 82 162">
-          <g fill="none" fill-rule="evenodd" stroke="#18FF92">
-            <path class="fill in" stroke-width="40" d="M21 61v20a60 60 0 0 0 60 60"/>
-            <path class="fill out" stroke-width="40" d="M81 141a60 60 0 0 1-60-60V61"/>
-            <path class="line out" stroke-width="2" d="M81 121a40 40 0 0 1-40-40V61H1v20a80 80 0 0 0 80 80v-40z"/>
-          </g>
+        <svg class="logo-letter letter-i" viewBox="0 0 32 124" width="32" height="124" fill="none" fill-rule="evenodd">
+          <path class="line" d="M8 120V8"/>
+          <path class="line" d="M16 8v112"/>
+          <path class="line" d="M24 120V8"/>
+          <path class="fill" stroke="#FFFFFF" stroke-width="24" d="M16 36v88"/>
         </svg>
-      </div>
-      <div class="letter letter-m-1">
-        <svg viewBox="0 0 162 162">
-          <g fill="none" fill-rule="evenodd" stroke="#5E89FB">
-            <path class="fill in" stroke-width="40" d="M21 161V1"/>
-            <path class="fill out" stroke-width="40" d="M21 1v160"/>
-            <path class="fill in" stroke-width="40" d="M21 161V81c1-33.14 26.86-60 60-60a60 60 0 0 1 60 60v80"/>
-            <path class="fill out" stroke-width="40" d="M141 161V81a60 60 0 0 0-60-60c-33.14 0-59 26.86-60 60v80"/>
-            <path class="line out" stroke-width="2" d="M41 161V1H1v160h40z"/>
-            <path class="line out" stroke-width="2" d="M1 161V80.4C2.35 36.27 37.2 1 81 1a80 80 0 0 1 80 80v80h-40V81a40 40 0 0 0-40-40c-21.7 0-39.18 17.59-40 40.33V161H1z"/>
-          </g>
+        <svg class="logo-letter letter-m" viewBox="0 0 256 124" width="256" height="124" fill="none" fill-rule="evenodd">
+          <path class="line" 
+            d="M64 120V32C64 18.745 74.745 8 88 8c24 0 8 .1 40 .1s16-.1 40-.1c13.255 0 24 10.745 24 24v88"
+            data-d2="M8 120V32C8 18.745 18.745 8 32 8c24 0 64 40 96 40s72-40 96-40c13.255 0 24 10.745 24 24v88"
+            data-d3="M8 120V32C8 18.745 18.745 8 32 8c24 0 64 .1 96 .1s72-.1 96-.1c13.255 0 24 10.745 24 24v88"
+          />
+          <path class="line" 
+            d="M72 120V32c0-8.842 7.163-16 16-16 16 0 8 .1 40 .1s24-.1 40-.1c8.832 0 15.986 7.248 16 16v88"
+            data-d2="M16 120V32c0-8.842 7.163-16 16-16 16 0 64 38 96 38s80-38 96-38c8.832 0 15.986 7.248 16 16v88"
+            data-d3="M16 120V32c0-8.842 7.163-16 16-16 16 0 64 .1 96 .1s80-.1 96-.1c8.832 0 15.986 7.248 16 16v88"
+          />
+          <path class="line" 
+            d="M80 120V32c0-4.421 3.582-8 8-8 13.397 0 8 .1 40 .1s26.73-.1 40-.1c4.424 0 8 3.65 8 8v88"
+            data-d2="M24 120V32c0-4.421 3.582-8 8-8 13.397 0 64 36 96 36s82.73-36 96-36c4.424 0 8 3.65 8 8v88"
+            data-d3="M24 120V32c0-4.421 3.582-8 8-8 13.397 0 64 .1 96 .1s82.73-.1 96-.1c4.424 0 8 3.65 8 8v88"
+          />
+          <path class="fill" stroke="#FFFFFF" stroke-width="24" d="M16 124V32c0-8.837 7.174-16 16-16 42.62.067 74.62.1 96 .1 21.286 0 53.286-.033 96-.1 8.826 0 16 7.163 16 16v92"/>
         </svg>
-      </div>
-      <div class="letter letter-m-2">
-        <svg viewBox="0 0 162 162">
-          <g fill="none" fill-rule="evenodd" stroke="#FB155A">
-            <path class="fill in" stroke-width="40" d="M21 161V81c1-33.14 26.86-60 60-60a60 60 0 0 1 60 60v80"/>
-            <path class="fill out" stroke-width="40" d="M141 161V81a60 60 0 0 0-60-60c-33.14 0-59 26.86-60 60v80"/>
-            <path class="line out" stroke-width="2" d="M1 161V80.4C2.35 36.27 37.2 1 81 1a80 80 0 0 1 80 80v80h-40V81a40 40 0 0 0-40-40c-21.7 0-39.18 17.59-40 40.33V161H1z"/>
-          </g>
+        <svg class="logo-letter letter-e" viewBox="0 0 144 124" width="144" height="124" fill="none" fill-rule="evenodd">
+          <path class="line" d="M40 88h72c13.255 0 24-10.745 24-24V32c0-13.255-10.745-24-24-24H32C18.745 8 8 18.745 8 32v64c0 13.255 10.745 24 24 24h104"/>
+          <path class="line" d="M136 112l-104.085.014c-8.837 0-16-7.163-16-16.014L16 32c.008-8.831 7.169-15.986 16-15.986L112 16c8.837 0 16 7.163 16 16v32c0 8.837-7.163 16-16 16H40"/>
+          <path class="line" d="M40 72h72a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8H31.992a8 8 0 0 0-8 7.992l-.068 64c0 4.426 3.581 8.008 8 8.008H136"/>
+          <path class="fill" stroke="#FFFFFF" stroke-width="24" d="M36 80h76c8.837-.18 16-7.323 16-16V32c0-8.857-7.163-16-16-16H32c-8.837 0-16 7.143-16 16v64c0 8.857 7.163 16 16 16h108"/>
         </svg>
-      </div>
-      <div class="letter letter-e">
-        <svg viewBox="0 0 162 162">
-          <g fill="none" fill-rule="evenodd" stroke="#18FF92">
-            <path class="fill in" stroke-width="40" d="M81 101h60V81c-1-33.14-26.86-60-60-60a60 60 0 1 0 0 120"/>
-            <path class="fill out" stroke-width="40" d="M81 141a60 60 0 1 1 0-120c33.14 0 59 26.86 60 60v20H81"/>
-            <path class="line out" stroke-width="2" d="M81 81v40h80V80.7C159.66 36.27 124.8 1 81 1a80 80 0 1 0 0 160v-40a40 40 0 1 1 0-80c21.6 0 39.01 17.42 39.99 40H81z"/>
-          </g>
-        </svg>
-      </div>
-      <div class="logo-icon">
-        <div class="icon">
-          <svg viewBox="0 0 62 62">
-            <g fill="none" fill-rule="evenodd" stroke-width="2" transform="translate(1 1)">
-              <path class="icon-curve" stroke="#FF1554" d="M0 16a80.88 80.88 0 0 1 44 44"/>
-              <path class="icon-line" stroke="#5E89FB" d="M4 0h54a2 2 0 0 1 2 2.01V58A2 2 0 0 1 58 60H2a2 2 0 0 1-2-2.01V2A2 2 0 0 1 2 0h2z"/>
-              <rect width="40" height="40" x="10" y="10" stroke="#18FF92" rx="20"/>
-            </g>
-          </svg>
-        </div>
-        <div class="icon-text">
-          <svg viewBox="0 0 160 62">
-            <g fill="#FBF3FB" fill-rule="evenodd">
-              <path d="M27.33 18h1.73l10.15 25.7h-1.69l-3.24-8.24H21.97l-3.28 8.24H17L27.33 18zm6.45 16.1l-5.51-14.55h-.07l-5.73 14.54h11.3z"/>
-              <polygon points="51.334 18 53.314 18 69.55 41.58 69.622 41.58 69.622 18 71.206 18 71.206 43.704 69.334 43.704 52.99 19.944 52.918 19.944 52.918 43.704 51.334 43.704"/>
-              <polygon points="86.027 18 87.611 18 87.611 43.704 86.027 43.704"/>
-              <polygon points="102.433 18 104.701 18 114.745 41.94 114.817 41.94 124.753 18 127.021 18 127.021 43.704 125.437 43.704 125.437 19.944 125.365 19.944 115.573 43.704 113.989 43.704 104.089 19.944 104.017 19.944 104.017 43.704 102.433 43.704"/>
-              <polygon points="141.843 18 159.123 18 159.123 19.368 143.427 19.368 143.427 29.664 158.187 29.664 158.187 31.032 143.427 31.032 143.427 42.336 159.303 42.336 159.303 43.704 141.843 43.704"/>
-            </g>
+        <div class="bounce">
+          <svg viewBox="0 0 720 288" width="720" height="288" fill="none">
+            <path d="M448 268c0-131.066-15.14-203.447-71.885-203.447C319.371 64.553 304 156.038 304 240"/>
+            <rect class="dot" fill="#FFF" x="-12" y="-12" width="24" height="24"></rect>
           </svg>
         </div>
       </div>
-      <div class="dot dot-i">
-        <svg viewBox="0 0 42 42">
-          <g fill="none" fill-rule="evenodd">
-            <rect width="40" height="40" x="1" y="1" fill="#17F28C" rx="20"/>
-          </g>
-        </svg>
-      </div>
-      <div class="dot dot-e">
-        <svg viewBox="0 0 42 42">
-          <g fill="none" fill-rule="evenodd">
-            <rect width="40" height="40" x="1" y="1" fill="#FFFFFF" rx="20"/>
-          </g>
-        </svg>
-      </div>
+      <h2>Javascript Animation Engine</h2>
     </div>
+
   </div>
-  <div class="info">
-    <p class="description">
-      Javascript Animation Engine
-    </p>
-    <div class="links">
-      <a class="button blue" href="documentation" target="_blank">
-        <svg viewBox="0 0 180 60">
-          <path d="M10,10 C10,10 50,9.98999977 90,9.98999977 C130,9.98999977 170,10 170,10 C170,10 170.009995,20 170.009995,30 C170.009995,40 170,50 170,50 C170,50 130,50.0099983 90,50.0099983 C50,50.0099983 10,50 10,50 C10,50 9.98999977,40 9.98999977,30 C9.98999977,20 10,10 10,10 Z"></path>
-        </svg>
-        <span>Documentation</span>
-      </a>
-      <a class="button blue" href="https://codepen.io/collection/XLebem/" target="_blank">
-        <svg viewBox="0 0 180 60">
-          <path d="M10,10 C10,10 50,9.98999977 90,9.98999977 C130,9.98999977 170,10 170,10 C170,10 170.009995,20 170.009995,30 C170.009995,40 170,50 170,50 C170,50 130,50.0099983 90,50.0099983 C50,50.0099983 10,50 10,50 C10,50 9.98999977,40 9.98999977,30 C9.98999977,20 10,10 10,10 Z"></path>
-        </svg>
-        <span>CodePen</span>
-      </a>
-      <a class="button green" href="https://github.com/juliangarnier/anime" target="_blank">
-        <svg viewBox="0 0 180 60">
-          <path d="M10,10 C10,10 50,9.98999977 90,9.98999977 C130,9.98999977 170,10 170,10 C170,10 170.009995,20 170.009995,30 C170.009995,40 170,50 170,50 C170,50 130,50.0099983 90,50.0099983 C50,50.0099983 10,50 10,50 C10,50 9.98999977,40 9.98999977,30 C9.98999977,20 10,10 10,10 Z"></path>
-        </svg>
-        <span>GitHub</span>
-      </a>
+
+    <div class="logo-nav">
+
+      <nav class="logo-links">
+        <a href="/documentation"><span>Documentation</span></a>
+        <a href="https://codepen.io/collection/XLebem/"><span>CodePen</span></a>
+        <a href="https://github.com/juliangarnier/anime"><span>GitHub</span></a>
+      </nav>
+
     </div>
-    <p class="credits">
-      v<span class="version">0.0</span> © <span class="date">2016</span> <a href="http://juliangarnier.com" target="_blank">Julian Garnier</a>
-    </p>
-  </div>
+
+  <p class="credits">
+    v<span class="version">0.0</span> © <span class="date">2016</span> <a href="http://juliangarnier.com">Julian Garnier</a>
+  </p>
+
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -156,8 +127,7 @@
     ga('create', 'UA-79927007-1', 'auto');
     ga('send', 'pageview');
   </script>
-  <script src="anime.min.js"></script>
-  <script src="documentation/assets/js/fireworks.js"></script>
-  <script src="documentation/assets/js/site.js"></script>
+  <script src="lib/anime.min.js"></script>
+  <script src="website/js/scripts.js"></script>
 </body>
 </html>

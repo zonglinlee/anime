@@ -15,8 +15,9 @@
   <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png">
-  <link href="../assets/css/anime.css" rel="stylesheet">
-  <script src="../../anime.js"></script>
+  <link href="../assets/css/documentation.css" rel="stylesheet">
+  <script src="../../lib/anime.min.js"></script>
+  <!-- <script src="../assets/js/anime/anime.2.2.0.js"></script> -->
   <style>
     body {
       opacity: 0;
@@ -224,9 +225,8 @@
             { value: 0, duration: 20, delay: 500, easing: 'easeInQuart' },
             { value: 1, duration: 200, delay: 1000, easing: 'easeOutQuart' },
             { value: 0, duration: 400, delay: 500, easing: 'easeInBack' }
-          ],
-          offset: 0
-        })
+          ]
+        }, 0)
         .add({
           targets: '.dot-i',
           translateY: { value: [-200, 0], duration: 500, elasticity: 400 },
@@ -234,9 +234,8 @@
             { value: [0, 1], duration: 100, easing: 'easeOutQuart' },
             { value: 0, duration: 400, delay: 1400, easing: 'easeInBack' }
           ],
-          delay: 1200,
-          offset: 0
-        })
+          delay: 1200
+        }, 0)
         .add({
           targets: '.fill.in',
           strokeDashoffset: {
@@ -255,9 +254,8 @@
             value: 0,
             duration: 1,
             delay: function(el, i, t) { return 1900 + ( i * 80 ); },
-          },
-          offset: 0
-        })
+          }
+        }, 0)
         .add({
           targets: '.fill.out',
           strokeDashoffset: [
@@ -268,9 +266,8 @@
               delay: function(el, i) { return (i * 80); },
               easing: 'easeInQuart'
             }
-          ],
-          offset: 0
-        })
+          ]
+        }, 0)
         .add({
           targets: '.line.out',
           strokeDashoffset: {
@@ -284,16 +281,14 @@
             delay: function(el, i, t) { return 2000 + ( i * 100 ); },
             duration: 200,
             easing: 'linear'
-          },
-          offset: 0
-        })
+          }
+        }, 0)
         .add({
           targets: '.icon',
           opacity: { value: 1, duration: 10, delay: 2800, easing: 'linear' },
           translateY: { value: 60, duration: 800 },
-          delay: 4200,
-          offset: 0
-        })
+          delay: 4200
+        }, 0)
         .add({
           targets: '.icon-line',
           strokeDashoffset: [
@@ -311,20 +306,17 @@
             duration: 800,
             delay: 3400,
             easing: 'easeInQuad'
-          },
-          offset: 0
-        })
+          }
+        }, 0)
         .add({
           targets: ['.icon-text path', '.icon-text polygon'],
           translateY: [50, 0],
           opacity: { value: [0, 1], duration: 100, easing: 'linear' },
-          delay: function(el, i, t) { return 4200 + ( i * 20 ); },
-          offset: 0
-        })
+          delay: function(el, i, t) { return 4200 + ( i * 20 ); }
+        }, 0)
         
       function init() {
         document.body.classList.add('ready');
-        // logoTimeline.seek(4700);
         logoTimeline.play();
       }
 
@@ -339,6 +331,6 @@
     }
 
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <script src="../assets/js/vendors/stats.min.js"></script>
 </body>
 </html>

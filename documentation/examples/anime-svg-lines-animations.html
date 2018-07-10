@@ -15,8 +15,7 @@
   <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png">
-  <link href="../assets/css/anime.css" rel="stylesheet">
-  <script src="../../anime.js"></script>
+  <link href="../assets/css/documentation.css" rel="stylesheet">
   <style>
     body {
       display: flex;
@@ -27,10 +26,14 @@
       width: 100%;
       height: 100%;
     }
-    .anim, .anim svg {
+    .anim {
       position: relative;
-      width: 600px;
-      height: 400px;
+      width: 50%;
+    }
+    .anim svg {
+      position: relative;
+      width: 100%;
+      border: 1px solid red;
     }
     .anim path {
       stroke-width: 2;
@@ -62,7 +65,9 @@
       </g>
     </svg>
   </div>
-  <script>
+  <!-- <script type="module" src="../../src/index.js"></script> -->
+  <script type="module">
+    import anime from "../../src/index.js";
     anime({
       targets: ['line', 'circle', 'polygon', 'polyline', 'path', 'rect'],
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -76,12 +81,13 @@
       targets: '.item',
       translateX: pathEl('x'),
       translateY: pathEl('y'),
+      rotate: pathEl('angle'),
       easing: 'easeInOutSine',
       duration: 1500,
       direction: 'alternate',
       loop: true
     });
   </script>
-  <script src="../assets/js/stats.js"></script>
+  <!-- <script src="../assets/js/vendors/stats.min.js"></script> -->
 </body>
 </html>
