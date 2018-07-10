@@ -44,7 +44,7 @@ body {
   align-items: center;
   color: #000;
   font-family: Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 1.25rem;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   /*overflow: hidden;*/
 }
@@ -85,7 +85,6 @@ a {
 /* Logo animation */
 
 .intro-header {
-  pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,21 +96,36 @@ a {
 }
 
 .anime-logo-animation {
-  overflow: hidden;
   position: relative;
-  display: flex;
-  flex-shrink: 0;
   visibility: hidden;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 4.5em;
-  height: 3.4em;
-  font-size: 160px;
+  width: 100%;
+  padding-bottom: 25%;
+}
+
+@media (min-width: 720px) {
+  .anime-logo-animation {
+    width: 720px;
+    height: 220px;
+    padding-bottom: 0;
+  }
 }
 
 .anime-logo-animation.is-visible {
   visibility: visible;
+}
+
+.animation-wrapper {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 720px;
+  height: 544px;
+  margin: -272px 0 0 -360px;
 }
 
 .anime-logo-animation .anime-logo {
@@ -126,19 +140,20 @@ a {
   align-items: flex-end;
   position: relative;
   width: 100%;
-  height: 3.2em;
-  margin-top: -2.2em;
-  margin-bottom: .075em;
+  height: 512px;
+  margin-top: -352px;
+  margin-bottom: 8px;
 }
 
 .anime-logo-subtitle {
   opacity: 0;
   position: relative;
   width: 100%;
-  font-size: .1125em;
+  font-size: 18px;
   font-weight: bold;
   color: #000000;
-  letter-spacing: .1em;
+  letter-spacing: 17.2px;
+  text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
   text-align: center;
@@ -149,8 +164,8 @@ a {
   align-items: flex-end;
   overflow: hidden;
   height: 100%;
-  padding-bottom: .15em;
-  margin-bottom: -.125em;
+  padding-bottom: 24px;
+  margin-bottom: -20px;
   transform: translate3d(0,0,0);
 }
 
@@ -158,36 +173,56 @@ a {
   overflow: visible;
   position: absolute;
   left: 0;
-  bottom: .325em;
+  bottom: 67px;
 }
-
-/*.anime-logo-animation .bounce path {
-  stroke: red;
-}*/
 
 .anime-logo-animation .dot {
   position: absolute;
   z-index: 10;
   top: 0;
   left: 0;
-  width: .15em;
-  height: .15em;
-  margin: -.09375em 0 0 -.075em;
+  width: 24px;
+  height: 24px;
+  margin: -15px 0 0 -12px;
   background-color: #000;
   transform: translate3d(0,0,0);
 }
 
 .anime-logo-animation .logo-letter svg {
+  width: 100%;
   fill: none;
   fill-rule: evenodd;
 }
 
 .anime-logo-animation .line {
   stroke: #000;
-  stroke-width: .15em;
+  stroke-width: 24px;
 }
 
 .anime-logo-animation .fill {
   stroke: #000;
-  stroke-width: .15em;
+  stroke-width: 24px;
+}
+
+.animation-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Buttons and links */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 13.75rem;
+  height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: .125rem;
+  background: #FBFBF6;
+  border: 1px solid #D6D6D0;
+  box-shadow: 0 1px 3px 0 rgba(56,56,53,.1);
+  border-radius: 3px;
 }

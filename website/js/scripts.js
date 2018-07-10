@@ -1,16 +1,9 @@
 function fitToScreen(el, marginX, marginY) {
   var elWidth = el.offsetWidth;
-  var elHeight = el.offsetHeight;
   var screenWidth = window.innerWidth;
-  var screenHeight = window.innerHeight;
   var limitWidth = screenWidth - marginX;
-  var limitHeight = screenHeight - marginY;
   if (elWidth > limitWidth) {
     var scaleRatio = limitWidth / elWidth;
-    anime.setValue(el, { scale: scaleRatio });
-  }
-  if (elHeight > limitHeight) {
-    var scaleRatio = limitHeight / elHeight;
     anime.setValue(el, { scale: scaleRatio });
   }
 }
@@ -22,25 +15,26 @@ var logoAnimation = (function() {
   }
 
   var logoAnimationEl = document.querySelector('.anime-logo-animation');
+  var animationWrapperEl = document.querySelector('.animation-wrapper');
   var bouncePath = anime.path('.bounce path');
 
-  //fitToScreen(logoAnimationEl, 64, 16);
+  fitToScreen(animationWrapperEl, 64, 16);
 
   var resizeTimeout = null;
 
-  // window.addEventListener('resize', function(e) {
-  //   clearTimeout(resizeTimeout);
-  //   resizeTimeout = setTimeout(function() {
-  //     fitToScreen(logoAnimationEl, 64, 16);
-  //   }, 100);
-  // });
+  window.addEventListener('resize', function(e) {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+      fitToScreen(animationWrapperEl, 64, 16);
+    }, 100);
+  });
 
   anime.setValue('.fill', {opacity: 0});
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
   anime.setValue('.dot', {
-    translateX: '2.8em',
-    translateY: '-.625em'
+    translateX: 448,
+    translateY: -100
   });
 
   var logoAnimationTL = anime.timeline({
@@ -58,9 +52,9 @@ var logoAnimation = (function() {
     targets: '.bounced',
     transformOrigin: ['50% 100% 0px', '50% 100% 0px'],
     translateY: [
-      {value: ['.8em', '-.8em'], duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
-      {value: '.025em', duration: 120, easing: 'easeInQuad'},
-      {value: '0em', duration: 120, easing: 'easeOutQuad'}
+      {value: [128, -128], duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
+      {value: 4, duration: 120, easing: 'easeInQuad'},
+      {value: 0, duration: 120, easing: 'easeOutQuad'}
     ],
     scaleX: [
       {value: [.55, .85], duration: 190, easing: 'easeOutSine'},
@@ -78,7 +72,7 @@ var logoAnimation = (function() {
   }, 300)
   .add({
     targets: '.dot',
-    translateY: '1.675em',
+    translateY: 268,
     translateZ: 0,
     scaleY: [4, .7],
     scaleX: { value: 1.3, delay: 100, duration: 200 },
@@ -132,8 +126,8 @@ var logoAnimation = (function() {
     scaleY: 1,
     scaleX: 1,
     translateY: [
-      {value: '1.6375em', duration: 100, easing: 'easeOutSine'},
-      {value: '1.525em', duration: 1000, easing: 'easeOutElastic(1, .8)'}
+      {value: 262, duration: 100, easing: 'easeOutSine'},
+      {value: 244, duration: 1000, easing: 'easeOutElastic(1, .8)'}
     ]
   })
   .add({
@@ -151,7 +145,7 @@ var logoAnimation = (function() {
   .add({
     targets: ['.letter-i', '.letter-n', '.letter-m', '.letter-a', '.letter-e'],
     translateY: [
-      {value: '.20625em', duration: '.9375em'},
+      {value: 33, duration: 150},
       {value: 0, duration: 800, easing: 'easeOutElastic(1, .6)'}
     ],
     strokeDashoffset: [anime.setDashoffset, 0],
@@ -160,10 +154,10 @@ var logoAnimation = (function() {
   .add({
     targets: ['.anime-logo-subtitle'],
     opacity: 1,
-    translateY: ['-.125em', 0],
-    easing: 'easeOutElastic(1, .6)',
-    duration: 1000,
-  }, '-=1010')
+    translateY: [-16, 0],
+    easing: 'easeOutElastic(1, .8)',
+    duration: 600,
+  }, '-=990')
   // .add({
   //   begin: initSphereAnimation
   // }, '-=1500')
