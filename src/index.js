@@ -764,13 +764,15 @@ function createAnimation(animatable, prop) {
   const animType = getAnimationType(animatable.target, prop.name);
   if (animType) {
     const tweens = normalizeTweens(prop, animatable);
+    const lastTween = tweens[tweens.length - 1];
     return {
       type: animType,
       property: prop.name,
       animatable: animatable,
       tweens: tweens,
-      duration: tweens[tweens.length - 1].end,
-      delay: tweens[0].delay
+      duration: lastTween.end,
+      delay: tweens[0].delay,
+      endDelay: lastTween.endDelay
     }
   }
 }
