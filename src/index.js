@@ -58,6 +58,8 @@ const is = {
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
 }
 
+// Easings
+
 function parseEasingParameters(string) {
   const match = /\(([^)]+)\)/.exec(string);
   return match ? match[1].split(',').map(p => parseFloat(p)) : [];
@@ -993,11 +995,11 @@ function anime(params = {}) {
     const insTime = adjustTime(engineTime);
     instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
     if (children) syncInstanceChildren(insTime);
+    if (!instance.began) {
+      instance.began = true;
+      setCallback('begin');
+    }
     if (insTime >= insDelay || !insDuration) {
-      if (!instance.began) {
-        instance.began = true;
-        setCallback('begin');
-      }
       setCallback('run');
     }
     if (insTime > insDelay && insTime < insDuration) {
