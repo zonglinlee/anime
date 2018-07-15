@@ -787,15 +787,6 @@ function getAnimations(animatables, properties) {
 
 // Create Instance
 
-function getInstanceTimings(type, animations, tweenSettings) {
-  const isDelay = (type === 'delay');
-  if (animations.length) {
-    return (isDelay ? Math.min : Math.max).apply(Math, animations.map(anim => anim[type]));
-  } else {
-    return isDelay ? tweenSettings.delay : tweenSettings.delay + tweenSettings.duration;
-  }
-}
-
 function getStates(params) {
   const statesParams = params.states;
   if (!statesParams) return;
@@ -812,20 +803,31 @@ function getStates(params) {
   return states;
 }
 
+function getInstanceTimings(animations, tweenSettings) {
+  const animLength = animations.length;
+  const timings = {};
+  timings.duration = animLength ? Math.max.apply(Math, animations.map(anim => anim.duration)) : tweenSettings.duration;
+  timings.delay = animLength ? Math.min.apply(Math, animations.map(anim => anim.delay)) : tweenSettings.delay;
+  timings.endDelay = animLength ? timings.duration - Math.max.apply(Math, animations.map(anim => anim.duration - anim.endDelay)) : tweenSettings.endDelay;
+  return timings;
+}
+
 function createNewInstance(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
   const animatables = getAnimatables(params.targets);
   const properties = getProperties(instanceSettings, tweenSettings, params);
   const animations = getAnimations(animatables, properties);
+  const timings = getInstanceTimings(animations, tweenSettings);
   return mergeObjects(instanceSettings, {
     children: [],
     states: getStates(params),
     currentState: null,
     animatables: animatables,
     animations: animations,
-    duration: getInstanceTimings('duration', animations, tweenSettings),
-    delay: getInstanceTimings('delay', animations, tweenSettings)
+    duration: timings.duration,
+    delay: timings.delay,
+    endDelay: timings.endDelay
   });
 }
 

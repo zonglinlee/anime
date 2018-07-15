@@ -63,11 +63,19 @@
       {value: anime.random(-200, 200)},
       {value: anime.random(-200, 200)}
     ],
+    translateY: {
+      value: 100,
+      duration: 500,
+      delay: 3000,
+      endDelay: 6000
+    },
     delay: 1000,
     endDelay: 1000,
     duration: 3000,
     easing: 'linear'
   });
+
+  console.log(animation);
 
   function log(animation, logEl) {
 
