@@ -31,6 +31,10 @@ const cache = {
 
 // Utils
 
+function minMax(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
 function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
@@ -64,10 +68,10 @@ function parseEasingParameters(string) {
 function spring(string, duration) {
 
   const params = parseEasingParameters(string);
-  const mass = minMaxValue(is.und(params[0]) ? 1 : params[0], .1, 100);
-  const stiffness = minMaxValue(is.und(params[1]) ? 100 : params[1], .1, 100);
-  const damping = minMaxValue(is.und(params[2]) ? 10 : params[2], .1, 100);
-  const velocity =  minMaxValue(is.und(params[3]) ? 0 : params[3], .1, 100);
+  const mass = minMax(is.und(params[0]) ? 1 : params[0], .1, 100);
+  const stiffness = minMax(is.und(params[1]) ? 100 : params[1], .1, 100);
+  const damping = minMax(is.und(params[2]) ? 10 : params[2], .1, 100);
+  const velocity =  minMax(is.und(params[3]) ? 0 : params[3], .1, 100);
   const w0 = Math.sqrt(stiffness / mass);
   const zeta = damping / (2 * Math.sqrt(stiffness * mass));
   const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
@@ -112,8 +116,8 @@ function spring(string, duration) {
 // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
 
 function elastic(amplitude = 1, period = .5) {
-  const a = minMaxValue(amplitude, 1, 10);
-  const p = minMaxValue(period, .1, 2);
+  const a = minMax(amplitude, 1, 10);
+  const p = minMax(period, .1, 2);
   return t => {
     return (t === 0 || t === 1) ? t : 
       -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
@@ -404,10 +408,6 @@ function getTransformUnit(propName) {
 }
 
 // Values
-
-function minMaxValue(val, min, max) {
-  return Math.min(Math.max(val, min), max);
-}
 
 function getFunctionValue(val, animatable) {
   if (!is.fnc(val)) return val;
@@ -928,7 +928,7 @@ function anime(params = {}) {
       let tween = tweens[tweenLength];
       // Only check for keyframes if there is more than one tween
       if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
-      const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
+      const elapsed = minMax(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
       const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed);
       const strings = tween.to.strings;
       const round = tween.round;
@@ -991,7 +991,7 @@ function anime(params = {}) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
     const insTime = adjustTime(engineTime);
-    instance.progress = minMaxValue((insTime / insDuration) * 100, 0, 100);
+    instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
     if (children) syncInstanceChildren(insTime);
     if (insTime >= insDelay || !insDuration) {
       if (!instance.began) {
