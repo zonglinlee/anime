@@ -3,7 +3,11 @@
 const defaultInstanceSettings = {
   update: null,
   begin: null,
-  run: null,
+  loopBegin: null,
+  changeBegin: null,
+  change: null,
+  changeComplete: null,
+  loopComplete: null,
   complete: null,
   loop: 1,
   direction: 'normal',
@@ -976,48 +980,64 @@ function anime(params = {}) {
       anim.currentValue = progress;
       i++;
     }
-    instance.currentTime = insTime;
   }
 
   function setCallback(cb) {
     if (instance[cb]) instance[cb](instance);
   }
 
-  function countIteration() {
-    if (instance.remaining && instance.remaining !== true) {
-      instance.remaining--;
-    }
-  }
-
   function setInstanceProgress(engineTime) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
+    const insEndDelay = insDuration - instance.endDelay;
     const insTime = adjustTime(engineTime);
-    instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
-    if (children) syncInstanceChildren(insTime);
+    const insReversed = instance.reversed;
+    instance.currentTime = insTime;
     if (!instance.began) {
       instance.began = true;
       setCallback('begin');
+      setCallback('loopBegin');
     }
-    if (insTime >= insDelay || !insDuration) {
-      setCallback('run');
+    if (
+    (!instance.changeBegan && !insReversed && insTime >= insDelay && insTime < insEndDelay) ||
+    (!instance.changeBegan && insReversed && insTime <= insEndDelay && insTime > insDelay)) {
+      instance.changeBegan = true;
+      instance.changeCompleted = false;
+      setCallback('changeBegin');
     }
-    if (insTime > insDelay && insTime < insDuration) {
+    if (insTime >= insDelay && insTime < insEndDelay) {
       setAnimationsProgress(insTime);
-    } else {
-      if (insTime <= insDelay && instance.currentTime !== 0) {
-        setAnimationsProgress(0);
-        if (instance.reversed) countIteration();
-      }
-      if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
-        setAnimationsProgress(insDuration);
-        if (!instance.reversed) countIteration();
+      setCallback('change');
+    }
+    if (
+    (!instance.changeCompleted && !insReversed && insTime >= insEndDelay) ||
+    (!instance.changeCompleted && insReversed && insTime <= insDelay)) {
+      instance.changeCompleted = true;
+      instance.changeBegan = false;
+      setAnimationsProgress(insReversed ? insDelay : insEndDelay);
+      setCallback('changeComplete');
+    }
+    if (
+    (insTime <= 0 && instance.currentTime !== 0 && instance.reversed) ||
+    (insTime >= insDuration && instance.currentTime !== insDuration && !instance.reversed)) {
+      if (instance.remaining && instance.remaining !== true) {
+        instance.remaining--;
       }
     }
+    if (insTime <= 0 && instance.currentTime !== 0) {
+      instance.currentTime = 0;
+    }
+    if (insTime >= insDuration && instance.currentTime !== insDuration) {
+      instance.currentTime = insDuration;
+    }
+    if (children) syncInstanceChildren(instance.currentTime);
+    instance.progress = (instance.currentTime / insDuration) * 100;
     setCallback('update');
     if (engineTime >= insDuration) {
       lastTime = 0;
+      setCallback('loopComplete');
       if (instance.remaining) {
+        setCallback('loopBegin');
         startTime = now;
         if (instance.direction === 'alternate') toggleInstanceDirection();
       } else {
