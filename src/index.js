@@ -993,7 +993,7 @@ function anime(params = {}) {
     const insTime = adjustTime(engineTime);
     const insReversed = instance.reversed;
     instance.currentTime = insTime;
-    if (!instance.began || !insDuration) {
+    if (!instance.began) {
       instance.began = true;
       setCallback('begin');
       setCallback('loopBegin');
@@ -1173,7 +1173,7 @@ function timeline(params = {}) {
   tl.pause();
   tl.duration = 0;
   tl.add = function(instanceParams, timelineOffset) {
-    function passThrough(ins) { ins.began = true;  ins.completed = true; };
+    function passThrough(ins) { ins.began = true;  ins.completed = true; ins.changeCompleted = true; };
     tl.children.forEach(passThrough);
     let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
     insParams.targets = insParams.targets || params.targets;
