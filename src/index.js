@@ -3,7 +3,11 @@
 const defaultInstanceSettings = {
   update: null,
   begin: null,
-  run: null,
+  loopBegin: null,
+  changeBegin: null,
+  change: null,
+  changeComplete: null,
+  loopComplete: null,
   complete: null,
   loop: 1,
   direction: 'normal',
@@ -31,6 +35,10 @@ const cache = {
 
 // Utils
 
+function minMax(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
 function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
@@ -54,6 +62,8 @@ const is = {
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
 }
 
+// Easings
+
 function parseEasingParameters(string) {
   const match = /\(([^)]+)\)/.exec(string);
   return match ? match[1].split(',').map(p => parseFloat(p)) : [];
@@ -64,10 +74,10 @@ function parseEasingParameters(string) {
 function spring(string, duration) {
 
   const params = parseEasingParameters(string);
-  const mass = minMaxValue(is.und(params[0]) ? 1 : params[0], .1, 100);
-  const stiffness = minMaxValue(is.und(params[1]) ? 100 : params[1], .1, 100);
-  const damping = minMaxValue(is.und(params[2]) ? 10 : params[2], .1, 100);
-  const velocity =  minMaxValue(is.und(params[3]) ? 0 : params[3], .1, 100);
+  const mass = minMax(is.und(params[0]) ? 1 : params[0], .1, 100);
+  const stiffness = minMax(is.und(params[1]) ? 100 : params[1], .1, 100);
+  const damping = minMax(is.und(params[2]) ? 10 : params[2], .1, 100);
+  const velocity =  minMax(is.und(params[3]) ? 0 : params[3], .1, 100);
   const w0 = Math.sqrt(stiffness / mass);
   const zeta = damping / (2 * Math.sqrt(stiffness * mass));
   const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
@@ -112,8 +122,8 @@ function spring(string, duration) {
 // Elastic easing adapted from jQueryUI http://api.jqueryui.com/easings/
 
 function elastic(amplitude = 1, period = .5) {
-  const a = minMaxValue(amplitude, 1, 10);
-  const p = minMaxValue(period, .1, 2);
+  const a = minMax(amplitude, 1, 10);
+  const p = minMax(period, .1, 2);
   return t => {
     return (t === 0 || t === 1) ? t : 
       -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
@@ -405,10 +415,6 @@ function getTransformUnit(propName) {
 
 // Values
 
-function minMaxValue(val, min, max) {
-  return Math.min(Math.max(val, min), max);
-}
-
 function getFunctionValue(val, animatable) {
   if (!is.fnc(val)) return val;
   return val(animatable.target, animatable.id, animatable.total);
@@ -659,8 +665,10 @@ function normalizePropertyTweens(prop, tweenSettings) {
   const propArray = is.arr(prop) ? prop : [prop];
   return propArray.map((v, i) => {
     const obj = (is.obj(v) && !is.pth(v)) ? v : {value: v};
-    // Default delay value should be applied only on the first tween
+    // Default delay value should only be applied to the first tween
     if (is.und(obj.delay)) obj.delay = !i ? tweenSettings.delay : 0;
+    // Default endDelay value should only be applied to the last tween
+    if (is.und(obj.endDelay)) obj.endDelay = i === propArray.length - 1 ? tweenSettings.endDelay : 0;
     return obj;
   }).map(k => mergeObjects(k, settings));
 }
@@ -762,13 +770,15 @@ function createAnimation(animatable, prop) {
   const animType = getAnimationType(animatable.target, prop.name);
   if (animType) {
     const tweens = normalizeTweens(prop, animatable);
+    const lastTween = tweens[tweens.length - 1];
     return {
       type: animType,
       property: prop.name,
       animatable: animatable,
       tweens: tweens,
-      duration: tweens[tweens.length - 1].end,
-      delay: tweens[0].delay
+      duration: lastTween.end,
+      delay: tweens[0].delay,
+      endDelay: lastTween.endDelay
     }
   }
 }
@@ -782,15 +792,6 @@ function getAnimations(animatables, properties) {
 }
 
 // Create Instance
-
-function getInstanceTimings(type, animations, tweenSettings) {
-  const isDelay = (type === 'delay');
-  if (animations.length) {
-    return (isDelay ? Math.min : Math.max).apply(Math, animations.map(anim => anim[type]));
-  } else {
-    return isDelay ? tweenSettings.delay : tweenSettings.delay + tweenSettings.duration;
-  }
-}
 
 function getStates(params) {
   const statesParams = params.states;
@@ -808,20 +809,31 @@ function getStates(params) {
   return states;
 }
 
+function getInstanceTimings(animations, tweenSettings) {
+  const animLength = animations.length;
+  const timings = {};
+  timings.duration = animLength ? Math.max.apply(Math, animations.map(anim => anim.duration)) : tweenSettings.duration;
+  timings.delay = animLength ? Math.min.apply(Math, animations.map(anim => anim.delay)) : tweenSettings.delay;
+  timings.endDelay = animLength ? timings.duration - Math.max.apply(Math, animations.map(anim => anim.duration - anim.endDelay)) : tweenSettings.endDelay;
+  return timings;
+}
+
 function createNewInstance(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
   const animatables = getAnimatables(params.targets);
   const properties = getProperties(instanceSettings, tweenSettings, params);
   const animations = getAnimations(animatables, properties);
+  const timings = getInstanceTimings(animations, tweenSettings);
   return mergeObjects(instanceSettings, {
     children: [],
     states: getStates(params),
     currentState: null,
     animatables: animatables,
     animations: animations,
-    duration: getInstanceTimings('duration', animations, tweenSettings),
-    delay: getInstanceTimings('delay', animations, tweenSettings)
+    duration: timings.duration,
+    delay: timings.delay,
+    endDelay: timings.endDelay
   });
 }
 
@@ -922,7 +934,7 @@ function anime(params = {}) {
       let tween = tweens[tweenLength];
       // Only check for keyframes if there is more than one tween
       if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
-      const elapsed = minMaxValue(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
+      const elapsed = minMax(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
       const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed);
       const strings = tween.to.strings;
       const round = tween.round;
@@ -968,48 +980,64 @@ function anime(params = {}) {
       anim.currentValue = progress;
       i++;
     }
-    instance.currentTime = insTime;
   }
 
   function setCallback(cb) {
     if (instance[cb]) instance[cb](instance);
   }
 
-  function countIteration() {
-    if (instance.remaining && instance.remaining !== true) {
-      instance.remaining--;
-    }
-  }
-
   function setInstanceProgress(engineTime) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
+    const insEndDelay = insDuration - instance.endDelay;
     const insTime = adjustTime(engineTime);
-    instance.progress = minMaxValue((insTime / insDuration) * 100, 0, 100);
-    if (children) syncInstanceChildren(insTime);
-    if (insTime >= insDelay || !insDuration) {
-      if (!instance.began) {
-        instance.began = true;
-        setCallback('begin');
-      }
-      setCallback('run');
+    const insReversed = instance.reversed;
+    instance.currentTime = insTime;
+    if (!instance.began || !insDuration) {
+      instance.began = true;
+      setCallback('begin');
+      setCallback('loopBegin');
     }
-    if (insTime > insDelay && insTime < insDuration) {
+    if (
+    (!instance.changeBegan && !insReversed && insTime >= insDelay && insTime < insEndDelay) ||
+    (!instance.changeBegan && insReversed && insTime <= insEndDelay && insTime > insDelay)) {
+      instance.changeBegan = true;
+      instance.changeCompleted = false;
+      setCallback('changeBegin');
+    }
+    if (insTime >= insDelay && insTime < insEndDelay) {
       setAnimationsProgress(insTime);
-    } else {
-      if (insTime <= insDelay && instance.currentTime !== 0) {
-        setAnimationsProgress(0);
-        if (instance.reversed) countIteration();
-      }
-      if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
-        setAnimationsProgress(insDuration);
-        if (!instance.reversed) countIteration();
+      setCallback('change');
+    }
+    if (
+    (!instance.changeCompleted && !insReversed && insTime >= insEndDelay) ||
+    (!instance.changeCompleted && insReversed && insTime <= insDelay)) {
+      instance.changeCompleted = true;
+      instance.changeBegan = false;
+      setAnimationsProgress(insReversed ? insDelay : insEndDelay);
+      setCallback('changeComplete');
+    }
+    if (
+    (insTime <= 0 && instance.currentTime !== 0 && instance.reversed) ||
+    (insTime >= insDuration && instance.currentTime !== insDuration && !instance.reversed)) {
+      if (instance.remaining && instance.remaining !== true) {
+        instance.remaining--;
       }
     }
+    if (insTime <= 0 && instance.currentTime !== 0) {
+      instance.currentTime = 0;
+    }
+    if (insTime >= insDuration && instance.currentTime !== insDuration) {
+      instance.currentTime = insDuration;
+    }
+    if (children) syncInstanceChildren(instance.currentTime);
+    instance.progress = (instance.currentTime / insDuration) * 100;
     setCallback('update');
     if (engineTime >= insDuration) {
       lastTime = 0;
+      setCallback('loopComplete');
       if (instance.remaining) {
+        setCallback('loopBegin');
         startTime = now;
         if (instance.direction === 'alternate') toggleInstanceDirection();
       } else {

@@ -2325,8 +2325,8 @@ anime({
   </script>
 </div>
 
-<div id="begin" class="demo">
-  <h3 class="demo-title">Begin</h3>
+<div id="beginComplete" class="demo">
+  <h3 class="demo-title">Begin & Complete</h3>
   <div class="demo-description">
     <table>
       <thead>
@@ -2340,88 +2340,43 @@ anime({
         <td>Return the current animation Object</td>
       </tr>
     </table>
-    <p>
-      <code>begin()</code> callback is triggered when the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.<br>
-      It's also called if the animation <code>duration</code> is <code>0</code>.
-    </p>
+      <p><code>begin()</code> callback is triggered right after the animation starts playing.</p>
+      <p><code>complete()</code> callback is triggered when the animation is completed.</p>
+      <p class="bubble info">Both <code>begin()</code> and <code>complete()</code> callbacks are called if the animation's <code>duration</code> is <code>0</code>.</p>
   </div>
-  <div class="demo-content begin-demo">
+  <div class="demo-content begin-complete-demo">
     <div class="logs">
-      <input class="log began-log" value="began : false"></input>
+      <input class="log begin-log" value=""></input>
       <input class="log progress-log"></input>
+      <input class="log complete-log" value=""></input>
     </div>
     <div class="large circle shadow"></div>
     <div class="large circle el"></div>
   </div>
-  <script>var begin = function() {
-/*DEMO*/
-var beganLogEl = document.querySelector('.begin-demo .began-log');
-var progressLogEl = document.querySelector('.begin-demo .progress-log');
+  <script>var beginComplete = function() {
 
+var beginLogEl = document.querySelector('.begin-complete-demo .begin-log');
+var completeLogEl = document.querySelector('.begin-complete-demo .complete-log');
+var progressLogEl = document.querySelector('.begin-complete-demo .progress-log');
+
+beginLogEl.value = '';
+completeLogEl.value = '';
+
+/*DEMO*/
 anime({
-  targets: '.begin-demo .el',
+  targets: '.begin-complete-demo .el',
   translateX: 250,
   delay: 1000,
   begin: function(anim) {
-    anim.animatables[0].target.style.backgroundColor = '#18FF92';
-  },
-  update: function (anim) {
-    beganLogEl.value = 'began : ' + anim.began;
-    progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
-  }
-});
-/*DEMO*/
-}
-  </script>
-
-</div>
-
-<div id="run" class="demo">
-  <h3 class="demo-title">Run</h3>
-  <div class="demo-description">
-    <table>
-      <thead>
-        <td>Type</td>
-        <td>Parameters</td>
-        <td>Info</td>
-      </thead>
-      <tr>
-        <td>Function</td>
-        <td>animation</td>
-        <td>Return the current animation Object</td>
-      </tr>
-    </table>
-    <p>
-      <code>run()</code> callback is triggered on every frame if the <code>animation.currentTime</code> is equal or superior to the <code>animation.delay</code>.
-    </p>
-  </div>
-  <div class="demo-content run-demo">
-    <div class="logs">
-      <input class="log current-time-log" value="not running"></input>
-      <input class="log progress-log" value="progress : 0%"></input>
-    </div>
-    <div class="large circle shadow"></div>
-    <div class="large circle el"></div>
-  </div>
-  <script>var run = function() {
-/*DEMO*/
-var runLogEl = document.querySelector('.run-demo .current-time-log');
-var runProgressLogEl = document.querySelector('.run-demo .progress-log');
-
-anime({
-  targets: '.run-demo .el',
-  translateX: 250,
-  delay: 1000,
-  run: function(anim) {
-    anim.animatables[0].target.style.backgroundColor = '#18FF92';
-  },
-  update: function(anim) {
-    if (anim.began) runLogEl.value = 'running';
-    runProgressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
+    beginLogEl.value = 'has began : ' + anim.began;
   },
   complete: function(anim) {
-    anim.animatables[0].target.style.backgroundColor = '';
-    runLogEl.value = 'not running';
+    completeLogEl.value = 'is completed : ' + anim.completed;
+  },
+  update: function(anim) {
+    progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
+    beginLogEl.value = 'has began : ' + anim.began;
+    completeLogEl.value = 'is completed : ' + anim.completed;
   }
 });
 /*DEMO*/

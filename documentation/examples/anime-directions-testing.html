@@ -96,7 +96,7 @@
       params.begin = function() { testEl.classList.add('color-03') };
       params.update = function(a) { 
         testEl.classList.add('color-01');
-        progressEl.value = a.progress + '%';
+        progressEl.value = 'Progress ' + Math.round(a.progress) + '%';
       };
       params.complete = function() { testEl.classList.add('color-05') };
       var animation = anime(params);

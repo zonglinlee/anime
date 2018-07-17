@@ -50,7 +50,7 @@
   <script>
 
     var numberOfEls = 500;
-    var duration = 4000;
+    var duration = 5000;
     var midScreenX = window.innerWidth / 2;
     var midScreenY = window.innerHeight / 2;
     var radius = Math.sqrt(midScreenX * midScreenX + midScreenY * midScreenY);
@@ -67,22 +67,10 @@
 
       anime({
         targets: el,
-        //rotate: '+=2turn',
-        translateX: '1rem',
-        // scaleY: [
-        //   {value: [1, .1]},
-        //   {value: 1}
-        // ],
-        // height: [
-        //   {value: ['10rem', '1rem']},
-        //   {value: '1rem'}
-        // ],
-        // height: [
-        //   {value: '10px'},
-        //   {value: anime.getValue(el, 'height', 'px')}
-        // ],
+        rotate: '+=360',
+        //delay: i * (duration / numberOfEls),
+        //endDelay: i * (duration / numberOfEls),
         easing: 'linear',
-        direction: 'alternate',
         duration: duration,
         loop: true
       });
