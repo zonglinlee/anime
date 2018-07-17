@@ -993,7 +993,7 @@ function anime(params = {}) {
     const insTime = adjustTime(engineTime);
     const insReversed = instance.reversed;
     instance.currentTime = insTime;
-    if (!instance.began) {
+    if (!instance.began || !insDuration) {
       instance.began = true;
       setCallback('begin');
       setCallback('loopBegin');

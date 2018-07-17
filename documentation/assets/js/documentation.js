@@ -19,7 +19,7 @@ function scrollTo(selector, offset, cb) {
     scroll: el.offsetTop - offset,
     duration: 500,
     easing: 'easeInOutQuart',
-    run: function(a) { demosEl.scrollTop = a.animations[0].currentValue; },
+    update: function(a) { demosEl.scrollTop = a.animations[0].currentValue; },
     complete: function() { if (cb) cb(); }
   });
 }
