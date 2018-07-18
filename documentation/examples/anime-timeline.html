@@ -109,7 +109,8 @@
     },
     complete: function(anim) {
       console.log('tl complete');
-    }
+    },
+    autoplay: true
   });
 
   document.querySelector('.controls .play').onclick = tl.play;
@@ -122,23 +123,31 @@
     scale: 8,
     background: '#FF1461',
     begin: function() { console.log('animation 1 began')},
+    changeBegin: function() { console.log('animation 1 change began')},
+    changeComplete: function() { console.log('animation 1 change completed')},
     complete: function() { console.log('animation 1 completed')}
   })
   .add({
     background: '#18FF92',
     rotate: 45,
     begin: function() { console.log('animation 2 began')},
+    changeBegin: function() { console.log('animation 2 change began')},
+    changeComplete: function() { console.log('animation 2 change completed')},
     complete: function() { console.log('animation 2 completed')}
   })
   .add({
     background: '#5A87FF',
     begin: function() { console.log('animation 3 began')},
+    changeBegin: function() { console.log('animation 3 change began')},
+    changeComplete: function() { console.log('animation 3 change completed')},
     complete: function() { console.log('animation 3 completed')}
   })
   .add({
     background: '#FBF38C',
     rotate: 90,
     begin: function() { console.log('animation 4 began')},
+    changeBegin: function() { console.log('animation 4 change began')},
+    changeComplete: function() { console.log('animation 4 change completed')},
     complete: function() { console.log('animation 4 completed')}
   })
   .add({
@@ -146,19 +155,23 @@
     scaleY: .5,
     background: '#FBF38C',
     begin: function() { console.log('animation 5 began')},
+    changeBegin: function() { console.log('animation 5 change began')},
+    changeComplete: function() { console.log('animation 5 change completed')},
     complete: function() { console.log('animation 5 completed')}
   });
 
-  controlsProgressEl.addEventListener('input', function() {
-    tl.seek(tl.duration * (controlsProgressEl.value / 100));
-  });
+  // controlsProgressEl.addEventListener('input', function() {
+  //   tl.seek(tl.duration * (controlsProgressEl.value / 100));
+  // });
 
-  for (var i = 0; i < els.length; i++) {
-    els[i].addEventListener('mouseenter', function() {
-      anime.remove(this);
-      this.style.backgroundColor = 'red';
-    }, false);
-  }
+  // for (var i = 0; i < els.length; i++) {
+  //   els[i].addEventListener('mouseenter', function() {
+  //     anime.remove(this);
+  //     this.style.backgroundColor = 'red';
+  //   }, false);
+  // }
+
+console.log(tl);
 
   </script>
   <!-- <script src="../assets/js/vendors/stats.min.js"></script> -->

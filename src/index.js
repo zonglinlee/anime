@@ -986,60 +986,63 @@ function anime(params = {}) {
     if (instance[cb]) instance[cb](instance);
   }
 
+  function countIteration() {
+    if (instance.remaining && instance.remaining !== true) {
+      instance.remaining--;
+    }
+  }
+
   function setInstanceProgress(engineTime) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
     const insEndDelay = insDuration - instance.endDelay;
-    const insTime = adjustTime(engineTime);
     const insReversed = instance.reversed;
-    instance.currentTime = insTime;
-    if (!instance.began || !insDuration) {
+    const insTime = adjustTime(engineTime);
+    instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
+    if (children) { syncInstanceChildren(insTime); }
+    if (!instance.began) {
       instance.began = true;
       setCallback('begin');
       setCallback('loopBegin');
     }
     if (
-    (!instance.changeBegan && !insReversed && insTime >= insDelay && insTime < insEndDelay) ||
-    (!instance.changeBegan && insReversed && insTime <= insEndDelay && insTime > insDelay)) {
+      (!instance.changeBegan && !insReversed && insTime >= insDelay && insTime < insEndDelay) || 
+      (!instance.changeBegan && insReversed && insTime <= insEndDelay && insTime > insDelay)) {
       instance.changeBegan = true;
       instance.changeCompleted = false;
       setCallback('changeBegin');
     }
-    if (insTime >= insDelay && insTime < insEndDelay) {
-      setAnimationsProgress(insTime);
+    if ((insTime >= insDelay && insTime <= insEndDelay)) {
       setCallback('change');
     }
     if (
-    (!instance.changeCompleted && !insReversed && insTime >= insEndDelay) ||
-    (!instance.changeCompleted && insReversed && insTime <= insDelay)) {
+      (!instance.changeCompleted && !insReversed && insTime >= insEndDelay) || 
+      (!instance.changeCompleted && insReversed && insTime <= insDelay)) {
       instance.changeCompleted = true;
       instance.changeBegan = false;
-      setAnimationsProgress(insReversed ? insDelay : insEndDelay);
       setCallback('changeComplete');
     }
-    if (
-    (insTime <= 0 && instance.currentTime !== 0 && instance.reversed) ||
-    (insTime >= insDuration && instance.currentTime !== insDuration && !instance.reversed)) {
-      if (instance.remaining && instance.remaining !== true) {
-        instance.remaining--;
+    if (insTime >= insDelay && insTime <= insDuration) {
+      setAnimationsProgress(insTime);
+    } else {
+      if (insTime <= insDelay && instance.currentTime !== 0) {
+        setAnimationsProgress(0);
+        if (instance.reversed) { countIteration(); }
+      }
+      if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
+        setAnimationsProgress(insDuration);
+        if (!instance.reversed) { countIteration(); }
       }
     }
-    if (insTime <= 0 && instance.currentTime !== 0) {
-      instance.currentTime = 0;
-    }
-    if (insTime >= insDuration && instance.currentTime !== insDuration) {
-      instance.currentTime = insDuration;
-    }
-    if (children) syncInstanceChildren(instance.currentTime);
-    instance.progress = (instance.currentTime / insDuration) * 100;
+    instance.currentTime = minMax(insTime, 0, insDuration);
     setCallback('update');
     if (engineTime >= insDuration) {
       lastTime = 0;
       setCallback('loopComplete');
       if (instance.remaining) {
-        setCallback('loopBegin');
         startTime = now;
-        if (instance.direction === 'alternate') toggleInstanceDirection();
+        setCallback('loopBegin');
+        if (instance.direction === 'alternate') { toggleInstanceDirection(); }
       } else {
         instance.paused = true;
         if (!instance.completed) {
@@ -1173,7 +1176,7 @@ function timeline(params = {}) {
   tl.pause();
   tl.duration = 0;
   tl.add = function(instanceParams, timelineOffset) {
-    function passThrough(ins) { ins.began = true;  ins.completed = true; };
+    function passThrough(ins) { ins.began = true;  ins.completed = true; ins.changeCompleted = true; };
     tl.children.forEach(passThrough);
     let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
     insParams.targets = insParams.targets || params.targets;
