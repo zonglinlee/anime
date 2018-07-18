@@ -980,7 +980,6 @@ function anime(params = {}) {
       anim.currentValue = progress;
       i++;
     }
-    instance.currentTime = insTime;
   }
 
   function setCallback(cb) {
@@ -997,6 +996,7 @@ function anime(params = {}) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
     const insEndDelay = insDuration - instance.endDelay;
+    const insReversed = instance.reversed;
     const insTime = adjustTime(engineTime);
     instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
     if (children) { syncInstanceChildren(insTime); }
@@ -1004,8 +1004,22 @@ function anime(params = {}) {
       instance.began = true;
       setCallback('begin');
     }
-    if ((insTime >= insDelay && insTime <= insEndDelay) || !insDuration) {
+    if (
+      (!instance.changeBegan && !insReversed && insTime >= insDelay && insTime < insEndDelay) || 
+      (!instance.changeBegan && insReversed && insTime <= insEndDelay && insTime > insDelay)) {
+      instance.changeBegan = true;
+      instance.changeCompleted = false;
+      setCallback('changeBegin');
+    }
+    if ((insTime >= insDelay && insTime <= insEndDelay)) {
       setCallback('change');
+    }
+    if (
+      (!instance.changeCompleted && !insReversed && insTime >= insEndDelay) || 
+      (!instance.changeCompleted && insReversed && insTime <= insDelay)) {
+      instance.changeCompleted = true;
+      instance.changeBegan = false;
+      setCallback('changeComplete');
     }
     if (insTime > insDelay && insTime < insDuration) {
       setAnimationsProgress(insTime);
