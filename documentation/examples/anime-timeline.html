@@ -110,7 +110,7 @@
     complete: function(anim) {
       console.log('tl complete');
     },
-    autoplay: false
+    autoplay: true
   });
 
   document.querySelector('.controls .play').onclick = tl.play;
@@ -160,16 +160,18 @@
     complete: function() { console.log('animation 5 completed')}
   });
 
-  controlsProgressEl.addEventListener('input', function() {
-    tl.seek(tl.duration * (controlsProgressEl.value / 100));
-  });
+  // controlsProgressEl.addEventListener('input', function() {
+  //   tl.seek(tl.duration * (controlsProgressEl.value / 100));
+  // });
 
-  for (var i = 0; i < els.length; i++) {
-    els[i].addEventListener('mouseenter', function() {
-      anime.remove(this);
-      this.style.backgroundColor = 'red';
-    }, false);
-  }
+  // for (var i = 0; i < els.length; i++) {
+  //   els[i].addEventListener('mouseenter', function() {
+  //     anime.remove(this);
+  //     this.style.backgroundColor = 'red';
+  //   }, false);
+  // }
+
+console.log(tl);
 
   </script>
   <!-- <script src="../assets/js/vendors/stats.min.js"></script> -->
