@@ -38,14 +38,23 @@
       overflow-y: scroll;
       position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
       height: 100%;
       padding: 20px;
+      padding-top: 80px;
       font-size: 16px;
       line-height: 20px;
       text-align: left;
       font-family: monospace;
+    }
+
+    .log-animation {
+      left: 0;
+      width: 50%;
+    }
+
+    .log-timeline {
+      left: 50%;
+      width: 50%;
     }
 
     .counter {
@@ -55,12 +64,12 @@
       background-color: rgba(255,255,255,.2);
     }
 
+    .currentTime, .progress { opacity: .5 }
+
     .time {
       position: absolute;
       top: 0;
-      left: 50%;
-      width: 50%;
-      height: 100%;
+      height: 80px;
       padding: 20px;
       font-size: 16px;
       line-height: 20px;
@@ -68,14 +77,34 @@
       font-family: monospace;
     }
 
+    .time-animation {
+      left: 0;
+      width: 50%;
+    }
+
+    .time-timeline {
+      left: 50%;
+      width: 50%;
+    }
+
+    /* Player animation */
+
     .timeline {
       position: absolute;
-      left: 0;
-      right: 0;
       bottom: 0;
       height: 100px;
       padding-top: 4px;
       background-color: #000;
+    }
+
+    .timeline.player-animation {
+      width: 50%;
+      left: 0;
+    }
+
+    .timeline.player-timeline {
+      width: 50%;
+      left: 50%;
     }
 
     .tl-needle {
@@ -90,6 +119,7 @@
     }
 
     .tl-animation {
+      position: relative;
       display: flex;
       justify-content: space-between;
       width: auto;
@@ -112,18 +142,24 @@
 
   <div class="el color-04"></div>
 
-  <div class="log"></div>
-  <div class="time"></div>
+  <div class="el color-08"></div>
+
+  <div class="log log-animation"></div>
+  <div class="time time-animation"></div>
+
+  <div class="log log-timeline"></div>
+  <div class="time time-timeline"></div>
 
 </body>
 <script type="module">
 
   import anime from '../../src/index.js';
 
-  var tileLogEl = document.querySelector('.time');
+  var animationTimeLogEl = document.querySelector('.time-animation');
+  var timelineTimeLogEl = document.querySelector('.time-timeline');
 
   var animation = anime({
-    targets: '.el',
+    targets: '.el.color-04',
     translateX: [
       {value: 200},
       {value: -200},
@@ -147,13 +183,41 @@
     duration: 2000,
     easing: 'easeOutQuad',
     direction: 'alternate',
-    //loop: 3,
+    loop: 3,
+    autoplay: false,
     update: function(a) {
-      tileLogEl.innerHTML = 'progress : ' + a.progress + '<br>currentTime : ' + a.currentTime;
-    }
+      animationTimeLogEl.innerHTML = 'progress : ' + a.progress + '<br>currentTime : ' + a.currentTime;
+    },
   });
 
-  function animePlayer(instance) {
+  var tl = anime.timeline({
+    targets: '.el.color-08',
+    easing: 'easeInOutQuad',
+    autoplay: false,
+    direction: 'alternate',
+    loop: 3,
+    update: function(a) {
+      timelineTimeLogEl.innerHTML = 'progress : ' + a.progress + '<br>currentTime : ' + a.currentTime;
+      // console.log(a.progress);
+    }
+  })
+  .add({
+    translateX: 100,
+    delay: 1000
+  })
+  .add({
+    translateY: 100
+  }, '-=500')
+  .add({
+    rotate: 360,
+    endDelay: 1000
+  }, '-=500');
+
+
+  console.log(tl);
+
+
+  function animePlayer(instance, playerClass) {
 
     function createEl(type, className, parentEl) {
       var el = document.createElement(type);
@@ -163,6 +227,7 @@
     }
 
     var timelineEl = createEl('div', 'timeline', document.body);
+    if (playerClass) timelineEl.classList.add(playerClass);
     var needleEl = createEl('div', 'tl-needle', timelineEl);
     var animations = [];
     var colors = ['#FF1461','#FF7C72','#FBF38C','#A6FF8F','#18FF92','#1CE2B2','#5EF3FB','#61C3FF','#5A87FF','#8453E3','#C26EFF','#FB89FB'];
@@ -171,14 +236,17 @@
     function convertMStoEM(ms) { return ms / 100; }
     function convertEMtoMS(em) { return parseFloat(em) * 250; }
 
-    function createAnimationLog(animObj) {
+    function createAnimationLog(animObj, timelineOffset) {
       var anim = animObj;
       anim.player = {};
       anim.player.animationEl = createEl('div', 'tl-animation', timelineEl);
       anim.player.delayEl = createEl('div', 'tl-delay', anim.player.animationEl);
       anim.player.endDelayEl = createEl('div', 'tl-end-delay', anim.player.animationEl);
       anim.update = function() {
-        anime.setValue(anim.player.animationEl, {width: convertMStoEM(anim.duration) + 'em'});
+        anime.setValue(anim.player.animationEl, {
+          left: convertMStoEM(timelineOffset) + 'em',
+          width: convertMStoEM(anim.duration) + 'em'
+        });
         anime.setValue(anim.player.delayEl, {width: (anim.delay / anim.duration) * 100 + '%'});
         anime.setValue(anim.player.endDelayEl, {width: (anim.endDelay / anim.duration) * 100 + '%'});
       }
@@ -204,22 +272,36 @@
       }
     });
 
-    instance.animations.forEach(createAnimationLog);
+    if (instance.children.length) {
+      instance.children.forEach(function(child) {
+        console.log(child.timelineOffset);
+        child.animations.forEach(function(anim) {
+          createAnimationLog(anim, child.timelineOffset);
+        });
+      })
+    } else {
+      instance.animations.forEach(function(anim) {
+        createAnimationLog(anim);
+      });
+    }
 
   }
 
-  animePlayer(animation);
+  animePlayer(animation, 'player-animation');
+  animePlayer(tl, 'player-timeline');
 
-  function logCallbacks(animation, logEl) {
-
-    var callbacks = ['begin', 'loopBegin', 'changeBegin', 'change', 'changeComplete', 'loopComplete', 'complete'];
+  function logCallbacks(animation, logEl, callbacks) {
 
     function appendLog(cbName) {
       animation[cbName] = function() {
         var pEl = document.createElement('p');
         var counterSpanEl = document.createElement('span');
+        var currentTimeSpanEl = document.createElement('span');
+        var progressSpanEl = document.createElement('span');
         var textSpanEl = document.createElement('span');
         var lastPEl = logEl.querySelector('p:last-child');
+        currentTimeSpanEl.innerHTML = ' ' + animation.currentTime + 'ms';
+        progressSpanEl.innerHTML = ' ' + animation.progress + '%';
         if (lastPEl && lastPEl.querySelector('.text').innerHTML === cbName) {
           var lastCountEl = lastPEl.querySelector('.counter');
           var lastCountValue = parseFloat(lastCountEl.innerHTML);
@@ -230,9 +312,12 @@
           textSpanEl.innerHTML = cbName;
           counterSpanEl.classList.add('counter');
           textSpanEl.classList.add('text');
-          //anime.setValue(textSpanEl, {color: '#'+(Math.random()*0xFFFFFF<<0).toString(16)})
+          currentTimeSpanEl.classList.add('currentTime');
+          progressSpanEl.classList.add('progress');
           pEl.appendChild(counterSpanEl);
           pEl.appendChild(textSpanEl);
+          pEl.appendChild(currentTimeSpanEl);
+          pEl.appendChild(progressSpanEl);
           logEl.appendChild(pEl);
           logEl.scrollTop = logEl.scrollHeight;
         }
@@ -243,7 +328,9 @@
 
   }
 
-  logCallbacks(animation, document.querySelector('.log'));
+  logCallbacks(animation, document.querySelector('.log-animation'), ['begin', 'loopBegin', 'changeBegin', 'change', 'changeComplete', 'loopComplete', 'complete']);
+
+  logCallbacks(tl, document.querySelector('.log-timeline'), ['begin', 'loopBegin', 'changeBegin', 'change', 'changeComplete', 'loopComplete', 'complete']);
 
 
 </script>
