@@ -932,6 +932,10 @@ function anime(params = {}) {
         child.seek(time - child.timelineOffset);
       }
     }
+      // for (let i = 0; i < childrenLength; i++) {
+      //   const child = children[i];
+      //   child.seek(time - child.timelineOffset);
+      // }
   }
 
   function setAnimationsProgress(insTime) {
@@ -1038,6 +1042,7 @@ function anime(params = {}) {
       setAnimationsProgress(insTime);
     } else {
       if (insTime <= insDelay && instance.currentTime !== 0) {
+        console.log(instance.id, ' update');
         setAnimationsProgress(0);
       }
       if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
