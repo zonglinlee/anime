@@ -22,7 +22,12 @@ function siteAnimation() {
   })
   .add({
     targets: '.header-bottom-line',
-    opacity: [1, .2],
+    opacity: {
+      value: [1, .2],
+      delay: 650,
+      duration: 500,
+      easing: 'easeOutQuad'
+    },
     scaleX: [0, 1],
     easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)'
   })
@@ -249,7 +254,7 @@ var logoAnimation = (function() {
   }, '-=1010');
 
   //anime.speed = .1;
-  // logoAnimationTL.seek(3000);
+  //logoAnimationTL.seek(2500);
 
   logoAnimationEl.classList.add('is-visible');
 
