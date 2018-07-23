@@ -24,7 +24,7 @@ function siteAnimation() {
     targets: '.header-bottom-line',
     opacity: [1, .2],
     scaleX: [0, 1],
-    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
+    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)'
   })
   .add({
     targets: ['.header-nav-left a', '.mini-logo-link','.header-nav-right a', '.logo-nav a'],
@@ -50,8 +50,8 @@ function sphereAnimation() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
           targets: spherePathEls[i],
-          translateX: [3, -3],
-          translateY: [3, -3],
+          translateX: [4, -3],
+          translateY: [4, -3],
           easing: 'easeOutQuad',
           autoplay: false
         }));
@@ -75,7 +75,7 @@ function sphereAnimation() {
     translateX: [60, 0],
     translateY: [60, 0],
     translateZ: [0, 0],
-    duration: 2500,
+    duration: 3000,
     easing: 'easeOutSine',
   }, 0)
   .add({
@@ -85,13 +85,13 @@ function sphereAnimation() {
       duration: 1000,
       easing: 'easeInOutCirc',
       delay:  function(el, i, t) {
-        return (t - i) * 35
+        return (t - i) * 50
       }
     },
     opacity: 1,
     duration: 750,
     delay:  function(el, i, t) {
-      return (t - i) * 40
+      return (t - i) * 80
     },
     easing: 'linear'
   }, 0);
@@ -205,7 +205,10 @@ var logoAnimation = (function() {
     targets: '.letter-i rect',
     opacity: 0.001,
     duration: 1,
-    complete: sphereAnimation
+    complete: function() {
+      siteAnimation();
+      sphereAnimation();
+    }
   })
   .add({
     targets: '.dot',
@@ -215,7 +218,6 @@ var logoAnimation = (function() {
       {value: 262, duration: 100, easing: 'easeOutSine'},
       {value: 244, duration: 1000, easing: 'easeOutElastic(1, .8)'}
     ],
-    complete: siteAnimation
   })
   .add({
     targets: '.letter-m .line',
@@ -255,7 +257,5 @@ var logoAnimation = (function() {
 
 })();
 
-// demo
-window.onload = logoAnimation.play;
-document.body.onclick = function() { location.reload() };
-document.body.ontouchend = function() { location.reload() };
+
+logoAnimation.play();

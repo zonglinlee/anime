@@ -72,12 +72,21 @@ a {
   border: 1px solid rgba(0,0,0,.2);
   box-shadow: 0 1px 3px 0 rgba(56,56,53,.1);
   border-radius: 3px;
-  transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .5s ease, box-shadow .5s ease;
 }
 
-.cta:hover {
-  border: 1px solid #000000;
+.cta:hover,
+.cta:focus {
+  outline: none;
+  border-color: rgba(0,0,0,1);
   box-shadow: 0 6px 10px 0 rgba(56,56,53,.1);
+  transition-duration: .2s;
+}
+
+.cta:active {
+  border-color: rgba(0,0,0,.2);
+  box-shadow: 0 0 0 0 rgba(56,56,53,.1);
+  transition-duration: .125s;
 }
 
 .large-title {
@@ -326,6 +335,6 @@ a {
   opacity: .001;
   fill: rgba(248,248,244,.9);
   stroke: #000;
-  stroke-width: 2px;
+  stroke-width: 1px;
   backface-visibility: hidden;
 }
