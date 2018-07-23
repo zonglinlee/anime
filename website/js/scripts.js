@@ -19,6 +19,61 @@ function getPathDuration(el, speed) {
   return anime.setDashoffset(el) * speed;
 }
 
+function sphereAnimation() {
+
+  var sphereEl = document.querySelector('.sphere');
+  var spherePathEls = sphereEl.querySelectorAll('.sphere path');
+  var pathLength = spherePathEls.length;
+  var aimations = [];
+
+  for (var i = 0; i < pathLength; i++) {
+    aimations.push(anime({
+      targets: spherePathEls[i],
+      translateX: [3, -3],
+      translateY: [3, -3],
+      easing: 'easeOutQuad',
+      autoplay: false
+    }));
+  }
+
+
+
+  var introAnimation = anime.timeline()
+  .add({
+    targets: sphereEl,
+    translateX: [40, 0],
+    translateY: [40, 0],
+    translateZ: [0, 0],
+    duration: 2500,
+    easing: 'easeOutQuad',
+  }, 0)
+  .add({
+    targets: spherePathEls,
+    strokeDashoffset: {
+      value: [anime.setDashoffset, 0],
+      duration: 1500,
+      easing: 'easeInOutCirc',
+    },
+    opacity: 1,
+    duration: 750,
+    delay:  function(el, i, t) {
+      return i * 50
+    },
+    easing: 'linear'
+  }, 0);
+
+  var sphereAnimation = anime({
+    update: function(ins) {
+      aimations.forEach(function(animation, i) {
+        var percent = (1 - Math.sin((i * .35) + (.0020 * ins.currentTime))) / 2;
+        animation.seek(animation.duration * percent);
+      });
+    },
+    duration: Infinity
+  });
+
+}
+
 var logoAnimation = (function() {
 
   var logoAnimationEl = document.querySelector('.logo-animation');
@@ -35,7 +90,7 @@ var logoAnimation = (function() {
     }, 100);
   });
 
-  anime.setValue('.fill', {opacity: 0});
+  anime.setValue('.fill', {opacity: 0.001});
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
   anime.setValue('.dot', {
@@ -78,12 +133,16 @@ var logoAnimation = (function() {
   }, 300)
   .add({
     targets: '.dot',
-    easing: 'cubicBezier(0.350, 0.560, 0.305, 1)',
-    duration: 380,
+    opacity: {
+      value: 1,
+      duration: 100
+    },
     translateY: 268,
     translateZ: 0,
     scaleY: [4, .7],
-    scaleX: { value: 1.3, delay: 100, duration: 200}
+    scaleX: { value: 1.3, delay: 100, duration: 200},
+    duration: 320,
+    easing: 'cubicBezier(0.350, 0.560, 0.305, 1)'
   }, '-=490')
   .add({
     targets: '.letter-m .line',
@@ -91,7 +150,7 @@ var logoAnimation = (function() {
     duration: 600,
     d: function(el) { return el.dataset.d2 },
     begin: function(a) { a.animatables[0].target.removeAttribute('stroke-dasharray'); }
-  }, '-=290')
+  }, '-=330')
   .add({
     targets: ['.letter-a', '.letter-n', '.letter-i'],
     translateX: 0,
@@ -124,8 +183,9 @@ var logoAnimation = (function() {
   }, '-=660')
   .add({
     targets: '.letter-i rect',
-    opacity: 0,
-    duration: 1
+    opacity: 0.001,
+    duration: 1,
+    complete: sphereAnimation
   })
   .add({
     targets: '.dot',
@@ -162,47 +222,8 @@ var logoAnimation = (function() {
     translateY: [-20, 0],
     opacity: 1,
     easing: 'easeOutElastic(1, .6)',
-    duration: 1000,
-  }, '-=1010')
-  .add({
-    targets: '.dot',
-    translateY: [
-      {value: '-=70px', duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
-      {value: '+=170px', duration: 120, easing: 'easeInQuad'}
-    ],
-    scaleX: [
-      {value: [.55, .85], duration: 190, easing: 'easeOutSine'},
-      {value: 1, duration: 120, delay: 85, easing: 'easeInOutSine'}
-    ],
-    scaleY: [
-      {value: [.8, 1.3], duration: 120, easing: 'easeOutSine'},
-      {value: 1, duration: 50, delay: 180, easing: 'easeInOutSine'},
-      {value: 0, duration: 20, easing: 'easeOutQuad'}
-    ],
-    translateZ: 0,
-  })
-  .add({
-    targets: ['.letter-i .line', '.letter-n .line', '.letter-m .line', '.letter-a .line', '.letter-e .line'],
-    strokeDashoffset: [0, anime.setDashoffset],
-    easing: 'cubicBezier(0.400, 0.530, 0.070, 1)',
-    duration: function(el) { return getPathDuration(el, 1.5) },
-    delay: function(el, i) { return Math.round(i / 2) * 50 },
-    change: function(a) {
-      var iEl = a.animatables[0].target;
-      var mEl = a.animatables[2].target;
-      anime.setDashoffset(iEl);
-      anime.setValue(mEl, {'d': mEl.dataset.d4});
-      anime.setDashoffset(mEl);
-    }
-  }, '-=690')
-  .add({
-    targets: '.anime-logo h2',
-    translateY: -20,
-    translateZ: [0, 0],
-    opacity: 0,
-    easing: 'easeOutElastic(1, .6)',
-    duration: 700,
-  }, '-=400');
+    duration: 1000
+  }, '-=1010');
 
   //anime.speed = .1;
   // logoAnimationTL.seek(3000);

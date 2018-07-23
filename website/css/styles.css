@@ -38,6 +38,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
   color: #000;
   font-family: Roobert Regular, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1.25rem;
@@ -88,16 +90,6 @@ a {
   width: 100%;
   max-width: 1280px;
   margin: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.horizontal-section {
-  flex-direction: row;
-}
-
-.vertical-section {
-  flex-direction: column;
 }
 
 /* Mini logo */
@@ -116,27 +108,57 @@ a {
   top: 0;
   width: 100%;
   height: 4rem;
-  background-color: #F8F8F4;
 }
 
 .site-header-content {
   justify-content: space-between;
   height: 100%;
+  background-color: #F8F8F4;
+  border-bottom: 1px solid #D6D6D0;
 }
 
-.main-nav a {
+.header-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: calc(50% - 100px);
+}
+
+.header-nav:last-child {
+  justify-content: flex-end;
+}
+
+.header-nav a {
   font-size: 1rem;
   font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
-.main-nav a:not(:first-child) {
+.header-nav:first-child a {
+  margin-right: 1rem;
+}
+
+.header-nav:last-child a {
   margin-left: 1rem;
+}
+
+.mini-logo-link {
+  display: block;
+  position: relative;
+  width: 88px;
+  height: 14px;
+}
+
+.mini-logo-link svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* Logo animation */
 
 .intro-header {
-  pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -148,7 +170,7 @@ a {
 }
 
 .logo-animation {
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   display: flex;
   flex-shrink: 0;
@@ -165,6 +187,7 @@ a {
 }
 
 .anime-logo {
+  overflow: visible;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -172,6 +195,7 @@ a {
 }
 
 .anime-logo-signs {
+  overflow: visible;
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -185,9 +209,10 @@ a {
   opacity: 0;
   position: relative;
   width: 100%;
+  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   font-size: 20px;
-  letter-spacing: 16.4px;
+  letter-spacing: 16px;
   white-space: nowrap;
   text-align: center;
 }
@@ -210,6 +235,7 @@ a {
 }
 
 .dot {
+  opacity: 0.001;
   position: absolute;
   z-index: 10;
   top: 0;
@@ -236,42 +262,23 @@ a {
   stroke-width: 24px;
 }
 
-/*.fill-out {
-  stroke: #F8F8F4;
-  stroke-width: 26px;
-}*/
+/* Sphere */
 
 .sphere {
-  overflow: visible;
+  position: absolute;
   top: 50%;
   left: 50%;
-  width: 680px;
-  height: 680px;
+  overflow: visible;
+  width: 440px;
+  height: 440px;
+  margin: -220px 0 0 -220px;
+  transform: translate3d(0,0,0);
 }
 
 .sphere path {
-  fill: rgba(248,248,244,.4);
+  opacity: .001;
+  fill: rgba(248,248,244,.9);
   stroke: #000;
   stroke-width: 2px;
-}
-
-.site-header,
-.jae-section {
-  opacity: 0;
-  transition: opacity .5s ease;
-}
-
-.site-header {
-  transition-delay: 1.5s;
-}
-
-.intro-played .site-header,
-.intro-played .jae-section {
-  opacity: 1;
-}
-
-/* JAE section */
-
-.jae-section {
-  padding-top: 8rem;
+  backface-visibility: hidden;
 }
