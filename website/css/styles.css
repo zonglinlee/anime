@@ -56,6 +56,30 @@ a {
   color: currentColor;
 }
 
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  min-width: 12rem;
+  margin: 0 1rem 1rem 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
+  text-align: center;
+  background: #FBFBF6;
+  border: 1px solid rgba(0,0,0,.2);
+  box-shadow: 0 1px 3px 0 rgba(56,56,53,.1);
+  border-radius: 3px;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+
+.cta:hover {
+  border: 1px solid #000000;
+  box-shadow: 0 6px 10px 0 rgba(56,56,53,.1);
+}
+
 .large-title {
   font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   margin-bottom: 3rem;
@@ -111,10 +135,23 @@ a {
 }
 
 .site-header-content {
+  overflow: hidden;
+  position: relative;
   justify-content: space-between;
   height: 100%;
   background-color: #F8F8F4;
-  border-bottom: 1px solid #D6D6D0;
+}
+
+.header-bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #000;
+  transform-origin: 0 0;
+  transform: scaleX(0);
 }
 
 .header-nav {
@@ -124,7 +161,7 @@ a {
   width: calc(50% - 100px);
 }
 
-.header-nav:last-child {
+.header-nav-right {
   justify-content: flex-end;
 }
 
@@ -133,11 +170,11 @@ a {
   font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
-.header-nav:first-child a {
+.header-nav-left a {
   margin-right: 1rem;
 }
 
-.header-nav:last-child a {
+.header-nav-right a {
   margin-left: 1rem;
 }
 
@@ -156,17 +193,26 @@ a {
   height: 100%;
 }
 
+.header-nav a,
+.mini-logo-link,
+.logo-nav a {
+  opacity: 0;
+  transform: translate3d(0, 3rem, 0);
+}
+
 /* Logo animation */
 
 .intro-header {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0;
+  top: 3rem;
   left: 0;
-  height: 100%;
   width: 100%;
+  height: calc(100vh - 6rem);
+  max-height: 720px;
 }
 
 .logo-animation {
@@ -242,7 +288,7 @@ a {
   left: 0;
   width: 24px;
   height: 24px;
-  margin: -15px 0 0 -12px;
+  margin: -17px 0 0 -12px;
   background-color: #000;
   transform: translate3d(0,0,0);
 }
@@ -258,6 +304,7 @@ a {
 }
 
 .fill {
+  opacity: 0.001;
   stroke: #000;
   stroke-width: 24px;
 }

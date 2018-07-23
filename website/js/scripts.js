@@ -15,8 +15,27 @@ function fitToScreen(el, marginX, marginY) {
   }
 }
 
-function getPathDuration(el, speed) {
-  return anime.setDashoffset(el) * speed;
+function siteAnimation() {
+
+  var animation = anime.timeline({
+    duration: 750
+  })
+  .add({
+    targets: '.header-bottom-line',
+    opacity: [1, .2],
+    scaleX: [0, 1],
+    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
+  })
+  .add({
+    targets: ['.header-nav-left a', '.mini-logo-link','.header-nav-right a', '.logo-nav a'],
+    opacity: [0, 1],
+    translateY: ['3rem', 0],
+    translateZ: 0,
+    easing: 'easeOutCirc',
+    delay: function(el, i) {
+      return i * 100
+    }
+  },50)
 }
 
 function sphereAnimation() {
@@ -26,51 +45,56 @@ function sphereAnimation() {
   var pathLength = spherePathEls.length;
   var aimations = [];
 
-  for (var i = 0; i < pathLength; i++) {
-    aimations.push(anime({
-      targets: spherePathEls[i],
-      translateX: [3, -3],
-      translateY: [3, -3],
-      easing: 'easeOutQuad',
-      autoplay: false
-    }));
-  }
+  var glow = anime({
+    begin: function() {
+      for (var i = 0; i < pathLength; i++) {
+        aimations.push(anime({
+          targets: spherePathEls[i],
+          translateX: [3, -3],
+          translateY: [3, -3],
+          easing: 'easeOutQuad',
+          autoplay: false
+        }));
+      }
+    },
+    update: function(ins) {
+      aimations.forEach(function(animation, i) {
+        var percent = (1 - Math.sin((i * .35) + (.0022 * ins.currentTime))) / 2;
+        animation.seek(animation.duration * percent);
+      });
+    },
+    duration: Infinity,
+    autoplay: false
+  });
 
-
-
-  var introAnimation = anime.timeline()
+  var introAnimation = anime.timeline({
+    begin: glow.play
+  })
   .add({
     targets: sphereEl,
-    translateX: [40, 0],
-    translateY: [40, 0],
+    translateX: [60, 0],
+    translateY: [60, 0],
     translateZ: [0, 0],
     duration: 2500,
-    easing: 'easeOutQuad',
+    easing: 'easeOutSine',
   }, 0)
   .add({
     targets: spherePathEls,
     strokeDashoffset: {
       value: [anime.setDashoffset, 0],
-      duration: 1500,
+      duration: 1000,
       easing: 'easeInOutCirc',
+      delay:  function(el, i, t) {
+        return (t - i) * 35
+      }
     },
     opacity: 1,
     duration: 750,
     delay:  function(el, i, t) {
-      return i * 50
+      return (t - i) * 40
     },
     easing: 'linear'
   }, 0);
-
-  var sphereAnimation = anime({
-    update: function(ins) {
-      aimations.forEach(function(animation, i) {
-        var percent = (1 - Math.sin((i * .35) + (.0020 * ins.currentTime))) / 2;
-        animation.seek(animation.duration * percent);
-      });
-    },
-    duration: Infinity
-  });
 
 }
 
@@ -90,13 +114,9 @@ var logoAnimation = (function() {
     }, 100);
   });
 
-  anime.setValue('.fill', {opacity: 0.001});
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
-  anime.setValue('.dot', {
-    translateX: 448,
-    translateY: -100
-  });
+  anime.setValue('.dot', { translateX: 448, translateY: -100 });
 
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
@@ -194,7 +214,8 @@ var logoAnimation = (function() {
     translateY: [
       {value: 262, duration: 100, easing: 'easeOutSine'},
       {value: 244, duration: 1000, easing: 'easeOutElastic(1, .8)'}
-    ]
+    ],
+    complete: siteAnimation
   })
   .add({
     targets: '.letter-m .line',
