@@ -203,9 +203,12 @@ a {
 
 .site-header-content a:hover:after,
 .site-header-content a:focus:after {
-  outline: none;
   transform-origin: 0 0;
   transform: scaleX(1);
+}
+
+.site-header-content a:focus {
+  outline: none;
 }
 
 .header-nav-left a {
@@ -250,11 +253,11 @@ a {
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 3rem;
+  top: 0rem;
   left: 0;
   width: 100%;
-  height: calc(100vh - 6rem);
-  max-height: 720px;
+  height: calc(100vh - 3rem);
+  max-height: 760px;
 }
 
 .logo-animation {

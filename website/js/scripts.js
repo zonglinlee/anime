@@ -24,7 +24,7 @@ function siteAnimation() {
     targets: '.header-bottom-line',
     opacity: {
       value: [1, .2],
-      delay: 650,
+      delay: 450,
       duration: 500,
       easing: 'easeOutQuad'
     },
