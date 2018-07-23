@@ -52,21 +52,6 @@
     return str.indexOf(text) > -1;
   }
 
-  if (!Element.prototype.matches)
-    Element.prototype.matches = Element.prototype.msMatchesSelector || 
-                              Element.prototype.webkitMatchesSelector;
-
-  if (!Element.prototype.closest)
-    Element.prototype.closest = function(s) {
-      var el = this;
-      if (!document.documentElement.contains(el)) return null;
-      do {
-          if (el.matches(s)) return el;
-          el = el.parentElement || el.parentNode;
-      } while (el !== null); 
-      return null;
-    };
-
   const is = {
     arr: a => Array.isArray(a),
     obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
@@ -490,19 +475,9 @@
   function getPath(path, percent) {
     const el = is.str(path) ? selectString(path)[0] : path;
     const p = percent || 100;
-    const svg = el.closest("svg");
-    const viewBox = svg.viewBox.baseVal;
-
-    const offsetX = (typeof viewBox  !== 'undefined' ) ? 0 - viewBox.x : 0;
-    const offsetY = (typeof viewBox  !== 'undefined' ) ? 0 - viewBox.y : 0;
-
     return function(prop) {
       return {
         el: el,
-        svg: svg,
-        viewBox: viewBox,
-        offsetX: offsetX,
-        offsetY: offsetY,
         property: prop,
         totalLength: getTotalLength(el) * (p / 100)
       }
@@ -514,25 +489,13 @@
       const l = progress + offset >= 1 ? progress + offset : 0;
       return path.el.getPointAtLength(l);
     }
-
-    var scaleX = 1;
-    var scaleY = 1;
-    if (typeof path.viewBox  !== 'undefined' ) {
-        const box = path.svg.getBoundingClientRect();
-        const width = box.right-box.left;  //path.svg.width.baseVal.value is not cross browser compatible
-        const height = box.bottom-box.top; //path.svg.height.baseVal.value is not cross browser compatible
-
-        scaleX = (width / path.viewBox.width);
-        scaleY = (height / path.viewBox.height);
-    }
-
     const p = point();
     const p0 = point(-1);
     const p1 = point(+1);
     switch (path.property) {
-      case 'x': return (p.x + path.offsetX) * scaleX;
-      case 'y': return (p.y + path.offsetY) * scaleY;
-      case 'angle': return Math.atan2((p1.y - p0.y) * scaleY, (p1.x - p0.x)*scaleX) * 180 / Math.PI;
+      case 'x': return p.x;
+      case 'y': return p.y;
+      case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
     }
   }
 

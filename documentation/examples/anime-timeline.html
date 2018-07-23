@@ -21,13 +21,23 @@
   <style>
 
     body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .debug,
+    .demo {
+      position: relative;
+      width: 100%;
+      height: 50vh;
+    }
+
+    .demo {
       display: flex;
       flex-wrap: no-wrap;
       justify-content: space-around;
       align-items: center;
-      position: absolute;
-      width: 100%;
-      height: 100%;
     }
 
     .el {
@@ -37,14 +47,23 @@
       margin: 10px;
     }
 
+    .player {
+      position: relative;
+      top: 50px;
+      height: calc(50vh - 50px);
+    }
+
     .controls {
+      opacity: 1;
       display: flex;
-      position: fixed;
+      position: absolute;
       right: 0;
-      bottom: 0;
+      top: 0;
       left: 0;
-      height: 100px;
-      background: white;
+      height: 46px;
+      padding: 0 10px 0 10px;
+      background: #000;
+      color: #FFF;
     }
 
     .buttons {
@@ -58,7 +77,6 @@
     .timeline {
       display: flex;
       flex-grow: 1;
-      padding: 20px;
     }
 
     .progress {
@@ -69,29 +87,37 @@
 </head>
 <body>
 
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
-  <div class="el"></div>
+  <div class="demo">
 
-  <div class="controls">
-    <div class="buttons">
-      <button class="play">Play</button>
-      <button class="pause">Pause</button>
-      <button class="restart">Restart</button>
+    <div class="el"></div>
+    <div class="el"></div>
+    <div class="el"></div>
+    <div class="el"></div>
+    <div class="el"></div>
+    <div class="el"></div>
+    <div class="el"></div>
+
+  </div>
+
+  <div class="debug">
+    <div class="controls">
+      <div class="buttons">
+        <button class="play">Play</button>
+        <button class="pause">Pause</button>
+        <button class="restart">Restart</button>
+      </div>
+      <div class="timeline">
+        <input class="progress" type="range" min="0" max="100" step=".1" value="0">
+      </div>
     </div>
-    <div class="timeline">
-      <input class="progress" type="range" min="0" max="100" step=".1" value="0">
-    </div>
+    <div class="player"></div>
   </div>
 
 </body>
 <script type="module">
 
   import anime from '../../src/index.js';
+  import animePlayer from '../assets/js/anime.player.js'
 
   var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
@@ -99,18 +125,13 @@
   var tl = anime.timeline({
     targets: els,
     direction: 'alternate',
-    duration: 250,
+    duration: 800,
     delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
     },
-    begin: function(anim) {
-      console.log('tl begin');
-    },
-    complete: function(anim) {
-      console.log('tl complete');
-    },
-    autoplay: true
+    autoplay: true,
+    easing: 'easeOutQuad'
   });
 
   document.querySelector('.controls .play').onclick = tl.play;
@@ -121,57 +142,39 @@
   .add({
     translateY: -100,
     scale: 8,
-    background: '#FF1461',
-    begin: function() { console.log('animation 1 began')},
-    changeBegin: function() { console.log('animation 1 change began')},
-    changeComplete: function() { console.log('animation 1 change completed')},
-    complete: function() { console.log('animation 1 completed')}
+    background: '#FF1461'
   })
   .add({
     background: '#18FF92',
     rotate: 45,
-    begin: function() { console.log('animation 2 began')},
-    changeBegin: function() { console.log('animation 2 change began')},
-    changeComplete: function() { console.log('animation 2 change completed')},
-    complete: function() { console.log('animation 2 completed')}
-  })
+  }, '-=400')
   .add({
-    background: '#5A87FF',
-    begin: function() { console.log('animation 3 began')},
-    changeBegin: function() { console.log('animation 3 change began')},
-    changeComplete: function() { console.log('animation 3 change completed')},
-    complete: function() { console.log('animation 3 completed')}
-  })
+    background: '#5A87FF'
+  }, '-=400')
   .add({
     background: '#FBF38C',
     rotate: 90,
-    begin: function() { console.log('animation 4 began')},
-    changeBegin: function() { console.log('animation 4 change began')},
-    changeComplete: function() { console.log('animation 4 change completed')},
-    complete: function() { console.log('animation 4 completed')}
-  })
+  }, '-=400')
   .add({
     scaleX: 3,
     scaleY: .5,
     background: '#FBF38C',
-    begin: function() { console.log('animation 5 began')},
-    changeBegin: function() { console.log('animation 5 change began')},
-    changeComplete: function() { console.log('animation 5 change completed')},
-    complete: function() { console.log('animation 5 completed')}
+  }, '-=400');
+
+  controlsProgressEl.addEventListener('input', function() {
+    tl.seek(tl.duration * (controlsProgressEl.value / 100));
   });
 
-  // controlsProgressEl.addEventListener('input', function() {
-  //   tl.seek(tl.duration * (controlsProgressEl.value / 100));
-  // });
+  for (var i = 0; i < els.length; i++) {
+    els[i].addEventListener('mouseenter', function() {
+      anime.remove(this);
+      this.style.backgroundColor = 'red';
+    }, false);
+  }
 
-  // for (var i = 0; i < els.length; i++) {
-  //   els[i].addEventListener('mouseenter', function() {
-  //     anime.remove(this);
-  //     this.style.backgroundColor = 'red';
-  //   }, false);
-  // }
+  var playerEl = document.querySelector('.player');
 
-console.log(tl);
+  animePlayer(tl, playerEl);
 
   </script>
   <!-- <script src="../assets/js/vendors/stats.min.js"></script> -->
