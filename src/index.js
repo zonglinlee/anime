@@ -1037,12 +1037,11 @@ function anime(params = {}) {
       instance.changeBegan = false;
       setCallback('changeComplete');
     }
-    if (children) { syncInstanceChildren(insTime); }
+    if (children) { syncInstanceChildren(insTime); };
     if (insTime >= insDelay && insTime <= insDuration) {
       setAnimationsProgress(insTime);
     } else {
       if (insTime <= insDelay && instance.currentTime !== 0) {
-        console.log(instance.id, ' update');
         setAnimationsProgress(0);
       }
       if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
