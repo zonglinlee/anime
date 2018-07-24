@@ -63,7 +63,7 @@ rollup({
 
     // output gzip size
     const int = sizer.sync(code);
-    console.info('Compilation was a success! 😎');
+    console.info('Compilation was a success! 👍');
     console.info(`~> gzip size: ${ pretty(int) }`);
   }).catch(console.error);
 }).catch(console.error);
