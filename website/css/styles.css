@@ -164,7 +164,7 @@ a {
   margin: 0;
   border: none;
   border-bottom: 1px solid #000;
-  transform-origin: 0 0;
+  transform-origin: 50% 0;
   transform: scaleX(0);
 }
 

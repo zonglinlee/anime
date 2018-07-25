@@ -24,23 +24,30 @@ function siteAnimation() {
     targets: '.header-bottom-line',
     opacity: {
       value: [1, .2],
-      delay: 450,
-      duration: 500,
+      delay: 0,
+      duration: 400,
       easing: 'easeOutQuad'
     },
     scaleX: [0, 1],
-    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)'
-  })
+    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
+    duration: 650
+  }, 0)
   .add({
-    targets: ['.header-nav-left a', '.mini-logo-link','.header-nav-right a', '.logo-nav a'],
+    targets: ['.header-nav-left a', '.mini-logo-link','.header-nav-right a'],
     opacity: [0, 1],
-    translateY: ['3rem', 0],
-    translateZ: 0,
-    easing: 'easeOutCirc',
-    delay: function(el, i) {
-      return i * 100
+    translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
+    delay: function(el, i, t) {
+      var delay = Math.abs(Math.round((t / 2) - i - 1)) * 40;
+      return delay;
     }
-  },50)
+  }, 20)
+  .add({
+    targets: '.logo-nav a',
+    opacity: [0, 1],
+    translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
+    delay: function(el, i, t) { return (t - i) * 40 }
+  }, 20)
+
 }
 
 function sphereAnimation() {
@@ -254,7 +261,7 @@ var logoAnimation = (function() {
   }, '-=1010');
 
   //anime.speed = .1;
-  //logoAnimationTL.seek(2500);
+  //logoAnimationTL.seek(2000);
 
   logoAnimationEl.classList.add('is-visible');
 
