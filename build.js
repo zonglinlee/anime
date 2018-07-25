@@ -10,7 +10,7 @@ const date = new Date();
 
 const banner = `/*
  * anime.js v${ pkg.version }
- * © ${ date.getFullYear() } Julian Garnier
+ * (c) ${ date.getFullYear() } Julian Garnier
  * Released under the MIT license
  * animejs.com
  */
@@ -63,7 +63,7 @@ rollup({
 
     // output gzip size
     const int = sizer.sync(code);
-    console.info('Compilation was a success! 😎');
+    console.info('Compilation was a success! 👍');
     console.info(`~> gzip size: ${ pretty(int) }`);
   }).catch(console.error);
 }).catch(console.error);
