@@ -15,41 +15,6 @@ function fitToScreen(el, marginX, marginY) {
   }
 }
 
-function siteAnimation() {
-
-  var animation = anime.timeline({
-    duration: 750
-  })
-  .add({
-    targets: '.header-bottom-line',
-    opacity: {
-      value: [1, .2],
-      delay: 0,
-      duration: 400,
-      easing: 'easeOutQuad'
-    },
-    scaleX: [0, 1],
-    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
-    duration: 650
-  }, 0)
-  .add({
-    targets: ['.header-nav-left a', '.mini-logo-link','.header-nav-right a'],
-    opacity: [0, 1],
-    translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
-    delay: function(el, i, t) {
-      var delay = Math.abs(Math.round((t / 2) - i - 1)) * 40;
-      return delay;
-    }
-  }, 20)
-  .add({
-    targets: '.logo-nav a',
-    opacity: [0, 1],
-    translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
-    delay: function(el, i, t) { return (t - i) * 40 }
-  }, 20)
-
-}
-
 function sphereAnimation() {
 
   var sphereEl = document.querySelector('.sphere');
@@ -129,6 +94,41 @@ var logoAnimation = (function() {
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
   anime.setValue('.dot', { translateX: 448, translateY: -100 });
+
+  var siteAnimation = anime.timeline({
+    duration: 750,
+    begin: sphereAnimation,
+    autoplay: false
+  })
+  .add({
+    targets: '.header-bottom-line',
+    opacity: {
+      value: [1, .2],
+      delay: 0,
+      duration: 400,
+      easing: 'easeOutQuad'
+    },
+    scaleX: [0, 1],
+    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
+    duration: 650
+  }, 0)
+  .add({
+    targets: ['.header-nav-left a', '.mini-logo-link','.header-nav-right a'],
+    opacity: [0.001, 1],
+    translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
+    translateZ: [0, 0],
+    delay: function(el, i, t) {
+      var delay = Math.abs(Math.round((t / 2) - i - 1)) * 40;
+      return delay;
+    }
+  }, 20)
+  .add({
+    targets: '.logo-nav a',
+    opacity: [0.001, 1],
+    translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
+    translateZ: [0, 0],
+    delay: function(el, i, t) { return (t - i) * 40 }
+  }, 20);
 
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
@@ -217,10 +217,7 @@ var logoAnimation = (function() {
     targets: '.letter-i rect',
     opacity: 0.001,
     duration: 1,
-    complete: function() {
-      siteAnimation();
-      sphereAnimation();
-    }
+    complete: siteAnimation.play
   })
   .add({
     targets: '.dot',
