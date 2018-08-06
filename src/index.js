@@ -1081,7 +1081,7 @@ function anime(params = {}) {
     instance.paused = true;
     instance.began = false;
     instance.changeBegan = false;
-    instance.changeComplete = false;
+    instance.changeCompleted = false;
     instance.completed = false;
     instance.seeking = false;
     instance.reversed = direction === 'reverse';

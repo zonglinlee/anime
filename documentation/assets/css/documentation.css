@@ -15,10 +15,15 @@ body {
   width: 100%;
   height: 100%;
   color: white;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-family: RoobertTRIAL-Regular;
+  font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+input {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 
 .color-01, .color-targets { color: #FF1461; } /* Red */
@@ -565,7 +570,7 @@ article {
   align-items: center;
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 .log:focus {

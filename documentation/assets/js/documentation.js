@@ -4,7 +4,6 @@ var articleEls = document.querySelectorAll('article');
 var demoInfoEl = document.querySelector('.demo-info');
 var descriptionEl = document.querySelector('.info-output');
 var descriptionTitleEl = document.querySelector('.demo-info h2');
-var ulHeight = 20;
 var demos = [];
 
 function getScrollTop() {
@@ -76,19 +75,23 @@ function outputCode(demoCode, demoTitle, demoDecription, demoColorClass) {
 
 function toggleSectionLink(ulEl) {
   var ulEls = document.querySelectorAll('.navigation ul');
+  var ulLiEls = ulEl.querySelectorAll('.li');
   for (var i = 0; i < ulEls.length; i++) ulEls[i].classList.remove('active');
   ulEl.classList.add('active');
   anime.remove(ulEls);
   anime({
     targets: '.navigation ul:not(.active)',
-    height: ulHeight + 10,
+    height: 30,
     duration: 400,
     easing: 'easeOutQuart'
   });
   anime({
     targets: ulEl,
     height: function(el) {
-      return el.childNodes.length * ulHeight + 20;
+      var height = 0;
+      var childNodes = el.childNodes;
+      for (var i = 0; i < childNodes.length; i++) height += childNodes[i].offsetHeight;
+      return height;
     },
     duration: 600,
     delay: 400,
