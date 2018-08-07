@@ -1,16 +1,10 @@
-function fitToScreen(el, marginX, marginY) {
+function fitToScreen(el, marginX) {
+  anime.setValue(el, { scale: 1 });
   var elWidth = el.offsetWidth;
-  var elHeight = el.offsetHeight;
   var screenWidth = window.innerWidth;
-  var screenHeight = window.innerHeight;
   var limitWidth = screenWidth - marginX;
-  var limitHeight = screenHeight - marginY;
   if (elWidth > limitWidth) {
     var scaleRatio = limitWidth / elWidth;
-    anime.setValue(el, { scale: scaleRatio });
-  }
-  if (elHeight > limitHeight) {
-    var scaleRatio = limitHeight / elHeight;
     anime.setValue(el, { scale: scaleRatio });
   }
 }
@@ -22,7 +16,7 @@ function sphereAnimation() {
   var pathLength = spherePathEls.length;
   var aimations = [];
 
-  var glow = anime({
+  var breathAnimation = anime({
     begin: function() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
@@ -45,7 +39,7 @@ function sphereAnimation() {
   });
 
   var introAnimation = anime.timeline({
-    begin: glow.play
+    begin: breathAnimation.play
   })
   .add({
     targets: sphereEl,
@@ -88,7 +82,7 @@ var logoAnimation = (function() {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(function() {
       fitToScreen(logoAnimationEl, 64, 16);
-    }, 100);
+    }, 10);
   });
 
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
@@ -100,6 +94,12 @@ var logoAnimation = (function() {
     begin: sphereAnimation,
     autoplay: false
   })
+  .add({
+    targets: '.site-header',
+    opacity: [.001, 1],
+    easing: 'linear',
+    duration: 10,
+  }, 0)
   .add({
     targets: '.header-bottom-line',
     opacity: {
@@ -258,7 +258,7 @@ var logoAnimation = (function() {
   }, '-=1010');
 
   //anime.speed = .1;
-  //logoAnimationTL.seek(2000);
+  logoAnimationTL.seek(3000);
 
   logoAnimationEl.classList.add('is-visible');
 

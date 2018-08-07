@@ -130,13 +130,6 @@ a {
   margin: auto;
 }
 
-/* Mini logo */
-
-.mini-logo {
-  stroke: #000;
-  stroke-width: 2px;
-}
-
 /* Header */
 
 .site-header {
@@ -172,12 +165,17 @@ a {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: calc(50% - 100px);
   height: 100%;
 }
 
-.header-nav-right {
-  justify-content: flex-end;
+
+@media (min-width: 640px) {
+  .header-nav {
+    width: calc(50% - 50px);
+  }
+  .header-nav-right {
+    justify-content: flex-end;
+  }
 }
 
 .header-nav a {
@@ -211,23 +209,30 @@ a {
   outline: none;
 }
 
-.header-nav-left a {
+.header-nav-left a:not(:last-child) {
   margin-right: 1rem;
 }
 
-.header-nav-right a {
+.header-nav-right a:not(:first-child) {
   margin-left: 1rem;
 }
 
-.header-nav a:hover {
-
+.mini-logo {
+  stroke: #000;
+  stroke-width: 2px;
 }
 
 .mini-logo-link {
-  display: block;
+  display: none;
   position: relative;
   width: 88px;
   height: 100%;
+}
+
+@media (min-width: 640px) {
+  .mini-logo-link {
+    display: block;
+  }
 }
 
 .mini-logo-link svg {
@@ -245,12 +250,31 @@ a {
   transform: translate3d(0, 3rem, 0);
 }
 
+/* Logo CTAs */
+
+.logo-nav {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+@media (min-width: 640px) {
+  .logo-nav {
+    flex-direction: row;
+  }
+}
+
+.logo-nav .cta:last-child {
+  margin-bottom: 0;
+}
+
 /* Logo animation */
 
 .intro-header {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   position: absolute;
   top: 0rem;
@@ -262,15 +286,24 @@ a {
 
 .logo-animation {
   overflow: visible;
-  position: relative;
   display: flex;
   flex-shrink: 0;
   visibility: hidden;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 740px;
   height: 544px;
+  margin: -300px 0 0 -370px;
+}
+
+@media (min-width: 640px) {
+.logo-animation {
+  margin-top: -272px;
+}
 }
 
 .logo-animation.is-visible {
@@ -373,4 +406,14 @@ a {
   stroke: #000;
   stroke-width: 1px;
   backface-visibility: hidden;
+}
+
+/* Helpers */
+
+  .small-screen-only { display: flex; }
+  .large-screen-only { display: none; }
+
+@media (min-width: 640px) {
+  .small-screen-only { display: none; }
+  .large-screen-only { display: flex; }
 }
