@@ -39,6 +39,7 @@ body {
 }
 
 body {
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,17 +95,17 @@ a {
   transition-duration: .125s;
 }
 
-.large-title {
+.section-title {
   font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
-  margin-bottom: 3rem;
-  font-size: 3.75rem;
+  margin-bottom: 4rem;
+  font-size: 1.875rem;
   text-align: center;
 }
 
-.small-title {
-  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
-  margin-bottom: 1rem;
-  font-size: 1.875rem;
+.article-title {
+  font-family: RoobertTRIAL-SemiBold;
+  font-size: 1rem;
+  letter-spacing: 0;
   text-align: center;
 }
 
@@ -128,6 +129,14 @@ a {
   width: 100%;
   max-width: 1280px;
   margin: auto;
+}
+
+.content-section {
+  display: none;
+}
+
+.is-ready .content-section {
+  display: flex;
 }
 
 /* Header */
@@ -167,7 +176,6 @@ a {
   align-items: center;
   height: 100%;
 }
-
 
 @media (min-width: 640px) {
   .header-nav {
@@ -272,15 +280,16 @@ a {
 /* Logo animation */
 
 .intro-header {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  position: absolute;
-  top: 0rem;
+  position: relative;
+  top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 6rem);
   max-height: 760px;
 }
 
@@ -297,7 +306,7 @@ a {
   left: 50%;
   width: 740px;
   height: 544px;
-  margin: -300px 0 0 -370px;
+  margin: -330px 0 0 -370px;
 }
 
 @media (min-width: 640px) {
@@ -406,6 +415,36 @@ a {
   stroke: #000;
   stroke-width: 1px;
   backface-visibility: hidden;
+}
+
+/* Features section */
+
+.features-section {
+  flex-direction: column;
+  width: 100%;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 4rem;
+}
+
+.feature-box {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .feature-box {
+    width: 33.33%;
+  }
+}
+
+.feature-anim {
+  width: 8rem;
+  height: 8rem;
 }
 
 /* Helpers */

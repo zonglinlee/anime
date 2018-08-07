@@ -59,7 +59,7 @@ function sphereAnimation() {
         return (t - i) * 50
       }
     },
-    opacity: 1,
+    opacity: [.001, 1],
     duration: 750,
     delay:  function(el, i, t) {
       return (t - i) * 80
@@ -74,7 +74,7 @@ var logoAnimation = (function() {
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
 
-  fitToScreen(logoAnimationEl, 64, 16);
+  fitToScreen(logoAnimationEl, 24);
 
   var resizeTimeout = null;
 
@@ -99,6 +99,9 @@ var logoAnimation = (function() {
     opacity: [.001, 1],
     easing: 'linear',
     duration: 10,
+    begin: function() {
+      document.body.classList.add('is-ready');
+    }
   }, 0)
   .add({
     targets: '.header-bottom-line',
@@ -133,9 +136,7 @@ var logoAnimation = (function() {
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
     autoplay: false
-  });
-
-  logoAnimationTL
+  })
   .add({
     targets: '.letter-i .line',
     duration: 0,
@@ -258,7 +259,7 @@ var logoAnimation = (function() {
   }, '-=1010');
 
   //anime.speed = .1;
-  logoAnimationTL.seek(3000);
+  //logoAnimationTL.seek(3000);
 
   logoAnimationEl.classList.add('is-visible');
 
@@ -266,5 +267,4 @@ var logoAnimation = (function() {
 
 })();
 
-
-logoAnimation.play();
+window.onload = logoAnimation.play;
