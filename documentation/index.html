@@ -943,7 +943,7 @@ anime({
   </div>
   <div class="demo-content">
     <div class="line">
-      <div class="small label">3 times</div>
+      <div class="small label">normal 3 times</div>
       <div class="small square shadow"></div>
       <div class="small square el loop"></div>
     </div>
@@ -958,7 +958,7 @@ anime({
       <div class="small square el loop-alternate"></div>
     </div>
     <div class="line">
-      <div class="small label">inifinite</div>
+      <div class="small label">normal inifinite</div>
       <div class="small square shadow"></div>
       <div class="small square el loop-infinity"></div>
     </div>
@@ -992,6 +992,7 @@ anime({
 anime({
   targets: '.loop-reverse',
   translateX: 250,
+  loop: 3,
   direction: 'reverse',
   easing: 'easeInOutSine'
 });
@@ -1007,6 +1008,7 @@ anime({
 anime({
   targets: '.loop-alternate',
   translateX: 250,
+  loop: 3,
   direction: 'alternate',
   easing: 'easeInOutSine'
 });
