@@ -3143,6 +3143,58 @@ anime({
 
 </div>
 
+<div id="customEasing" class="demo">
+  <h3 class="demo-title">Custom easing function</h3>
+  <div class="demo-description">
+    <table>
+      <thead>
+        <td>Parameter</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td>Time</td>
+        <td>Return the current time of the animation</td>
+      </tr>
+    </table>
+    <p>
+      A custom easing function must be returned by <a class="color-values" href="#functionBasedPropVal">function based value</a>.
+    </p>
+    <pre><code>easing: function() { return function(time) { return time * i} }</code></pre>
+  </div>
+  <div class="demo-content custom-easing-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var customEasing = function() {
+/*DEMO*/
+anime({
+  targets: '.custom-easing-demo .el',
+  translateX: 250,
+  direction: 'alternate',
+  loop: true,
+  duration: 2000,
+  easing: function(el, i, total) {
+    return function(t) {
+      return Math.pow(Math.sin(t * (i + 1)), total);
+    }
+  }
+});
+/*DEMO*/
+}
+  </script>
+
+</div>
+
 </article>
 <!-- -->
 

@@ -276,12 +276,13 @@ const easings = (() => {
 })();
 
 function parseEasings(tween) {
-  const string = tween.easing;
-  const name = string.split('(')[0];
-  const args = parseEasingParameters(string);
+  const easing = tween.easing;
+  if (is.fnc(easing)) return easing;
+  const name = easing.split('(')[0];
   const ease = easings[name];
+  const args = parseEasingParameters(easing);
   switch (name) {
-    case 'spring' : return spring(string, tween.duration);
+    case 'spring' : return spring(easing, tween.duration);
     case 'cubicBezier' : return applyArguments(bezier, args);
     case 'steps' : return applyArguments(steps, args);
     default : return is.fnc(ease) ? applyArguments(ease, args) : applyArguments(bezier, ease);
