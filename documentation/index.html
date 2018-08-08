@@ -2410,9 +2410,9 @@ anime({
         <td>Return the current animation Object</td>
       </tr>
     </table>
-      <p><code>loopBegin()</code> callback is triggered everytime a loop begin.</p>
-      <p><code>loopComplete()</code> callback is triggered everytime a loop is completed.</p>
-      <p class="bubble info">Animation direction will affect the order in which <code>loopBegin()</code> and <code>loopComplete()</code> are triggerd.</p>
+      <p><code>loopBegin()</code> callback is triggered once everytime a loop begin.</p>
+      <p><code>loopComplete()</code> callback is triggered once everytime a loop is completed.</p>
+      <p class="bubble warning">Animation direction will affect the order in which <code>loopBegin()</code> and <code>loopComplete()</code> are triggerd.</p>
   </div>
   <div class="demo-content loopBegin-loopComplete-demo">
     <div class="logs">
@@ -2526,9 +2526,9 @@ anime({
         <td>Return the current animation Object</td>
       </tr>
     </table>
-      <p><code>changeBegin()</code> callback is triggered everytime a loop begin.</p>
-      <p><code>loopComplete()</code> callback is triggered everytime a loop is completed.</p>
-      <p class="bubble info">Animation direction will affect the order in which <code>loopBegin()</code> and <code>loopComplete()</code> are triggerd.</p>
+      <p><code>changeBegin()</code> callback is triggered once everytime the animation <code>delay</code> ends.</p>
+      <p><code>changeComplete()</code> callback is triggered once everytime the animation <code>endDelay</code> starts.</p>
+      <p class="bubble warning">Animation direction will affect the order in which <code>changeBegin()</code> and <code>changeComplete()</code> are triggerd.</p>
   </div>
   <div class="demo-content changeBegin-chnageComplete-demo">
     <div class="logs">
