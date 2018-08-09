@@ -95,13 +95,21 @@ var logoAnimation = (function() {
     autoplay: false
   })
   .add({
+    targets: '.content-section',
+    opacity: [.001, 1],
+    translateY: ['50px', 0],
+    translateZ: [0, 0],
+    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
+    duration: 1200,
+    changeBegin: function() {
+      document.body.classList.add('is-ready');
+    }
+  }, 500)
+  .add({
     targets: '.site-header',
     opacity: [.001, 1],
     easing: 'linear',
-    duration: 10,
-    begin: function() {
-      document.body.classList.add('is-ready');
-    }
+    duration: 10
   }, 0)
   .add({
     targets: '.header-bottom-line',
@@ -258,8 +266,8 @@ var logoAnimation = (function() {
     duration: 1000
   }, '-=1010');
 
-  //anime.speed = .1;
-  //logoAnimationTL.seek(3000);
+  logoAnimationTL.seek(logoAnimationTL.duration);
+  siteAnimation.seek(siteAnimation.duration);
 
   logoAnimationEl.classList.add('is-visible');
 

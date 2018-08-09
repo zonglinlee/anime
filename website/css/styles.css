@@ -442,9 +442,44 @@ a {
   }
 }
 
+/* Features anims */
+
 .feature-anim {
+  display: flex;
   width: 8rem;
   height: 8rem;
+  border: 1px solid rgba(255,0,0,.8);
+  background-color: rgba(255,0,0,.1);
+}
+
+.feature-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 10rem;
+  margin-bottom: 1rem;
+}
+
+/* Keyframes*/
+
+.feature-keyframes {
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.key-box {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #000;
+}
+
+.key-box-shadow {
+  position: absolute;
+  width: 2rem;
+  height: 1px;
+  background-color: #000;
 }
 
 /* Helpers */
