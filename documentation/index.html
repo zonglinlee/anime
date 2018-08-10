@@ -2240,8 +2240,7 @@ for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function() {
     statesOverridesDemoAnimation.animateTo(this.value, {
       translateX: anime.random(-40, 40),
-      duration: anime.random(100, 1000),
-      easing: anime.easings[anime.random(0, anime.easings.length-1)]
+      duration: anime.random(100, 1000)
     });
   });
 }
