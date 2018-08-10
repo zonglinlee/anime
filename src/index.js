@@ -276,12 +276,13 @@ const easings = (() => {
 })();
 
 function parseEasings(tween) {
-  const string = tween.easing;
-  const name = string.split('(')[0];
-  const args = parseEasingParameters(string);
+  const easing = tween.easing;
+  if (is.fnc(easing)) return easing;
+  const name = easing.split('(')[0];
   const ease = easings[name];
+  const args = parseEasingParameters(easing);
   switch (name) {
-    case 'spring' : return spring(string, tween.duration);
+    case 'spring' : return spring(easing, tween.duration);
     case 'cubicBezier' : return applyArguments(bezier, args);
     case 'steps' : return applyArguments(steps, args);
     default : return is.fnc(ease) ? applyArguments(ease, args) : applyArguments(bezier, ease);
@@ -911,17 +912,17 @@ function anime(params = {}) {
     children.forEach(child => child.reversed = instance.reversed);
   }
 
+  function adjustTime(time) {
+    return instance.reversed ? instance.duration - time : time;
+  }
+
   function resetTime() {
     startTime = 0;
     lastTime = adjustTime(instance.currentTime) * (1 / anime.speed);
   }
 
-  function adjustTime(time) {
-    return instance.reversed ? instance.duration - time : time;
-  }
-
   function syncInstanceChildren(time) {
-    if (instance.seeking && time < instance.currentTime) {
+    if (instance.seeked && time < instance.currentTime) {
       for (let i = childrenLength; i--;) {
         const child = children[i];
         child.seek(time - child.timelineOffset);
@@ -932,10 +933,6 @@ function anime(params = {}) {
         child.seek(time - child.timelineOffset);
       }
     }
-      // for (let i = 0; i < childrenLength; i++) {
-      //   const child = children[i];
-      //   child.seek(time - child.timelineOffset);
-      // }
   }
 
   function setAnimationsProgress(insTime) {
@@ -1081,9 +1078,9 @@ function anime(params = {}) {
     instance.paused = true;
     instance.began = false;
     instance.changeBegan = false;
-    instance.changeComplete = false;
+    instance.changeCompleted = false;
     instance.completed = false;
-    instance.seeking = false;
+    instance.seeked = false;
     instance.reversed = direction === 'reverse';
     instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
     children = instance.children;
@@ -1095,23 +1092,24 @@ function anime(params = {}) {
   instance.tick = function(t) {
     now = t;
     if (!startTime) startTime = now;
-    instance.seeking = false;
+    instance.seeked = false;
     setInstanceProgress((now + (lastTime - startTime)) * anime.speed);
   }
 
   instance.seek = function(time) {
-    instance.seeking = true;
+    instance.seeked = true;
     setInstanceProgress(adjustTime(time));
   }
 
   instance.pause = function() {
     instance.paused = true;
+    resetTime();
   }
 
   instance.play = function() {
     if (!instance.paused) return;
     instance.paused = false;
-    resetTime();
+    if (instance.seeked) resetTime();
     activeInstances.push(instance);
     if (!raf) engine();
   }
@@ -1122,8 +1120,8 @@ function anime(params = {}) {
   }
 
   instance.restart = function() {
-    instance.pause();
     instance.reset();
+    resetTime();
     instance.play();
   }
 
@@ -1150,6 +1148,7 @@ function anime(params = {}) {
   if (instance.startTime) {
     // if startTime > instance duration, simulate a loop
     setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
+    resetTime();
   }
 
   if (instance.states) {
