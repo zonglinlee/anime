@@ -1,3 +1,5 @@
+import anime from '../../src/index.js';
+
 var keyframesAnimation = anime.timeline({
   loop: true
 })
@@ -75,8 +77,6 @@ var CSSTransformsAnimation = (function() {
       },
     }, 0);
 
-    isElementInViewport(el, animation.play, animation.pause);
-
   }
 
   for (var i = 0; i < shapeEls.length; i++) animateShape(shapeEls[i]);
@@ -134,12 +134,15 @@ animateNeedles();
 
 var statesAnimation = anime({
   targets: '.states-box',
+  rotate: function() {
+    return anime.random(-10, 10)
+  },
   easing: 'easeOutQuad',
   states: {
-    close: {
-      rotate: function() {
-        return anime.random(-5, 5)
-      }
+    shuffled: {
+      translateX: 100
     }
   }
-})
+});
+
+console.log(statesAnimation);

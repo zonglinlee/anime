@@ -38,11 +38,22 @@
       text-align: center;
     }
 
+    .states-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 100px;
+      border: 2px solid currentColor;
+      text-align: center;
+    }
+
   </style>
 </head>
 <body>
 
   <div class="states-example color-01"></div>
+  <div class="states-box color-01"></div>
   <nav>
     <button value="default">Default</button>
     <button value="circle">Circle</button>
@@ -79,6 +90,16 @@
       }
     },
   });
+
+anime({
+  targets: '.states-box',
+  easing: 'easeOutQuad',
+  states: {
+    open: {
+      rotate: 360
+    }
+  }
+})
 
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function() {
