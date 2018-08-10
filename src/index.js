@@ -219,13 +219,13 @@ const bezier = (() => {
 
 })();
 
-const easings = (() => {
+const penner = (() => {
 
   const names = ['Quad', 'Cubic', 'Quart', 'Quint', 'Sine', 'Expo', 'Circ', 'Back', 'Elastic'];
 
   // Approximated Penner equations http://matthewlein.com/ceaser/
 
-  const penner = {
+  const curves = {
     In: [
       [0.550, 0.085, 0.680, 0.530], /* inQuad */
       [0.550, 0.055, 0.675, 0.190], /* inCubic */
@@ -265,9 +265,9 @@ const easings = (() => {
     linear: [0.250, 0.250, 0.750, 0.750]
   }
 
-  for (let equation in penner) {
-    penner[equation].forEach((ease, i) => { 
-      eases['ease'+equation+names[i]] = ease;
+  for (let coords in curves) {
+    curves[coords].forEach((ease, i) => { 
+      eases['ease'+coords+names[i]] = ease;
     });
   }
 
@@ -275,14 +275,13 @@ const easings = (() => {
 
 })();
 
-function parseEasings(tween) {
-  const easing = tween.easing;
+function parseEasings(easing, duration) {
   if (is.fnc(easing)) return easing;
   const name = easing.split('(')[0];
-  const ease = easings[name];
+  const ease = penner[name];
   const args = parseEasingParameters(easing);
   switch (name) {
-    case 'spring' : return spring(easing, tween.duration);
+    case 'spring' : return spring(easing, duration);
     case 'cubicBezier' : return applyArguments(bezier, args);
     case 'steps' : return applyArguments(steps, args);
     default : return is.fnc(ease) ? applyArguments(ease, args) : applyArguments(bezier, ease);
@@ -720,7 +719,7 @@ function normalizeTweens(prop, animatable) {
     tween.to = decomposeValue(getRelativeValue(to, from), unit);
     tween.start = previousTween ? previousTween.end : 0;
     tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
-    tween.easing = parseEasings(tween);
+    tween.easing = parseEasings(tween.easing, tween.duration);
     tween.isPath = is.pth(tweenValue);
     tween.isColor = is.col(tween.from.original);
     if (tween.isColor) tween.round = 1;
@@ -1233,7 +1232,7 @@ anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
 anime.timeline = timeline;
-anime.easings = easings;
+anime.easing = parseEasings;
 anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export default anime;
