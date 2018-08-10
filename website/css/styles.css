@@ -35,7 +35,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 
 html,
 body {
-  background-color: #F8F8F4;
+  background-color: #FBFBF6;
 }
 
 body {
@@ -474,14 +474,14 @@ a {
 }
 
 .key-box {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border: 1px solid #000;
 }
 
 .key-box-shadow {
   position: absolute;
-  width: 2rem;
+  width: 2.5rem;
   height: 1px;
   background-color: #000;
 }
@@ -522,14 +522,37 @@ a {
 }
 
 .clock-dial-line:nth-child(4n + 1) {
-  height: 1rem;
+  height: .8rem;
 }
 
 .needle {
+  position: absolute;
   width: 1px;
-  height: 1.8rem;
   background-color: #000;
   transform-origin: 50% 100%;
+}
+
+.small-needle {
+  height: 1.25rem;
+}
+
+.long-needle {
+  height: 1.875rem;
+}
+
+/* States System */
+
+.feature-states {
+  justify-content: center;
+  align-items: center;
+}
+
+.states-box {
+  position: absolute;
+  width: 2.5rem;
+  height: 3rem;
+  border: 1px solid #000;
+  background-color: #FBFBF6;
 }
 
 /* Helpers */

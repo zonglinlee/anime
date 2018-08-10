@@ -231,7 +231,7 @@ var logoAnimation = (function() {
     translateX: bouncePath('x'),
     translateY: bouncePath('y'),
     translateZ: 0,
-    rotate: 360,
+    rotate: '1turn',
     scaleX: [
       { value: 1, duration: 50, easing: 'easeOutSine' }
     ],
