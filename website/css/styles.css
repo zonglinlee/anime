@@ -505,17 +505,31 @@ a {
   align-items: center;
 }
 
-.time-clock {
+.time-control-clock {
   position: absolute;
-  width: 8rem;
-  height: 8rem;
+  width: 6rem;
+  height: 6rem;
+}
+
+.clock-dial-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: .5rem;
+  background-color: #000;
+  transform-origin: 50% 0;
+}
+
+.clock-dial-line:nth-child(4n + 1) {
+  height: 1rem;
 }
 
 .needle {
   width: 1px;
   height: 1.8rem;
   background-color: #000;
-  transform-origin: 50% 0;
+  transform-origin: 50% 100%;
 }
 
 /* Helpers */

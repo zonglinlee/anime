@@ -53,8 +53,7 @@ var CSSTransformsAnimation = (function() {
       translateZ: [0, 0],
       rotate: function() { return anime.random(-180, 180); },
       duration: function() { return anime.random(500, 2000); },
-      delay: function() { return anime.random(0, 250); },
-      endDelay: function() { return anime.random(0, 250); },
+      delay: function() { return anime.random(0, 500); },
       easing: function() { return 'cubicBezier('+bezierCurves[anime.random(0, bezierCurves.length-1)]+')'}
     }, 0)
     .add({
@@ -82,12 +81,36 @@ var CSSTransformsAnimation = (function() {
 
 })();
 
-var timeControlAnimation = anime({
+var clock = (function() {
+  var parentEl = document.querySelector('.time-control-clock');
+  var fragment = document.createDocumentFragment();
+  var totalLines = 48;
+  function createLine(angle) {
+    var el = document.createElement('div');
+    el.classList.add('clock-dial-line');
+    anime.setValue(el, {rotate: angle, translateY: '-3rem'});
+    fragment.appendChild(el);
+  }
+  for (var i = 0; i < totalLines; i++) {
+    var angle = (i / totalLines) * 360;
+    createLine(angle);
+  }
+  parentEl.appendChild(fragment);
+})();
+
+console.log(anime.easings);
+
+var timeControlAnimation = anime.timeline({
+  easing: 'easeInOutQuad',
+  direction: 'alternate',
+  loop: true
+})
+.add({
+  targets: '.clock-dial-line',
+  translateY: '+=1rem'
+}, 0)
+.add({
   targets: '.needle',
-  translateY: ['50%', '50%'],
-  rotate: 180,
-  easing: 'steps(24)',
-  duration: 2000,
-  // loop: true,
-  diretion: 'alternate'
-});
+  translateY: ['-50%', '-50%'],
+  rotate: 540
+}, 0);
