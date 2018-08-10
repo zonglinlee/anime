@@ -522,7 +522,7 @@ a {
 }
 
 .clock-dial-line:nth-child(4n + 1) {
-  height: .8rem;
+  height: .75rem;
 }
 
 .needle {
@@ -547,9 +547,9 @@ a {
   align-items: center;
 }
 
-.states-box {
+.states-card {
   position: absolute;
-  width: 2.5rem;
+  width: 2.25rem;
   height: 3rem;
   border: 1px solid #000;
   background-color: #FBFBF6;

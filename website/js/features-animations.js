@@ -1,4 +1,4 @@
-import anime from '../../src/index.js';
+//import anime from '../../src/index.js';
 
 var keyframesAnimation = anime.timeline({
   loop: true
@@ -52,8 +52,8 @@ var CSSTransformsAnimation = (function() {
       complete: function(anim) { animateShape(anim.animatables[0].target); }
     })
     .add({
-      translateX: function() { return (anime.random(-25, 25) / 10) + 'rem'; },
-      translateY: function() { return (anime.random(-25, 25) / 10) + 'rem'; },
+      translateX: function() { return (anime.random(-20, 20) / 10) + 'rem'; },
+      translateY: function() { return (anime.random(-20, 20) / 10) + 'rem'; },
       translateZ: [0, 0],
       rotate: function() { return anime.random(-180, 180); },
       duration: function() { return anime.random(1000, 2000); },
@@ -133,16 +133,42 @@ function animateNeedles() {
 animateNeedles();
 
 var statesAnimation = anime({
-  targets: '.states-box',
-  rotate: function() {
-    return anime.random(-10, 10)
-  },
+  targets: '.states-card',
   easing: 'easeOutQuad',
+  delay: function(el, i, t) { return (t - i) * 25 },
   states: {
-    shuffled: {
-      translateX: 100
+    open: {
+      translateX: [
+        {value: '-2rem', delay: function(el, i, t) { return (t - i) * 100 }},
+        {value: function(el, i, t) { return 1.5 - (((t - 1) - i) * .5) + 'rem'; }},
+      ],
+      translateY: [
+        {value: '0rem'},
+        {value: function(el, i, t) { return (Math.abs(Math.round((t / 2) - i - 1)) * .125) + 'rem'; }},
+      ],
+      rotate: [
+        {value: function() { return anime.random(-15, 15)}},
+        {value: function(el, i, t) { return 30 - ((t - i) * 6); }},
+      ],
+      complete: function() {
+        statesAnimation.animateTo('close');
+      }
+    },
+    close: {
+      translateX: 0,
+      translateY: [
+        {value: 0},
+        {value: function(el, i) { return .5 - (i * .125) + 'rem' } }
+      ],
+      rotate: [
+        {value: function() { return anime.random(-15, 15) }},
+        {value: 0 }
+      ],
+      complete: function() {
+        statesAnimation.animateTo('open');
+      }
     }
   }
 });
 
-console.log(statesAnimation);
+statesAnimation.animateTo('open');
