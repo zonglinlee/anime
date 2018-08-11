@@ -1,237 +1,238 @@
-//import anime from '../../src/index.js';
+  //import anime from '../../src/index.js';
 
-var featuresAnimations = {};
+function featuresAnimations() {
 
-featuresAnimations.keyframes = anime.timeline({
-  loop: true
-})
-.add({
-  targets: '.key-box',
-  transformOrigin: [
-    {value: ['50% 100% 0px', '50% 50% 0px'], duration: 100, easing: 'cubicBezier(.17,.67,.5,.97)'},
-    {value: '50% 100% 0px', duration: 250, delay: 500, easing: 'cubicBezier(.77,.01,.99,.78)'}
-  ],
-  translateY: [
-    {value: '-6rem', duration: 600, easing: 'cubicBezier(.17,.67,.5,.97)'},
-    {value: '0rem', duration: 250, delay: 100, easing: 'cubicBezier(.77,.01,.99,.78)'}
-  ],
-  translateZ: [0, 0],
-  rotate: [
-    {value: 360, easing: 'cubicBezier(.17,.67,.5,.97)', duration: 900}
-  ],
-  scaleX: [
-    {value: 1, duration: 700, easing: 'easeOutQuad'},
-    {value: .9, duration: 200, easing: 'easeInQuad'},
-    {value: 1.4, duration: 300, easing: 'easeOutQuad'},
-  ],
-  scaleY: [
-    {value: [.5, 1], duration: 300, easing: 'easeOutQuad'},
-    {value: .5, duration: 150, delay: 650, endDelay: 50, easing: 'easeOutCirc'},
-  ]
-})
-.add({
-  targets: '.key-box-shadow',
-  scaleX: [
-    {value: [1.2, .2], duration: 600, easing: 'cubicBezier(.17,.67,.5,.97)'},
-    {value: 1.2, duration: 300, delay: 100, easing: 'cubicBezier(.77,.01,.99,.78)'},
-  ]
-}, 0);
+  var animations = {};
 
-featuresAnimations.CSSTransforms = (function() {
-
-  var shapeEls = document.querySelectorAll('.CSS-transforms-shape');
-  var triangleEl = document.querySelector('.CSS-transforms-shape polygon');
-  var trianglePoints = triangleEl.getAttribute('points').split(' ');
-  var bezierCurves = ['.98,-0.07,.24,1.07', '1,.22,.09,.81', '.88,.02,0,1.29'];
-
-  function animateShape(el) {
-
-    var animation = anime.timeline({
-      targets: el,
-      easing: 'easeOutQuad',
-      complete: function(anim) { animateShape(anim.animatables[0].target); }
-    })
-    .add({
-      translateX: function() { return (anime.random(-20, 20) / 10) + 'rem'; },
-      translateY: function() { return (anime.random(-20, 20) / 10) + 'rem'; },
-      translateZ: [0, 0],
-      rotate: function() { return anime.random(-180, 180); },
-      duration: function() { return anime.random(1000, 2000); },
-      delay: function() { return anime.random(0, 1000); },
-      easing: function() { return 'cubicBezier('+bezierCurves[anime.random(0, bezierCurves.length-1)]+')'}
-    }, 0)
-    .add({
-      targets: el.querySelector('circle'),
-      r: function() { return anime.random(10, 24); }
-    }, 0)
-    .add({
-      targets: el.querySelector('rect'),
-      width: function() { return anime.random(17, 49); },
-      height: function() { return anime.random(17, 49); }
-    }, 0)
-    .add({
-      targets: el.querySelector('polygon'),
-      points: function() { 
-        var scale = anime.random(50, 150) / 100;
-        return trianglePoints.map(function(p) { return p * scale; }).join(' ');
-      },
-    }, 0);
-
-  }
-
-  function playAll() {
-    for (var i = 0; i < shapeEls.length; i++) animateShape(shapeEls[i]);
-  }
-
-  function pauseAll() {
-    for (var i = 0; i < shapeEls.length; i++) anime.remove(shapeEls[i]);
-  }
-
-  playAll();
-
-  return {
-    play: playAll,
-    pause: pauseAll
-  }
-
-})();
-
-var clock = (function() {
-  var parentEl = document.querySelector('.time-control-clock');
-  var fragment = document.createDocumentFragment();
-  var totalLines = 48;
-  function createLine(angle) {
-    var el = document.createElement('div');
-    el.classList.add('clock-dial-line');
-    anime.setValue(el, {rotate: angle, translateY: '-3rem'});
-    fragment.appendChild(el);
-  }
-  for (var i = 0; i < totalLines; i++) {
-    var angle = (i / totalLines) * 360;
-    createLine(angle);
-  }
-  parentEl.appendChild(fragment);
-})();
-
-var timeControlAnimation = anime.timeline({
-  loop: true,
-  easing: 'linear',
-  duration: 12000,
-  autoplay: false
-})
-.add({
-  targets: '.long-needle',
-  translateY: ['-50%', '-50%'],
-  rotate: 4320,
-}, 0)
-.add({
-  targets: '.small-needle',
-  translateY: ['-50%', '-50%'],
-  rotate: 360,
-}, 0);
-
-featuresAnimations.timeControl = null;
-
-function animateNeedles() {
-  featuresAnimations.timeControl = anime({
-    targets: timeControlAnimation,
-    currentTime: anime.random(0, timeControlAnimation.duration),
-    duration: anime.random(1000, 3000),
-    complete: animateNeedles,
-    easing: 'easeInOutQuad',
-    update: function(anim) {
-      timeControlAnimation.seek(anim.animations[0].currentValue);
-    }
+  animations.keyframes = anime.timeline({
+    loop: true
   })
-}
+  .add({
+    targets: '.key-box',
+    transformOrigin: [
+      {value: ['50% 100% 0px', '50% 50% 0px'], duration: 100, easing: 'cubicBezier(.17,.67,.5,.97)'},
+      {value: '50% 100% 0px', duration: 250, delay: 500, easing: 'cubicBezier(.77,.01,.99,.78)'}
+    ],
+    translateY: [
+      {value: '-6rem', duration: 600, easing: 'cubicBezier(.17,.67,.5,.97)'},
+      {value: '0rem', duration: 250, delay: 100, easing: 'cubicBezier(.77,.01,.99,.78)'}
+    ],
+    translateZ: [0, 0],
+    rotate: [
+      {value: 360, easing: 'cubicBezier(.17,.67,.5,.97)', duration: 900}
+    ],
+    scaleX: [
+      {value: 1, duration: 700, easing: 'easeOutQuad'},
+      {value: .9, duration: 200, easing: 'easeInQuad'},
+      {value: 1.4, duration: 300, easing: 'easeOutQuad'},
+    ],
+    scaleY: [
+      {value: [.5, 1], duration: 300, easing: 'easeOutQuad'},
+      {value: .5, duration: 150, delay: 650, endDelay: 50, easing: 'easeOutCirc'},
+    ]
+  })
+  .add({
+    targets: '.key-box-shadow',
+    scaleX: [
+      {value: [1.2, .2], duration: 600, easing: 'cubicBezier(.17,.67,.5,.97)'},
+      {value: 1.2, duration: 300, delay: 100, easing: 'cubicBezier(.77,.01,.99,.78)'},
+    ]
+  }, 0);
 
-animateNeedles();
+  animations.CSSTransforms = (function() {
 
-featuresAnimations.statesSystem = anime({
-  targets: '.states-card',
-  easing: 'easeOutQuad',
-  delay: function(el, i, t) { return (t - i) * 25 },
-  states: {
-    open: {
-      translateX: [
-        {value: '-2rem', delay: function(el, i, t) { return (t - i) * 100 }},
-        {value: function(el, i, t) { return 1.5 - (((t - 1) - i) * .5) + 'rem'; }},
-      ],
-      translateY: [
-        {value: '0rem'},
-        {value: function(el, i, t) { return (Math.abs(Math.round((t / 2) - i - 1)) * .125) + 'rem'; }},
-      ],
-      rotate: [
-        {value: function() { return anime.random(-15, 15)}},
-        {value: function(el, i, t) { return 30 - ((t - i) * 6); }},
-      ],
-      complete: function() {
-        featuresAnimations.statesSystem.animateTo('close');
+    var shapeEls = document.querySelectorAll('.CSS-transforms-shape');
+    var triangleEl = document.querySelector('.CSS-transforms-shape polygon');
+    var trianglePoints = triangleEl.getAttribute('points').split(' ');
+    var bezierCurves = ['.98,-0.07,.24,1.07', '1,.22,.09,.81', '.88,.02,0,1.29'];
+
+    function animateShape(el) {
+
+      var animation = anime.timeline({
+        targets: el,
+        easing: 'easeOutQuad',
+        complete: function(anim) { animateShape(anim.animatables[0].target); }
+      })
+      .add({
+        translateX: function() { return (anime.random(-20, 20) / 10) + 'rem'; },
+        translateY: function() { return (anime.random(-20, 20) / 10) + 'rem'; },
+        translateZ: [0, 0],
+        rotate: function() { return anime.random(-180, 180); },
+        duration: function() { return anime.random(1000, 2000); },
+        delay: function() { return anime.random(0, 1000); },
+        easing: function() { return 'cubicBezier('+bezierCurves[anime.random(0, bezierCurves.length-1)]+')'}
+      }, 0)
+      .add({
+        targets: el.querySelector('circle'),
+        r: function() { return anime.random(10, 24); }
+      }, 0)
+      .add({
+        targets: el.querySelector('rect'),
+        width: function() { return anime.random(17, 49); },
+        height: function() { return anime.random(17, 49); }
+      }, 0)
+      .add({
+        targets: el.querySelector('polygon'),
+        points: function() { 
+          var scale = anime.random(50, 150) / 100;
+          return trianglePoints.map(function(p) { return p * scale; }).join(' ');
+        },
+      }, 0);
+
+    }
+
+    function playAll() {
+      for (var i = 0; i < shapeEls.length; i++) animateShape(shapeEls[i]);
+    }
+
+    function pauseAll() {
+      for (var i = 0; i < shapeEls.length; i++) anime.remove(shapeEls[i]);
+    }
+
+    playAll();
+
+    return {
+      play: playAll,
+      pause: pauseAll
+    }
+
+  })();
+
+  var clock = (function() {
+    var parentEl = document.querySelector('.time-control-clock');
+    var fragment = document.createDocumentFragment();
+    var totalLines = 48;
+    function createLine(angle) {
+      var el = document.createElement('div');
+      el.classList.add('clock-dial-line');
+      anime.setValue(el, {rotate: angle, translateY: '-3rem'});
+      fragment.appendChild(el);
+    }
+    for (var i = 0; i < totalLines; i++) {
+      var angle = (i / totalLines) * 360;
+      createLine(angle);
+    }
+    parentEl.appendChild(fragment);
+  })();
+
+  var timeControlAnimation = anime.timeline({
+    loop: true,
+    easing: 'linear',
+    duration: 12000,
+    autoplay: false
+  })
+  .add({
+    targets: '.long-needle',
+    translateY: ['-50%', '-50%'],
+    rotate: 4320,
+  }, 0)
+  .add({
+    targets: '.small-needle',
+    translateY: ['-50%', '-50%'],
+    rotate: 360,
+  }, 0);
+
+  animations.timeControl = null;
+
+  function animateNeedles() {
+    animations.timeControl = anime({
+      targets: timeControlAnimation,
+      currentTime: anime.random(0, timeControlAnimation.duration),
+      duration: anime.random(1000, 3000),
+      complete: animateNeedles,
+      easing: 'easeInOutQuad',
+      update: function(anim) {
+        timeControlAnimation.seek(anim.animations[0].currentValue);
       }
-    },
-    close: {
-      translateX: 0,
-      translateY: [
-        {value: 0},
-        {value: function(el, i) { return .5 - (i * .125) + 'rem' } }
-      ],
-      rotate: [
-        {value: function() { return anime.random(-15, 15) }},
-        {value: 0 }
-      ],
-      complete: function() {
-        featuresAnimations.statesSystem.animateTo('open');
+    })
+  }
+
+  animateNeedles();
+
+  animations.statesSystem = anime({
+    targets: '.states-card',
+    easing: 'easeOutQuad',
+    delay: function(el, i, t) { return (t - i) * 25 },
+    states: {
+      open: {
+        translateX: [
+          {value: '-2rem', delay: function(el, i, t) { return (t - i) * 100 }},
+          {value: function(el, i, t) { return 1.5 - (((t - 1) - i) * .5) + 'rem'; }},
+        ],
+        translateY: [
+          {value: '0rem'},
+          {value: function(el, i, t) { return (Math.abs(Math.round((t / 2) - i - 1)) * .125) + 'rem'; }},
+        ],
+        rotate: [
+          {value: function() { return anime.random(-15, 15)}},
+          {value: function(el, i, t) { return 30 - ((t - i) * 6); }},
+        ],
+        complete: function() {
+          animations.statesSystem.animateTo('close');
+        }
+      },
+      close: {
+        translateX: 0,
+        translateY: [
+          {value: 0},
+          {value: function(el, i) { return .5 - (i * .125) + 'rem' } }
+        ],
+        rotate: [
+          {value: function() { return anime.random(-15, 15) }},
+          {value: 0 }
+        ],
+        complete: function() {
+          animations.statesSystem.animateTo('open');
+        }
       }
     }
-  }
-});
+  });
 
-featuresAnimations.statesSystem.animateTo('open');
+  animations.statesSystem.animateTo('open');
 
-featuresAnimations.easings = anime({
-  targets: '.easing-ball',
-  translateX: [
-    {value: ['-2.5rem', '2.5rem']},
-    {value: '-2.5rem'}
-  ],
-  scaleX: [
-    {value: function(el, i) { return 1 + (i / 5)}, duration: 250, easing: 'easeOutQuad'},
-    {value: 1, duration: 150, easing: 'easeInOutQuad', endDelay: 400},
-    {value: function(el, i) { return 1 + (i / 5)}, duration: 250, easing: 'easeOutQuad'},
-    {value: 1, duration: 150, easing: 'easeInOutQuad'}
-  ],
-  translateZ: [0, 0],
-  duration: 1600,
-  loop: true,
-  easing: function(el, i) {
-    if (i === 0) return 'easeInOutQuart';
-    if (i === 1) return 'easeOutCubic';
-    if (i === 2) return 'easeOutElastic';
-  }
-});
+  animations.easings = anime({
+    targets: '.easing-ball',
+    translateX: [
+      {value: ['-2.5rem', '2.5rem']},
+      {value: '-2.5rem'}
+    ],
+    scaleX: [
+      {value: function(el, i) { return 1 + (i / 5)}, duration: 250, easing: 'easeOutQuad'},
+      {value: 1, duration: 150, easing: 'easeInOutQuad', endDelay: 400},
+      {value: function(el, i) { return 1 + (i / 5)}, duration: 250, easing: 'easeOutQuad'},
+      {value: 1, duration: 150, easing: 'easeInOutQuad'}
+    ],
+    translateZ: [0, 0],
+    duration: 1600,
+    loop: true,
+    easing: function(el, i) {
+      if (i === 0) return 'easeInOutQuart';
+      if (i === 1) return 'easeOutCubic';
+      if (i === 2) return 'easeOutElastic';
+    }
+  });
 
-var SVGHelpersPath = anime.path('.svg-path path')
+  var SVGHelpersPath = anime.path('.svg-path path');
 
-featuresAnimations.SVGHelpers = anime({
-  targets: '.svg-box',
-  translateX: SVGHelpersPath('x'),
-  translateY: SVGHelpersPath('y'),
-  rotate: SVGHelpersPath('angle'),
-  easing: 'linear',
-  duration: 2000,
-  loop: true
-});
+  animations.SVGHelpers = anime({
+    targets: '.svg-box',
+    translateX: SVGHelpersPath('x'),
+    translateY: SVGHelpersPath('y'),
+    rotate: SVGHelpersPath('angle'),
+    easing: 'linear',
+    duration: 2000,
+    loop: true
+  });
 
+  /* Manage playback */
 
-/* Manage playback */
+  var featureSectionEl = document.querySelector('.features-section');
+  var featuresAnimArray = Object.keys(animations).map(function(key) { return animations[key]; });
 
-var featureSectionEl = document.querySelector('.features-section');
-var featuresAnimArray = Object.keys(featuresAnimations).map(function(key) { return featuresAnimations[key]; });
+  isElementInViewport(featureSectionEl, function() {
+    featuresAnimArray.forEach(function(anim) {anim.play});
+  }, function() {
+    featuresAnimArray.forEach(function(anim) {anim.pause});
+  });
 
-isElementInViewport(featureSectionEl, function() {
-  console.log('play');
-  featuresAnimArray.forEach(function(anim) {console.log(anim); anim.play});
-}, function() {
-  console.log('pause');
-  featuresAnimArray.forEach(function(anim) {anim.pause});
-})
+}

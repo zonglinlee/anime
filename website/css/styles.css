@@ -96,6 +96,8 @@ a {
 }
 
 .section-title {
+  padding-left: 1rem;
+  padding-right: 1rem;
   font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   margin-bottom: 4rem;
   font-size: 1.875rem;
@@ -103,7 +105,9 @@ a {
 }
 
 .article-title {
-  font-family: RoobertTRIAL-SemiBold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1rem;
   letter-spacing: 0;
   text-align: center;
@@ -309,13 +313,7 @@ a {
   width: 100%;
   height: calc(100vh - 6rem);
   max-height: 580px;
-  margin-bottom: 2rem;
-}
-
-@media (min-width: 640px) {
-  .intro-header {
-    margin-bottom: 4rem;
-  }
+  padding-bottom: 4rem;
 }
 
 .logo-animation {
@@ -331,7 +329,7 @@ a {
   left: 50%;
   width: 740px;
   height: 544px;
-  margin: -336px 0 0 -370px;
+  margin: -366px 0 0 -370px;
 }
 
 @media (min-width: 640px) {
@@ -458,29 +456,16 @@ a {
 
 /* Features anims */
 
-.feature-anim {
-  position: relative;
-  display: flex;
-  width: 8rem;
-  height: 8rem;
-}
-
-.feature-anim.is-debug {
-  border: 1px solid rgba(255,0,0,.8);
-  background-color: rgba(255,0,0,.1);
-}
-
 .feature-box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 10rem;
   margin-bottom: 3rem;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 350px) {
   .feature-box {
     width: 50%;
   }
@@ -490,6 +475,20 @@ a {
   .feature-box {
     width: 33.33%;
   }
+}
+
+.feature-anim {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  width: 8rem;
+  height: 8rem;
+  margin-bottom: 1rem;
+}
+
+.feature-anim.is-debug {
+  border: 1px solid rgba(255,0,0,.8);
+  background-color: rgba(255,0,0,.1);
 }
 
 /* Keyframes*/

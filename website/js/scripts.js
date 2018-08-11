@@ -103,8 +103,8 @@ var logoAnimation = (function() {
   window.addEventListener('resize', function(e) {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(function() {
-      fitToScreen(logoAnimationEl, 64, 16);
-    }, 10);
+      fitToScreen(logoAnimationEl, 24);
+    }, 1);
   });
 
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
@@ -115,7 +115,10 @@ var logoAnimation = (function() {
     duration: 750,
     autoplay: false,
     begin: sphereAnimation,
-    complete: function() { document.body.classList.add('is-ready'); }
+    complete: function() { 
+      document.body.classList.add('is-ready');
+      featuresAnimations();
+    }
   })
   .add({
     targets: '.site-header',
