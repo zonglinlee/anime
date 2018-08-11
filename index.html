@@ -7,7 +7,7 @@
   <meta property="og:title" content="anime.js">
   <link href="website/css/styles.css" rel="stylesheet">
 </head>
-<body class="is-ready">
+<body>
 
   <header class="site-header">
     <div class="section site-header-content">
@@ -166,15 +166,20 @@
       </article>
 
       <article class="feature-box">
-        <div class="feature-anim is-debug">
-
+        <div class="feature-anim feature-easings">
+          <div class="easing-ball"></div>
+          <div class="easing-ball"></div>
+          <div class="easing-ball"></div>
         </div>
         <h2 class="article-title">Built-in easings</h2>
       </article>
 
       <article class="feature-box">
-        <div class="feature-anim is-debug">
-
+        <div class="feature-anim feature-svg-helpers">
+          <svg class="svg-path" viewBox="0 0 128 128">
+            <path fill="none" fill-rule="evenodd" fill-rule="nonzero" stroke="#000000" d="M49.9411255,49.8578644 C42.1766235,42.0473785 29.5878785,42.0473785 21.8233765,49.8578644 C14.0588745,57.6683502 14.0588745,70.3316498 21.8233765,78.1421356 C29.5878785,85.9526215 42.1766235,85.9526215 49.9411255,78.1421356 L78.0588745,49.8578644 C85.8233765,42.0473785 98.4121215,42.0473785 106.176624,49.8578644 C113.941125,57.6683502 113.941125,70.3316498 106.176624,78.1421356 C98.4121215,85.9526215 85.8233765,85.9526215 78.0588745,78.1421356 L49.9411255,49.8578644 Z"/>
+          </svg>
+          <div class="svg-box"></div>
         </div>
         <h2 class="article-title">SVG helpers</h2>
       </article>
@@ -191,8 +196,8 @@
     ga('send', 'pageview');
   </script>
   <script async src='https://www.google-analytics.com/analytics.js'></script>
-  <!-- <script src="lib/anime.min.js"></script> -->
-  <script type="module" src="website/js/scripts.js"></script>
-  <script type="module" src="website/js/features-animations.js"></script>
+  <script src="lib/anime.min.js"></script>
+  <script src="website/js/scripts.js"></script>
+  <script src="website/js/features-animations.js"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
-import anime from '../../src/index.js';
+//import anime from '../../src/index.js';
 
-var keyframesAnimation = anime.timeline({
+var featuresAnimations = {};
+
+featuresAnimations.keyframes = anime.timeline({
   loop: true
 })
 .add({
@@ -35,14 +37,12 @@ var keyframesAnimation = anime.timeline({
   ]
 }, 0);
 
-// anime.speed = .5;
-
-var CSSTransformsAnimation = (function() {
+featuresAnimations.CSSTransforms = (function() {
 
   var shapeEls = document.querySelectorAll('.CSS-transforms-shape');
   var triangleEl = document.querySelector('.CSS-transforms-shape polygon');
   var trianglePoints = triangleEl.getAttribute('points').split(' ');
-  var bezierCurves = ['.98,-0.07,.24,1.07', '1,.22,.09,.81', '.88,.02,0,1.29']
+  var bezierCurves = ['.98,-0.07,.24,1.07', '1,.22,.09,.81', '.88,.02,0,1.29'];
 
   function animateShape(el) {
 
@@ -79,7 +79,20 @@ var CSSTransformsAnimation = (function() {
 
   }
 
-  for (var i = 0; i < shapeEls.length; i++) animateShape(shapeEls[i]);
+  function playAll() {
+    for (var i = 0; i < shapeEls.length; i++) animateShape(shapeEls[i]);
+  }
+
+  function pauseAll() {
+    for (var i = 0; i < shapeEls.length; i++) anime.remove(shapeEls[i]);
+  }
+
+  playAll();
+
+  return {
+    play: playAll,
+    pause: pauseAll
+  }
 
 })();
 
@@ -117,8 +130,10 @@ var timeControlAnimation = anime.timeline({
   rotate: 360,
 }, 0);
 
+featuresAnimations.timeControl = null;
+
 function animateNeedles() {
-  anime({
+  featuresAnimations.timeControl = anime({
     targets: timeControlAnimation,
     currentTime: anime.random(0, timeControlAnimation.duration),
     duration: anime.random(1000, 3000),
@@ -132,7 +147,7 @@ function animateNeedles() {
 
 animateNeedles();
 
-var statesAnimation = anime({
+featuresAnimations.statesSystem = anime({
   targets: '.states-card',
   easing: 'easeOutQuad',
   delay: function(el, i, t) { return (t - i) * 25 },
@@ -151,7 +166,7 @@ var statesAnimation = anime({
         {value: function(el, i, t) { return 30 - ((t - i) * 6); }},
       ],
       complete: function() {
-        statesAnimation.animateTo('close');
+        featuresAnimations.statesSystem.animateTo('close');
       }
     },
     close: {
@@ -165,10 +180,58 @@ var statesAnimation = anime({
         {value: 0 }
       ],
       complete: function() {
-        statesAnimation.animateTo('open');
+        featuresAnimations.statesSystem.animateTo('open');
       }
     }
   }
 });
 
-statesAnimation.animateTo('open');
+featuresAnimations.statesSystem.animateTo('open');
+
+featuresAnimations.easings = anime({
+  targets: '.easing-ball',
+  translateX: [
+    {value: ['-2.5rem', '2.5rem']},
+    {value: '-2.5rem'}
+  ],
+  scaleX: [
+    {value: function(el, i) { return 1 + (i / 5)}, duration: 250, easing: 'easeOutQuad'},
+    {value: 1, duration: 150, easing: 'easeInOutQuad', endDelay: 400},
+    {value: function(el, i) { return 1 + (i / 5)}, duration: 250, easing: 'easeOutQuad'},
+    {value: 1, duration: 150, easing: 'easeInOutQuad'}
+  ],
+  translateZ: [0, 0],
+  duration: 1600,
+  loop: true,
+  easing: function(el, i) {
+    if (i === 0) return 'easeInOutQuart';
+    if (i === 1) return 'easeOutCubic';
+    if (i === 2) return 'easeOutElastic';
+  }
+});
+
+var SVGHelpersPath = anime.path('.svg-path path')
+
+featuresAnimations.SVGHelpers = anime({
+  targets: '.svg-box',
+  translateX: SVGHelpersPath('x'),
+  translateY: SVGHelpersPath('y'),
+  rotate: SVGHelpersPath('angle'),
+  easing: 'linear',
+  duration: 2000,
+  loop: true
+});
+
+
+/* Manage playback */
+
+var featureSectionEl = document.querySelector('.features-section');
+var featuresAnimArray = Object.keys(featuresAnimations).map(function(key) { return featuresAnimations[key]; });
+
+isElementInViewport(featureSectionEl, function() {
+  console.log('play');
+  featuresAnimArray.forEach(function(anim) {console.log(anim); anim.play});
+}, function() {
+  console.log('pause');
+  featuresAnimArray.forEach(function(anim) {anim.pause});
+})

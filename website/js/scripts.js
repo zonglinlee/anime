@@ -1,4 +1,4 @@
-import anime from '../../src/index.js';
+//import anime from '../../src/index.js';
 
 /* Ontersection observer */
 
@@ -41,8 +41,8 @@ function sphereAnimation() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
           targets: spherePathEls[i],
-          translateX: [4, -3],
-          translateY: [4, -3],
+          translateX: [2, -2],
+          translateY: [2, -2],
           easing: 'easeOutQuad',
           autoplay: false
         }));
@@ -114,19 +114,9 @@ var logoAnimation = (function() {
   var siteAnimation = anime.timeline({
     duration: 750,
     autoplay: false,
-    begin: sphereAnimation
+    begin: sphereAnimation,
+    complete: function() { document.body.classList.add('is-ready'); }
   })
-  .add({
-    targets: '.content-section',
-    opacity: [.001, 1],
-    translateY: ['50px', 0],
-    translateZ: [0, 0],
-    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
-    duration: 1200,
-    changeBegin: function() {
-      document.body.classList.add('is-ready');
-    }
-  }, 500)
   .add({
     targets: '.site-header',
     opacity: [.001, 1],
@@ -142,7 +132,7 @@ var logoAnimation = (function() {
       easing: 'easeOutQuad'
     },
     scaleX: [0, 1],
-    easing: 'cubicBezier(0.655, 0.405, 0.030, 0.945)',
+    easing: 'cubicBezier(.655, .405, .03, .945)',
     duration: 650
   }, 0)
   .add({
@@ -160,7 +150,8 @@ var logoAnimation = (function() {
     opacity: [0.001, 1],
     translateY: {value: ['3rem', 0], duration: 800, easing: 'easeOutElastic(1, .6)'},
     translateZ: [0, 0],
-    delay: function(el, i, t) { return (t - i) * 40 }
+    delay: function(el, i, t) { return (t - i) * 40 },
+    endDelay: 1200
   }, 20);
 
   var logoAnimationTL = anime.timeline({
@@ -248,10 +239,7 @@ var logoAnimation = (function() {
     targets: '.letter-i rect',
     opacity: 0.001,
     duration: 1,
-    complete: function() {
-      console.log('complete');
-      siteAnimation.play()
-    }
+    complete: siteAnimation.play
   })
   .add({
     targets: '.dot',
@@ -292,7 +280,7 @@ var logoAnimation = (function() {
   }, '-=1010');
 
   // logoAnimationTL.seek(logoAnimationTL.duration);
-  // siteAnimation.seek(siteAnimation.duration);
+  // siteAnimation.seek(siteAnimation.duration - 1000);
 
   logoAnimationEl.classList.add('is-visible');
 
