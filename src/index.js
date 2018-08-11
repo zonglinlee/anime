@@ -895,6 +895,7 @@ document.addEventListener('visibilitychange', handleVisibilityChange);
 function anime(params = {}) {
 
   let startTime = 0, lastTime = 0, now = 0;
+  let children, childrenLength = 0;
   let resolve = null;
 
   function makePromise() {
@@ -907,7 +908,7 @@ function anime(params = {}) {
 
   function toggleInstanceDirection() {
     instance.reversed = !instance.reversed;
-    instance.children.forEach(child => child.reversed = instance.reversed);
+    children.forEach(child => child.reversed = instance.reversed);
   }
 
   function adjustTime(time) {
@@ -920,14 +921,13 @@ function anime(params = {}) {
   }
 
   function syncInstanceChildren(time) {
-    const children = instance.children;
     if (instance.seeked && time < instance.currentTime) {
-      for (let i = children.length; i--;) {
+      for (let i = childrenLength; i--;) {
         const child = children[i];
         child.seek(time - child.timelineOffset);
       }
     } else {
-      for (let i = 0; i < children.length; i++) {
+      for (let i = 0; i < childrenLength; i++) {
         const child = children[i];
         child.seek(time - child.timelineOffset);
       }
@@ -1033,7 +1033,7 @@ function anime(params = {}) {
       instance.changeBegan = false;
       setCallback('changeComplete');
     }
-    if (instance.children) { syncInstanceChildren(insTime); };
+    if (children) { syncInstanceChildren(insTime); };
     if (insTime >= insDelay && insTime <= insDuration) {
       setAnimationsProgress(insTime);
     } else {
@@ -1071,7 +1071,6 @@ function anime(params = {}) {
   instance.reset = function() {
     const direction = instance.direction;
     const loops = instance.loop;
-    const children = instance.children;
     instance.passthrough = false;
     instance.currentTime = 0;
     instance.progress = 0;
@@ -1083,7 +1082,9 @@ function anime(params = {}) {
     instance.seeked = false;
     instance.reversed = direction === 'reverse';
     instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
-    for (let i = children.length; i--;) children[i].reset();
+    children = instance.children;
+    childrenLength = children.length;
+    for (let i = childrenLength; i--;) instance.children[i].reset();
     setAnimationsProgress(0);
   }
 
@@ -1127,7 +1128,7 @@ function anime(params = {}) {
     let state = instance.states[stateName];
     if (!state) return;
     if (paramsOverrides) state = mergeObjects(paramsOverrides, state);
-    anime.remove(state.targets);
+    instance.pause();
     const animation = anime(state);
     animation.currentState = stateName;
     return animation;
