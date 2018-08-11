@@ -1,4 +1,4 @@
-//import anime from '../../src/index.js';
+import anime from '../../src/index.js';
 
 var keyframesAnimation = anime.timeline({
   loop: true
