@@ -41,8 +41,8 @@ function sphereAnimation() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
           targets: spherePathEls[i],
-          translateX: [2, -2],
-          translateY: [2, -2],
+          translateX: [2, -3],
+          translateY: [2, -3],
           easing: 'easeOutQuad',
           autoplay: false
         }));
