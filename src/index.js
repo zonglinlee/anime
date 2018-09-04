@@ -266,7 +266,7 @@ const penner = (() => {
   }
 
   for (let coords in curves) {
-    curves[coords].forEach((ease, i) => { 
+    curves[coords].forEach((ease, i) => {
       eases['ease'+coords+names[i]] = ease;
     });
   }
@@ -1188,6 +1188,48 @@ function removeTargets(targets) {
   }
 }
 
+// Stagger helpers
+
+function stagger(val, params = {}) {
+  const direction = params.direction || 'normal';
+  const easing = params.easing ? parseEasings(params.easing) : null;
+  const grid = params.grid;
+  let fromIndex = params.from || 0;
+  const fromCenter = fromIndex === 'center';
+  const fromLast = fromIndex === 'last';
+  const isRange = is.arr(val);
+  const val1 = isRange ? parseFloat(val[0]) : parseFloat(val);
+  const val2 = isRange ? parseFloat(val[1]) : 0;
+  const unit = getUnit(isRange ? val[1] : val) || 0;
+  const start = params.start || 0 + (isRange ? val1 : 0);
+  const values = [];
+  let maxValue = 0;
+  return (el, i, t) => {
+    if (fromCenter) fromIndex = (t - 1) / 2;
+    if (fromLast) fromIndex = t - 1;
+    if (!values.length) {
+      for (let index = 0; index < t; index++) {
+        if (!grid) {
+          values.push(Math.abs(fromIndex - index));
+        } else {
+          const x = !fromCenter ? fromIndex%grid[0] : (grid[0]-1)/2;
+          const y = !fromCenter ? Math.floor(fromIndex/grid[1]) : (grid[1]-1)/2;
+          const dx = x - index%grid[0];
+          const dy = y - Math.floor(index/grid[1]);
+          const currentIndex = Math.sqrt(dx * dx + dy * dy);
+          values.push(Math.sqrt(dx * dx + dy * dy));
+        }
+        maxValue = Math.max(...values);
+      }
+    }
+    let progress = values[i];
+    if (easing) progress = easing(progress / maxValue) * maxValue;
+    if (direction === 'reverse') progress = Math.abs(maxValue - progress);
+    const spacing = isRange ? (val2 - val1) / maxValue : val1;
+    return start + (spacing * progress) + unit;
+  }
+}
+
 // Timeline
 
 function timeline(params = {}) {
@@ -1231,8 +1273,10 @@ anime.setValue = setTargetValue;
 anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
+anime.stagger = stagger;
 anime.timeline = timeline;
 anime.easing = parseEasings;
+anime.penner = penner;
 anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export default anime;

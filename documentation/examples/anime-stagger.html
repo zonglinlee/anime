@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>stager | anime.js</title>
+  <title>stagger | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
@@ -306,7 +306,7 @@
   var animationTimeLogEl = document.querySelector('.time-animation');
   var timelineTimeLogEl = document.querySelector('.time-timeline');
 
-  var stager = {
+  var stagger = {
     leftToRight: (spacing, min, max) => {
       return (el, i, t) => {
         let delay = i * spacing;
@@ -341,11 +341,21 @@
     }
   }
 
+  // anime.stagger(0, 1, 100);
+  // anime.stagger(1, 0, 100);
+  // anime.stagger(.5, 1, 100);
+  // anime.stagger(1, .5, 100);
+  // anime.stagger({x: window.innerWidth / 2, y: window.innerWidth / 2}, 1, 100);
+  // anime.stagger('-2rem', '2rem');
+
+  // anime.stagger.linear(100, true);
+  // anime.stagger.splash();
+
   var animation = anime({
     targets: '.el',
-    rotate: stager.splash(window.innerWidth / 2, window.innerHeight / 2, 90),
+    rotate: stagger.splash(window.innerWidth / 2, window.innerHeight / 2, 90),
     scaleX: .05,
-    delay: stager.splash(window.innerWidth / 2, window.innerHeight / 2, 100),
+    delay: stagger.splash(window.innerWidth / 2, window.innerHeight / 2, 100),
     easing: 'easeInOutQuart',
     direction: 'alternate',
     loop: true
