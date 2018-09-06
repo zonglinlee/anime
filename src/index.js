@@ -738,9 +738,7 @@ const setProgressValue = {
     transforms.list.set(p, v);
     if (p === transforms.last || manual) {
       let str = '';
-      transforms.list.forEach((value, prop) => {
-        str += `${prop}(${value}) `;
-      });
+      transforms.list.forEach((value, prop) => { str += `${prop}(${value}) `; });
       t.style.transform = str;
     }
   }
@@ -809,7 +807,7 @@ function getStates(params) {
   return states;
 }
 
-function getInstanceTimings(animations, tweenSettings, timelineOffset) {
+function getInstanceTimings(animations, tweenSettings) {
   const animLength = animations.length;
   const getTlOffset = anim => anim.timelineOffset ? anim.timelineOffset : 0;
   const timings = {};
@@ -921,16 +919,9 @@ function anime(params = {}) {
   }
 
   function syncInstanceChildren(time) {
-    if (instance.seeked && time < instance.currentTime) {
-      for (let i = childrenLength; i--;) {
-        const child = children[i];
-        child.seek(time - child.timelineOffset);
-      }
-    } else {
-      for (let i = 0; i < childrenLength; i++) {
-        const child = children[i];
-        child.seek(time - child.timelineOffset);
-      }
+    for (let i = 0; i < childrenLength; i++) {
+      const child = children[i];
+      child.seek(time - child.timelineOffset);
     }
   }
 
@@ -1037,9 +1028,6 @@ function anime(params = {}) {
     if (insTime >= insDelay && insTime <= insDuration) {
       setAnimationsProgress(insTime);
     } else {
-      if (insTime <= insDelay && instance.currentTime !== 0) {
-        setAnimationsProgress(0);
-      }
       if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
         setAnimationsProgress(insDuration);
       }
@@ -1079,7 +1067,6 @@ function anime(params = {}) {
     instance.changeBegan = false;
     instance.changeCompleted = false;
     instance.completed = false;
-    instance.seeked = false;
     instance.reversed = direction === 'reverse';
     instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
     children = instance.children;
@@ -1091,12 +1078,10 @@ function anime(params = {}) {
   instance.tick = function(t) {
     now = t;
     if (!startTime) startTime = now;
-    instance.seeked = false;
     setInstanceProgress((now + (lastTime - startTime)) * anime.speed);
   }
 
   instance.seek = function(time) {
-    instance.seeked = true;
     setInstanceProgress(adjustTime(time));
   }
 
@@ -1108,8 +1093,8 @@ function anime(params = {}) {
   instance.play = function() {
     if (!instance.paused) return;
     instance.paused = false;
-    if (instance.seeked) resetTime();
     activeInstances.push(instance);
+    resetTime();
     if (!raf) engine();
   }
 
@@ -1120,7 +1105,6 @@ function anime(params = {}) {
 
   instance.restart = function() {
     instance.reset();
-    resetTime();
     instance.play();
   }
 
@@ -1223,7 +1207,7 @@ function stagger(val, params = {}) {
       }
     }
     let progress = values[i];
-    if (easing) progress = easing(progress / maxValue) * maxValue;
+    if (easing) progress = (1 - easing(progress / maxValue)) * maxValue;
     if (direction === 'reverse') progress = Math.abs(maxValue - progress);
     const spacing = isRange ? (val2 - val1) / maxValue : val1;
     return start + (spacing * progress) + unit;
@@ -1237,9 +1221,10 @@ function timeline(params = {}) {
   tl.duration = 0;
   tl.add = function(instanceParams, timelineOffset) {
     const tlIndex = activeInstances.indexOf(tl);
+    const children = tl.children;
     if (tlIndex > -1) activeInstances.splice(tlIndex, 1);
     function passThrough(ins) { ins.passthrough = true; };
-    tl.children.forEach(passThrough);
+    for (let i = 0; i < children.length; i++) passThrough(children[i]);
     let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
     insParams.targets = insParams.targets || params.targets;
     const tlDuration = tl.duration;
@@ -1251,8 +1236,8 @@ function timeline(params = {}) {
     const ins = anime(insParams);
     passThrough(ins);
     const totalDuration = ins.duration + insParams.timelineOffset;
-    tl.children.push(ins);
-    const timings = getInstanceTimings(tl.children, params);
+    children.push(ins);
+    const timings = getInstanceTimings(children, params);
     tl.delay = timings.delay;
     tl.endDelay = timings.endDelay;
     tl.duration = timings.duration;

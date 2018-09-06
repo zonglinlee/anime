@@ -34,12 +34,12 @@
     }
 
     .easing-visualizer div {
-      width: 8px;
-      height: 8px;
+      width: 2px;
+      height: 2px;
       margin: 0 0 0 0;
       background-color: #FFF;
       transform-origin: 50% 100%;
-      border-radius: 50%;
+      //border-radius: 50%;
     }
 
   </style>
@@ -53,67 +53,6 @@
 
   import anime from '../../src/index.js';
 
-  const is = {
-    arr: a => Array.isArray(a),
-    obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
-    pth: a => is.obj(a) && a.hasOwnProperty('totalLength'),
-    svg: a => a instanceof SVGElement,
-    dom: a => a.nodeType || is.svg(a),
-    str: a => typeof a === 'string',
-    fnc: a => typeof a === 'function',
-    und: a => typeof a === 'undefined',
-    hex: a => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a),
-    rgb: a => /^rgb/.test(a),
-    hsl: a => /^hsl/.test(a),
-    col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
-  }
-
-  function getUnit(val) {
-    const split = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(val);
-    if (split) return split[2];
-  }
-
-  function stagger(val, params = {}) {
-    const direction = params.direction || 'normal';
-    const grid = params.grid;
-    const isRange = is.arr(val);
-    const val1 = isRange ? parseFloat(val[0]) : parseFloat(val);
-    const val2 = isRange ? parseFloat(val[1]) : 0;
-    const start = params.start || 0 + (isRange ? val1 : 0);
-    const easing = params.easing ? anime.easing(params.easing) : null;
-    const unit = getUnit(isRange ? val[1] : val) || 0;
-    const values = [];
-    let maxValue = 0;
-    let from = params.from || 0;
-    let intialValue = from;
-    return (el, i, t) => {
-      if (from === 'middle') intialValue = (t - 1) / 2;
-      if (from === 'last') intialValue = t - 1;
-      if (!values.length) {
-        for (let index = 0; index < t; index++) {
-          if (grid) {
-            // const x = from !== 'middle' ? intialValue%grid[0] : (grid[0]/2)%grid[0];
-            // const y = from !== 'middle' ? Math.ceil(intialValue/grid[1]) : Math.ceil((grid[1]/2)/grid[1]);
-            const x = grid[0] / 2;
-            const y = grid[1] / 2;
-            const dx = x - (index%grid[0]);
-            const dy = y - (Math.ceil(index/grid[1]));
-            //console.log(dx, dy);
-            values.push(Math.sqrt(dx * dx + dy * dy));
-          } else {
-            values.push(Math.abs(intialValue - index));
-          }
-          maxValue = Math.max(...values);
-        }
-      }
-      let progress = values[i];
-      if (easing) progress = easing(progress / maxValue) * maxValue;
-      if (direction === 'reverse') progress = Math.abs(maxValue - progress);
-      const spacing = isRange ? (val2 - val1) / maxValue : val1;
-      return start + (spacing * progress) + unit;
-    }
-  }
-
   const easingVisualizerEl = document.querySelector('.easing-visualizer');
   const fragment = document.createDocumentFragment();
   const numberOfElements = 51;
@@ -126,18 +65,17 @@
 
   anime({
     targets: '.easing-visualizer div',
-    translateY: (() => {
+    scaleY: (() => {
       const keyframes = [];
       for (let ease in anime.penner) {
-        keyframes.push({
-          value: stagger([0, -400], {easing: ease}),
-          delay: stagger(.125)
-        });
+        keyframes.push({value: anime.stagger([200, 1], {easing: ease}), easing: ease});
       };
-      keyframes.push({ value: stagger([0, -400], {easing: 'steps(10)'}), delay: stagger(.125) });
-      keyframes.push({ value: 0, delay: stagger(.125) });
+      keyframes.push({ value: anime.stagger([200, 1], {easing: 'steps(10)'}), easing: 'steps(10)' });
+      keyframes.push({ value: anime.stagger([200, 1], {easing: 'cubicBezier(0.545, 0.475, 0.145, 1)'}) });
+      keyframes.push({ value: 1 });
       return keyframes;
     })(),
+    delay: anime.stagger(15),
     easing: 'easeInOutSine',
     duration: 16000,
     loop: true

@@ -122,15 +122,17 @@
   var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
 
-  var tl = anime.timeline({
+  window.tl = anime.timeline({
     targets: els,
-    direction: 'alternate',
     duration: 800,
     delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
     },
+    loopComplete: (a) => console.log('END'),
     autoplay: true,
+    loop: true,
+    // direction: 'alternate',
     easing: 'easeOutQuad'
   });
 
@@ -165,16 +167,16 @@
     tl.seek(tl.duration * (controlsProgressEl.value / 100));
   });
 
-  for (var i = 0; i < els.length; i++) {
-    els[i].addEventListener('mouseenter', function() {
-      anime.remove(this);
-      this.style.backgroundColor = 'red';
-    }, false);
-  }
+  // for (var i = 0; i < els.length; i++) {
+  //   els[i].addEventListener('mouseenter', function() {
+  //     anime.remove(this);
+  //     this.style.backgroundColor = 'red';
+  //   }, false);
+  // }
 
-  var playerEl = document.querySelector('.player');
+  // var playerEl = document.querySelector('.player');
 
-  animePlayer(tl, playerEl);
+  //animePlayer(tl, playerEl);
 
   </script>
   <!-- <script src="../assets/js/vendors/stats.min.js"></script> -->
