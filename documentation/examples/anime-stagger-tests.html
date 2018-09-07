@@ -36,8 +36,8 @@
     }
 
     .demo {
-      flex-wrap: wrap;
       position: relative;
+      flex-wrap: wrap;
       align-items: center;
       flex-grow: 1;
       width: 14rem;
@@ -61,8 +61,15 @@
       border: 2px solid currentColor;
     }
 
-    .from-coords, .from-coords-reversed {
-      padding: 3rem 3.5rem;
+    .demo .grid-wrapper {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 10rem;
+      height: 5rem;
+      margin: auto;
+      border: none;
     }
 
     /* Player animation */
@@ -198,22 +205,48 @@
       <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
     </section>
 
-    <section class="demo from-coords">
+    <section class="demo">
       <h1>Coordinates</h1>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      <div class="grid-wrapper grid">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
     </section>
 
-    <section class="demo from-coords-reversed">
+    <section class="demo">
       <h1>Coordinates reversed</h1>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-      <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      <div class="grid-wrapper grid-reversed">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h1>Coordinates reversed</h1>
+      <div class="grid-wrapper grid-axis">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </section>
+
+    <section class="demo">
+      <h1>Coordinates reversed</h1>
+      <div class="grid-wrapper grid-axis-reversed">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
     </section>
 
   </div>
@@ -300,23 +333,35 @@
   }, 0)
   .add({
     targets: '.easing div',
-    translateY: anime.stagger(['2em', '-2em'], {easing: 'easeInOutQuart'}),
-    delay: anime.stagger([0, 600], {easing: 'easeInOutQuart'})
+    translateY: anime.stagger(['2em', '-2em'], {easing: 'easeOutExpo'}),
+    delay: anime.stagger([0, 600], {easing: 'easeOutExpo'})
   }, 0)
   .add({
     targets: '.easing-reversed div',
-    translateY: anime.stagger(['2em', '-2em'], { direction: 'reverse', easing: 'easeInOutQuart'}),
-    delay: anime.stagger([0, 600], { direction: 'reverse', easing: 'easeInOutQuart'}),
+    translateY: anime.stagger(['2em', '-2em'], { direction: 'reverse', easing: 'easeOutExpo'}),
+    delay: anime.stagger([0, 600], { direction: 'reverse', easing: 'easeOutExpo'}),
   }, 0)
   .add({
-    targets: '.from-coords div',
-    scale: anime.stagger([0, 1], {grid: [7, 7], from: 'center'}),
-    delay: anime.stagger(200, {grid: [7, 7], from: 'center'})
+    targets: '.grid div',
+    scale: anime.stagger([1, 0], {grid: [10, 5], from: 38}),
+    delay: anime.stagger(100, {grid: [10, 5], from: 38})
   }, 0)
   .add({
-    targets: '.from-coords-reversed div',
-    scale: anime.stagger([0, 1], {grid: [7, 7], from: 'center', direction: 'reverse'}),
-    delay: anime.stagger(200, {grid: [7, 7], from: 'center', direction: 'reverse'})
+    targets: '.grid-reversed div',
+    scale: anime.stagger([1, 0], {grid: [10, 5], from: 38, direction: 'reverse'}),
+    delay: anime.stagger(100, {grid: [10, 5], from: 38, direction: 'reverse'})
+  }, 0)
+  .add({
+    targets: '.grid-axis div',
+    translateX: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'x'}),
+    translateY: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'y'}),
+    delay: anime.stagger(100, {grid: [10, 5], from: 'center'})
+  }, 0)
+  .add({
+    targets: '.grid-axis-reversed div',
+    translateX: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'x', direction: 'reverse'}),
+    translateY: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'y', direction: 'reverse'}),
+    delay: anime.stagger(100, {grid: [10, 5], from: 'center', direction: 'reverse'})
   }, 0);
 
   function animePlayer(instance, playerClass) {

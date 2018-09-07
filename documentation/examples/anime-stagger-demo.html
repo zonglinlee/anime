@@ -87,21 +87,21 @@
     delay: anime.stagger(1, {from: 'last'})
   })
   .add({
-    rotate: anime.stagger(-5, {from: 'center', direction: 'reverse', easing: 'easeInSine'}),
-    translateX: anime.stagger([-2, 2]),
-    scale: anime.stagger([2, 1], {from: 'center', easing: 'easeInSine'}),
+    //rotate: anime.stagger(-1, {from: 'center', direction: 'reverse', easing: 'easeInSine'}),
+    translateX: 0,
+    translateY: 0,
     delay: anime.stagger(20, {from: 'center'})
   })
   .add({
     translateX: anime.stagger([-300, 400]),
     translateY: anime.stagger([-80, 80], {from: 'center', easing: 'easeOutSine'}),
-    rotate: anime.stagger([-45, 45], {from: 'center'}),
+    rotate: anime.stagger([45, -45], {from: 'center'}),
     delay: anime.stagger(25, {from: 'center', direction: 'reverse', easing: 'easeInSine'}),
   })
   .add({
     translateX: () => anime.random(-100, 100),
     translateY: () => anime.random(-100, 100),
-    scale: anime.stagger([2, .1], {from: 'center'}),
+    scale: anime.stagger([1.5, .5], {from: 'center'}),
     rotate: anime.stagger([10, -10], {from: 'last'}),
     delay: anime.stagger(50, {from: 'center', grid: [9, 9]}),
   })
@@ -119,10 +119,15 @@
     delay: anime.stagger(50, {from: 'center', grid: [9, 9]}),
   })
   .add({
-    translateX: 0,
+    translateX: anime.stagger('1rem', {grid: [9, 9], from: 'center', axis: 'x'}),
+    //translateY: anime.stagger('1rem', {grid: [9, 9], from: 'center', axis: 'y'}),
+    delay: anime.stagger(200, {grid: [9, 9], from: 'center', direction: 'reverse'})
+  })
+  .add({
+    translateX: anime.stagger([25, -25], {from: 'first'}),
     translateY: 0,
-    easing: 'easeOutElastic',
-    delay: anime.stagger(20, {from: 0}),
+    rotate: anime.stagger([45, -45], {from: 'first'}),
+    delay: anime.stagger(10, {from: 'first'}),
   })
   .add({
     translateY: anime.stagger([-240, 240]),
@@ -136,12 +141,9 @@
     scale: 1,
     rotate: 360,
     duration: 2000,
-    //delay: anime.stagger(20, {from: 'center'}),
     delay: 0,
-  })
+  });
 
-  // staggersAnimation.seek(staggersAnimation.duration - 100);
-  // anime.speed = .1;
   staggersAnimation.play();
 
 </script>

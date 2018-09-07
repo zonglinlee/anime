@@ -1178,7 +1178,9 @@ function stagger(val, params = {}) {
   const direction = params.direction || 'normal';
   const easing = params.easing ? parseEasings(params.easing) : null;
   const grid = params.grid;
+  const axis = params.axis;
   let fromIndex = params.from || 0;
+  const fromFirst = fromIndex === 'first';
   const fromCenter = fromIndex === 'center';
   const fromLast = fromIndex === 'last';
   const isRange = is.arr(val);
@@ -1186,9 +1188,11 @@ function stagger(val, params = {}) {
   const val2 = isRange ? parseFloat(val[1]) : 0;
   const unit = getUnit(isRange ? val[1] : val) || 0;
   const start = params.start || 0 + (isRange ? val1 : 0);
-  const values = [];
+  const reverseValue = val => axis ? (val < 0) ? val * -1 : -val : Math.abs(maxValue - val);
+  let values = [];
   let maxValue = 0;
   return (el, i, t) => {
+    if (fromFirst) fromIndex = 0;
     if (fromCenter) fromIndex = (t - 1) / 2;
     if (fromLast) fromIndex = t - 1;
     if (!values.length) {
@@ -1196,21 +1200,27 @@ function stagger(val, params = {}) {
         if (!grid) {
           values.push(Math.abs(fromIndex - index));
         } else {
-          const x = !fromCenter ? fromIndex%grid[0] : (grid[0]-1)/2;
-          const y = !fromCenter ? Math.floor(fromIndex/grid[1]) : (grid[1]-1)/2;
-          const dx = x - index%grid[0];
-          const dy = y - Math.floor(index/grid[1]);
-          const currentIndex = Math.sqrt(dx * dx + dy * dy);
-          values.push(Math.sqrt(dx * dx + dy * dy));
+          const fromX = !fromCenter ? fromIndex%grid[0] : (grid[0]-1)/2;
+          const fromY = !fromCenter ? Math.floor(fromIndex/grid[0]) : (grid[1]-1)/2;
+          const toX = index%grid[0];
+          const toY = Math.floor(index/grid[0]);
+          const dx = fromX - toX;
+          const dy = fromY - toY;
+          let value = Math.sqrt(dx * dx + dy * dy);
+          if (axis === 'x') value = -dx;
+          if (axis === 'y') value = -dy;
+          values.push(value);
         }
         maxValue = Math.max(...values);
       }
+      if (direction === 'reverse') {
+        values = values.map(reverseValue);
+      }
     }
     let progress = values[i];
-    if (easing) progress = (1 - easing(progress / maxValue)) * maxValue;
-    if (direction === 'reverse') progress = Math.abs(maxValue - progress);
+    if (easing) progress = easing(progress / maxValue) * maxValue;
     const spacing = isRange ? (val2 - val1) / maxValue : val1;
-    return start + (spacing * progress) + unit;
+    return start + (spacing * (Math.round(progress * 10) / 10)) + unit;
   }
 }
 
