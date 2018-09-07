@@ -87,16 +87,16 @@
     delay: anime.stagger(1, {from: 'last'})
   })
   .add({
-    //rotate: anime.stagger(-1, {from: 'center', direction: 'reverse', easing: 'easeInSine'}),
+    rotate: anime.stagger(2, {from: 'center', direction: 'reverse', easing: 'easeInSine'}),
     translateX: 0,
     translateY: 0,
-    delay: anime.stagger(20, {from: 'center'})
+    delay: anime.stagger(10, {from: 'center'})
   })
   .add({
     translateX: anime.stagger([-300, 400]),
     translateY: anime.stagger([-80, 80], {from: 'center', easing: 'easeOutSine'}),
-    rotate: anime.stagger([45, -45], {from: 'center'}),
-    delay: anime.stagger(25, {from: 'center', direction: 'reverse', easing: 'easeInSine'}),
+    //rotate: anime.stagger([45, -45], {from: 'center'}),
+    delay: anime.stagger(10, {from: 'last', direction: 'reverse', easing: 'easeInSine'}),
   })
   .add({
     translateX: () => anime.random(-100, 100),
@@ -126,7 +126,7 @@
   .add({
     translateX: anime.stagger([25, -25], {from: 'first'}),
     translateY: 0,
-    rotate: anime.stagger([45, -45], {from: 'first'}),
+    rotate: anime.stagger([40, -40], {from: 'first'}),
     delay: anime.stagger(10, {from: 'first'}),
   })
   .add({

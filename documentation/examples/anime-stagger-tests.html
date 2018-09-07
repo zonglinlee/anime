@@ -333,13 +333,13 @@
   }, 0)
   .add({
     targets: '.easing div',
-    translateY: anime.stagger(['2em', '-2em'], {easing: 'easeOutExpo'}),
-    delay: anime.stagger([0, 600], {easing: 'easeOutExpo'})
+    translateY: anime.stagger('-.5em', {from: 0, easing: 'easeOutExpo'}),
+    delay: anime.stagger([0, 600], {from: 0, easing: 'easeOutExpo'})
   }, 0)
   .add({
     targets: '.easing-reversed div',
-    translateY: anime.stagger(['2em', '-2em'], { direction: 'reverse', easing: 'easeOutExpo'}),
-    delay: anime.stagger([0, 600], { direction: 'reverse', easing: 'easeOutExpo'}),
+    translateY: anime.stagger('-.5em', {from: 0, direction: 'reverse', easing: 'easeOutExpo'}),
+    delay: anime.stagger([0, 600], {from: 0, direction: 'reverse', easing: 'easeOutExpo'}),
   }, 0)
   .add({
     targets: '.grid div',
@@ -353,15 +353,15 @@
   }, 0)
   .add({
     targets: '.grid-axis div',
-    translateX: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'x'}),
-    translateY: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'y'}),
-    delay: anime.stagger(100, {grid: [10, 5], from: 'center'})
+    translateX: anime.stagger('.5rem', {grid: [10, 5], from: 38, axis: 'x'}),
+    translateY: anime.stagger('.5rem', {grid: [10, 5], from: 38, axis: 'y'}),
+    delay: anime.stagger(100, {grid: [10, 5], from: 38})
   }, 0)
   .add({
     targets: '.grid-axis-reversed div',
-    translateX: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'x', direction: 'reverse'}),
-    translateY: anime.stagger('.5rem', {grid: [10, 5], from: 'center', axis: 'y', direction: 'reverse'}),
-    delay: anime.stagger(100, {grid: [10, 5], from: 'center', direction: 'reverse'})
+    translateX: anime.stagger('.5rem', {grid: [10, 5], from: 38, axis: 'x', direction: 'reverse'}),
+    translateY: anime.stagger('.5rem', {grid: [10, 5], from: 38, axis: 'y', direction: 'reverse'}),
+    delay: anime.stagger(100, {grid: [10, 5], from: 38, direction: 'reverse'})
   }, 0);
 
   function animePlayer(instance, playerClass) {

@@ -68,10 +68,10 @@
     scaleY: (() => {
       const keyframes = [];
       for (let ease in anime.penner) {
-        keyframes.push({value: anime.stagger([200, 1], {easing: ease}), easing: ease});
+        keyframes.push({value: anime.stagger([1, 200], {easing: ease}), easing: ease});
       };
-      keyframes.push({ value: anime.stagger([200, 1], {easing: 'steps(10)'}), easing: 'steps(10)' });
-      keyframes.push({ value: anime.stagger([200, 1], {easing: 'cubicBezier(0.545, 0.475, 0.145, 1)'}) });
+      keyframes.push({ value: anime.stagger([1, 200], {easing: 'steps(10)'}), easing: 'steps(10)' });
+      keyframes.push({ value: anime.stagger([1, 200], {easing: 'cubicBezier(0.545, 0.475, 0.145, 1)'}) });
       keyframes.push({ value: 1 });
       return keyframes;
     })(),
