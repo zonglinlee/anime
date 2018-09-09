@@ -104,8 +104,8 @@
       display: flex;
       justify-content: space-between;
       width: auto;
-      height: 8px;
-      margin-bottom: 4px;
+      height: 2px;
+      margin-bottom: 2px;
       background-color: currentColor;
       border-radius: .5rem;
     }
@@ -333,13 +333,13 @@
   }, 0)
   .add({
     targets: '.easing div',
-    translateY: anime.stagger('-.5em', {from: 0, easing: 'easeOutExpo'}),
-    delay: anime.stagger([0, 600], {from: 0, easing: 'easeOutExpo'})
+    translateY: anime.stagger(['2rem', '-2rem'], {from: 'center', easing: 'easeOutExpo'}),
+    delay: anime.stagger([0, 600], {from: 'center', easing: 'easeOutExpo'})
   }, 0)
   .add({
     targets: '.easing-reversed div',
-    translateY: anime.stagger('-.5em', {from: 0, direction: 'reverse', easing: 'easeOutExpo'}),
-    delay: anime.stagger([0, 600], {from: 0, direction: 'reverse', easing: 'easeOutExpo'}),
+    translateY: anime.stagger(['2rem', '-2rem'], {from: 'center', direction: 'reverse', easing: 'easeOutExpo'}),
+    delay: anime.stagger([0, 600], {from: 'center', direction: 'reverse', easing: 'easeOutExpo'}),
   }, 0)
   .add({
     targets: '.grid div',
@@ -392,7 +392,7 @@
       anim.update = function() {
         anime.setValue(anim.player.animationEl, {
           left: convertMStoEM(timelineOffset) + 'em',
-          width: convertMStoEM(anim.duration) + 'em'
+          width: convertMStoEM(anim.duration * 3) + 'em'
         });
         anime.setValue(anim.player.delayEl, {width: (anim.delay / anim.duration) * 100 + '%'});
         anime.setValue(anim.player.endDelayEl, {width: (anim.endDelay / anim.duration) * 100 + '%'});
@@ -409,7 +409,7 @@
 
     var playerAnimation = anime({
       targets: needleEl,
-      translateX: convertMStoEM(instance.duration) + 'em',
+      translateX: convertMStoEM(instance.duration * 3) + 'em',
       duration: instance.duration,
       direction: instance.direction,
       loop: instance.loop,
