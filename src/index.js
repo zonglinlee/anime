@@ -52,6 +52,7 @@ const is = {
   obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
   pth: a => is.obj(a) && a.hasOwnProperty('totalLength'),
   svg: a => a instanceof SVGElement,
+  inp: a => a instanceof HTMLInputElement,
   dom: a => a.nodeType || is.svg(a),
   str: a => typeof a === 'string',
   fnc: a => typeof a === 'function',
@@ -451,7 +452,7 @@ function getCSSValue(el, prop, unit) {
 }
 
 function getAnimationType(el, prop) {
-  if (is.dom(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
+  if (is.dom(el) && !is.inp(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
   if (el[prop] != null) return 'object';
