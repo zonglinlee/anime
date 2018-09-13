@@ -23,6 +23,7 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
+      background-color: #F6F4F2;
     }
 
     .easing-visualizer {
@@ -37,9 +38,8 @@
       width: 2px;
       height: 2px;
       margin: 0 0 0 0;
-      background-color: #FFF;
+      background-color: #373535;
       transform-origin: 50% 100%;
-      //border-radius: 50%;
     }
 
   </style>
@@ -63,15 +63,15 @@
 
   easingVisualizerEl.appendChild(fragment);
 
+  const easings = [];
+  for (let ease in anime.penner) easings.push(ease);
+  easings.push('steps(10)');
+  easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
+
   anime({
     targets: '.easing-visualizer div',
     scaleY: (() => {
-      const keyframes = [];
-      for (let ease in anime.penner) {
-        keyframes.push({value: anime.stagger([1, 200], {easing: ease}), easing: ease});
-      };
-      keyframes.push({ value: anime.stagger([1, 200], {easing: 'steps(10)'}), easing: 'steps(10)' });
-      keyframes.push({ value: anime.stagger([1, 200], {easing: 'cubicBezier(0.545, 0.475, 0.145, 1)'}) });
+      const keyframes = easings.map(ease => { return {value: anime.stagger([1, 200], {easing: ease}), easing: ease}; });
       keyframes.push({ value: 1 });
       return keyframes;
     })(),

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>stagger | anime.js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:title" content="anime.js">
+  <meta property="og:url" content="http://animejs.com">
+  <meta property="og:description" content="Javascript Animation Engine">
+  <meta property="og:image" content="http://animejs.com/documentation/assets/img/icons/og.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="anime.js">
+  <meta name="twitter:site" content="@juliangarnier">
+  <meta name="twitter:description" content="Javascript Animation Engine">
+  <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
+  <link href="../assets/css/documentation.css" rel="stylesheet">
+  <style>
+
+    :root {
+      font-size: 20px;
+    }
+
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      background-color: #F6F4F2;
+    }
+
+    .stagger-visualizer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 16rem;
+      height: 16rem;
+    }
+
+    .stagger-visualizer div {
+      position: relative;
+      width: .8rem;
+      height: .8rem;
+      margin: .1rem;
+      border: 2px solid currentColor;
+      background-color: #F6F4F2;
+      color: #373535;
+      border-radius: 50%;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="stagger-visualizer"></div>
+
+</body>
+<script type="module">
+
+  import anime from '../../src/index.js';
+
+  const staggerVisualizerEl = document.querySelector('.stagger-visualizer');
+  const fragment = document.createDocumentFragment();
+  const numberOfElements = 256;
+
+  for (let i = 0; i < numberOfElements; i++) {
+    fragment.appendChild(document.createElement('div'));
+  }
+
+  staggerVisualizerEl.appendChild(fragment);
+
+  function animateGrid() {
+    const index = anime.random(0, 256);
+    anime.setValue('.stagger-visualizer div', { zIndex: anime.stagger(1, {grid: [16, 16], from: index, direction: 'reverse'}) });
+    anime({
+      targets: '.stagger-visualizer div',
+      translateX: [
+        {value: anime.stagger('-.15rem', {grid: [16, 16], from: 'center', axis: 'x'}), duration: 300 },
+        {value: anime.stagger('.125rem', {grid: [16, 16], from: 'center', axis: 'x'}), duration: 500 },
+        {value: 0, duration: 600},
+      ],
+      translateY: [
+        {value: anime.stagger('-.25rem', {grid: [16, 16], from: 'center', axis: 'y'}), duration: 300 },
+        {value: anime.stagger('.125rem', {grid: [16, 16], from: 'center', axis: 'y'}), duration: 500 },
+        {value: 0, duration: 600},
+      ],
+      color: [
+        {value: '#FF4B4B', duration: 500},
+        {value: '#373535', duration: 500},
+      ],
+      delay: anime.stagger(1),
+      delay: anime.stagger(1, {direction: 'reverse'}),
+      delay: anime.stagger(1, {from: 'center'}),
+      delay: anime.stagger(4, {easing: 'easeOutQuad', from: 'last'}),
+      delay: anime.stagger(50, {grid: [16, 16], from: 'last'}),
+      easing: 'easeInOutQuad',
+      complete: animateGrid
+    });
+  }
+
+  animateGrid();
+
+</script>
+</html>
