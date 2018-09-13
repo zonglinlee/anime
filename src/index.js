@@ -577,7 +577,7 @@ function getParentSvg(pathEl, svgData) {
   const svg = svgData || {};
   const parentSvgEl = svg.el || getParentSvgEl(pathEl);
   const rect = parentSvgEl.getBoundingClientRect();
-  const viewBoxAttr = parentSvgEl.getAttribute('viewBox');
+  const viewBoxAttr = getAttribute(parentSvgEl, 'viewBox');
   const width = rect.width;
   const height = rect.height;
   const viewBox = svg.viewBox || (viewBoxAttr ? viewBoxAttr.split(' ') : [0, 0, width, height]);
