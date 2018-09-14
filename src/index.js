@@ -60,7 +60,8 @@ const is = {
   hex: a => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a),
   rgb: a => /^rgb/.test(a),
   hsl: a => /^hsl/.test(a),
-  col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
+  col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
+  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes' && a !== 'states'
 }
 
 // Easings
@@ -305,7 +306,7 @@ function selectString(str) {
 function filterArray(arr, callback) {
   const len = arr.length;
   const thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-  let result = [];
+  const result = [];
   for (let i = 0; i < len; i++) {
     if (i in arr) {
       const val = arr[i];
@@ -335,19 +336,19 @@ function arrayContains(arr, val) {
 // Objects
 
 function cloneObject(o) {
-  let clone = {};
+  const clone = {};
   for (let p in o) clone[p] = o[p];
   return clone;
 }
 
 function replaceObjectProps(o1, o2) {
-  let o = cloneObject(o1);
+  const o = cloneObject(o1);
   for (let p in o1) o[p] = o2.hasOwnProperty(p) ? o2[p] : o1[p];
   return o;
 }
 
 function mergeObjects(o1, o2) {
-  let o = cloneObject(o1);
+  const o = cloneObject(o1);
   for (let p in o2) o[p] = is.und(o1[p]) ? o2[p] : o1[p];
   return o;
 }
@@ -674,10 +675,34 @@ function normalizePropertyTweens(prop, tweenSettings) {
   }).map(k => mergeObjects(k, settings));
 }
 
-function getProperties(instanceSettings, tweenSettings, params) {
-  let properties = [];
+function flattenKeyframes(keyframes) {
+  const propertyNames = filterArray([...new Set(flattenArray(keyframes.map(key => { 
+    return Object.keys(key).map(p => { if (is.key(p)) return p }); 
+  })))], a => !is.und(a));
+  const properties = {};
+  for (let i = 0; i < propertyNames.length; i++) {
+    const propName = propertyNames[i];
+    properties[propName] = keyframes.map(key => {
+      const newKey = {};
+      for (let p in key) {
+        if (is.key(p)) {
+          if (p == propName) newKey.value = key[p];
+        } else {
+          newKey[p] = key[p];
+        }
+      }
+      return newKey;
+    });
+  }
+  return properties;
+}
+
+function getProperties(tweenSettings, params) {
+  const properties = [];
+  const keyframes = params.keyframes;
+  if (keyframes) params = mergeObjects(flattenKeyframes(keyframes), params);;
   for (let p in params) {
-    if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets' && p !== 'states') {
+    if (is.key(p)) {
       properties.push({
         name: p,
         tweens: normalizePropertyTweens(params[p], tweenSettings)
@@ -690,7 +715,7 @@ function getProperties(instanceSettings, tweenSettings, params) {
 // Tweens
 
 function normalizeTweenValues(tween, animatable) {
-  let t = {};
+  const t = {};
   for (let p in tween) {
     let value = getFunctionValue(tween[p], animatable);
     if (is.arr(value)) {
@@ -709,13 +734,14 @@ function normalizeTweens(prop, animatable) {
   return prop.tweens.map(t => {
     const tween = normalizeTweenValues(t, animatable);
     const tweenValue = tween.value;
-    const to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
+    let to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
     const toUnit = getUnit(to);
     const originalValue = getOriginalTargetValue(animatable.target, prop.name, toUnit, animatable);
     const previousValue = previousTween ? previousTween.to.original : originalValue;
     const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
     const fromUnit = getUnit(from) || getUnit(originalValue);
     const unit = toUnit || fromUnit;
+    if (is.und(to)) to = previousValue;
     tween.from = decomposeValue(from, unit);
     tween.to = decomposeValue(getRelativeValue(to, from), unit);
     tween.start = previousTween ? previousTween.end : 0;
@@ -823,8 +849,8 @@ let instanceID = 0;
 function createNewInstance(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
+  const properties = getProperties(tweenSettings, params);
   const animatables = getAnimatables(params.targets);
-  const properties = getProperties(instanceSettings, tweenSettings, params);
   const animations = getAnimations(animatables, properties);
   const timings = getInstanceTimings(animations, tweenSettings);
   const id = instanceID;
