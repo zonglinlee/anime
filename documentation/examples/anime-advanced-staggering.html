@@ -31,6 +31,7 @@
     }
 
     .stagger-visualizer {
+      position: relative;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -39,14 +40,27 @@
       height: 16rem;
     }
 
-    .stagger-visualizer div {
+    .stagger-visualizer .dot {
       position: relative;
-      width: .8rem;
-      height: .8rem;
-      margin: .1rem;
-      border: 2px solid currentColor;
-      background-color: #F6F4F2;
+      width: .2rem;
+      height: .2rem;
+      margin: .4rem;
+      /*border: 2px solid currentColor;*/
+      /*background-color: #F6F4F2;*/
+      background-color: currentColor;
       color: #373535;
+      border-radius: 50%;
+    }
+
+    .stagger-visualizer .cursor {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 1rem;
+      height: 1rem;
+      color: #FF4B4B;
+      background-color: currentColor;
       border-radius: 50%;
     }
 
@@ -54,7 +68,9 @@
 </head>
 <body>
 
-  <div class="stagger-visualizer"></div>
+  <div class="stagger-visualizer">
+    <div class="cursor"></div>
+  </div>
 
 </body>
 <script type="module">
@@ -66,38 +82,68 @@
   const numberOfElements = 256;
 
   for (let i = 0; i < numberOfElements; i++) {
-    fragment.appendChild(document.createElement('div'));
+    const dotEl = document.createElement('div');
+    dotEl.classList.add('dot');
+    fragment.appendChild(dotEl);
   }
 
   staggerVisualizerEl.appendChild(fragment);
 
+  let index = anime.random(0, 256);
+  let nextIndex = 0;
+
   function animateGrid() {
-    const index = anime.random(0, 256);
-    anime.setValue('.stagger-visualizer div', { zIndex: anime.stagger(1, {grid: [16, 16], from: index, direction: 'reverse'}) });
-    anime({
-      targets: '.stagger-visualizer div',
-      translateX: [
-        {value: anime.stagger('-.15rem', {grid: [16, 16], from: 'center', axis: 'x'}), duration: 300 },
-        {value: anime.stagger('.125rem', {grid: [16, 16], from: 'center', axis: 'x'}), duration: 500 },
-        {value: 0, duration: 600},
-      ],
-      translateY: [
-        {value: anime.stagger('-.25rem', {grid: [16, 16], from: 'center', axis: 'y'}), duration: 300 },
-        {value: anime.stagger('.125rem', {grid: [16, 16], from: 'center', axis: 'y'}), duration: 500 },
-        {value: 0, duration: 600},
-      ],
-      color: [
-        {value: '#FF4B4B', duration: 500},
-        {value: '#373535', duration: 500},
-      ],
-      // delay: anime.stagger(1),
-      // delay: anime.stagger(1, {direction: 'reverse'}),
-      // delay: anime.stagger(1, {from: 'center'}),
-      // delay: anime.stagger(4, {easing: 'easeOutQuad', from: 'last'}),
-      delay: anime.stagger(50, {grid: [16, 16], from: 'last'}),
+    nextIndex = anime.random(0, 256);
+    anime.setValue('.cursor', {
+      translateX: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'x'}),
+      translateY: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'y'}),
+      scale: 1
+    });
+    anime.timeline({
       easing: 'easeInOutQuad',
       complete: animateGrid
-    });
+    })
+    .add({
+      targets: '.cursor',
+      keyframes: [
+        { scale: .625 }, 
+        { scale: 1.125 },
+        { scale: 1 }
+      ],
+      duration: 1000
+    })
+    .add({
+      targets: '.dot',
+      keyframes: [
+        {
+          translateX: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'x'}),
+          translateY: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'y'}),
+          duration: 300
+        },
+        {
+          translateX: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'x'}),
+          translateY: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'y'}),
+          scale: 2.5,
+          duration: 500
+        }, {
+          translateX: 0,
+          translateY: 0,
+          scale: 1,
+          duration: 600,
+        }
+      ],
+      delay: anime.stagger(50, {grid: [16, 16], from: index})
+    }, '-=1000')
+    .add({
+      targets: '.cursor',
+      translateX: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'x'}),
+      translateY: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'y'}),
+      duration: 800,
+      easing: 'easeOutQuad'
+    }, '-=1100')
+
+    index = nextIndex;
+
   }
 
   animateGrid();
