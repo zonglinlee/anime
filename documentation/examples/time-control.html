@@ -31,12 +31,133 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      width: 36rem;
-      height: 24rem;
+      width: calc(36rem + 2px);
+      height: 16rem;
     }
 
-    .time-control .timeline {
+    .time-control .ruller {
+      position: absolute;
+      top: 0;
+      display: flex;
+      width: 100%;
+    }
 
+    .time-control .line {
+      width: 2px;
+      height: .5rem;
+      background-color: currentColor;
+    }
+
+    .time-control .line:nth-child(9n+2) {
+      height: 1rem;
+    }
+
+    .time-control .line:not(:last-child) {
+      margin-right: 4px;
+    }
+
+    .time-cursor {
+      position: absolute;
+      z-index: 1;
+      top: -1.125rem;
+      left: calc(-1rem + 1px);
+      width: 2rem;
+      height: 2rem;
+      background-color: currentColor;
+      border-radius: 50%;
+    }
+
+    .time-cursor input {
+      position: relative;
+      z-index: 1;
+      width: 2rem;
+      height: 2rem;
+      color: #FFF;
+      background-color: transparent;
+      border-radius: 50%;
+      text-align: center;
+      font-size: .75rem;
+    }
+
+    .time-cursor:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: calc(1rem - 1px);
+      display: block;
+      width: 2px;
+      height: 16rem;
+      background-color: #F64E4D;
+    }
+
+    .timeline {
+      font-size: .75rem;
+      display: flex;
+      width: 100%;
+      height: 2rem;
+      border: 2px solid currentColor;
+    }
+
+    .animation {
+      display: flex;
+      align-items: center;
+      width: 33.33%;
+    }
+
+    .animation-cell {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      border-right: 2px solid currentColor;
+    }
+
+    .animation:last-child .animation-cell:last-child {
+      border-right: none;
+    }
+
+    .animation-delay { width: 25%;}
+    .animation-change { width: 40%;}
+    .animation-end-delay { width: 35%;}
+
+    .label {
+      white-space: nowrap;
+      height: 1rem;
+      line-height: 1rem;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      height: 6rem;
+    }
+
+    .info .label {
+      padding-left: .5rem;
+      padding-right: .5rem;
+    }
+
+    .info-left {
+      left: -2px;
+    }
+
+    .info-bottom {
+      top: 0;
+      justify-content: flex-end;
+    }
+
+    .info-bar {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background-color: currentColor;
+    }
+
+    .info-left .info-bar {
+      left: 0;
     }
 
   </style>
@@ -44,7 +165,35 @@
 <body>
 
   <div class="time-control">
-    <div class="timeline"></div>
+    <div class="ruller">
+      <div class="time-cursor color-red">
+        <input value="999" />
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="animation">
+        <div class="animation-cell animation-delay">
+          <div class="label">delay</div>
+          <div class="info info-left info-bottom">
+            <div class="info-bar"></div>
+            <div class="label">loop begin</div>
+            <div class="label">animation begin</div>
+          </div>
+        </div>
+        <div class="animation-cell animation-change">change</div>
+        <div class="animation-cell animation-end-delay">end delay</div>
+      </div>
+      <div class="animation">
+        <div class="animation-cell animation-delay">delay</div>
+        <div class="animation-cell animation-change">change</div>
+        <div class="animation-cell animation-end-delay">end delay</div>
+      </div>
+      <div class="animation">
+        <div class="animation-cell animation-delay">delay</div>
+        <div class="animation-cell animation-change">change</div>
+        <div class="animation-cell animation-end-delay">end delay</div>
+      </div>
+    </div>
   </div>
 
 </body>
@@ -53,21 +202,97 @@
   import anime from '../../src/index.js';
 
   const staggerVisualizerEl = document.querySelector('.time-control');
+  const rullerEl = document.querySelector('.ruller');
+  const timeEl = document.querySelector('.time-cursor input');
   const fragment = document.createDocumentFragment();
-  const numberOfElements = 256;
+  const numberOfElements = 145;
 
   for (let i = 0; i < numberOfElements; i++) {
     const dotEl = document.createElement('div');
-    dotEl.classList.add('dot');
+    dotEl.classList.add('line');
     fragment.appendChild(dotEl);
   }
 
-  staggerVisualizerEl.appendChild(fragment);
+  rullerEl.appendChild(fragment);
 
-  let index = anime.random(0, 256);
-  let nextIndex = 0;
+  anime.speed= .5;
 
-  animateGrid();
+  function infoAnimation(el) {
+    var barEl = el.querySelector('.bar');
+    var labelEls = el.querySelectorAll('.label');
+    var animation = anime.timeline({
+      easing: 'easeInOutSine',
+      autoplay: false
+    })
+    .add({
+      targets: barEl,
+      scaleY: [0, 1]
+    })
+    .add({
+      targets: labelEls,
+      opacity: [0, 1],
+      delay: anime.stagger(100, {from: 'last'})
+    })
+    return animation;
+  }
+
+  const timeControlAnimation = anime.timeline({
+    easing: 'linear'
+  })
+  .add({
+    targets: '.time-cursor',
+    translateX: '36rem',
+  })
+  .add({
+    targets: '.ruller .line',
+    translateY: [
+      {value: '1rem'},
+      {value: '0rem'}
+    ],
+    duration: 120,
+    delay: anime.stagger([0, 1000]),
+    easing: 'easeInOutSine',
+    update: function(anim) {
+      const currentTime = anim.currentTime;
+      if (currentTime >= 1000) {
+        anim.pause();
+        anim.passthrough = true;
+        anim.seek(1000);
+      }
+      timeEl.value = Math.round(anim.currentTime);
+    }
+  }, -60)
+  .add({
+    targets: '.animation-delay',
+    opacity: [0, 1],
+    duration: 50,
+    delay: anime.stagger(1000/3, {start: 0})
+  }, 0)
+  .add({
+    targets: '.animation-change',
+    opacity: [0, 1],
+    duration: 50,
+    delay: anime.stagger(1000/3, {start: (1000/3) * .25})
+  }, 0)
+  .add({
+    targets: '.animation-end-delay',
+    opacity: [0, 1],
+    duration: 50,
+    delay: anime.stagger(1000/3, {start: (1000/3) * .65})
+  }, 0)
+  .add({
+    targets: '.animation-end-delay',
+    opacity: [0, 1],
+    duration: 50,
+    delay: anime.stagger(1000/3, {start: (1000/3) * .65})
+  }, 0)
+  .add({
+    targets: '.animation-end-delay',
+    opacity: [0, 1],
+    duration: 50,
+    delay: anime.stagger(1000/3, {start: (1000/3) * .65})
+  }, 0)
+  .add(infoAnimation(document.querySelector('.info')), 0)
 
 </script>
 </html>

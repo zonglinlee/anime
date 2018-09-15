@@ -22,7 +22,8 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  font-family: RoobertTRIAL-Regular, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+  font-family: RoobertTRIAL-SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -30,6 +31,7 @@ body {
 
 input {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: bold;
   font-variant-numeric: tabular-nums;
 }
 
