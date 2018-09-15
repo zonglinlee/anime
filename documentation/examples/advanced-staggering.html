@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>stagger | anime.js</title>
+  <title>advanced staggering • anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
@@ -15,19 +15,14 @@
   <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
-  <link href="../assets/css/documentation.css" rel="stylesheet">
+  <link href="../assets/css/animejs.css" rel="stylesheet">
   <style>
-
-    :root {
-      font-size: 20px;
-    }
 
     body {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      background-color: #F6F4F2;
     }
 
     .stagger-visualizer {
@@ -42,13 +37,10 @@
 
     .stagger-visualizer .dot {
       position: relative;
-      width: .2rem;
-      height: .2rem;
-      margin: .4rem;
-      /*border: 2px solid currentColor;*/
-      /*background-color: #F6F4F2;*/
+      width: .25rem;
+      height: .25rem;
+      margin: .375rem;
       background-color: currentColor;
-      color: #373535;
       border-radius: 50%;
     }
 
@@ -59,7 +51,6 @@
       left: 0;
       width: 1rem;
       height: 1rem;
-      color: #FF4B4B;
       background-color: currentColor;
       border-radius: 50%;
     }
@@ -69,7 +60,7 @@
 <body>
 
   <div class="stagger-visualizer">
-    <div class="cursor"></div>
+    <div class="cursor color-red"></div>
   </div>
 
 </body>
@@ -93,11 +84,12 @@
   let nextIndex = 0;
 
   function animateGrid() {
+
     nextIndex = anime.random(0, 256);
+
     anime.setValue('.cursor', {
       translateX: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'x'}),
-      translateY: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'y'}),
-      scale: 1
+      translateY: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'y'})
     });
     anime.timeline({
       easing: 'easeInOutQuad',
@@ -110,7 +102,7 @@
         { scale: 1.125 },
         { scale: 1 }
       ],
-      duration: 1000
+      duration: 600
     })
     .add({
       targets: '.dot',
@@ -118,28 +110,26 @@
         {
           translateX: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'x'}),
           translateY: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'y'}),
-          duration: 300
-        },
-        {
+          duration: 200
+        }, {
           translateX: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'x'}),
           translateY: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'y'}),
-          scale: 2.5,
-          duration: 500
+          scale: 2,
+          duration: 400
         }, {
           translateX: 0,
           translateY: 0,
           scale: 1,
-          duration: 600,
+          duration: 500,
         }
       ],
       delay: anime.stagger(50, {grid: [16, 16], from: index})
-    }, '-=1000')
+    }, '-=600')
     .add({
       targets: '.cursor',
-      translateX: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'x'}),
-      translateY: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'y'}),
-      duration: 800,
-      easing: 'easeOutQuad'
+      translateX: { value: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
+      translateY: { value: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
+      easing: 'easeOutSine'
     }, '-=1100')
 
     index = nextIndex;

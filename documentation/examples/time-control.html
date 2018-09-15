@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>stagger | anime.js</title>
+  <title>time control • anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
@@ -15,7 +15,7 @@
   <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
-  <link href="../assets/css/documentation.css" rel="stylesheet">
+  <link href="../assets/css/animejs.css" rel="stylesheet">
   <style>
 
     body {
@@ -23,63 +23,51 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      background-color: #F6F4F2;
     }
 
-    .easing-visualizer {
+    .time-control {
+      position: relative;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      width: 400px;
-      height: 400px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 36rem;
+      height: 24rem;
     }
 
-    .easing-visualizer div {
-      width: 2px;
-      height: 2px;
-      margin: 0 0 0 0;
-      background-color: #373535;
-      transform-origin: 50% 100%;
+    .time-control .timeline {
+
     }
 
   </style>
 </head>
 <body>
 
-  <div class="easing-visualizer"></div>
+  <div class="time-control">
+    <div class="timeline"></div>
+  </div>
 
 </body>
 <script type="module">
 
   import anime from '../../src/index.js';
 
-  const easingVisualizerEl = document.querySelector('.easing-visualizer');
+  const staggerVisualizerEl = document.querySelector('.time-control');
   const fragment = document.createDocumentFragment();
-  const numberOfElements = 51;
+  const numberOfElements = 256;
 
   for (let i = 0; i < numberOfElements; i++) {
-    fragment.appendChild(document.createElement('div'));
+    const dotEl = document.createElement('div');
+    dotEl.classList.add('dot');
+    fragment.appendChild(dotEl);
   }
 
-  easingVisualizerEl.appendChild(fragment);
+  staggerVisualizerEl.appendChild(fragment);
 
-  const easings = [];
-  for (let ease in anime.penner) easings.push(ease);
-  easings.push('steps(10)');
-  easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
+  let index = anime.random(0, 256);
+  let nextIndex = 0;
 
-  anime({
-    targets: '.easing-visualizer div',
-    scaleY: (() => {
-      const keyframes = easings.map(ease => { return {value: anime.stagger([1, 200], {easing: ease}), easing: ease}; });
-      keyframes.push({ value: 1 });
-      return keyframes;
-    })(),
-    delay: anime.stagger(15),
-    easing: 'easeInOutSine',
-    duration: 16000,
-    loop: true
-  });
+  animateGrid();
 
 </script>
 </html>
