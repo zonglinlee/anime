@@ -1058,7 +1058,7 @@ function anime(params = {}) {
       if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
         setAnimationsProgress(insDuration);
       }
-      if (instance.currentTime <= insDelay && instance.currentTime !== 0) {
+      if (insTime <= insDelay && instance.currentTime !== 0) {
         setAnimationsProgress(0);
       }
     }
