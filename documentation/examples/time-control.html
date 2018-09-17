@@ -25,13 +25,43 @@
       align-items: center;
     }
 
-    .time-control {
+    .feature-section {
+      position: relative;
+      display: flex;
+    }
+
+    .feature-section-center {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .section-title {
+      font-size: 64px;
+      line-height: 56px;
+      letter-spacing: 0;
+      margin-bottom: 1rem;
+    }
+
+    .section-title span {
+      display: inline-block;
+    }
+
+    .section-description {
+      font-size: 24px;
+      line-height: 32px;
+      letter-spacing: 0;
+      margin-bottom: 3rem;
+    }
+
+    .feature-anim {
       position: relative;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
       align-items: center;
-      width: calc(36rem + 2px);
+    }
+
+    .time-control {
       height: 16rem;
     }
 
@@ -39,7 +69,8 @@
       position: absolute;
       top: 0;
       display: flex;
-      width: 100%;
+      width: calc(34rem + 4px);
+      padding: 0 1px;
     }
 
     .time-control .line {
@@ -86,61 +117,63 @@
       left: calc(1rem - 1px);
       display: block;
       width: 2px;
-      height: 16rem;
+      height: 3rem;
       background-color: #F64E4D;
     }
 
     .timeline {
-      font-size: .75rem;
+      position: relative;
+      overflow: visible;
       display: flex;
       width: 100%;
-      height: 2rem;
-      border: 2px solid currentColor;
+      height: 8px;
+      font-size: .75rem;
     }
 
     .animation {
-      display: flex;
-      align-items: center;
-      width: 33.33%;
-    }
-
-    .animation-cell {
       position: relative;
+      overflow: visible;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      border-right: 2px solid currentColor;
     }
 
-    .animation:last-child .animation-cell:last-child {
-      border-right: none;
+    .animation-band {
+      position: relative;
+      height: 8px;
+      margin: 0 1px;
+      border-radius: 4px;
     }
 
-    .animation-delay { width: 25%;}
-    .animation-change { width: 40%;}
-    .animation-end-delay { width: 35%;}
-
-    .label {
-      white-space: nowrap;
-      height: 1rem;
-      line-height: 1rem;
+    .animation-delay {
+      background-color: currentColor;
+      width: 48px;
+    }
+    .animation-change {
+      background-color: #F64E4D;
+      width: 156px;
+    }
+    .animation-end-delay {
+      border: 2px solid currentColor;
+      width: 48px;
     }
 
     .info {
+      position: relative;
       display: flex;
       flex-direction: column;
-      position: absolute;
-      height: 6rem;
+      width: 2px;
+      height: 3rem;
+      margin: 0 1px;
     }
 
-    .info .label {
-      padding-left: .5rem;
-      padding-right: .5rem;
-    }
+    .info + .info { margin-left: -3px; }
 
-    .info-left {
-      left: -2px;
+    .info-large { height: 6rem; }
+
+    .info-top {
+      bottom: 0;
+      justify-content: flex-start;
+      align-items: flex-end;
+      align-self: flex-end;
     }
 
     .info-bottom {
@@ -150,62 +183,150 @@
 
     .info-bar {
       position: absolute;
-      top: 0;
       width: 2px;
       height: 100%;
       background-color: currentColor;
+      transform-origin: 50% 100%;
     }
 
-    .info-left .info-bar {
-      left: 0;
+    .info-top .info-bar { bottom: 0; }
+    .info-bottom .info-bar { top: 0; transform-origin: 50% 0%; }
+    .info-left .info-bar { left: 0; }
+    .info-right .info-bar { right: 0; }
+
+    .info-label {
+      white-space: nowrap;
+      height: 1rem;
+      padding-left: .5rem;
+      padding-right: .5rem;
+      line-height: 1rem;
+    }
+
+    .info-top .info-label {
+      margin: -4px 0 0;
+    }
+
+    .info-bottom .info-label {
+      margin: 0 0 -4px 0;
     }
 
   </style>
 </head>
 <body>
 
-  <div class="time-control">
-    <div class="ruller">
-      <div class="time-cursor color-red">
-        <input value="999" />
-      </div>
-    </div>
-    <div class="timeline">
-      <div class="animation">
-        <div class="animation-cell animation-delay">
-          <div class="label">delay</div>
-          <div class="info info-left info-bottom">
-            <div class="info-bar"></div>
-            <div class="label">loop begin</div>
-            <div class="label">animation begin</div>
-          </div>
+  <section class="feature-section feature-section-center feature-control" style="margin-top: 1000px; margin-bottom: 1000px;">
+
+    <h1 class="section-title">
+      <span>Time</span> <span>control</span> <span>& callbacks</span>
+    </h1>
+
+    <p class="section-description">
+      Play, pause, control, reverse and trigger events in sync
+    </p>
+
+    <div class="time-control feature-anim">
+      <div class="ruller">
+        <div class="time-cursor color-red">
+          <input value="999" />
         </div>
-        <div class="animation-cell animation-change">change</div>
-        <div class="animation-cell animation-end-delay">end delay</div>
       </div>
-      <div class="animation">
-        <div class="animation-cell animation-delay">delay</div>
-        <div class="animation-cell animation-change">change</div>
-        <div class="animation-cell animation-end-delay">end delay</div>
-      </div>
-      <div class="animation">
-        <div class="animation-cell animation-delay">delay</div>
-        <div class="animation-cell animation-change">change</div>
-        <div class="animation-cell animation-end-delay">end delay</div>
+      <div class="timeline">
+        <div class="info-loop-begin info info-large info-left info-bottom" data-delay="0">
+          <div class="info-bar"></div>
+          <div class="info-label">loop begin</div>
+          <div class="info-label">animation begin</div>
+        </div>
+        <div class="animation">
+          <div class="animation-band animation-delay"></div>
+          <div class="info-change-begin info info-left info-bottom" data-delay="100">
+            <div class="info-bar"></div>
+            <div class="info-label">change begin</div>
+          </div>
+          <div class="animation-band animation-change"></div>
+          <div class="info-change-complete info info-right info-top" data-delay="400">
+            <div class="info-bar"></div>
+            <div class="info-label">change complete</div>
+          </div>
+          <div class="animation-band animation-end-delay"></div>
+        </div>
+        <div class="info-loop-complete info info-large info-right info-top" data-delay="500">
+          <div class="info-bar"></div>
+          <div class="info-label">loop complete</div>
+        </div>
+        <div class="info info-large info-left info-bottom" data-delay="500">
+          <div class="info-bar"></div>
+          <div class="info-label">loop begin</div>
+          <div class="info-label">reverse</div>
+        </div>
+        <div class="animation">
+          <div class="animation-band animation-delay"></div>
+          <div class="info-change-begin info info-left info-bottom" data-delay="600">
+            <div class="info-bar"></div>
+            <div class="info-label">change begin</div>
+          </div>
+          <div class="animation-band animation-change"></div>
+          <div class="info-change-complete info info-right info-top" data-delay="900">
+            <div class="info-bar"></div>
+            <div class="info-label">change complete</div>
+          </div>
+          <div class="animation-band animation-end-delay"></div>
+        </div>
+        <div class="info-loop-complete info info-large info-right info-top" data-delay="1000">
+          <div class="info-bar"></div>
+          <div class="info-label">loop complete</div>
+        </div>
+        <div class="info info-large info-left info-bottom" data-delay="1000">
+          <div class="info-bar"></div>
+          <div class="info-label">loop begin</div>
+          <div class="info-label">reverse</div>
+        </div>
+        <div class="animation">
+          <div class="animation-band animation-delay"></div>
+          <div class="info-change-begin info info-left info-bottom" data-delay="1100">
+            <div class="info-bar"></div>
+            <div class="info-label">change begin</div>
+          </div>
+          <div class="animation-band animation-change"></div>
+          <div class="info-change-complete info info-right info-top" data-delay="1400">
+            <div class="info-bar"></div>
+            <div class="info-label">change complete</div>
+          </div>
+          <div class="animation-band animation-end-delay"></div>
+        </div>
+        <div class="info-loop-complete info info-large info-right info-top" data-delay="1500">
+          <div class="info-bar"></div>
+          <div class="info-label">animation complete</div>
+          <div class="info-label">loop complete</div>
+        </div>
       </div>
     </div>
-  </div>
+
+  </section>
 
 </body>
 <script type="module">
 
   import anime from '../../src/index.js';
 
-  const staggerVisualizerEl = document.querySelector('.time-control');
+  const timeControlEl = document.querySelector('.time-control');
   const rullerEl = document.querySelector('.ruller');
   const timeEl = document.querySelector('.time-cursor input');
+  const infoEls = document.querySelectorAll('.info');
   const fragment = document.createDocumentFragment();
-  const numberOfElements = 145;
+  const numberOfElements = 136;
+
+  function isElementInViewport(el, inCB, outCB) {
+    function handleIntersect(entries, observer) {
+      var entry = entries[0];
+      if (entry.isIntersecting) {
+        if (inCB) inCB(el, entry);
+      } else {
+        if (outCB) outCB(el, entry);
+      }
+    }
+    var observer = new IntersectionObserver(handleIntersect);
+    observer.observe(el);
+  }
 
   for (let i = 0; i < numberOfElements; i++) {
     const dotEl = document.createElement('div');
@@ -215,84 +336,80 @@
 
   rullerEl.appendChild(fragment);
 
-  anime.speed= .5;
+  //anime.speed= .5;
 
-  function infoAnimation(el) {
-    var barEl = el.querySelector('.bar');
-    var labelEls = el.querySelectorAll('.label');
-    var animation = anime.timeline({
-      easing: 'easeInOutSine',
-      autoplay: false
-    })
-    .add({
-      targets: barEl,
-      scaleY: [0, 1]
-    })
-    .add({
-      targets: labelEls,
-      opacity: [0, 1],
-      delay: anime.stagger(100, {from: 'last'})
-    })
-    return animation;
-  }
+  var controlDemoAnim = anime.timeline({
+    targets: '.feature-control .section-title span',
+    easing: 'easeOutSine',
+    duration: 200,
+    delay: anime.stagger([0, 100], {start: 100}),
+    endDelay: 100,
+    autoplay: false
+  })
+  .add({ translateY: [20, 0], opacity: [0, 1] })
+  .add({ translateY: [0, 20], opacity: [1, 0], easing: 'easeInSine',})
+  .add({ translateY: [20, 0], opacity: [0, 1] })
 
   const timeControlAnimation = anime.timeline({
-    easing: 'linear'
+    easing: 'linear',
+    autoplay: false
   })
   .add({
     targets: '.time-cursor',
-    translateX: '36rem',
+    translateX: 'calc(34rem - 5px)',
+    duration: 1500
   })
   .add({
     targets: '.ruller .line',
-    translateY: [
-      {value: '1rem'},
-      {value: '0rem'}
-    ],
-    duration: 120,
-    delay: anime.stagger([0, 1000]),
+    translateY: [ {value: '1rem'}, {value: '0rem'} ],
+    duration: 200,
+    delay: anime.stagger([0, 1500]),
     easing: 'easeInOutSine',
     update: function(anim) {
-      const currentTime = anim.currentTime;
-      if (currentTime >= 1000) {
-        anim.pause();
-        anim.passthrough = true;
-        anim.seek(1000);
-      }
-      timeEl.value = Math.round(anim.currentTime);
+      controlDemoAnim.seek(anim.currentTime);
+      timeEl.value = Math.round(controlDemoAnim.currentTime);
     }
-  }, -60)
-  .add({
-    targets: '.animation-delay',
-    opacity: [0, 1],
-    duration: 50,
-    delay: anime.stagger(1000/3, {start: 0})
-  }, 0)
-  .add({
-    targets: '.animation-change',
-    opacity: [0, 1],
-    duration: 50,
-    delay: anime.stagger(1000/3, {start: (1000/3) * .25})
-  }, 0)
-  .add({
-    targets: '.animation-end-delay',
-    opacity: [0, 1],
-    duration: 50,
-    delay: anime.stagger(1000/3, {start: (1000/3) * .65})
-  }, 0)
-  .add({
-    targets: '.animation-end-delay',
-    opacity: [0, 1],
-    duration: 50,
-    delay: anime.stagger(1000/3, {start: (1000/3) * .65})
-  }, 0)
-  .add({
-    targets: '.animation-end-delay',
-    opacity: [0, 1],
-    duration: 50,
-    delay: anime.stagger(1000/3, {start: (1000/3) * .65})
-  }, 0)
-  .add(infoAnimation(document.querySelector('.info')), 0)
+  }, -100)
+
+  for (var i = 0; i < infoEls.length; i++) {
+    var infoEl = infoEls[i];
+    var delay = parseFloat(anime.getValue(infoEl, 'data-delay'));
+    var direction = infoEl.classList.contains('info-bottom') ? -1 : 1;
+    timeControlAnimation
+    .add({
+      targets: infoEl.querySelector('.info-bar'),
+      scaleY: [0, 1],
+      duration: 500,
+      easing: 'easeOutCirc'
+    }, delay)
+    .add({
+      targets: infoEl.querySelectorAll('.info-label'),
+      opacity: [0, 1],
+      translateY: [direction * 10, 0],
+      duration: 250,
+      delay: anime.stagger(50, {start: 115, direction: direction > 0 ? 'reverse' : 'normal'}),
+      easing: 'easeOutSine'
+    }, delay)
+  }
+
+  var controlAnimationCanMove = false;
+
+  function moveControlAnimation() {
+    var rect = timeControlEl.getBoundingClientRect();
+    var top = rect.top;
+    var height = rect.height;
+    var windowHeight = window.innerHeight;
+    var scrolled = (top - windowHeight) * -1;
+    timeControlAnimation.seek((scrolled * 3) - 500);
+    if (controlAnimationCanMove) requestAnimationFrame(moveControlAnimation);
+  }
+
+  isElementInViewport(timeControlEl, function(el, entry) {
+    controlAnimationCanMove = true;
+    requestAnimationFrame(moveControlAnimation);
+  }, function(el, entry) {
+    controlAnimationCanMove = false;
+  });
 
 </script>
 </html>

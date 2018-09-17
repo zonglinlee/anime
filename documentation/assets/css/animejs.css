@@ -19,10 +19,6 @@ body {
 }
 
 body {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-
   font-family: RoobertTRIAL-SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
@@ -35,7 +31,7 @@ input {
   font-variant-numeric: tabular-nums;
 }
 
-.color-white { color: #F6F4F2; } /* Black */
+.color-white { color: #F6F4F2; } /* White */
 .color-black { color: #373535; } /* Black */
 .color-red, .color-targets { color: #F64E4D; } /* Red */
 .color-orange, .color-properties { color: #F6984E; } /* Orange */
