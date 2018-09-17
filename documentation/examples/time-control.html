@@ -62,7 +62,7 @@
     }
 
     .time-control {
-      height: 16rem;
+      height: 12rem;
     }
 
     .time-control .ruller {
@@ -91,7 +91,7 @@
       position: absolute;
       z-index: 1;
       top: -1.125rem;
-      left: calc(-1rem + 1px);
+      left: calc(-1rem + 2px);
       width: 2rem;
       height: 2rem;
       background-color: currentColor;
@@ -117,12 +117,13 @@
       left: calc(1rem - 1px);
       display: block;
       width: 2px;
-      height: 3rem;
+      height: 12.125rem;
       background-color: #F64E4D;
     }
 
     .timeline {
       position: relative;
+      z-index: 1;
       overflow: visible;
       display: flex;
       width: 100%;
@@ -161,13 +162,13 @@
       display: flex;
       flex-direction: column;
       width: 2px;
-      height: 3rem;
+      height: 2rem;
       margin: 0 1px;
     }
 
     .info + .info { margin-left: -3px; }
 
-    .info-large { height: 6rem; }
+    .info-large { height: 4rem; }
 
     .info-top {
       bottom: 0;
@@ -336,39 +337,32 @@
 
   rullerEl.appendChild(fragment);
 
-  //anime.speed= .5;
-
-  var controlDemoAnim = anime.timeline({
-    targets: '.feature-control .section-title span',
-    easing: 'easeOutSine',
-    duration: 200,
-    delay: anime.stagger([0, 100], {start: 100}),
-    endDelay: 100,
-    autoplay: false
-  })
-  .add({ translateY: [20, 0], opacity: [0, 1] })
-  .add({ translateY: [0, 20], opacity: [1, 0], easing: 'easeInSine',})
-  .add({ translateY: [20, 0], opacity: [0, 1] })
-
   const timeControlAnimation = anime.timeline({
     easing: 'linear',
     autoplay: false
   })
   .add({
     targets: '.time-cursor',
-    translateX: 'calc(34rem - 5px)',
-    duration: 1500
-  })
+    keyframes: [
+      {
+        translateY: ['-1rem', 0], duration: 100, easing: 'easeInQuad'
+      }, {
+        translateX: 'calc(34rem - 6px)', duration: 1500
+      }, {
+        translateY: '-1rem', duration: 100, easing: 'easeOutQuad'
+      }
+    ],
+    duration: 1500,
+    update: function(anim) {
+      timeEl.value = anim.currentTime;
+    }
+  }, -100)
   .add({
     targets: '.ruller .line',
     translateY: [ {value: '1rem'}, {value: '0rem'} ],
     duration: 200,
     delay: anime.stagger([0, 1500]),
-    easing: 'easeInOutSine',
-    update: function(anim) {
-      controlDemoAnim.seek(anim.currentTime);
-      timeEl.value = Math.round(controlDemoAnim.currentTime);
-    }
+    easing: 'easeInOutSine'
   }, -100)
 
   for (var i = 0; i < infoEls.length; i++) {
