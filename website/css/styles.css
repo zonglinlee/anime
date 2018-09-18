@@ -143,6 +143,10 @@ a {
   margin: auto;;
 }
 
+.section-rtl {
+  flex-direction: row-reverse;
+}
+
 .content-section,
 .intro-header {
   transform: translate3d(0, 3rem, 0);

@@ -1,3 +1,5 @@
+import anime from '../../../src/index.js';
+
 function fitElToParent(el, padding) {
   function resize() {
     anime.setValue(el, {scale: 1});
@@ -6,7 +8,7 @@ function fitElToParent(el, padding) {
     var elOffsetWidth = el.offsetWidth - pad;
     var parentOffsetWidth = parentEl.offsetWidth;
     var ratio = parentOffsetWidth / elOffsetWidth;
-    anime.setValue(el, {scale: ratio});
+    if (ratio < 1) anime.setValue(el, {scale: ratio});
   }
   resize();
   window.addEventListener('resize', resize);
@@ -18,9 +20,9 @@ var logoAnimation = (function() {
   var bouncePath = anime.path('.bounce path');
   var versionNumerEl = document.querySelector('.version-number');
 
-  fitElToParent(logoAnimationEl, 20)
+  fitElToParent(logoAnimationEl, 20);
 
-  versionNumerEl.innerHTML = '&nbsp;V' + anime.version;
+  versionNumerEl.innerHTML = 'V' + anime.version;
 
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
@@ -137,11 +139,176 @@ var logoAnimation = (function() {
     delay: anime.stagger(30, {from: 1})
   }, '-=1010');
 
-  // anime.speed = .1;
-  // logoAnimationTL.seek(2000);
-
   return logoAnimationTL;
 
 })();
 
+window.builtInEasingsAnimation = (function() {
+
+  var easingVisualizerEl = document.querySelector('.easing-visualizer');
+  var fragment = document.createDocumentFragment();
+  var numberOfBars = 63;
+  var duration = 450;
+  var animation;
+  var paused = false;
+
+  fitElToParent(easingVisualizerEl);
+
+  for (var i = 0; i < numberOfBars; i++) {
+    var barEl = document.createElement('div');
+    var dotEl = document.createElement('div');
+    barEl.classList.add('bar');
+    dotEl.classList.add('dot');
+    dotEl.classList.add('color-red');
+    fragment.appendChild(barEl);
+    fragment.appendChild(dotEl);
+  }
+
+  easingVisualizerEl.appendChild(fragment);
+
+  anime.setValue('.easing-visualizer .dot', { translateX: anime.stagger(6) });
+
+  function play() {
+
+    paused = false;
+
+    var easings = [];
+    for (var ease in anime.penner) easings.push(ease);
+    easings.push('steps('+anime.random(5, 20)+')');
+    easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
+    var ease = easings[anime.random(0, easings.length - 1)];
+
+    animation = anime.timeline({
+      easing: 'easeInOutQuad',
+      complete: function() {
+        if (!paused) play();
+      }
+    })
+    .add({
+      targets: '.easing-visualizer .bar',
+      scaleY: anime.stagger([1, 88], {easing: ease, from: 'center', direction: 'reverse'}),
+      easing: ease,
+      duration: duration,
+      delay: anime.stagger(16, {from: 'center'})
+    })
+    .add({
+      targets: '.easing-visualizer .dot',
+      translateY: anime.stagger(['-6rem', '6rem'], {easing: ease, from: 'last'}),
+      easing: ease,
+      duration: duration,
+      delay: anime.stagger(8, {from: 'center'})
+    }, 0);
+
+  }
+
+  function pause() {
+
+    paused = true;
+
+    animation = anime.timeline({
+      easing: 'easeInOutQuad'
+    })
+    .add({
+      targets: '.easing-visualizer .bar',
+      scaleY: anime.stagger([1, 88], {easing: 'linear', from: 'center', direction: 'reverse'}),
+      duration: duration,
+      delay: anime.stagger(16, {from: 'center'})
+    })
+    .add({
+      targets: '.easing-visualizer .dot',
+      translateY: anime.stagger(['-6rem', '6rem'], {easing: 'linear', from: 'last'}),
+      duration: duration,
+      delay: anime.stagger(8, {from: 'center'})
+    }, 0);
+
+  }
+
+  return {
+    play: play,
+    pause: pause
+  }
+
+})();
+
+var advancedStaggeringAnimation = (function() {
+
+  var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
+  var fragment = document.createDocumentFragment();
+  var numberOfElements = 16*16;
+
+  for (var i = 0; i < numberOfElements; i++) {
+    var dotEl = document.createElement('div');
+    dotEl.classList.add('dot');
+    fragment.appendChild(dotEl);
+  }
+
+  staggerVisualizerEl.appendChild(fragment);
+
+  var index = anime.random(0, numberOfElements);
+  var nextIndex = 0;
+
+  function animateGrid() {
+
+    nextIndex = anime.random(0, numberOfElements);
+
+    anime.setValue('.stagger-visualizer .cursor', {
+      translateX: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'x'}),
+      translateY: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'y'})
+    });
+
+    var animation = anime.timeline({
+      easing: 'easeInOutQuad',
+      complete: animateGrid
+    })
+    .add({
+      targets: '.cursor',
+      keyframes: [
+        { scale: .625 }, 
+        { scale: 1.125 },
+        { scale: 1 }
+      ],
+      duration: 600
+    })
+    .add({
+      targets: '.stagger-visualizer .dot',
+      keyframes: [
+        {
+          translateX: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'x'}),
+          translateY: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'y'}),
+          duration: 200
+        }, {
+          translateX: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'x'}),
+          translateY: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'y'}),
+          scale: 2,
+          duration: 500
+        }, {
+          translateX: 0,
+          translateY: 0,
+          scale: 1,
+          duration: 600,
+        }
+      ],
+      delay: anime.stagger(50, {grid: [16, 16], from: index})
+    }, '-=600')
+    .add({
+      targets: '.stagger-visualizer .cursor',
+      translateX: { value: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
+      translateY: { value: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
+      easing: 'easeOutSine'
+    }, '-=1100')
+
+    index = nextIndex;
+
+    console.log(animation);
+
+  }
+
+  return {
+    play: animateGrid
+  }
+
+})();
+
 logoAnimation.play();
+builtInEasingsAnimation.play();
+advancedStaggeringAnimation.play();

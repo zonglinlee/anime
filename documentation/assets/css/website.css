@@ -1,5 +1,13 @@
 /* Typography */
 
+/*.logo-animation-wrapper,
+.anime-logo,
+.col,
+.full-col {
+  background-color: rgba(255,0,0,.5);
+  box-shadow: 0 0 0 1px rgba(255,0,0,1);
+}*/
+
 a {
   position: relative;
   display: inline-block;
@@ -25,6 +33,11 @@ a:focus:after {
   transition: transform .125s cubic-bezier(0.655, 0.405, 0.030, 0.945);
 }
 
+a.primary,
+.primary {
+  color: #F64E4D;
+}
+
 .section-title {
   font-size: 3.5rem;
   line-height: 3rem;
@@ -42,19 +55,28 @@ a:focus:after {
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-bottom: 5rem;
+  margin-bottom: 6rem;
 }
 
 .section-content,
 .col,
 .full-col {
-  padding: 0 16px;
+  padding: 0 1rem;
 }
 
 .section-content {
   display: flex;
+  align-items: center;
   width: 100%;
-  max-width: 980px;
+  max-width: 1056px;
+}
+/*
+.feature-section .section-content {
+  min-height: 100vh;
+}*/
+
+.section-rtl {
+  flex-direction: row-reverse;
 }
 
 .col {
@@ -77,6 +99,10 @@ a:focus:after {
   margin-top: 5rem;
 }
 
+.section-intro .section-content {
+  align-items: flex-start;
+}
+
 .main-menu {
   position: relative;
   padding-bottom: 2rem;
@@ -97,12 +123,6 @@ a:focus:after {
 }
 
 /* Logo animation */
-
-.logo-animation-wrapper,
-.anime-logo {
-  /*background-color: rgba(255,0,0,.5);*/
-  /*box-shadow: 0 0 0 1px rgba(255,0,0,1);*/
-}
 
 .main-logo {
   display: flex;
@@ -128,7 +148,6 @@ a:focus:after {
   width: 740px;
   height: 544px;
   margin: -272px 0 0 -370px;
-  /*transform: scale(.615);*/
 }
 
 .anime-logo {
@@ -213,9 +232,77 @@ a:focus:after {
   background-color: currentColor;
 }
 
-/* Typography */
+/* Features */
 
-a.primary,
-.primary {
-  color: #F64E4D;
+.feature-animation {
+  position: relative;
+  padding-bottom: 100%;
+}
+
+/** Easings **/
+
+.easing-visualizer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  width: 16rem;
+  height: 16rem;
+  margin: -8rem 0 0 -8rem;
+}
+
+.easing-visualizer .bar {
+  width: 2px;
+  height: 4px;
+  background-color: currentColor;
+  transform-origin: 50% 50%;
+}
+
+.easing-visualizer .bar:not(:last-child) {
+  margin-right: 4px;
+}
+
+.easing-visualizer .dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  margin-left: -3px;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+/** Staggering **/
+
+.stagger-visualizer {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  width: 16rem;
+  height: 16rem;
+  margin: -8rem 0 0 -8rem;
+}
+
+.stagger-visualizer .dot {
+  position: relative;
+  width: .25rem;
+  height: .25rem;
+  margin: .375rem;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+.stagger-visualizer .cursor {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 1rem;
+  height: 1rem;
+  background-color: currentColor;
+  border-radius: 50%;
 }
