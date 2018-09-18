@@ -1,7 +1,26 @@
+function fitElToParent(el, padding) {
+  function resize() {
+    anime.setValue(el, {scale: 1});
+    var pad = padding || 0;
+    var parentEl = el.parentNode;
+    var elOffsetWidth = el.offsetWidth - pad;
+    var parentOffsetWidth = parentEl.offsetWidth;
+    var ratio = parentOffsetWidth / elOffsetWidth;
+    anime.setValue(el, {scale: ratio});
+  }
+  resize();
+  window.addEventListener('resize', resize);
+}
+
 var logoAnimation = (function() {
 
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
+  var versionNumerEl = document.querySelector('.version-number');
+
+  fitElToParent(logoAnimationEl, 20)
+
+  versionNumerEl.innerHTML = '&nbsp;V' + anime.version;
 
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
@@ -22,7 +41,7 @@ var logoAnimation = (function() {
     translateY: [
       {value: [128, -128], duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
       {value: 4, duration: 120, easing: 'easeInQuad'},
-      {value: 1, duration: 120, easing: 'easeOutQuad'}
+      {value: 0, duration: 120, easing: 'easeOutQuad'}
     ],
     scaleX: [
       {value: [.55, .85], duration: 190, easing: 'easeOutSine'},
@@ -35,17 +54,12 @@ var logoAnimation = (function() {
       {value: 1.05, duration: 180, delay: 25, easing: 'easeOutQuad'},
       {value: 1, duration: 250, delay: 15, easing: 'easeOutQuad'}
     ],
-    translateZ: 0,
-    delay: function(el, i) { return i * 45 }
+    delay: anime.stagger(45)
   }, 300)
   .add({
     targets: '.dot',
-    opacity: {
-      value: 1,
-      duration: 100
-    },
+    opacity: { value: 1, duration: 100 },
     translateY: 268,
-    translateZ: 0,
     scaleY: [4, .7],
     scaleX: { value: 1.3, delay: 100, duration: 200},
     duration: 320,
@@ -59,28 +73,19 @@ var logoAnimation = (function() {
     begin: function(a) { a.animatables[0].target.removeAttribute('stroke-dasharray'); }
   }, '-=330')
   .add({
-    targets: ['.letter-a', '.letter-n', '.letter-i'],
+    targets: ['.letter-a', '.letter-n', '.letter-i', '.letter-e'],
     translateX: 0,
-    easing: 'easeOutElastic(1, .8)',
+    easing: 'easeOutElastic(1, .6)',
     duration: 800,
-    delay: function(el, i, t) { return (t - i) * 20 },
-    change: function(a) {  a.animatables[2].target.removeAttribute('stroke-dasharray'); }
+    delay: anime.stagger(25, {from: 2.5}),
+    change: function(a) { a.animatables[2].target.removeAttribute('stroke-dasharray'); }
   }, '-=600')
-  .add({
-    targets: '.letter-e',
-    translateX: 0,
-    easing: 'easeOutElastic(.8, .7)',
-    duration: 800
-  }, '-=840')
   .add({
     targets: '.dot',
     translateX: bouncePath('x'),
     translateY: bouncePath('y'),
-    translateZ: 0,
     rotate: '1turn',
-    scaleX: [
-      { value: 1, duration: 50, easing: 'easeOutSine' }
-    ],
+    scaleX: { value: 1, duration: 50, easing: 'easeOutSine' },
     scaleY: [
       { value: [1, 1.5], duration: 50, easing: 'easeInSine' },
       { value: 1, duration: 50, easing: 'easeOutExpo' }
@@ -115,24 +120,28 @@ var logoAnimation = (function() {
     duration: 80
   }, '-=1110')
   .add({
-    targets: ['.letter-i', '.letter-n', '.letter-m', '.letter-a', '.letter-e'],
+    targets: '.logo-letter',
     translateY: [
       {value: 33, duration: 150},
       {value: 0, duration: 800, easing: 'easeOutElastic(1, .6)'}
     ],
     strokeDashoffset: [anime.setDashoffset, 0],
-    delay: function(el, i) { return Math.round(i / 2) * 30 }
+    delay: anime.stagger(40, {from: 'center'})
   }, '-=1100')
-  // .add({
-  //   targets: ['.anime-logo h2'],
-  //   translateY: [-20, 0],
-  //   opacity: 1,
-  //   easing: 'easeOutElastic(1, .6)',
-  //   duration: 1000
-  // }, '-=1010');
+  .add({
+    targets: ['.logo-text span'],
+    translateY: [-20, 0],
+    opacity: [0, 1],
+    easing: 'easeOutElastic(1, .6)',
+    duration: 500,
+    delay: anime.stagger(30, {from: 1})
+  }, '-=1010');
+
+  // anime.speed = .1;
+  // logoAnimationTL.seek(2000);
 
   return logoAnimationTL;
 
 })();
 
-window.onload = logoAnimation.play;
+logoAnimation.play();

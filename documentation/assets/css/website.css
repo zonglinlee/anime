@@ -1,3 +1,37 @@
+/* Typography */
+
+a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+a:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  margin-bottom: -2px;
+  background-color: currentColor;
+  transform-origin: 100% 0;
+  transform: scaleX(0);
+  transition: transform .25s cubic-bezier(0.655, 0.405, 0.030, 0.945);
+}
+
+a:hover:after,
+a:focus:after {
+  transform-origin: 0 0;
+  transform: scaleX(1);
+  transition: transform .125s cubic-bezier(0.655, 0.405, 0.030, 0.945);
+}
+
+.section-title {
+  font-size: 3.5rem;
+  line-height: 3rem;
+  letter-spacing: 0;
+  margin-bottom: 2rem;
+}
+
 /* Layout */
 
 :root {
@@ -8,44 +42,75 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-bottom: 5rem;
+}
+
+.section-content,
+.col,
+.full-col {
+  padding: 0 16px;
 }
 
 .section-content {
   display: flex;
   width: 100%;
   max-width: 980px;
-  padding: 0 16px;
 }
 
 .col {
-  width: 50%;
-  padding: 0 16px;
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .col {
+    width: 50%;
+  }
 }
 
 .full-col {
   width: 100%;
-  padding: 0 16px;
 }
 
 /* Intro */
 
 .section-intro {
-  margin-top: 6rem;
+  margin-top: 5rem;
 }
 
-.main-menu a {
+.main-menu {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.main-menu:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
   display: block;
+  width: 2rem;
+  height: 2px;
+  background-color: currentColor;
 }
 
-.main-menu a:hover {
-  color: #F64E4D;
+.anime-js-description {
+  text-align: justify;
 }
 
 /* Logo animation */
 
+.logo-animation-wrapper,
+.anime-logo {
+  /*background-color: rgba(255,0,0,.5);*/
+  /*box-shadow: 0 0 0 1px rgba(255,0,0,1);*/
+}
+
+.main-logo {
+  display: flex;
+  flex-direction: column;
+}
+
 .logo-animation-wrapper {
   position: relative;
-  border: 1px solid red;
   width: 100%;
   padding-bottom: 17.777777778%;
 }
@@ -73,7 +138,6 @@
   flex-direction: column;
   width: 720px;
   height: 128px;
-  background-color: rgba(255,0,0,.2);
 }
 
 .anime-logo-signs {
@@ -94,18 +158,14 @@
   transform: translate3d(0,0,0);
 }
 
-.bounce {
+.logo-animation .bounce {
   overflow: visible;
   position: absolute;
   left: 0;
   bottom: 62px;
 }
 
-path {
-  stroke: red;
-}
-
-.dot {
+.logo-animation .dot {
   opacity: 0.001;
   position: absolute;
   z-index: 10;
@@ -114,23 +174,48 @@ path {
   width: 24px;
   height: 24px;
   margin: -12px 0 0 -12px;
-  background-color: #000;
+  background-color: currentColor;
   transform: translate3d(0,0,0);
 }
 
-.logo-letter svg {
+.logo-animation .logo-letter svg {
   overflow: visible;
   fill: none;
   fill-rule: evenodd;
 }
 
-.line {
-  stroke: #000;
+.logo-animation .line {
+  stroke: currentColor;
   stroke-width: 24px;
 }
 
-.fill {
+.logo-animation .fill {
   opacity: 0.001;
-  stroke: #000;
+  stroke: currentColor;
   stroke-width: 24px;
+}
+
+.logo-text {
+  display: flex;
+  text-align: justify;
+  align-items: center;
+  margin-top: .35rem;
+}
+
+.logo-text span {
+  display: block;
+}
+
+.dash {
+  width: 100%;
+  height: 2px;
+  margin-top: 7px;
+  background-color: currentColor;
+}
+
+/* Typography */
+
+a.primary,
+.primary {
+  color: #F64E4D;
 }
