@@ -38,6 +38,10 @@ input {
   font-variant-numeric: tabular-nums;
 }
 
+a, a:visited {
+  color: inherit;
+}
+
 .color-white { color: #F6F4F2; } /* White */
 .color-black { color: #373535; } /* Black */
 .color-red, .color-targets { color: #F64E4D; } /* Red */

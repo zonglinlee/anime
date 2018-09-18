@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>anime.js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:title" content="anime.js">
+  <link href="website/css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="section site-header-content">
+      <nav class="header-nav header-nav-left">
+        <a href="#">Getting started</a>
+        <a href="#"><span class="small-screen-only">Docs</span><span class="large-screen-only">Documentation</span></a>
+      </nav>
+      <a href="/" class="mini-logo-link">
+        <svg class="mini-logo" viewBox="0 0 88 14" width="88" height="14">
+          <g fill="none" fill-rule="evenodd" stroke-linecap="square">
+            <path d="M1 1h12c1.105 0 2 .893 2 2v8c0 1.107-.895 2-2 2H3c-1.105 0-2-.893-2-2V7c0-1.124.895-2.017 2-2h8"/>
+            <path d="M19 13V3c0-1.105.898-2 2-2h10c1.102 0 2 .895 2 2v10"/>
+            <path d="M37.125 13V1"/>
+            <path d="M41 13V3a2 2 0 0 1 2-2c5.327.008 9.327.013 12 .013 2.66 0 6.66-.005 12-.013a2 2 0 0 1 2 2v10"/>
+            <path d="M77 9h8c1.105-.022 2-.915 2-2V3c0-1.107-.895-2-2-2H75c-1.105 0-2 .893-2 2v8c0 1.107.895 2 2 2h12"/>
+          </g>
+        </svg>
+      </a>
+      <nav class="header-nav header-nav-right">
+        <a href="#">CodePen</a>
+        <a href="#">GitHub</a>
+      </nav>
+      <hr class="header-bottom-line">
+    </div>
+  </header>
+
+  <section class="intro-header">
+    <div class="logo-animation">
+      <svg class="sphere" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 440">
+        <g id="sphere-final-small" fill="none" fill-opacity=".5" fill-rule="evenodd">
+          <path d="M361.604 361.238c-24.407 24.408-51.119 37.27-59.662 28.727-8.542-8.543 4.319-35.255 28.726-59.663 24.408-24.407 51.12-37.269 59.663-28.726 8.542 8.543-4.319 35.255-28.727 59.662z"/>
+          <path d="M360.72 360.354c-35.879 35.88-75.254 54.677-87.946 41.985-12.692-12.692 6.105-52.067 41.985-87.947 35.879-35.879 75.254-54.676 87.946-41.984 12.692 12.692-6.105 52.067-41.984 87.946z"/>
+          <path d="M357.185 356.819c-44.91 44.91-94.376 68.258-110.485 52.149-16.11-16.11 7.238-65.575 52.149-110.485 44.91-44.91 94.376-68.259 110.485-52.15 16.11 16.11-7.239 65.576-52.149 110.486z"/>
+          <path d="M350.998 350.632c-53.21 53.209-111.579 81.107-130.373 62.313-18.794-18.793 9.105-77.163 62.314-130.372 53.209-53.21 111.579-81.108 130.373-62.314 18.794 18.794-9.105 77.164-62.314 130.373z"/>
+          <path d="M343.043 342.677c-59.8 59.799-125.292 91.26-146.283 70.268-20.99-20.99 10.47-86.483 70.269-146.282 59.799-59.8 125.292-91.26 146.283-70.269 20.99 20.99-10.47 86.484-70.27 146.283z"/>
+          <path d="M334.646 334.28c-65.169 65.169-136.697 99.3-159.762 76.235-23.065-23.066 11.066-94.593 76.235-159.762s136.697-99.3 159.762-76.235c23.065 23.065-11.066 94.593-76.235 159.762z"/>
+          <path d="M324.923 324.557c-69.806 69.806-146.38 106.411-171.031 81.76-24.652-24.652 11.953-101.226 81.759-171.032 69.806-69.806 146.38-106.411 171.031-81.76 24.652 24.653-11.953 101.226-81.759 171.032z"/>
+          <path d="M312.99 312.625c-73.222 73.223-153.555 111.609-179.428 85.736-25.872-25.872 12.514-106.205 85.737-179.428s153.556-111.609 179.429-85.737c25.872 25.873-12.514 106.205-85.737 179.429z"/>
+          <path d="M300.175 299.808c-75.909 75.909-159.11 115.778-185.837 89.052-26.726-26.727 13.143-109.929 89.051-185.837 75.908-75.908 159.11-115.778 185.837-89.051 26.726 26.726-13.143 109.928-89.051 185.836z"/>
+          <path d="M284.707 284.34c-77.617 77.617-162.303 118.773-189.152 91.924-26.848-26.848 14.308-111.534 91.924-189.15C265.096 109.496 349.782 68.34 376.63 95.188c26.849 26.849-14.307 111.535-91.923 189.151z"/>
+          <path d="M269.239 267.989c-78.105 78.104-163.187 119.656-190.035 92.807-26.849-26.848 14.703-111.93 92.807-190.035 78.105-78.104 163.187-119.656 190.035-92.807 26.849 26.848-14.703 111.93-92.807 190.035z"/>
+          <path d="M252.887 252.52C175.27 330.138 90.584 371.294 63.736 344.446 36.887 317.596 78.043 232.91 155.66 155.293 233.276 77.677 317.962 36.521 344.81 63.37c26.85 26.848-14.307 111.534-91.923 189.15z"/>
+          <path d="M236.977 236.61C161.069 312.52 77.867 352.389 51.14 325.663c-26.726-26.727 13.143-109.928 89.052-185.837 75.908-75.908 159.11-115.777 185.836-89.05 26.727 26.726-13.143 109.928-89.051 185.836z"/>
+          <path d="M221.067 220.7C147.844 293.925 67.51 332.31 41.639 306.439c-25.873-25.873 12.513-106.206 85.736-179.429C200.6 53.786 280.931 15.4 306.804 41.272c25.872 25.873-12.514 106.206-85.737 179.429z"/>
+          <path d="M205.157 204.79c-69.806 69.807-146.38 106.412-171.031 81.76-24.652-24.652 11.953-101.225 81.759-171.031 69.806-69.807 146.38-106.411 171.031-81.76 24.652 24.652-11.953 101.226-81.759 171.032z"/>
+          <path d="M189.247 188.881c-65.169 65.169-136.696 99.3-159.762 76.235-23.065-23.065 11.066-94.593 76.235-159.762s136.697-99.3 159.762-76.235c23.065 23.065-11.066 94.593-76.235 159.762z"/>
+          <path d="M173.337 172.971c-59.799 59.8-125.292 91.26-146.282 70.269-20.991-20.99 10.47-86.484 70.268-146.283 59.8-59.799 125.292-91.26 146.283-70.269 20.99 20.991-10.47 86.484-70.269 146.283z"/>
+          <path d="M157.427 157.061c-53.209 53.21-111.578 81.108-130.372 62.314-18.794-18.794 9.104-77.164 62.313-130.373 53.21-53.209 111.58-81.108 130.373-62.314 18.794 18.794-9.105 77.164-62.314 130.373z"/>
+          <path d="M141.517 141.151c-44.91 44.91-94.376 68.259-110.485 52.15-16.11-16.11 7.239-65.576 52.15-110.486 44.91-44.91 94.375-68.258 110.485-52.15 16.109 16.11-7.24 65.576-52.15 110.486z"/>
+          <path d="M125.608 125.241c-35.88 35.88-75.255 54.677-87.947 41.985-12.692-12.692 6.105-52.067 41.985-87.947C115.525 43.4 154.9 24.603 167.592 37.295c12.692 12.692-6.105 52.067-41.984 87.946z"/>
+          <path d="M109.698 109.332c-24.408 24.407-51.12 37.268-59.663 28.726-8.542-8.543 4.319-35.255 28.727-59.662 24.407-24.408 51.12-37.27 59.662-28.727 8.543 8.543-4.319 35.255-28.726 59.663z"/>
+        </g>
+      </svg>
+      <div class="anime-logo">
+        <div class="anime-logo-signs">
+          <div class="logo-letter letter-a">
+            <svg class="bounced" viewBox="0 0 144 128" width="144" height="128">
+              <path class="line" d="M4 16.013L112 16c8.837 0 16 7.164 16 16L127.915 96c-.008 8.831-7.169 15.986-16 15.986l-79.92.014c-8.837 0-16-7.163-16-16V64.009c0-8.837 7.163-16 16-16h75.937" />
+            </svg>
+          </div>
+          <div class="logo-letter letter-n">
+            <svg class="bounced" viewBox="0 0 144 128" width="144" height="128" fill="none" fill-rule="evenodd">
+              <path class="line" d="M16 124V32c0-8.842 7.163-16 16-16h80c8.832.093 15.986 7.248 16 16v92" />
+            </svg>
+          </div>
+          <div class="logo-letter letter-i">
+            <svg class="bounced" viewBox="0 0 32 128" width="32" height="128" fill="none" fill-rule="evenodd">
+              <path class="line" 
+                      d="M16 124V4"
+                data-d2="M16 124V36"
+              />
+            </svg>
+          </div>
+          <div class="logo-letter letter-m">
+            <svg class="bounced" viewBox="0 0 256 128" width="256" height="128" fill="none" fill-rule="evenodd">
+              <path class="line" 
+                      d="M72 124V32c0-8.842 7.163-16 16-16 32 0-18.785.1 40 .1s8-.1 40-.1c8.832 0 15.986 7.248 16 16v92" 
+                data-d2="M16 124V32c0-8.842 7.163-16 16-16 32 0 37.215 41 96 41s64-41 96-41c8.832 0 15.986 7.248 16 16v92" 
+                data-d3="M16 124V32c0-8.842 7.163-16 16-16 32 0 37.215.1 96 .1s64-.1 96-.1c8.832 0 15.986 7.248 16 16v92" 
+                data-d4="M240 124V32c-.014-8.752-7.168-16-16-16-32 0-37.215.1-96 .1S64 16 32 16c-8.837 0-16 7.158-16 16v92"
+              />
+            </svg>
+          </div>
+          <div class="logo-letter letter-e">
+          <svg class="bounced" viewBox="0 0 144 128" width="144" height="128" fill="none" fill-rule="evenodd">
+            <path class="line" d="M140 112l-108.085.014c-8.837 0-16-7.163-16-16.014L16 32c.008-8.831 7.169-15.986 16-15.986L112 16c8.837 0 16 7.163 16 16v32c0 8.837-7.163 16-16 16H36"/>
+          </svg>
+          </div>
+          <div class="bounce">
+            <svg viewBox="0 0 720 288" width="720" height="288" fill="none">
+              <path d="M448 268c0-131.066-15.14-203.447-71.885-203.447C319.371 64.553 304 156.038 304 240"/>
+              <!-- <rect class="dot" fill="#FFF" x="-12" y="-12" width="24" height="24"></rect> -->
+            </svg>
+            <div class="dot"></div>
+          </div>
+        </div>
+        <h2>JavaScript Animation Engine</h2>
+      </div>
+    </div>
+
+    <nav class="logo-nav">
+      <a href="#" class="cta">Documentation</a><a href="#" class="cta">GitHub</a>
+    </nav>
+
+  </section>
+
+  <section class="features-section content-section section">
+
+    <h1 class="section-title">Complete web animation toolbox</h1>
+
+    <div class="features-list">
+
+      <a href="documentation#keyframes" class="feature-box">
+        <div class="feature-anim feature-keyframes">
+          <div class="key-box"></div>
+          <div class="key-box-shadow"></div>
+        </div>
+        <h2 class="secondary-title">Keyframes</h2>
+      </a>
+
+      <a href="documentation#specificPropParameters" class="feature-box">
+        <div class="feature-anim feature-CSS-transforms">
+          <svg class="CSS-transforms-shape" viewBox="0 0 50 50">
+            <circle cx="25" cy="25" r="19" fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="square"/>
+          </svg>
+          <svg class="CSS-transforms-shape" viewBox="0 0 50 50">
+            <rect width="32" height="32" x="9" y="9" fill="none" fill-rule="evenodd" stroke="#000000" stroke-linecap="square"/>
+          </svg>
+          <svg class="CSS-transforms-shape" viewBox="0 0 50 50">
+            <polygon fill="none" fill-rule="evenodd" stroke="#000000" points="25 9 45 41.727 5 41.727" stroke-linecap="square"/>
+          </svg>
+        </div>
+        <h2 class="secondary-title">Layered transforms</h2>
+      </a>
+
+      <a href="documentation#TLcontrols" class="feature-box">
+        <div class="feature-anim feature-time-control">
+          <div class="time-control-clock"></div>
+          <div class="needle small-needle"></div>
+          <div class="needle long-needle"></div>
+        </div>
+        <h2 class="secondary-title">Time control</h2>
+      </a>
+
+      <a href="documentation#statesBasics" class="feature-box">
+        <div class="feature-anim feature-states">
+          <div class="states-card"></div>
+          <div class="states-card"></div>
+          <div class="states-card"></div>
+          <div class="states-card"></div>
+          <div class="states-card"></div>
+          <div class="states-card"></div>
+          <div class="states-card"></div>
+        </div>
+        <h2 class="secondary-title">States system</h2>
+      </a>
+
+      <a href="documentation#linearEasing" class="feature-box">
+        <div class="feature-anim feature-easings">
+          <div class="easing-ball"></div>
+          <div class="easing-ball"></div>
+          <div class="easing-ball"></div>
+        </div>
+        <h2 class="secondary-title">Built-in easings</h2>
+      </a>
+
+      <a href="documentation#motionPath" class="feature-box">
+        <div class="feature-anim feature-svg-helpers">
+          <svg class="svg-path" viewBox="0 0 128 128">
+            <path fill="none" fill-rule="evenodd" fill-rule="nonzero" stroke="#000000" d="M49.9411255,49.8578644 C42.1766235,42.0473785 29.5878785,42.0473785 21.8233765,49.8578644 C14.0588745,57.6683502 14.0588745,70.3316498 21.8233765,78.1421356 C29.5878785,85.9526215 42.1766235,85.9526215 49.9411255,78.1421356 L78.0588745,49.8578644 C85.8233765,42.0473785 98.4121215,42.0473785 106.176624,49.8578644 C113.941125,57.6683502 113.941125,70.3316498 106.176624,78.1421356 C98.4121215,85.9526215 85.8233765,85.9526215 78.0588745,78.1421356 L49.9411255,49.8578644 Z"/>
+          </svg>
+          <div class="svg-box"></div>
+        </div>
+        <h2 class="secondary-title">SVG helpers</h2>
+      </a>
+
+    </div>
+
+    <a href="documentation" class="cta">Read the documentation</a>
+
+  </section>
+
+  <section class="get-started-section content-section section">
+
+    <h1 class="section-title">Getting started</h1>
+
+    <article class="get-started-article">
+
+      <h2 class="secondary-title">Installation</h2>
+
+    </article>
+
+    <article class="get-started-article">
+
+      <h2 class="secondary-title">Installation</h2>
+
+    </article>
+
+  </section>
+
+  </section>
+
+  <script>
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+    ga('create', 'UA-79927007-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  <script src="lib/anime.min.js"></script>
+  <script src="website/js/scripts.js"></script>
+  <script src="website/js/features-animations.js"></script>
+</body>
+</html>
