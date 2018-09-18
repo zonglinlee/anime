@@ -75,7 +75,7 @@
 
   const staggerVisualizerEl = document.querySelector('.stagger-visualizer');
   const fragment = document.createDocumentFragment();
-  const numberOfElements = 256;
+  const numberOfElements = 16*16;
 
   for (let i = 0; i < numberOfElements; i++) {
     const dotEl = document.createElement('div');
@@ -85,12 +85,12 @@
 
   staggerVisualizerEl.appendChild(fragment);
 
-  let index = anime.random(0, 256);
+  let index = anime.random(0, numberOfElements);
   let nextIndex = 0;
 
   function animateGrid() {
 
-    nextIndex = anime.random(0, 256);
+    nextIndex = anime.random(0, numberOfElements);
 
     anime.setValue('.cursor', {
       translateX: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'x'}),
@@ -120,15 +120,15 @@
           translateX: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'x'}),
           translateY: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'y'}),
           scale: 2,
-          duration: 400
+          duration: 500
         }, {
           translateX: 0,
           translateY: 0,
           scale: 1,
-          duration: 500,
+          duration: 600,
         }
       ],
-      delay: anime.stagger(40, {grid: [16, 16], from: index})
+      delay: anime.stagger(50, {grid: [16, 16], from: index})
     }, '-=600')
     .add({
       targets: '.cursor',
