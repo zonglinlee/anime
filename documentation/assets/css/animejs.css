@@ -1,5 +1,13 @@
-:root {
-  font-size: 24px;
+@font-face {
+ font-family: "Roobert SemiBold";
+ font-style: normal;
+ src: url("../fonts/Roobert-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+ font-family: "Roobert SemiBold";
+ font-style: italic;
+ src: url("../fonts/Roobert-SemiBoldItalic.woff2") format("woff2");
 }
 
 *, *:before, *:after {
@@ -19,15 +27,14 @@ body {
 }
 
 body {
-  font-family: RoobertTRIAL-SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 input {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-weight: bold;
+  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-variant-numeric: tabular-nums;
 }
 
