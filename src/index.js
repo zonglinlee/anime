@@ -52,6 +52,7 @@ const is = {
   obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
   pth: a => is.obj(a) && a.hasOwnProperty('totalLength'),
   svg: a => a instanceof SVGElement,
+  inp: a => a instanceof HTMLInputElement,
   dom: a => a.nodeType || is.svg(a),
   str: a => typeof a === 'string',
   fnc: a => typeof a === 'function',
@@ -59,7 +60,8 @@ const is = {
   hex: a => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a),
   rgb: a => /^rgb/.test(a),
   hsl: a => /^hsl/.test(a),
-  col: a => (is.hex(a) || is.rgb(a) || is.hsl(a))
+  col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
+  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes' && a !== 'states'
 }
 
 // Easings
@@ -266,7 +268,7 @@ const penner = (() => {
   }
 
   for (let coords in curves) {
-    curves[coords].forEach((ease, i) => { 
+    curves[coords].forEach((ease, i) => {
       eases['ease'+coords+names[i]] = ease;
     });
   }
@@ -304,7 +306,7 @@ function selectString(str) {
 function filterArray(arr, callback) {
   const len = arr.length;
   const thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-  let result = [];
+  const result = [];
   for (let i = 0; i < len; i++) {
     if (i in arr) {
       const val = arr[i];
@@ -334,19 +336,19 @@ function arrayContains(arr, val) {
 // Objects
 
 function cloneObject(o) {
-  let clone = {};
+  const clone = {};
   for (let p in o) clone[p] = o[p];
   return clone;
 }
 
 function replaceObjectProps(o1, o2) {
-  let o = cloneObject(o1);
+  const o = cloneObject(o1);
   for (let p in o1) o[p] = o2.hasOwnProperty(p) ? o2[p] : o1[p];
   return o;
 }
 
 function mergeObjects(o1, o2) {
-  let o = cloneObject(o1);
+  const o = cloneObject(o1);
   for (let p in o2) o[p] = is.und(o1[p]) ? o2[p] : o1[p];
   return o;
 }
@@ -451,7 +453,7 @@ function getCSSValue(el, prop, unit) {
 }
 
 function getAnimationType(el, prop) {
-  if (is.dom(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
+  if (is.dom(el) && !is.inp(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
   if (el[prop] != null) return 'object';
@@ -576,7 +578,7 @@ function getParentSvg(pathEl, svgData) {
   const svg = svgData || {};
   const parentSvgEl = svg.el || getParentSvgEl(pathEl);
   const rect = parentSvgEl.getBoundingClientRect();
-  const viewBoxAttr = parentSvgEl.getAttribute('viewBox');
+  const viewBoxAttr = getAttribute(parentSvgEl, 'viewBox');
   const width = rect.width;
   const height = rect.height;
   const viewBox = svg.viewBox || (viewBoxAttr ? viewBoxAttr.split(' ') : [0, 0, width, height]);
@@ -673,10 +675,34 @@ function normalizePropertyTweens(prop, tweenSettings) {
   }).map(k => mergeObjects(k, settings));
 }
 
-function getProperties(instanceSettings, tweenSettings, params) {
-  let properties = [];
+function flattenKeyframes(keyframes) {
+  const propertyNames = filterArray([...new Set(flattenArray(keyframes.map(key => { 
+    return Object.keys(key).map(p => { if (is.key(p)) return p }); 
+  })))], a => !is.und(a));
+  const properties = {};
+  for (let i = 0; i < propertyNames.length; i++) {
+    const propName = propertyNames[i];
+    properties[propName] = keyframes.map(key => {
+      const newKey = {};
+      for (let p in key) {
+        if (is.key(p)) {
+          if (p == propName) newKey.value = key[p];
+        } else {
+          newKey[p] = key[p];
+        }
+      }
+      return newKey;
+    });
+  }
+  return properties;
+}
+
+function getProperties(tweenSettings, params) {
+  const properties = [];
+  const keyframes = params.keyframes;
+  if (keyframes) params = mergeObjects(flattenKeyframes(keyframes), params);;
   for (let p in params) {
-    if (!instanceSettings.hasOwnProperty(p) && !tweenSettings.hasOwnProperty(p) && p !== 'targets' && p !== 'states') {
+    if (is.key(p)) {
       properties.push({
         name: p,
         tweens: normalizePropertyTweens(params[p], tweenSettings)
@@ -689,7 +715,7 @@ function getProperties(instanceSettings, tweenSettings, params) {
 // Tweens
 
 function normalizeTweenValues(tween, animatable) {
-  let t = {};
+  const t = {};
   for (let p in tween) {
     let value = getFunctionValue(tween[p], animatable);
     if (is.arr(value)) {
@@ -708,13 +734,14 @@ function normalizeTweens(prop, animatable) {
   return prop.tweens.map(t => {
     const tween = normalizeTweenValues(t, animatable);
     const tweenValue = tween.value;
-    const to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
+    let to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
     const toUnit = getUnit(to);
     const originalValue = getOriginalTargetValue(animatable.target, prop.name, toUnit, animatable);
     const previousValue = previousTween ? previousTween.to.original : originalValue;
     const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
     const fromUnit = getUnit(from) || getUnit(originalValue);
     const unit = toUnit || fromUnit;
+    if (is.und(to)) to = previousValue;
     tween.from = decomposeValue(from, unit);
     tween.to = decomposeValue(getRelativeValue(to, from), unit);
     tween.start = previousTween ? previousTween.end : 0;
@@ -738,9 +765,7 @@ const setProgressValue = {
     transforms.list.set(p, v);
     if (p === transforms.last || manual) {
       let str = '';
-      transforms.list.forEach((value, prop) => {
-        str += `${prop}(${value}) `;
-      });
+      transforms.list.forEach((value, prop) => { str += `${prop}(${value}) `; });
       t.style.transform = str;
     }
   }
@@ -809,7 +834,7 @@ function getStates(params) {
   return states;
 }
 
-function getInstanceTimings(animations, tweenSettings, timelineOffset) {
+function getInstanceTimings(animations, tweenSettings) {
   const animLength = animations.length;
   const getTlOffset = anim => anim.timelineOffset ? anim.timelineOffset : 0;
   const timings = {};
@@ -824,8 +849,8 @@ let instanceID = 0;
 function createNewInstance(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
+  const properties = getProperties(tweenSettings, params);
   const animatables = getAnimatables(params.targets);
-  const properties = getProperties(instanceSettings, tweenSettings, params);
   const animations = getAnimations(animatables, properties);
   const timings = getInstanceTimings(animations, tweenSettings);
   const id = instanceID;
@@ -921,16 +946,9 @@ function anime(params = {}) {
   }
 
   function syncInstanceChildren(time) {
-    if (instance.seeked && time < instance.currentTime) {
-      for (let i = childrenLength; i--;) {
-        const child = children[i];
-        child.seek(time - child.timelineOffset);
-      }
-    } else {
-      for (let i = 0; i < childrenLength; i++) {
-        const child = children[i];
-        child.seek(time - child.timelineOffset);
-      }
+    for (let i = 0; i < childrenLength; i++) {
+      const child = children[i];
+      child.seek(time - child.timelineOffset);
     }
   }
 
@@ -1037,11 +1055,11 @@ function anime(params = {}) {
     if (insTime >= insDelay && insTime <= insDuration) {
       setAnimationsProgress(insTime);
     } else {
-      if (insTime <= insDelay && instance.currentTime !== 0) {
-        setAnimationsProgress(0);
-      }
       if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
         setAnimationsProgress(insDuration);
+      }
+      if (insTime <= insDelay && instance.currentTime !== 0) {
+        setAnimationsProgress(0);
       }
     }
     instance.currentTime = minMax(insTime, 0, insDuration);
@@ -1079,7 +1097,6 @@ function anime(params = {}) {
     instance.changeBegan = false;
     instance.changeCompleted = false;
     instance.completed = false;
-    instance.seeked = false;
     instance.reversed = direction === 'reverse';
     instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
     children = instance.children;
@@ -1091,12 +1108,10 @@ function anime(params = {}) {
   instance.tick = function(t) {
     now = t;
     if (!startTime) startTime = now;
-    instance.seeked = false;
     setInstanceProgress((now + (lastTime - startTime)) * anime.speed);
   }
 
   instance.seek = function(time) {
-    instance.seeked = true;
     setInstanceProgress(adjustTime(time));
   }
 
@@ -1108,8 +1123,8 @@ function anime(params = {}) {
   instance.play = function() {
     if (!instance.paused) return;
     instance.paused = false;
-    if (instance.seeked) resetTime();
     activeInstances.push(instance);
+    resetTime();
     if (!raf) engine();
   }
 
@@ -1120,7 +1135,6 @@ function anime(params = {}) {
 
   instance.restart = function() {
     instance.reset();
-    resetTime();
     instance.play();
   }
 
@@ -1188,6 +1202,54 @@ function removeTargets(targets) {
   }
 }
 
+// Stagger helpers
+
+function stagger(val, params = {}) {
+  const direction = params.direction || 'normal';
+  const easing = params.easing ? parseEasings(params.easing) : null;
+  const grid = params.grid;
+  const axis = params.axis;
+  let fromIndex = params.from || 0;
+  const fromFirst = fromIndex === 'first';
+  const fromCenter = fromIndex === 'center';
+  const fromLast = fromIndex === 'last';
+  const isRange = is.arr(val);
+  const val1 = isRange ? parseFloat(val[0]) : parseFloat(val);
+  const val2 = isRange ? parseFloat(val[1]) : 0;
+  const unit = getUnit(isRange ? val[1] : val) || 0;
+  const start = params.start || 0 + (isRange ? val1 : 0);
+  let values = [];
+  let maxValue = 0;
+  return (el, i, t) => {
+    if (fromFirst) fromIndex = 0;
+    if (fromCenter) fromIndex = (t - 1) / 2;
+    if (fromLast) fromIndex = t - 1;
+    if (!values.length) {
+      for (let index = 0; index < t; index++) {
+        if (!grid) {
+          values.push(Math.abs(fromIndex - index));
+        } else {
+          const fromX = !fromCenter ? fromIndex%grid[0] : (grid[0]-1)/2;
+          const fromY = !fromCenter ? Math.floor(fromIndex/grid[0]) : (grid[1]-1)/2;
+          const toX = index%grid[0];
+          const toY = Math.floor(index/grid[0]);
+          const distanceX = fromX - toX;
+          const distanceY = fromY - toY;
+          let value = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+          if (axis === 'x') value = -distanceX;
+          if (axis === 'y') value = -distanceY;
+          values.push(value);
+        }
+        maxValue = Math.max(...values);
+      }
+      if (easing) values = values.map(val => easing(val / maxValue) * maxValue);
+      if (direction === 'reverse') values = values.map(val => axis ? (val < 0) ? val * -1 : -val : Math.abs(maxValue - val));
+    }
+    const spacing = isRange ? (val2 - val1) / maxValue : val1;
+    return start + (spacing * (Math.round(values[i] * 100) / 100)) + unit;
+  }
+}
+
 // Timeline
 
 function timeline(params = {}) {
@@ -1195,9 +1257,10 @@ function timeline(params = {}) {
   tl.duration = 0;
   tl.add = function(instanceParams, timelineOffset) {
     const tlIndex = activeInstances.indexOf(tl);
+    const children = tl.children;
     if (tlIndex > -1) activeInstances.splice(tlIndex, 1);
     function passThrough(ins) { ins.passthrough = true; };
-    tl.children.forEach(passThrough);
+    for (let i = 0; i < children.length; i++) passThrough(children[i]);
     let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
     insParams.targets = insParams.targets || params.targets;
     const tlDuration = tl.duration;
@@ -1209,8 +1272,8 @@ function timeline(params = {}) {
     const ins = anime(insParams);
     passThrough(ins);
     const totalDuration = ins.duration + insParams.timelineOffset;
-    tl.children.push(ins);
-    const timings = getInstanceTimings(tl.children, params);
+    children.push(ins);
+    const timings = getInstanceTimings(children, params);
     tl.delay = timings.delay;
     tl.endDelay = timings.endDelay;
     tl.duration = timings.duration;
@@ -1231,8 +1294,10 @@ anime.setValue = setTargetValue;
 anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
+anime.stagger = stagger;
 anime.timeline = timeline;
 anime.easing = parseEasings;
+anime.penner = penner;
 anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export default anime;
