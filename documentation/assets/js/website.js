@@ -1,5 +1,19 @@
 import anime from '../../../src/index.js';
 
+function isElementInViewport(el, inCB, outCB) {
+  function handleIntersect(entries, observer) {
+    var entry = entries[0];
+    console.log(entry);
+    if (entry.isIntersecting) {
+      if (inCB && typeof inCB === 'function') inCB(el, entry);
+    } else {
+      if (outCB && typeof outCB === 'function') outCB(el, entry);
+    }
+  }
+  var observer = new IntersectionObserver(handleIntersect);
+  observer.observe(el);
+}
+
 function fitElToParent(el, padding) {
   function resize() {
     anime.setValue(el, {scale: 1});
@@ -28,6 +42,8 @@ var logoAnimation = (function() {
   anime.setValue('.letter-e', {translateX: -56});
   anime.setValue('.dot', { translateX: 448, translateY: -100 });
 
+  // anime.speed = .1;
+
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
     autoplay: false
@@ -41,7 +57,7 @@ var logoAnimation = (function() {
     targets: '.bounced',
     transformOrigin: ['50% 100% 0px', '50% 100% 0px'],
     translateY: [
-      {value: [128, -128], duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
+      {value: [100, -152], duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
       {value: 4, duration: 120, easing: 'easeInQuad'},
       {value: 0, duration: 120, easing: 'easeOutQuad'}
     ],
@@ -128,7 +144,7 @@ var logoAnimation = (function() {
       {value: 0, duration: 800, easing: 'easeOutElastic(1, .6)'}
     ],
     strokeDashoffset: [anime.setDashoffset, 0],
-    delay: anime.stagger(40, {from: 'center'})
+    delay: anime.stagger(20, {from: 'center'})
   }, '-=1100')
   .add({
     targets: ['.logo-text span'],
@@ -136,7 +152,7 @@ var logoAnimation = (function() {
     opacity: [0, 1],
     easing: 'easeOutElastic(1, .6)',
     duration: 500,
-    delay: anime.stagger(30, {from: 1})
+    delay: anime.stagger(20, {from: 1})
   }, '-=1010');
 
   return logoAnimationTL;
@@ -173,30 +189,25 @@ window.builtInEasingsAnimation = (function() {
     paused = false;
 
     var easings = [];
-    for (var ease in anime.penner) easings.push(ease);
+    for (let ease in anime.penner) easings.push(ease);
     easings.push('steps('+anime.random(5, 20)+')');
     easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
     var ease = easings[anime.random(0, easings.length - 1)];
 
-    animation = anime.timeline({
-      easing: 'easeInOutQuad',
-      complete: function() {
-        if (!paused) play();
-      }
+    anime.timeline({
+      duration: duration,
+      easing: ease,
+      complete: play
     })
     .add({
       targets: '.easing-visualizer .bar',
       scaleY: anime.stagger([1, 88], {easing: ease, from: 'center', direction: 'reverse'}),
-      easing: ease,
-      duration: duration,
-      delay: anime.stagger(16, {from: 'center'})
+      delay: anime.stagger(14, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
       translateY: anime.stagger(['-6rem', '6rem'], {easing: ease, from: 'last'}),
-      easing: ease,
-      duration: duration,
-      delay: anime.stagger(8, {from: 'center'})
+      delay: anime.stagger(10, {from: 'center'})
     }, 0);
 
   }
@@ -223,6 +234,8 @@ window.builtInEasingsAnimation = (function() {
 
   }
 
+  isElementInViewport(easingVisualizerEl, play);
+
   return {
     play: play,
     pause: pause
@@ -234,7 +247,8 @@ var advancedStaggeringAnimation = (function() {
 
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
   var fragment = document.createDocumentFragment();
-  var numberOfElements = 16*16;
+  var row = 15;
+  var numberOfElements = row*row;
 
   for (var i = 0; i < numberOfElements; i++) {
     var dotEl = document.createElement('div');
@@ -247,38 +261,34 @@ var advancedStaggeringAnimation = (function() {
   var index = anime.random(0, numberOfElements);
   var nextIndex = 0;
 
-  function animateGrid() {
+  function play() {
 
     nextIndex = anime.random(0, numberOfElements);
 
     anime.setValue('.stagger-visualizer .cursor', {
-      translateX: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'x'}),
-      translateY: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'y'})
+      translateX: anime.stagger('-1rem', {grid: [row, row], from: index, axis: 'x'}),
+      translateY: anime.stagger('-1rem', {grid: [row, row], from: index, axis: 'y'})
     });
 
     var animation = anime.timeline({
       easing: 'easeInOutQuad',
-      complete: animateGrid
+      complete: play
     })
     .add({
       targets: '.cursor',
-      keyframes: [
-        { scale: .625 }, 
-        { scale: 1.125 },
-        { scale: 1 }
-      ],
+      keyframes: [{ scale: .625 }, { scale: 1.125 }, { scale: 1 }],
       duration: 600
     })
     .add({
       targets: '.stagger-visualizer .dot',
       keyframes: [
         {
-          translateX: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'x'}),
-          translateY: anime.stagger('-.175rem', {grid: [16, 16], from: index, axis: 'y'}),
+          translateX: anime.stagger('-.175rem', {grid: [row, row], from: index, axis: 'x'}),
+          translateY: anime.stagger('-.175rem', {grid: [row, row], from: index, axis: 'y'}),
           duration: 200
         }, {
-          translateX: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'x'}),
-          translateY: anime.stagger('.125rem', {grid: [16, 16], from: index, axis: 'y'}),
+          translateX: anime.stagger('.125rem', {grid: [row, row], from: index, axis: 'x'}),
+          translateY: anime.stagger('.125rem', {grid: [row, row], from: index, axis: 'y'}),
           scale: 2,
           duration: 500
         }, {
@@ -288,27 +298,27 @@ var advancedStaggeringAnimation = (function() {
           duration: 600,
         }
       ],
-      delay: anime.stagger(50, {grid: [16, 16], from: index})
+      delay: anime.stagger(50, {grid: [row, row], from: index})
     }, '-=600')
     .add({
       targets: '.stagger-visualizer .cursor',
-      translateX: { value: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
-      translateY: { value: anime.stagger('-1rem', {grid: [16, 16], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
+      translateX: { value: anime.stagger('-1rem', {grid: [row, row], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
+      translateY: { value: anime.stagger('-1rem', {grid: [row, row], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
       easing: 'easeOutSine'
     }, '-=1100')
 
     index = nextIndex;
 
-    console.log(animation);
-
   }
 
+  isElementInViewport(staggerVisualizerEl, play);
+
   return {
-    play: animateGrid
+    play: play
   }
 
 })();
 
 logoAnimation.play();
-builtInEasingsAnimation.play();
-advancedStaggeringAnimation.play();
+// builtInEasingsAnimation.play();
+// advancedStaggeringAnimation.play();

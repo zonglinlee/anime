@@ -39,10 +39,10 @@ a.primary,
 }
 
 .section-title {
-  font-size: 3.5rem;
-  line-height: 3rem;
+  font-size: 3rem;
+  line-height: 2.5rem;
   letter-spacing: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Layout */
@@ -218,7 +218,7 @@ a.primary,
   display: flex;
   text-align: justify;
   align-items: center;
-  margin-top: .35rem;
+  margin-top: .25rem;
 }
 
 .logo-text span {
@@ -282,9 +282,9 @@ a.primary,
   align-items: center;
   top: 50%;
   left: 50%;
-  width: 16rem;
-  height: 16rem;
-  margin: -8rem 0 0 -8rem;
+  width: 15rem;
+  height: 15rem;
+  margin: -7.5rem 0 0 -7.5rem;
 }
 
 .stagger-visualizer .dot {

@@ -97,22 +97,19 @@
     const duration = 450;
 
     anime.timeline({
-      easing: 'easeInOutQuad',
-      complete: animateEasing
+      complete: animateEasing,
+      easing: ease,
+      duration: duration
     })
     .add({
       targets: '.easing-visualizer .bar',
       scaleY: anime.stagger([1, 88], {easing: ease, from: 'center', direction: 'reverse'}),
-      easing: ease,
-      duration: duration,
-      delay: anime.stagger(16, {from: 'center'})
+      delay: anime.stagger(14, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
       translateY: anime.stagger(['-6rem', '6rem'], {easing: ease, from: 'last'}),
-      easing: ease,
-      duration: duration,
-      delay: anime.stagger(8, {from: 'center'})
+      delay: anime.stagger(10, {from: 'center'})
     }, 0);
 
   }
