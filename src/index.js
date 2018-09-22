@@ -12,7 +12,6 @@ const defaultInstanceSettings = {
   loop: 1,
   direction: 'normal',
   autoplay: true,
-  startTime: 0,
   timelineOffset: 0
 }
 
@@ -61,7 +60,7 @@ const is = {
   rgb: a => /^rgb/.test(a),
   hsl: a => /^hsl/.test(a),
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
-  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes' && a !== 'states'
+  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes'
 }
 
 // Easings
@@ -821,22 +820,6 @@ function getAnimations(animatables, properties) {
 
 // Create Instance
 
-function getStates(params) {
-  const statesParams = params.states;
-  if (!statesParams) return;
-  let instanceParams = cloneObject(params);
-  delete instanceParams.states;
-  let states = {default: instanceParams};
-  for (let state in statesParams) {
-    states[state] = cloneObject(instanceParams);
-    let stateParams = statesParams[state];
-    for (let p in stateParams) {
-      states[state][p] = stateParams[p];
-    }
-  }
-  return states;
-}
-
 function getInstanceTimings(animations, tweenSettings) {
   const animLength = animations.length;
   const getTlOffset = anim => anim.timelineOffset ? anim.timelineOffset : 0;
@@ -861,8 +844,6 @@ function createNewInstance(params) {
   return mergeObjects(instanceSettings, {
     id: id,
     children: [],
-    states: getStates(params),
-    currentState: null,
     animatables: animatables,
     animations: animations,
     duration: timings.duration,
@@ -1016,7 +997,7 @@ function anime(params = {}) {
   }
 
   function setCallback(cb) {
-    if (instance[cb] && !instance.passthrough) instance[cb](instance);
+    if (instance[cb] && !instance.passThrough) instance[cb](instance);
   }
 
   function countIteration() {
@@ -1092,7 +1073,7 @@ function anime(params = {}) {
   instance.reset = function() {
     const direction = instance.direction;
     const loops = instance.loop;
-    instance.passthrough = false;
+    instance.passThrough = false;
     instance.currentTime = 0;
     instance.progress = 0;
     instance.paused = true;
@@ -1141,38 +1122,10 @@ function anime(params = {}) {
     instance.play();
   }
 
-  instance.animateTo = function(stateName, paramsOverrides) {
-    let state = instance.states[stateName];
-    if (!state) return;
-    if (paramsOverrides) state = mergeObjects(paramsOverrides, state);
-    instance.pause();
-    const animation = anime(state);
-    animation.currentState = stateName;
-    return animation;
-  }
-
-  instance.goTo = function(stateName, paramsOverrides) {
-    const stateAnimation = instance.animateTo(stateName, paramsOverrides);
-    stateAnimation.seek(stateAnimation.duration);
-    return stateAnimation;
-  }
-
   instance.finished = promise;
-
   instance.reset();
 
-  if (instance.startTime) {
-    // if startTime > instance duration, simulate a loop
-    setInstanceProgress(instance.startTime - (instance.duration * Math.floor(instance.startTime / instance.duration)));
-    resetTime();
-  }
-
-  if (instance.states) {
-    // Initialize default state
-    instance.goTo('default');
-  }
-
-  if (instance.autoplay && !instance.states) instance.play();
+  if (instance.autoplay) instance.play();
 
   return instance;
 
@@ -1262,7 +1215,7 @@ function timeline(params = {}) {
     const tlIndex = activeInstances.indexOf(tl);
     const children = tl.children;
     if (tlIndex > -1) activeInstances.splice(tlIndex, 1);
-    function passThrough(ins) { ins.passthrough = true; };
+    function passThrough(ins) { ins.passThrough = true; };
     for (let i = 0; i < children.length; i++) passThrough(children[i]);
     let insParams = mergeObjects(instanceParams, replaceObjectProps(defaultTweenSettings, params));
     insParams.targets = insParams.targets || params.targets;
