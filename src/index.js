@@ -675,10 +675,13 @@ function normalizePropertyTweens(prop, tweenSettings) {
   }).map(k => mergeObjects(k, settings));
 }
 
+  // const propertyNames = filterArray(flattenArray(keyframes.map(key => {
+  //   return Object.keys(key).map(p => { if (is.key(p)) return p }); 
+  // })).reduce((a,b) => { if (a.indexOf(b) < 0)a.push(b); return a; }, []), a => !is.und(a));
+
 function flattenKeyframes(keyframes) {
-  const propertyNames = filterArray([...new Set(flattenArray(keyframes.map(key => { 
-    return Object.keys(key).map(p => { if (is.key(p)) return p }); 
-  })))], a => !is.und(a));
+  const propertyNames = flattenArray(keyframes.map(key => Object.keys(key).filter(p => is.key(p))))
+  .reduce((a,b) => { if (a.indexOf(b) < 0)a.push(b); return a; }, []);
   const properties = {};
   for (let i = 0; i < propertyNames.length; i++) {
     const propName = propertyNames[i];
