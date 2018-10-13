@@ -1,5 +1,13 @@
 /* Typography */
 
+:root { font-size: 16px; }
+@media (min-width: 380px) { :root { font-size: 18px; } }
+@media (min-width: 500px) { :root { font-size: 24px; } }
+
+p {
+  font-size: 1rem;
+}
+
 a {
   position: relative;
   display: inline-block;
@@ -34,19 +42,17 @@ a.primary,
   margin-bottom: 1.5rem;
   font-size: 3rem;
   line-height: 2.5rem;
-  letter-spacing: 0;
+  letter-spacing: -.025em;
   text-align: center;
 }
 
 .section-paragraph {
-  margin-bottom: 2rem;
   text-align: center;
+  margin-bottom: 2rem;
 }
 
 @media (min-width: 788px) {
-  .section-paragraph {
-    margin-bottom: 0rem;
-  }
+
   .section-paragraph,
   .section-title {
     text-align: left;
@@ -54,10 +60,6 @@ a.primary,
 }
 
 /* Layout */
-
-:root { font-size: 16px; }
-@media (min-width: 380px) { :root { font-size: 18px; } }
-@media (min-width: 500px) { :root { font-size: 24px; } }
 
 .section {
   display: flex;
@@ -96,6 +98,9 @@ a.primary,
   .section-content {
     flex-direction: row;
   }
+  .vertical-content {
+    flex-direction: column;
+  }
   .section-rtl {
     flex-direction: row-reverse;
   }
@@ -116,7 +121,7 @@ a.primary,
 /* Intro */
 
 .intro-section {
-  margin-top: 6rem;
+  margin-top: 7rem;
 }
 
 @media (min-width: 788px) {
@@ -136,6 +141,7 @@ a.primary,
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 2rem;
   }
 }
 
@@ -227,7 +233,7 @@ a.primary,
   overflow: visible;
   position: absolute;
   left: 0;
-  bottom: 62px;
+  bottom: 60px;
 }
 
 .logo-animation .dot {
@@ -236,9 +242,9 @@ a.primary,
   z-index: 10;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
-  margin: -12px 0 0 -12px;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
   background-color: currentColor;
   transform: translate3d(0,0,0);
 }
@@ -251,13 +257,13 @@ a.primary,
 
 .logo-animation .line {
   stroke: currentColor;
-  stroke-width: 24px;
+  stroke-width: 20px;
 }
 
 .logo-animation .fill {
   opacity: .001;
   stroke: currentColor;
-  stroke-width: 24px;
+  stroke-width: 20px;
 }
 
 .logo-text {
@@ -283,7 +289,20 @@ a.primary,
 
 .feature-animation {
   position: relative;
+  width: 80%;
+  margin: auto;
   padding-bottom: 100%;
+}
+
+@media (min-width: 788px) {
+  .feature-animation {
+    width: 100%;
+  }
+}
+
+.full-col .feature-animation {
+  width: 100%;
+  padding-bottom: 0;
 }
 
 /** Easings **/
@@ -356,3 +375,201 @@ a.primary,
 }
 
 /** Time control **/
+
+.section-feature-control {
+  overflow-x: hidden;
+}
+
+.section-feature-control .section-paragraph {
+  margin-bottom: 3rem;
+}
+
+.section-feature-control .feature-animation {
+  height: 288px;
+}
+
+.time-control {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 814px;
+  height: 288px;
+  margin-left: -407px;
+}
+
+.time-control .ruller {
+  position: absolute;
+  top: 0;
+  display: flex;
+  padding: 0 1px;
+}
+
+.time-control .line {
+  width: 2px;
+  height: 12px;
+  background-color: currentColor;
+}
+
+.time-control .line:nth-child(9n+2) {
+  height: 24px;
+}
+
+.time-control .line:not(:last-child) {
+  margin-right: 4px;
+}
+
+.time-cursor {
+  position: absolute;
+  z-index: 1;
+  top: -29px;
+  left: -22px;
+  width: 48px;
+  height: 48px;
+  background-color: currentColor;
+  border-radius: 50%;
+}
+
+.time-cursor input {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  color: #FFF;
+  background-color: transparent;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 12px;
+}
+
+.time-cursor:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 23px;
+  display: block;
+  width: 2px;
+  height: 292px;
+  background-color: #F64E4D;
+}
+
+.timeline {
+  position: relative;
+  z-index: 1;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  height: 8px;
+  font-size: 18px;
+}
+
+.animation {
+  position: relative;
+  overflow: visible;
+  display: flex;
+}
+
+.animation-band {
+  position: relative;
+  height: 8px;
+  margin: 0 1px;
+  border-radius: 4px;
+}
+
+.animation-delay {
+  background-color: currentColor;
+  width: 48px;
+}
+.animation-change {
+  background-color: #F64E4D;
+  width: 156px;
+}
+.animation-end-delay {
+  border: 2px solid currentColor;
+  width: 48px;
+}
+
+.info {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 2px;
+  height: 48px;
+  margin: 0 1px;
+}
+
+.info + .info { margin-left: -3px; }
+
+.info-large { height: 96px; }
+
+.info-top {
+  bottom: 0;
+  justify-content: flex-start;
+  align-items: flex-end;
+  align-self: flex-end;
+}
+
+.info-bottom {
+  top: 0;
+  justify-content: flex-end;
+}
+
+.info-bar {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background-color: currentColor;
+  transform-origin: 50% 100%;
+}
+
+.info-top .info-bar { bottom: 0; }
+.info-bottom .info-bar { top: 0; transform-origin: 50% 0%; }
+.info-left .info-bar { left: 0; }
+.info-right .info-bar { right: 0; }
+
+.info-label {
+  white-space: nowrap;
+  height: 24px;
+  padding-left: 12px;
+  padding-right: 12px;
+  line-height: 24px;
+}
+
+.info-top .info-label {
+  margin: -4px 0 0;
+}
+
+.info-bottom .info-label {
+  margin: 0 0 -4px 0;
+}
+
+/** Layered Animation **/
+
+.layered-animations {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.layered-animations .shape {
+  position: absolute;
+  top: 50%;
+  overflow: visible;
+  width: 192px;
+  height: 192px;
+  margin-top: -96px;
+  stroke: currentColor;
+  fill: transparent;
+}
+
+.layered-animations .small.shape {
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  stroke: currentColor;
+  stroke-width: 2px;
+  fill: currentColor;
+}

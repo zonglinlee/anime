@@ -28,9 +28,14 @@ body {
 
 body {
   font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-variant-numeric: tabular-nums;
+  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-weight: 400;
+  font-feature-settings:"tnum" 1, "salt" 1, "ss03" 1;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+}
+
+h1, h2 {
+  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 input {
