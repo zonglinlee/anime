@@ -1,11 +1,27 @@
 @font-face {
- font-family: "Roobert SemiBold";
+ font-family: "Roobert";
+ font-weight: 400;
+ font-style: normal;
+ src: url("../fonts/Roobert-Regular.woff2") format("woff2");
+}
+
+@font-face {
+ font-family: "Roobert";
+ font-weight: 400;
+ font-style: italic;
+ src: url("../fonts/Roobert-Regular.woff2") format("woff2");
+}
+
+@font-face {
+ font-family: "Roobert";
+ font-weight: 600;
  font-style: normal;
  src: url("../fonts/Roobert-SemiBold.woff2") format("woff2");
 }
 
 @font-face {
- font-family: "Roobert SemiBold";
+ font-family: "Roobert";
+ font-weight: 600;
  font-style: italic;
  src: url("../fonts/Roobert-SemiBoldItalic.woff2") format("woff2");
 }
@@ -27,15 +43,14 @@ body {
 }
 
 body {
-  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
-  /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+  font-family: Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-feature-settings:"tnum" 1, "salt" 1, "ss03" 1;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2 {
-  font-family: Roobert SemiBold, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 600;
 }
 
 input {

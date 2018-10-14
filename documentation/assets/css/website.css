@@ -1,8 +1,8 @@
 /* Typography */
 
 :root { font-size: 16px; }
-@media (min-width: 380px) { :root { font-size: 18px; } }
-@media (min-width: 500px) { :root { font-size: 24px; } }
+@media (min-width: 380px) { :root { font-size: 20px; } }
+@media (min-width: 500px) { :root { font-size: 26px; } }
 
 p {
   font-size: 1rem;
@@ -147,10 +147,13 @@ a.primary,
 
 .main-menu {
   position: relative;
+  font-weight: 600;
 }
 
 .anime-js-description {
   text-align: justify;
+  font-weight: 400;
+  /*font-size: 1.5rem;*/
 }
 
 .description-section .section-content {
@@ -242,9 +245,9 @@ a.primary,
   z-index: 10;
   top: 0;
   left: 0;
-  width: 20px;
-  height: 20px;
-  margin: -10px 0 0 -10px;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
   background-color: currentColor;
   transform: translate3d(0,0,0);
 }
@@ -257,13 +260,13 @@ a.primary,
 
 .logo-animation .line {
   stroke: currentColor;
-  stroke-width: 20px;
+  stroke-width: 24px;
 }
 
 .logo-animation .fill {
   opacity: .001;
   stroke: currentColor;
-  stroke-width: 20px;
+  stroke-width: 24px;
 }
 
 .logo-text {
