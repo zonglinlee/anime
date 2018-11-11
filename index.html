@@ -20,18 +20,24 @@
 </head>
 <body>
 
+  <section class="section top-nav-section">
+    <div class="section-content">
+      <div class="header full-col">
+        <a href="#" class="top-title">anime.js</a>
+        <nav class="main-menu">
+          <a href="#">Documentation</a>
+          <a href="#">Examples</a>
+          <a href="#" class="primary">GitHub</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
   <section class="section intro-section">
 
-    <div class="section-content header">
+    <div class="section-content">
 
-      <nav class="main-menu fluid-col">
-        <a href="#">Documentation</a><br>
-        <a href="#">CodePen</a><br>
-        <a href="#">GitHub</a><br>
-        <a class="primary" href="#">Download</a>
-      </nav>
-
-      <div class="main-logo fluid-col">
+      <div class="main-logo">
 
         <div class="logo-animation-wrapper">
           <div class="logo-animation">
@@ -51,7 +57,7 @@
                   <svg class="bounced" viewBox="0 0 32 128" width="32" height="128" fill="none" fill-rule="evenodd">
                     <path class="line" 
                             d="M16 124V4"
-                      data-d2="M16 124V36"
+                      data-d2="M16 124V37"
                     />
                   </svg>
                 </div>
@@ -82,11 +88,7 @@
         </div>
 
         <h2 class="logo-text">
-          <span>JavaScript</span>&nbsp;
-          <span>Animation</span>&nbsp;
-          <span>Engine</span>&nbsp;
-          <span class="dash"></span>&nbsp;
-          <a href="#"><span class="version-number primary">V3.0.0</span></a>
+          JavaScript Animation Engine | ＪＳ アニメーション エンジン | Version <em class="version-number">V3.0.0</em> | © 2018 Julian Garnier
         </h2>
 
       </div>
@@ -99,7 +101,8 @@
 
     <div class="section-content">
       <p class="anime-js-description full-col">
-        Anime.js is a web animation toolbox with a flexible, yet powerfull API designed for advanced staggerring, easy easings, perfect animations synchronisation, and total control on timings and callbacks. It works with CSS, Canvas, JavaScript objects, SVG or any other DOM attributes.
+        Anime.js is a complete JavaScript animation toolbox. Its flexible, yet powerfull API is designed for creating advanced staggerring, easy easings, perfect animations synchronisation, and gives you total control on timings and callbacks. <br>
+        It works with CSS, Canvas, JavaScript objects, SVG or any other DOM attributes.
       </p>
       <hr class="separator">
     </div>
@@ -114,11 +117,11 @@
           Easy easings
         </h1>
         <p class="section-paragraph">
-          Elastic
-          Spring
-          Penner’s functions
-          Custom bubic Bézier
-          Steps
+          Easily add easing to your animations using the built-in functions : 
+          Elastic, Spring, Penner’s easings, Steps and Custom bubic Bézier curves.
+          <br>
+          <br>
+          <a href="/documentation/#pennerFunctions">Learn more</a>
         </p>
       </div>
       <div class="col">
@@ -181,71 +184,87 @@
             <div class="timeline">
               <div class="info-loop-begin info info-large info-left info-bottom" data-delay="0">
                 <div class="info-bar"></div>
-                <div class="info-label">loop begin</div>
-                <div class="info-label">animation begin</div>
+                <p class="info-label">loop begin</p>
+                <p class="info-label">animation begin</p>
               </div>
               <div class="animation">
                 <div class="animation-band animation-delay"></div>
                 <div class="info-change-begin info info-left info-bottom" data-delay="100">
                   <div class="info-bar"></div>
-                  <div class="info-label">change begin</div>
+                  <p class="info-label">change begin</p>
                 </div>
                 <div class="animation-band animation-change"></div>
                 <div class="info-change-complete info info-right info-top" data-delay="400">
                   <div class="info-bar"></div>
-                  <div class="info-label">change complete</div>
+                  <p class="info-label">change complete</p>
                 </div>
                 <div class="animation-band animation-end-delay"></div>
               </div>
               <div class="info-loop-complete info info-large info-right info-top" data-delay="500">
                 <div class="info-bar"></div>
-                <div class="info-label">loop complete</div>
+                <p class="info-label">loop complete</p>
               </div>
               <div class="info info-large info-left info-bottom" data-delay="500">
                 <div class="info-bar"></div>
-                <div class="info-label">loop begin</div>
-                <div class="info-label">reverse</div>
+                <p class="info-label">loop begin</p>
+                <p class="info-label">reverse</p>
               </div>
               <div class="animation">
                 <div class="animation-band animation-delay"></div>
                 <div class="info-change-begin info info-left info-bottom" data-delay="600">
                   <div class="info-bar"></div>
-                  <div class="info-label">change begin</div>
+                  <p class="info-label">change begin</p>
                 </div>
                 <div class="animation-band animation-change"></div>
                 <div class="info-change-complete info info-right info-top" data-delay="900">
                   <div class="info-bar"></div>
-                  <div class="info-label">change complete</div>
+                  <p class="info-label">change complete</p>
                 </div>
                 <div class="animation-band animation-end-delay"></div>
               </div>
               <div class="info-loop-complete info info-large info-right info-top" data-delay="1000">
                 <div class="info-bar"></div>
-                <div class="info-label">loop complete</div>
+                <p class="info-label">loop complete</p>
               </div>
               <div class="info info-large info-left info-bottom" data-delay="1000">
                 <div class="info-bar"></div>
-                <div class="info-label">loop begin</div>
-                <div class="info-label">reverse</div>
+                <p class="info-label">loop begin</p>
+                <p class="info-label">reverse</p>
               </div>
               <div class="animation">
                 <div class="animation-band animation-delay"></div>
                 <div class="info-change-begin info info-left info-bottom" data-delay="1100">
                   <div class="info-bar"></div>
-                  <div class="info-label">change begin</div>
+                  <p class="info-label">change begin</p>
                 </div>
                 <div class="animation-band animation-change"></div>
                 <div class="info-change-complete info info-right info-top" data-delay="1400">
                   <div class="info-bar"></div>
-                  <div class="info-label">change complete</div>
+                  <p class="info-label">change complete</p>
                 </div>
                 <div class="animation-band animation-end-delay"></div>
               </div>
               <div class="info-loop-complete info info-large info-right info-top" data-delay="1500">
                 <div class="info-bar"></div>
-                <div class="info-label">animation complete</div>
-                <div class="info-label">loop complete</div>
+                <p class="info-label">animation complete</p>
+                <p class="info-label">loop complete</p>
               </div>
+            </div>
+
+          </div>
+
+          <div class="timeline-legend">
+            <div class="legend-item legend-delay">
+              <div class="animation-band animation-delay"></div>
+              <p>delay</p>
+            </div>
+            <div class="legend-item legend-delay">
+              <div class="animation-band animation-change"></div>
+              <p>change</p>
+            </div>
+            <div class="legend-item legend-delay">
+              <div class="animation-band animation-end-delay"></div>
+              <p>end-delay</p>
             </div>
           </div>
 

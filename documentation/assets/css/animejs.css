@@ -45,7 +45,7 @@ body {
 body {
   font-family: Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-weight: 400;
-  font-feature-settings:"tnum" 1, "salt" 1, "ss03" 1;
+  font-feature-settings:"tnum" 1, "ss03" 1;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -60,6 +60,10 @@ input {
 
 a, a:visited {
   color: inherit;
+}
+
+strong {
+  font-weight: 600;
 }
 
 .color-white { color: #F6F4F2; } /* White */

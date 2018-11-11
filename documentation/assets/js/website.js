@@ -26,13 +26,12 @@ function fitElToParent(el, padding) {
     var elOffsetWidth = el.offsetWidth - pad;
     var parentOffsetWidth = parentEl.offsetWidth;
     var ratio = parentOffsetWidth / elOffsetWidth;
-    if (ratio < 1) anime.setValue(el, {scale: ratio});
+    // if (ratio < 1) anime.setValue(el, {scale: ratio});
+    anime.setValue(el, {scale: ratio});
   }
   resize();
   window.addEventListener('resize', resize);
 }
-
-// anime.speed = .1;
 
 var logoAnimation = (function() {
 
@@ -61,7 +60,7 @@ var logoAnimation = (function() {
     targets: '.bounced',
     transformOrigin: ['50% 100% 0px', '50% 100% 0px'],
     translateY: [
-      {value: [100, -152], duration: 200, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
+      {value: [100, -152], duration: 190, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
       {value: 4, duration: 120, easing: 'easeInQuad'},
       {value: 0, duration: 120, easing: 'easeOutQuad'}
     ],
@@ -76,12 +75,12 @@ var logoAnimation = (function() {
       {value: 1.07, duration: 180, delay: 25, easing: 'easeOutQuad'},
       {value: 1, duration: 250, delay: 15, easing: 'easeOutQuad'}
     ],
-    delay: anime.stagger(40)
+    delay: anime.stagger(60)
   }, 500)
   .add({
     targets: '.dot',
     opacity: { value: 1, duration: 100 },
-    translateY: 268,
+    translateY: 270,
     scaleY: [4, .7],
     scaleX: { value: 1.3, delay: 100, duration: 200},
     duration: 320,
@@ -99,7 +98,7 @@ var logoAnimation = (function() {
     translateX: 0,
     easing: 'easeOutElastic(1, .6)',
     duration: 800,
-    delay: anime.stagger(25, {from: 2.5}),
+    delay: anime.stagger(40, {from: 2.5}),
     change: function(a) { a.animatables[2].target.removeAttribute('stroke-dasharray'); }
   }, '-=600')
   .add({
@@ -134,31 +133,35 @@ var logoAnimation = (function() {
     targets: '.letter-m .line',
     d: function(el) { return el.dataset.d3 },
     easing: 'spring(.2, 200, 3, 60)',
-  }, '-=1904')
+  }, '-=1908')
   .add({
     targets: '.letter-i .line',
     transformOrigin: ['50% 100% 0', '50% 100% 0'],
     d: function(el) { return el.dataset.d2 },
     easing: 'cubicBezier(0.400, 0.530, 0.070, 1)',
     duration: 80
-  }, '-=1110')
+  }, '-=1100')
   .add({
     targets: '.logo-letter',
     translateY: [
-      {value: 33, duration: 150},
-      {value: 0, duration: 800, easing: 'easeOutElastic(1, .6)'}
+      {value: 33, duration: 150, easing: 'easeOutQuart'},
+      {value: 0, duration: 800, easing: 'easeOutElastic(1, .5)'}
     ],
     strokeDashoffset: [anime.setDashoffset, 0],
-    delay: anime.stagger(20, {from: 'center'})
+    delay: anime.stagger(35, {from: 'center'})
   }, '-=1100')
   .add({
-    targets: ['.logo-text span'],
-    translateY: [-20, 0],
-    opacity: [0.001, 1],
-    easing: 'easeOutElastic(1, .6)',
-    duration: 500,
-    delay: anime.stagger(20, {from: 1})
-  }, '-=1010');
+    targets: ['.logo-text'],
+    translateY: [
+      {value: 20, easing: 'easeOutQuad', duration: 100},
+      {value: 0, easing: 'easeOutElastic(1, .9)', duration: 450}
+    ],
+    opacity: {value: [0.001, 1], duration: 50},
+    duration: 500
+  }, '-=970');
+
+  // logoAnimationTL.seek(1400);
+  // anime.speed = .1;
 
   return logoAnimationTL;
 
@@ -280,7 +283,7 @@ var advancedStaggeringAnimation = (function() {
 
   staggerVisualizerEl.appendChild(fragment);
 
-  var index = anime.random(0, numberOfElements);
+  var index = anime.random(0, numberOfElements-1);
   var nextIndex = 0;
 
   anime.setValue('.stagger-visualizer .cursor', {
@@ -293,7 +296,7 @@ var advancedStaggeringAnimation = (function() {
     paused = false;
     if (animation) animation.pause();
 
-    nextIndex = anime.random(0, numberOfElements);
+    nextIndex = anime.random(0, numberOfElements-1);
 
     animation = anime.timeline({
       easing: 'easeInOutQuad',
@@ -312,8 +315,8 @@ var advancedStaggeringAnimation = (function() {
           translateY: anime.stagger('-3px', {grid: [row, row], from: index, axis: 'y'}),
           duration: 200
         }, {
-          translateX: anime.stagger('3px', {grid: [row, row], from: index, axis: 'x'}),
-          translateY: anime.stagger('3px', {grid: [row, row], from: index, axis: 'y'}),
+          translateX: anime.stagger('2px', {grid: [row, row], from: index, axis: 'x'}),
+          translateY: anime.stagger('2px', {grid: [row, row], from: index, axis: 'y'}),
           scale: 3,
           duration: 350
         }, {
@@ -449,7 +452,7 @@ var timeControlAnimation = (function() {
     var height = rect.height;
     var windowHeight = window.innerHeight;
     var scrolled = (top - windowHeight) * -1;
-    timelineAnimation.seek((scrolled * 4) - 500);
+    timelineAnimation.seek((scrolled * 2));
     if (controlAnimationCanMove) requestAnimationFrame(moveControlAnimation);
   }
 
@@ -532,4 +535,4 @@ var layeredAnimation = (function() {
 
 })();
 
-logoAnimation.play();
+requestAnimationFrame(logoAnimation.play);
