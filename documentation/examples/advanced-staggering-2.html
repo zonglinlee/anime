@@ -120,8 +120,8 @@
         }, {
           translateX: anime.stagger('4px', {grid: [24, 11], from: index, axis: 'x'}),
           translateY: anime.stagger('4px', {grid: [24, 11], from: index, axis: 'y'}),
-          scale: 8,
-          duration: 500
+          scale: anime.stagger([9, 2], {grid: [24, 11], from: index}),
+          duration: 400
         }, {
           translateX: 0,
           translateY: 0,
@@ -129,7 +129,7 @@
           duration: 600,
         }
       ],
-      delay: anime.stagger(50, {grid: [24, 11], from: index})
+      delay: anime.stagger(30, {grid: [24, 11], from: index})
     }, '-=600')
     .add({
       targets: '.cursor',

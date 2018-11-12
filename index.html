@@ -20,22 +20,18 @@
 </head>
 <body>
 
-  <section class="section top-nav-section">
-    <div class="section-content">
-      <div class="header full-col">
-        <a href="#" class="top-title">anime.js</a>
-        <nav class="main-menu">
-          <a href="#">Documentation</a>
-          <a href="#">Examples</a>
-          <a href="#" class="primary">GitHub</a>
-        </nav>
-      </div>
-    </div>
-  </section>
+  <div class="grid-container">
 
-  <section class="section intro-section">
+    <header class="top-header">
+      <a href="#" class="top-title">anime.js</a>
+      <nav class="top-menu">
+        <a href="#">Documentation</a>
+        <a href="#">Examples</a>
+        <a href="#" class="primary">GitHub</a>
+      </nav>
+    </header>
 
-    <div class="section-content">
+    <section class="intro-section">
 
       <div class="main-logo">
 
@@ -93,25 +89,20 @@
 
       </div>
 
-    </div>
+    </section>
 
-  </section>
+    <section class="description-section">
 
-  <section class="section description-section">
-
-    <div class="section-content">
-      <p class="anime-js-description full-col">
+      <h1 class="description-title">Complete animation toolbox.</h1>
+      <p class="description-paragraph">
         Anime.js is a complete JavaScript animation toolbox. Its flexible, yet powerfull API is designed for creating advanced staggerring, easy easings, perfect animations synchronisation, and gives you total control on timings and callbacks. <br>
         It works with CSS, Canvas, JavaScript objects, SVG or any other DOM attributes.
       </p>
-      <hr class="separator">
-    </div>
 
-  </section>
+    </section>
 
-  <section class="section feature-section section-feature-easings">
+    <section class="feature-section section-feature-easings">
 
-    <div class="section-content">
       <div class="col">
         <h1 class="section-title">
           Easy easings
@@ -129,13 +120,11 @@
           <div class="easing-visualizer"></div>
         </div>
       </div>
-    </div>
 
-  </section>
+    </section>
 
-  <section class="section feature-section section-feature-staggering">
+    <section class="feature-section section-feature-staggering">
 
-    <div class="section-content section-rtl">
       <div class="col">
         <h1 class="section-title">
           Advanced<br>
@@ -156,20 +145,17 @@
           </div>
         </div>
       </div>
-    </div>
 
-  </section>
+    </section>
 
-  <section class="section feature-section section-feature-control">
+    <section class="feature-section section-feature-control">
 
-    <div class="section-content vertical-content">
-
-    <h1 class="section-title">
-      <span>Time</span> <span>control</span> <span>& callbacks</span>
-    </h1>
-    <p class="section-paragraph">
-      Play, pause, control, reverse and trigger events in sync
-    </p>
+      <h1 class="section-title">
+        <span>Time</span> <span>control</span> <span>& callbacks</span>
+      </h1>
+      <p class="section-paragraph">
+        Play, pause, control, reverse and trigger events in sync
+      </p>
 
       <div class="full-col">
 
@@ -272,13 +258,10 @@
 
       </div>
 
-    </div>
+    </section>
 
-  </section>
+    <section class="feature-section section-feature-layered-animation">
 
-  <section class="section feature-section section-feature-layered-animation">
-
-    <div class="section-content">
       <div class="col">
         <h1 class="section-title">
           Layered CSS<br>
@@ -314,9 +297,10 @@
           </svg>
         </div>
       </div>
-    </div>
 
-  </section>
+    </section>
+
+  </div>
 
 </body>
 <script src="lib/anime.min.js"></script>
