@@ -75,7 +75,7 @@ var logoAnimation = (function() {
       {value: 1.07, duration: 180, delay: 25, easing: 'easeOutQuad'},
       {value: 1, duration: 250, delay: 15, easing: 'easeOutQuad'}
     ],
-    delay: anime.stagger(60)
+    delay: anime.stagger(90)
   }, 500)
   .add({
     targets: '.dot',
@@ -112,7 +112,6 @@ var logoAnimation = (function() {
       { value: 1, duration: 50, easing: 'easeOutExpo' }
     ],
     easing: 'cubicBezier(0, .74, 1, .255)',
-    //complete: siteAnimation.play,
     duration: 800
   }, '-=660')
   .add({
@@ -151,16 +150,28 @@ var logoAnimation = (function() {
     delay: anime.stagger(35, {from: 'center'})
   }, '-=1100')
   .add({
-    targets: ['.logo-text'],
+    targets: '.logo-text',
     translateY: [
       {value: 20, easing: 'easeOutQuad', duration: 100},
       {value: 0, easing: 'easeOutElastic(1, .9)', duration: 450}
     ],
     opacity: {value: [0.001, 1], duration: 50},
     duration: 500
-  }, '-=970');
+  }, '-=970')
+  .add({
+    targets: ['.description-title','.description-paragraph'],
+    translateY: {value: ['80px', 0], easing: 'cubicBezier(.075, .83, .165, 1)'},
+    opacity: {value: [0.001, 1], easing: 'cubicBezier(.075, .83, .165, 1)'},
+    duration: 3500,
+    delay: anime.stagger(75)
+  }, '-=700')
+  .add({
+    targets: '.top-header',
+    opacity: {value: [0.001, 1], easing: 'linear'},
+    duration: 700,
+  }, '-=3500')
 
-  // logoAnimationTL.seek(1400);
+  //logoAnimationTL.seek(1400);
   // anime.speed = .1;
 
   return logoAnimationTL;
@@ -170,8 +181,11 @@ var logoAnimation = (function() {
 var builtInEasingsAnimation = (function() {
 
   var easingVisualizerEl = document.querySelector('.easing-visualizer');
-  var fragment = document.createDocumentFragment();
-  var numberOfBars = 63;
+  var barsWrapperEl = easingVisualizerEl.querySelector('.bars-wrapper');
+  var dotsWrapperEl = easingVisualizerEl.querySelector('.dots-wrapper');
+  var barsFragment = document.createDocumentFragment();
+  var dotsFragment = document.createDocumentFragment();
+  var numberOfBars = 99;
   var duration = 450;
   var animation;
   var paused = true;
@@ -184,22 +198,14 @@ var builtInEasingsAnimation = (function() {
     barEl.classList.add('bar');
     dotEl.classList.add('dot');
     dotEl.classList.add('color-red');
-    fragment.appendChild(barEl);
-    fragment.appendChild(dotEl);
+    barsFragment.appendChild(barEl);
+    dotsFragment.appendChild(dotEl);
   }
 
-  easingVisualizerEl.appendChild(fragment);
+  barsWrapperEl.appendChild(barsFragment);
+  dotsWrapperEl.appendChild(dotsFragment);
 
   var defaultEase = 'easeOutElastic';
-
-  anime.setValue('.easing-visualizer .bar', {
-    scaleY: anime.stagger([1, 88], {easing: defaultEase, from: 'center', direction: 'reverse'})
-  });
-
-  anime.setValue('.easing-visualizer .dot', {
-    translateX: anime.stagger(6),
-    translateY: anime.stagger(['-144px', '144px'], {easing: defaultEase, from: 'last'}),
-  });
 
   function play() {
 
@@ -220,13 +226,13 @@ var builtInEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 88], {easing: ease, from: 'center', direction: 'reverse'}),
-      delay: anime.stagger(14, {from: 'center'})
+      scaleY: anime.stagger([1, 125], {easing: ease, from: 'center', direction: 'reverse'}),
+      delay: anime.stagger(8, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
       translateY: anime.stagger(['-144px', '144px'], {easing: ease, from: 'last'}),
-      delay: anime.stagger(10, {from: 'center'})
+      delay: anime.stagger(8, {from: 'center'})
     }, 0);
 
   }
