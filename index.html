@@ -20,102 +20,128 @@
 </head>
 <body>
 
-  <div class="grid-container">
+  <header class="top-header grid-container">
+    <a href="#">
+      <svg class="top-mini-logo" viewBox="0 0 93 12">
+        <path d="M1 1h9.994c.92 0 1.665.744 1.665 1.662v6.676c0 .918-.746 1.662-1.665 1.662H2.666C1.746 11 1 10.256 1 9.338V5.981c0-.918.746-1.662 1.666-1.662h6.662"/>
+        <path d="M16.036 11V2.667c0-.92.744-1.667 1.662-1.667h8.336c.917 0 1.661.746 1.661 1.667V11"/>
+        <path d="M31.242 11V4.36"/>
+        <path d="M31.072 1.05V1"/>
+        <path d="M34.45 11V2.667c0-.92.745-1.667 1.665-1.667h39.183c.92 0 1.666.746 1.666 1.667V11"/>
+        <path d="M92 11h-9.994c-.92 0-1.665-.744-1.665-1.662V2.662c0-.918.746-1.662 1.665-1.662h8.328C91.254 1 92 1.744 92 2.662v3.324c0 .918-.746 1.662-1.666 1.662h-6.662"/>
+      </svg>
+    </a>
+    <nav class="top-menu">
+      <a href="#">Documentation</a>
+      <a href="#">Examples</a>
+      <a href="#" class="primary">Dowload <sup class="version-number">3.0.0</sup></a>
+    </nav>
+  </header>
 
-    <header class="top-header">
-      <a href="#" class="top-title">anime.js</a>
-      <nav class="top-menu">
-        <a href="#">Documentation</a>
-        <a href="#">Examples</a>
-        <a href="#" class="primary">GitHub</a>
-      </nav>
-    </header>
+  <section class="intro-section grid-container">
 
-    <section class="intro-section">
+    <div class="main-logo">
 
-      <div class="main-logo">
-
-        <div class="logo-animation-wrapper">
-          <div class="logo-animation">
-            <div class="anime-logo">
-              <div class="anime-logo-signs">
-                <div class="logo-letter letter-a">
-                  <svg class="bounced" viewBox="0 0 144 128" width="144" height="128">
-                    <path class="line" d="M4 16.013L112 16c8.837 0 16 7.164 16 16L127.915 96c-.008 8.831-7.169 15.986-16 15.986l-79.92.014c-8.837 0-16-7.163-16-16V64.009c0-8.837 7.163-16 16-16h75.937" />
-                  </svg>
-                </div>
-                <div class="logo-letter letter-n">
-                  <svg class="bounced" viewBox="0 0 144 128" width="144" height="128" fill="none" fill-rule="evenodd">
-                    <path class="line" d="M16 124V32c0-8.842 7.163-16 16-16h80c8.832.093 15.986 7.248 16 16v92" />
-                  </svg>
-                </div>
-                <div class="logo-letter letter-i">
-                  <svg class="bounced" viewBox="0 0 32 128" width="32" height="128" fill="none" fill-rule="evenodd">
-                    <path class="line" 
-                            d="M16 124V4"
-                      data-d2="M16 124V37"
-                    />
-                  </svg>
-                </div>
-                <div class="logo-letter letter-m">
-                  <svg class="bounced" viewBox="0 0 256 128" width="256" height="128" fill="none" fill-rule="evenodd">
-                    <path class="line" 
-                            d="M72 124V32c0-8.842 7.163-16 16-16 32 0-18.785.1 40 .1s8-.1 40-.1c8.832 0 15.986 7.248 16 16v92" 
-                      data-d2="M16 124V32c0-8.842 7.163-16 16-16 32 0 37.215 41 96 41s64-41 96-41c8.832 0 15.986 7.248 16 16v92" 
-                      data-d3="M16 124V32c0-8.842 7.163-16 16-16 32 0 37.215.1 96 .1s64-.1 96-.1c8.832 0 15.986 7.248 16 16v92" 
-                      data-d4="M240 124V32c-.014-8.752-7.168-16-16-16-32 0-37.215.1-96 .1S64 16 32 16c-8.837 0-16 7.158-16 16v92"
-                    />
-                  </svg>
-                </div>
-                <div class="logo-letter letter-e">
-                <svg class="bounced" viewBox="0 0 144 128" width="144" height="128" fill="none" fill-rule="evenodd">
-                  <path class="line" d="M140 112l-108.085.014c-8.837 0-16-7.163-16-16.014L16 32c.008-8.831 7.169-15.986 16-15.986L112 16c8.837 0 16 7.163 16 16v32c0 8.837-7.163 16-16 16H36"/>
+      <div class="logo-animation-wrapper">
+        <div class="logo-animation">
+          <div class="anime-logo">
+            <div class="anime-logo-signs">
+              <div class="logo-letter letter-a">
+                <svg class="bounced" viewBox="0 0 144 128" width="144" height="128">
+                  <path class="line" d="M4 16.013L112 16c8.837 0 16 7.164 16 16L127.915 96c-.008 8.831-7.169 15.986-16 15.986l-79.92.014c-8.837 0-16-7.163-16-16V64.009c0-8.837 7.163-16 16-16h75.937" />
                 </svg>
-                </div>
-                <div class="bounce">
-                  <svg viewBox="0 0 720 288" width="720" height="288" fill="none">
-                    <path d="M448 268c0-131.066-15.14-203.447-71.885-203.447C319.371 64.553 304 156.038 304 240"/>
-                  </svg>
-                  <div class="dot"></div>
-                </div>
+              </div>
+              <div class="logo-letter letter-n">
+                <svg class="bounced" viewBox="0 0 144 128" width="144" height="128" fill="none" fill-rule="evenodd">
+                  <path class="line" d="M16 124V32c0-8.842 7.163-16 16-16h80c8.832.093 15.986 7.248 16 16v92" />
+                </svg>
+              </div>
+              <div class="logo-letter letter-i">
+                <svg class="bounced" viewBox="0 0 32 128" width="32" height="128" fill="none" fill-rule="evenodd">
+                  <path class="line" 
+                          d="M16 124V4"
+                    data-d2="M16 124V37"
+                  />
+                </svg>
+              </div>
+              <div class="logo-letter letter-m">
+                <svg class="bounced" viewBox="0 0 256 128" width="256" height="128" fill="none" fill-rule="evenodd">
+                  <path class="line" 
+                          d="M72 124V32c0-8.842 7.163-16 16-16 32 0-18.785.1 40 .1s8-.1 40-.1c8.832 0 15.986 7.248 16 16v92" 
+                    data-d2="M16 124V32c0-8.842 7.163-16 16-16 32 0 37.215 41 96 41s64-41 96-41c8.832 0 15.986 7.248 16 16v92" 
+                    data-d3="M16 124V32c0-8.842 7.163-16 16-16 32 0 37.215.1 96 .1s64-.1 96-.1c8.832 0 15.986 7.248 16 16v92" 
+                    data-d4="M240 124V32c-.014-8.752-7.168-16-16-16-32 0-37.215.1-96 .1S64 16 32 16c-8.837 0-16 7.158-16 16v92"
+                  />
+                </svg>
+              </div>
+              <div class="logo-letter letter-e">
+              <svg class="bounced" viewBox="0 0 144 128" width="144" height="128" fill="none" fill-rule="evenodd">
+                <path class="line" d="M140 112l-108.085.014c-8.837 0-16-7.163-16-16.014L16 32c.008-8.831 7.169-15.986 16-15.986L112 16c8.837 0 16 7.163 16 16v32c0 8.837-7.163 16-16 16H36"/>
+              </svg>
+              </div>
+              <div class="bounce">
+                <svg viewBox="0 0 720 288" width="720" height="288" fill="none">
+                  <path d="M448 268c0-131.066-15.14-203.447-71.885-203.447C319.371 64.553 304 156.038 304 240"/>
+                </svg>
+                <div class="dot"></div>
               </div>
             </div>
           </div>
         </div>
-
-        <h2 class="logo-text">
-          JavaScript Animation Engine | ＪＳ アニメーション エンジン | Version <em class="version-number">V3.0.0</em> | © 2018 Julian Garnier
-        </h2>
-
       </div>
 
-    </section>
+      <h2 class="logo-text">
+        JavaScript Animation Engine | ＪＳ アニメーション エンジン | Version <em class="version-number">3.0.0</em> | © 2018 Julian Garnier
+      </h2>
 
-    <section class="description-section">
+    </div>
 
-      <h1 class="description-title">JS animation toolbox.</h1>
-      <p class="description-paragraph">
-        Anime.js helps you create smooth JavaScript based animations with a simple, yet powerfull API. Advanced staggerring, easy easings, perfect animations synchronisation, and total control on timings and callbacks. It works with CSS, Canvas, JavaScript objects, SVG or any other DOM attributes.
-        <br>
-        <br>
-        <a href="#" class="primary">Documentation</a>
-        <a href="#" class="primary">GitHub</a>
-      </p>
+  </section>
 
-    </section>
+  <section class="description-section grid-container">
 
-    <section class="feature-section section-feature-easings">
+    <h1 class="description-title">JS animation toolbox.</h1>
+    <p class="description-paragraph">
+      Anime.js helps you create smooth JavaScript based animations with a simple, yet powerfull API. Advanced staggerring, easy easings, perfect animations synchronisation, and total control on timings and callbacks. It works with CSS, Canvas, JavaScript objects, SVG or any other DOM attributes.
+      <br>
+      <br>
+      <a href="#" class="primary">Download on GitHub</a>
+    </p>
+
+  </section>
+
+  <section class="feature-section section-feature-easings inverted-section">
+
+    <div class="grid-container">
 
       <div class="feature-description">
         <h1 class="feature-title">
-          Easy easings
+          Easy easings.
         </h1>
         <p class="feature-paragraph">
           Easily add easing to your animations using the built-in functions : 
           Elastic, Spring, Penner’s easings, Steps and Custom bubic Bézier curves.
-          <br>
-          <br>
-          <a href="/documentation/#pennerFunctions" class="primary">Learn more</a>
+        </p>
+        <div class="feature-icons-container horizontal-icons">
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-easing-cubic.svg" />
+            <figcaption>cubic</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-easing-elastic.svg" />
+            <figcaption>elastic</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-easing-spring.svg" />
+            <figcaption>spring</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-easing-steps.svg" />
+            <figcaption>steps</figcaption>
+          </figure>
+        </div>
+        <p class="feature-paragraph">
+          <a href="/documentation/#pennerFunctions" class="primary">Learn more about easings</a>
         </p>
       </div>
 
@@ -126,162 +152,55 @@
         </div>
       </div>
 
-    </section>
+    </div>
 
-    <section class="feature-section section-feature-staggering">
+  </section>
 
-      <div class="col">
-        <h1 class="section-title">
-          Advanced<br>
-          staggering
+  <section class="feature-section section-feature-staggering">
+
+    <div class="grid-container">
+
+      <div class="feature-description">
+        <h1 class="feature-title">
+          Advanced staggering.
         </h1>
-        <p class="section-paragraph">
-          Elastic
-          Spring
-          Penner’s functions
-          Custom bubic Bézier
-          Steps
+        <p class="feature-paragraph">
+          Anime’s powerfull staggering system let you easily tweak animations timings and elements positions.
+          <br>
+          <br>
+          <a href="/documentation/#pennerFunctions" class="primary">Learn more about staggering</a>
         </p>
       </div>
-      <div class="col">
-        <div class="feature-animation">
-          <div class="stagger-visualizer">
-            <div class="cursor color-red"></div>
-          </div>
+
+      <div class="feature-animation">
+        <div class="stagger-visualizer">
+          <div class="cursor color-red"></div>
         </div>
       </div>
 
-    </section>
+    </div>
 
-    <section class="feature-section section-feature-control">
+  </section>
 
-      <h1 class="section-title">
-        <span>Time</span> <span>control</span> <span>& callbacks</span>
-      </h1>
-      <p class="section-paragraph">
-        Play, pause, control, reverse and trigger events in sync
-      </p>
+  <section class="feature-section section-feature-layered-animation inverted-section">
 
-      <div class="full-col">
+    <div class="grid-container">
 
-        <div class="feature-animation">
-
-          <div class="time-control">
-            <div class="ruller">
-              <div class="time-cursor color-red">
-                <input value="999" />
-              </div>
-            </div>
-            <div class="timeline">
-              <div class="info-loop-begin info info-large info-left info-bottom" data-delay="0">
-                <div class="info-bar"></div>
-                <p class="info-label">loop begin</p>
-                <p class="info-label">animation begin</p>
-              </div>
-              <div class="animation">
-                <div class="animation-band animation-delay"></div>
-                <div class="info-change-begin info info-left info-bottom" data-delay="100">
-                  <div class="info-bar"></div>
-                  <p class="info-label">change begin</p>
-                </div>
-                <div class="animation-band animation-change"></div>
-                <div class="info-change-complete info info-right info-top" data-delay="400">
-                  <div class="info-bar"></div>
-                  <p class="info-label">change complete</p>
-                </div>
-                <div class="animation-band animation-end-delay"></div>
-              </div>
-              <div class="info-loop-complete info info-large info-right info-top" data-delay="500">
-                <div class="info-bar"></div>
-                <p class="info-label">loop complete</p>
-              </div>
-              <div class="info info-large info-left info-bottom" data-delay="500">
-                <div class="info-bar"></div>
-                <p class="info-label">loop begin</p>
-                <p class="info-label">reverse</p>
-              </div>
-              <div class="animation">
-                <div class="animation-band animation-delay"></div>
-                <div class="info-change-begin info info-left info-bottom" data-delay="600">
-                  <div class="info-bar"></div>
-                  <p class="info-label">change begin</p>
-                </div>
-                <div class="animation-band animation-change"></div>
-                <div class="info-change-complete info info-right info-top" data-delay="900">
-                  <div class="info-bar"></div>
-                  <p class="info-label">change complete</p>
-                </div>
-                <div class="animation-band animation-end-delay"></div>
-              </div>
-              <div class="info-loop-complete info info-large info-right info-top" data-delay="1000">
-                <div class="info-bar"></div>
-                <p class="info-label">loop complete</p>
-              </div>
-              <div class="info info-large info-left info-bottom" data-delay="1000">
-                <div class="info-bar"></div>
-                <p class="info-label">loop begin</p>
-                <p class="info-label">reverse</p>
-              </div>
-              <div class="animation">
-                <div class="animation-band animation-delay"></div>
-                <div class="info-change-begin info info-left info-bottom" data-delay="1100">
-                  <div class="info-bar"></div>
-                  <p class="info-label">change begin</p>
-                </div>
-                <div class="animation-band animation-change"></div>
-                <div class="info-change-complete info info-right info-top" data-delay="1400">
-                  <div class="info-bar"></div>
-                  <p class="info-label">change complete</p>
-                </div>
-                <div class="animation-band animation-end-delay"></div>
-              </div>
-              <div class="info-loop-complete info info-large info-right info-top" data-delay="1500">
-                <div class="info-bar"></div>
-                <p class="info-label">animation complete</p>
-                <p class="info-label">loop complete</p>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="timeline-legend">
-            <div class="legend-item legend-delay">
-              <div class="animation-band animation-delay"></div>
-              <p>delay</p>
-            </div>
-            <div class="legend-item legend-delay">
-              <div class="animation-band animation-change"></div>
-              <p>change</p>
-            </div>
-            <div class="legend-item legend-delay">
-              <div class="animation-band animation-end-delay"></div>
-              <p>end-delay</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <section class="feature-section section-feature-layered-animation">
-
-      <div class="col">
-        <h1 class="section-title">
-          Layered CSS<br>
-          transforms
+      <div class="feature-description">
+        <h1 class="feature-title">
+          Layered CSS transforms
         </h1>
-        <p class="section-paragraph">
-          Elastic
-          Spring
-          Penner’s functions
-          Custom bubic Bézier
-          Steps
+        <p class="feature-paragraph">
+          Unlile CSS animations, anime’s flexible keyframe system allows you to animate each CSS transforms properties independently at the same time.<br>
+          Delays, duration, easing, everything is async.
+        </p>
+        <p class="feature-paragraph">
+          <a href="/documentation/#pennerFunctions" class="primary">Learn more about easings</a>
         </p>
       </div>
-      <div class="col">
-        <div class="feature-animation layered-animations">
+
+      <div class="feature-animation">
+        <div class="layered-animations">
           <svg class="small shape color-red" viewBox="0 0 96 96">
             <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
           </svg>
@@ -303,9 +222,200 @@
         </div>
       </div>
 
-    </section>
+    </div>
 
-  </div>
+  </section>
+
+  <section class="feature-section section-feature-control">
+
+    <div class="grid-container">
+
+      <div class="feature-description">
+
+        <h1 class="feature-title">
+          <span>Time</span> <span>control</span> <span>& callbacks</span>
+        </h1>
+        <p class="feature-paragraph">
+          Play, pause, control, reverse and trigger events in sync
+        </p>
+
+      </div>
+
+      <div class="feature-animation">
+
+        <div class="time-control">
+          <div class="ruller">
+            <div class="time-cursor color-red">
+              <input value="999" />
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="info-loop-begin info info-large info-left info-bottom" data-delay="0">
+              <div class="info-bar"></div>
+              <p class="info-label">loop begin</p>
+              <p class="info-label">animation begin</p>
+            </div>
+            <div class="animation">
+              <div class="animation-band animation-delay"></div>
+              <div class="info-change-begin info info-left info-bottom" data-delay="100">
+                <div class="info-bar"></div>
+                <p class="info-label">change begin</p>
+              </div>
+              <div class="animation-band animation-change"></div>
+              <div class="info-change-complete info info-right info-top" data-delay="400">
+                <div class="info-bar"></div>
+                <p class="info-label">change complete</p>
+              </div>
+              <div class="animation-band animation-end-delay"></div>
+            </div>
+            <div class="info-loop-complete info info-large info-right info-top" data-delay="500">
+              <div class="info-bar"></div>
+              <p class="info-label">loop complete</p>
+            </div>
+            <div class="info info-large info-left info-bottom" data-delay="500">
+              <div class="info-bar"></div>
+              <p class="info-label">loop begin</p>
+              <p class="info-label">reverse</p>
+            </div>
+            <div class="animation">
+              <div class="animation-band animation-delay"></div>
+              <div class="info-change-begin info info-left info-bottom" data-delay="600">
+                <div class="info-bar"></div>
+                <p class="info-label">change begin</p>
+              </div>
+              <div class="animation-band animation-change"></div>
+              <div class="info-change-complete info info-right info-top" data-delay="900">
+                <div class="info-bar"></div>
+                <p class="info-label">change complete</p>
+              </div>
+              <div class="animation-band animation-end-delay"></div>
+            </div>
+            <div class="info-loop-complete info info-large info-right info-top" data-delay="1000">
+              <div class="info-bar"></div>
+              <p class="info-label">loop complete</p>
+            </div>
+            <div class="info info-large info-left info-bottom" data-delay="1000">
+              <div class="info-bar"></div>
+              <p class="info-label">loop begin</p>
+              <p class="info-label">reverse</p>
+            </div>
+            <div class="animation">
+              <div class="animation-band animation-delay"></div>
+              <div class="info-change-begin info info-left info-bottom" data-delay="1100">
+                <div class="info-bar"></div>
+                <p class="info-label">change begin</p>
+              </div>
+              <div class="animation-band animation-change"></div>
+              <div class="info-change-complete info info-right info-top" data-delay="1400">
+                <div class="info-bar"></div>
+                <p class="info-label">change complete</p>
+              </div>
+              <div class="animation-band animation-end-delay"></div>
+            </div>
+            <div class="info-loop-complete info info-large info-right info-top" data-delay="1500">
+              <div class="info-bar"></div>
+              <p class="info-label">animation complete</p>
+              <p class="info-label">loop complete</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="timeline-legend">
+          <div class="legend-item legend-delay">
+            <div class="animation-band animation-delay"></div>
+            <p>delay</p>
+          </div>
+          <div class="legend-item legend-delay">
+            <div class="animation-band animation-change"></div>
+            <p>change</p>
+          </div>
+          <div class="legend-item legend-delay">
+            <div class="animation-band animation-end-delay"></div>
+            <p>end-delay</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="feature-section section-feature-animate inverted-section">
+
+    <div class="grid-container">
+
+      <div class="feature-description">
+        <h1 class="feature-title">
+          Animate anything.
+        </h1>
+        <p class="feature-paragraph">
+          Easily add easing to your animations using the built-in functions : 
+          Elastic, Spring, Penner’s easings, Steps and Custom bubic Bézier curves.
+        </p>
+        <div class="feature-icons-container horizontal-icons">
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-html.svg" />
+            <figcaption>
+              html
+            </figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-js.svg" />
+            <figcaption>
+              js
+            </figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-css.svg" />
+            <figcaption>
+              css
+            </figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-svg.svg" />
+            <figcaption>
+              svg
+            </figcaption>
+          </figure>
+        </div>
+        <p class="feature-paragraph">
+          <a href="/documentation/#pennerFunctions" class="primary">Learn more about animatables properties</a>
+        </p>
+      </div>
+
+      <div class="feature-animation square-animation">
+        <div class="sphere-animation">
+          <svg class="sphere" viewBox="0 0 440 440">
+            <path d="M361.604 361.238c-24.407 24.408-51.119 37.27-59.662 28.727-8.542-8.543 4.319-35.255 28.726-59.663 24.408-24.407 51.12-37.269 59.663-28.726 8.542 8.543-4.319 35.255-28.727 59.662z"/>
+            <path d="M360.72 360.354c-35.879 35.88-75.254 54.677-87.946 41.985-12.692-12.692 6.105-52.067 41.985-87.947 35.879-35.879 75.254-54.676 87.946-41.984 12.692 12.692-6.105 52.067-41.984 87.946z"/>
+            <path d="M357.185 356.819c-44.91 44.91-94.376 68.258-110.485 52.149-16.11-16.11 7.238-65.575 52.149-110.485 44.91-44.91 94.376-68.259 110.485-52.15 16.11 16.11-7.239 65.576-52.149 110.486z"/>
+            <path d="M350.998 350.632c-53.21 53.209-111.579 81.107-130.373 62.313-18.794-18.793 9.105-77.163 62.314-130.372 53.209-53.21 111.579-81.108 130.373-62.314 18.794 18.794-9.105 77.164-62.314 130.373z"/>
+            <path d="M343.043 342.677c-59.8 59.799-125.292 91.26-146.283 70.268-20.99-20.99 10.47-86.483 70.269-146.282 59.799-59.8 125.292-91.26 146.283-70.269 20.99 20.99-10.47 86.484-70.27 146.283z"/>
+            <path d="M334.646 334.28c-65.169 65.169-136.697 99.3-159.762 76.235-23.065-23.066 11.066-94.593 76.235-159.762s136.697-99.3 159.762-76.235c23.065 23.065-11.066 94.593-76.235 159.762z"/>
+            <path d="M324.923 324.557c-69.806 69.806-146.38 106.411-171.031 81.76-24.652-24.652 11.953-101.226 81.759-171.032 69.806-69.806 146.38-106.411 171.031-81.76 24.652 24.653-11.953 101.226-81.759 171.032z"/>
+            <path d="M312.99 312.625c-73.222 73.223-153.555 111.609-179.428 85.736-25.872-25.872 12.514-106.205 85.737-179.428s153.556-111.609 179.429-85.737c25.872 25.873-12.514 106.205-85.737 179.429z"/>
+            <path d="M300.175 299.808c-75.909 75.909-159.11 115.778-185.837 89.052-26.726-26.727 13.143-109.929 89.051-185.837 75.908-75.908 159.11-115.778 185.837-89.051 26.726 26.726-13.143 109.928-89.051 185.836z"/>
+            <path d="M284.707 284.34c-77.617 77.617-162.303 118.773-189.152 91.924-26.848-26.848 14.308-111.534 91.924-189.15C265.096 109.496 349.782 68.34 376.63 95.188c26.849 26.849-14.307 111.535-91.923 189.151z"/>
+            <path d="M269.239 267.989c-78.105 78.104-163.187 119.656-190.035 92.807-26.849-26.848 14.703-111.93 92.807-190.035 78.105-78.104 163.187-119.656 190.035-92.807 26.849 26.848-14.703 111.93-92.807 190.035z"/>
+            <path d="M252.887 252.52C175.27 330.138 90.584 371.294 63.736 344.446 36.887 317.596 78.043 232.91 155.66 155.293 233.276 77.677 317.962 36.521 344.81 63.37c26.85 26.848-14.307 111.534-91.923 189.15z"/>
+            <path d="M236.977 236.61C161.069 312.52 77.867 352.389 51.14 325.663c-26.726-26.727 13.143-109.928 89.052-185.837 75.908-75.908 159.11-115.777 185.836-89.05 26.727 26.726-13.143 109.928-89.051 185.836z"/>
+            <path d="M221.067 220.7C147.844 293.925 67.51 332.31 41.639 306.439c-25.873-25.873 12.513-106.206 85.736-179.429C200.6 53.786 280.931 15.4 306.804 41.272c25.872 25.873-12.514 106.206-85.737 179.429z"/>
+            <path d="M205.157 204.79c-69.806 69.807-146.38 106.412-171.031 81.76-24.652-24.652 11.953-101.225 81.759-171.031 69.806-69.807 146.38-106.411 171.031-81.76 24.652 24.652-11.953 101.226-81.759 171.032z"/>
+            <path d="M189.247 188.881c-65.169 65.169-136.696 99.3-159.762 76.235-23.065-23.065 11.066-94.593 76.235-159.762s136.697-99.3 159.762-76.235c23.065 23.065-11.066 94.593-76.235 159.762z"/>
+            <path d="M173.337 172.971c-59.799 59.8-125.292 91.26-146.282 70.269-20.991-20.99 10.47-86.484 70.268-146.283 59.8-59.799 125.292-91.26 146.283-70.269 20.99 20.991-10.47 86.484-70.269 146.283z"/>
+            <path d="M157.427 157.061c-53.209 53.21-111.578 81.108-130.372 62.314-18.794-18.794 9.104-77.164 62.313-130.373 53.21-53.209 111.58-81.108 130.373-62.314 18.794 18.794-9.105 77.164-62.314 130.373z"/>
+            <path d="M141.517 141.151c-44.91 44.91-94.376 68.259-110.485 52.15-16.11-16.11 7.239-65.576 52.15-110.486 44.91-44.91 94.375-68.258 110.485-52.15 16.109 16.11-7.24 65.576-52.15 110.486z"/>
+            <path d="M125.608 125.241c-35.88 35.88-75.255 54.677-87.947 41.985-12.692-12.692 6.105-52.067 41.985-87.947C115.525 43.4 154.9 24.603 167.592 37.295c12.692 12.692-6.105 52.067-41.984 87.946z"/>
+            <path d="M109.698 109.332c-24.408 24.407-51.12 37.268-59.663 28.726-8.542-8.543 4.319-35.255 28.727-59.662 24.407-24.408 51.12-37.27 59.662-28.727 8.543 8.543-4.319 35.255-28.726 59.663z"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
 
 </body>
 <script src="lib/anime.min.js"></script>

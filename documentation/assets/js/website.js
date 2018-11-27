@@ -178,6 +178,67 @@ var logoAnimation = (function() {
 
 })();
 
+var sphereAnimation = (function() {
+
+  var sphereEl = document.querySelector('.sphere-animation');
+  var spherePathEls = sphereEl.querySelectorAll('.sphere path');
+  var pathLength = spherePathEls.length;
+  var aimations = [];
+
+  fitElToParent(sphereEl);
+
+  var breathAnimation = anime({
+    begin: function() {
+      for (var i = 0; i < pathLength; i++) {
+        aimations.push(anime({
+          targets: spherePathEls[i],
+          stroke: {value: '#F6F4F2', duration: 150},
+          translateX: [1, -2],
+          translateY: [1, -2],
+          easing: 'easeOutQuad',
+          autoplay: false
+        }));
+      }
+    },
+    update: function(ins) {
+      aimations.forEach(function(animation, i) {
+        var percent = (1 - Math.sin((i * .35) + (.0022 * ins.currentTime))) / 2;
+        animation.seek(animation.duration * percent);
+      });
+    },
+    duration: Infinity,
+    autoplay: false
+  });
+
+  var introAnimation = anime.timeline({
+    begin: breathAnimation.play,
+  })
+  .add({
+    targets: sphereEl,
+    translateX: [60, 0],
+    translateY: [60, 0],
+    translateZ: [0, 0],
+    duration: 3000,
+    easing: 'easeOutSine',
+  }, 0)
+  .add({
+    targets: spherePathEls,
+    strokeDashoffset: {
+      value: [anime.setDashoffset, 0],
+      duration: 1000,
+      easing: 'easeInOutCirc',
+      delay: anime.stagger(50, {direction: 'reverse'})
+    },
+    opacity: [.001, 1],
+    duration: 750,
+    delay: anime.stagger(80, {direction: 'reverse'}),
+    easing: 'linear'
+  }, 0);
+
+  isElementInViewport(sphereEl, breathAnimation.play, breathAnimation.pause);
+
+})();
+
 var builtInEasingsAnimation = (function() {
 
   var easingVisualizerEl = document.querySelector('.easing-visualizer');
@@ -226,7 +287,7 @@ var builtInEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 125], {easing: ease, from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 100], {easing: ease, from: 'center', direction: 'reverse'}),
       delay: anime.stagger(8, {from: 'center'})
     })
     .add({
@@ -274,8 +335,7 @@ var advancedStaggeringAnimation = (function() {
 
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
   var fragment = document.createDocumentFragment();
-  var row = 15;
-  var numberOfElements = row*row;
+  var numberOfElements = 24*11;
   var animation;
   var paused = true;
 
@@ -293,8 +353,8 @@ var advancedStaggeringAnimation = (function() {
   var nextIndex = 0;
 
   anime.setValue('.stagger-visualizer .cursor', {
-    translateX: anime.stagger('-24px', {grid: [row, row], from: index, axis: 'x'}),
-    translateY: anime.stagger('-24px', {grid: [row, row], from: index, axis: 'y'})
+    translateX: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'x'}),
+    translateY: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'y'})
   });
 
   function play() {
@@ -309,22 +369,26 @@ var advancedStaggeringAnimation = (function() {
       complete: play
     })
     .add({
-      targets: '.cursor',
-      keyframes: [{ scale: .75 }, { scale: 1.125 }, { scale: 1 }],
-      duration: 450
+      targets: '.stagger-visualizer .cursor',
+      keyframes: [
+        { scale: .625 }, 
+        { scale: 1.125 },
+        { scale: 1 }
+      ],
+      duration: 600
     })
     .add({
       targets: '.stagger-visualizer .dot',
       keyframes: [
         {
-          translateX: anime.stagger('-3px', {grid: [row, row], from: index, axis: 'x'}),
-          translateY: anime.stagger('-3px', {grid: [row, row], from: index, axis: 'y'}),
+          translateX: anime.stagger('-4px', {grid: [24, 11], from: index, axis: 'x'}),
+          translateY: anime.stagger('-4px', {grid: [24, 11], from: index, axis: 'y'}),
           duration: 200
         }, {
-          translateX: anime.stagger('2px', {grid: [row, row], from: index, axis: 'x'}),
-          translateY: anime.stagger('2px', {grid: [row, row], from: index, axis: 'y'}),
-          scale: 3,
-          duration: 350
+          translateX: anime.stagger('4px', {grid: [24, 11], from: index, axis: 'x'}),
+          translateY: anime.stagger('4px', {grid: [24, 11], from: index, axis: 'y'}),
+          scale: anime.stagger([6, 2], {grid: [24, 11], from: index}),
+          duration: 400
         }, {
           translateX: 0,
           translateY: 0,
@@ -332,14 +396,14 @@ var advancedStaggeringAnimation = (function() {
           duration: 600,
         }
       ],
-      delay: anime.stagger(45, {grid: [row, row], from: index})
-    }, 0)
+      delay: anime.stagger(40, {grid: [24, 11], from: index})
+    }, '-=600')
     .add({
       targets: '.stagger-visualizer .cursor',
-      translateX: { value: anime.stagger('-24px', {grid: [row, row], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
-      translateY: { value: anime.stagger('-24px', {grid: [row, row], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
+      translateX: { value: anime.stagger('-40px', {grid: [24, 11], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
+      translateY: { value: anime.stagger('-40px', {grid: [24, 11], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
       easing: 'easeOutSine'
-    }, 900)
+    }, '-=1100')
 
     index = nextIndex;
 
@@ -357,8 +421,8 @@ var advancedStaggeringAnimation = (function() {
     })
     .add({
       targets: '.cursor',
-      translateX: { value: anime.stagger('-24px', {grid: [row, row], from: index, axis: 'x'}) },
-      translateY: { value: anime.stagger('-24px', {grid: [row, row], from: index, axis: 'y'}) },
+      translateX: { value: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'x'}) },
+      translateY: { value: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'y'}) },
       scale: 1,
     })
     .add({
@@ -366,7 +430,7 @@ var advancedStaggeringAnimation = (function() {
       translateX: 0,
       translateY: 0,
       scale: 1,
-      delay: anime.stagger(50, {grid: [row, row], from: index})
+      delay: anime.stagger(50, {grid: [24, 11], from: index})
     }, 0)
 
   }
@@ -469,16 +533,17 @@ var timeControlAnimation = (function() {
     controlAnimationCanMove = false;
   }, '0%');
 
-  // fitElToParent(timeControlEl);
-
 })();
 
 var layeredAnimation = (function() {
 
-  var shapeEls = document.querySelectorAll('.layered-animations .shape');
-  var triangleEl = document.querySelector('.layered-animations polygon');
+  var layeredAnimationEl = document.querySelector('.layered-animations');
+  var shapeEls = layeredAnimationEl.querySelectorAll('.shape');
+  var triangleEl = layeredAnimationEl.querySelector('polygon');
   var trianglePoints = triangleEl.getAttribute('points').split(' ');
   var easings = ['easeInOutQuad', 'easeInOutCirc', 'easeInOutSine', 'spring'];
+
+  fitElToParent(layeredAnimationEl);
 
   function animateShape(el) {
 
@@ -506,8 +571,12 @@ var layeredAnimation = (function() {
       complete: function(anim) { animateShape(anim.animatables[0].target); },
     })
     .add({
-      translateX: createKeyframes(function() { return anime.random(-4, 4) + 'rem'; }),
-      translateY: createKeyframes(function() { return anime.random(-4, 4) + 'rem'; }),
+      translateX: createKeyframes(function(el) { 
+        return el.classList.contains('small') ? anime.random(-400, 400) : anime.random(-280, 280);
+      }),
+      translateY: createKeyframes(function(el) { 
+        return el.classList.contains('small') ? anime.random(-320, 320) : anime.random(-160, 160);
+      }),
       rotate: createKeyframes(function() { return anime.random(-180, 180); }),
     }, 0);
     if (circleEl) {

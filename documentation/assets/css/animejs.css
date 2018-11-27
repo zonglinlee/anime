@@ -26,6 +26,39 @@
  src: url("../fonts/Roobert-SemiBoldItalic.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "InputMono";
+  src: url("../fonts/InputMono-Regular.woff2") format("woff2"),
+      url("../fonts/InputMono-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InputMono";
+  src: url("../fonts/InputMono-Bold.woff2") format("woff2"),
+      url("../fonts/InputMono-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "InputMono";
+  src: url("../fonts/InputMono-BoldItalic.woff2") format("woff2"),
+      url("../fonts/InputMono-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "InputMono";
+  src: url("../fonts/InputMono-Italic.woff2") format("woff2"),
+      url("../fonts/InputMono-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+}
+
+
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
@@ -39,7 +72,7 @@
 html,
 body {
   background-color: #F6F4F2;
-  color: #373535;
+  color: #252423;
 }
 
 body {
@@ -62,12 +95,17 @@ a, a:visited {
   color: inherit;
 }
 
+sup {
+  vertical-align: super;
+  font-size: .625em;
+}
+
 strong {
   font-weight: 600;
 }
 
 .color-white { color: #F6F4F2; } /* White */
-.color-black { color: #373535; } /* Black */
+.color-black { color: #252423; } /* Black */
 .color-red, .color-targets { color: #F64E4D; } /* Red */
 .color-orange, .color-properties { color: #F6984E; } /* Orange */
 .color-yellow, .color-prop-params { color: #C8CB48; } /* Yellow */

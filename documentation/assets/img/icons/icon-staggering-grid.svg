@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <rect id="path-1" width="26" height="26"/>
+  </defs>
+  <g id="icon-staggering-grid" fill="none" fill-rule="evenodd">
+    <g id="Group-7" transform="translate(11 11)">
+      <mask id="mask-2" fill="white">
+        <use xlink:href="#path-1"/>
+      </mask>
+      <rect width="24" height="24" x="1" y="1" stroke="#242423" stroke-width="2"/>
+      <circle id="Oval" cx="13" cy="13" r="1" fill="#242423" mask="url(#mask-2)"/>
+      <circle id="Oval-Copy" cx="13" cy="13" r="4" stroke="#242423" stroke-width="2" mask="url(#mask-2)"/>
+      <circle id="Oval-Copy-2" cx="13" cy="13" r="8" stroke="#242423" stroke-width="2" mask="url(#mask-2)"/>
+      <circle id="Oval-Copy-3" cx="13" cy="13" r="12" stroke="#242423" stroke-width="2" mask="url(#mask-2)"/>
+    </g>
+  </g>
+</svg>
