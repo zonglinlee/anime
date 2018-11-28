@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <g id="icon-staggering-reverse" fill="none" fill-rule="evenodd">
-    <rect id="Rectangle-40-Copy-8" width="24" height="24" x="12" y="12" stroke="#242423" stroke-width="2"/>
-    <path id="Path-13-Copy-41" stroke="#242423" stroke-width="2" d="M32 25v-2"/>
-    <path id="Path-13-Copy-40" stroke="#242423" stroke-width="2" d="M28 27v-6"/>
-    <path id="Path-13-Copy-39" stroke="#242423" stroke-width="2" d="M24 29V19"/>
-    <path id="Path-13-Copy-38" stroke="#242423" stroke-width="2" d="M20 31V17"/>
-    <g id="Group-5" stroke="#242423" stroke-width="2" transform="translate(15 15)">
-      <path id="Path-13-Copy-37" d="M1 18V0"/>
+    <g id="Group-2" stroke="#242423" stroke-width="2" transform="translate(7 7)">
+      <rect id="Rectangle-40-Copy-8" width="32" height="32" x="1" y="1" rx="4"/>
+      <path id="Path-13-Copy-41" d="M25 18v-2"/>
+      <path id="Path-13-Copy-40" d="M21 20v-6"/>
+      <path id="Path-13-Copy-39" d="M17 22V12"/>
+      <path id="Path-13-Copy-38" d="M13 24V10"/>
+      <path id="Path-13-Copy-37" d="M9 26V8"/>
     </g>
   </g>
 </svg>

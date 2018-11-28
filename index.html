@@ -34,7 +34,7 @@
     <nav class="top-menu">
       <a href="#">Documentation</a>
       <a href="#">Examples</a>
-      <a href="#" class="primary">Dowload <sup class="version-number">3.0.0</sup></a>
+      <a href="#" class="primary">Download <span class="version-number">3.0.0</span></a>
     </nav>
   </header>
 
@@ -112,7 +112,7 @@
 
   <section class="feature-section section-feature-easings inverted-section">
 
-    <div class="grid-container">
+    <div class="grid-container vertical-grid">
 
       <div class="feature-description">
         <h1 class="feature-title">
@@ -158,7 +158,13 @@
 
   <section class="feature-section section-feature-staggering">
 
-    <div class="grid-container">
+    <div class="grid-container horizontal-grid">
+
+      <div class="feature-animation vertical-animation">
+        <div class="stagger-visualizer">
+          <div class="cursor color-red"></div>
+        </div>
+      </div>
 
       <div class="feature-description">
         <h1 class="feature-title">
@@ -166,16 +172,36 @@
         </h1>
         <p class="feature-paragraph">
           Anime’s powerfull staggering system let you easily tweak animations timings and elements positions.
-          <br>
-          <br>
+        </p>
+        <div class="feature-icons-container vertical-icons">
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-staggering-forward.svg" />
+            <figcaption>forward</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-staggering-index.svg" />
+            <figcaption>from index</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-staggering-center.svg" />
+            <figcaption>from center</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-staggering-easing.svg" />
+            <figcaption>easing</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-staggering-reverse.svg" />
+            <figcaption>reversed</figcaption>
+          </figure>
+          <figure class="feature-icon">
+            <img src="documentation/assets/img/icons/icon-staggering-grid.svg" />
+            <figcaption>2d grid</figcaption>
+          </figure>
+        </div>
+        <p class="feature-paragraph">
           <a href="/documentation/#pennerFunctions" class="primary">Learn more about staggering</a>
         </p>
-      </div>
-
-      <div class="feature-animation">
-        <div class="stagger-visualizer">
-          <div class="cursor color-red"></div>
-        </div>
       </div>
 
     </div>
@@ -184,7 +210,7 @@
 
   <section class="feature-section section-feature-layered-animation inverted-section">
 
-    <div class="grid-container">
+    <div class="grid-container vertical-grid">
 
       <div class="feature-description">
         <h1 class="feature-title">
@@ -201,6 +227,15 @@
 
       <div class="feature-animation">
         <div class="layered-animations">
+          <svg class="x-small shape" viewBox="0 0 96 96">
+            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
+          </svg>
+          <svg class="x-small shape" viewBox="0 0 96 96">
+            <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square"/>
+          </svg>
+          <svg class="x-small shape" viewBox="0 0 96 96">
+            <circle cx="48" cy="48" r="32" fill-rule="evenodd" stroke-linecap="square"/>
+          </svg>
           <svg class="small shape color-red" viewBox="0 0 96 96">
             <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
           </svg>
@@ -210,13 +245,13 @@
           <svg class="small shape color-red" viewBox="0 0 96 96">
             <circle cx="48" cy="48" r="32" fill-rule="evenodd" stroke-linecap="square"/>
           </svg>
-          <svg class="shape" viewBox="0 0 96 96">
+          <svg class="large shape" viewBox="0 0 96 96">
             <circle cx="48" cy="48" r="28" fill-rule="evenodd" stroke-linecap="square"/>
           </svg>
-          <svg class="shape" viewBox="0 0 96 96">
+          <svg class="large shape" viewBox="0 0 96 96">
             <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
           </svg>
-          <svg class="shape" viewBox="0 0 96 96">
+          <svg class="large shape" viewBox="0 0 96 96">
             <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square"/>
           </svg>
         </div>
@@ -228,7 +263,7 @@
 
   <section class="feature-section section-feature-control">
 
-    <div class="grid-container">
+    <div class="grid-container vertical-grid">
 
       <div class="feature-description">
 
@@ -344,7 +379,7 @@
 
   <section class="feature-section section-feature-animate inverted-section">
 
-    <div class="grid-container">
+    <div class="grid-container vertical-grid">
 
       <div class="feature-description">
         <h1 class="feature-title">
@@ -357,27 +392,19 @@
         <div class="feature-icons-container horizontal-icons">
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-html.svg" />
-            <figcaption>
-              html
-            </figcaption>
+            <figcaption>html</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-js.svg" />
-            <figcaption>
-              js
-            </figcaption>
+            <figcaption>js</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-css.svg" />
-            <figcaption>
-              css
-            </figcaption>
+            <figcaption>css</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-svg.svg" />
-            <figcaption>
-              svg
-            </figcaption>
+            <figcaption>svg</figcaption>
           </figure>
         </div>
         <p class="feature-paragraph">

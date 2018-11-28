@@ -183,6 +183,7 @@ var sphereAnimation = (function() {
   var sphereEl = document.querySelector('.sphere-animation');
   var spherePathEls = sphereEl.querySelectorAll('.sphere path');
   var pathLength = spherePathEls.length;
+  var hasStarted = false;
   var aimations = [];
 
   fitElToParent(sphereEl);
@@ -211,13 +212,12 @@ var sphereAnimation = (function() {
   });
 
   var introAnimation = anime.timeline({
-    begin: breathAnimation.play,
+    autoplay: false
   })
   .add({
     targets: sphereEl,
     translateX: [60, 0],
     translateY: [60, 0],
-    translateZ: [0, 0],
     duration: 3000,
     easing: 'easeOutSine',
   }, 0)
@@ -225,17 +225,22 @@ var sphereAnimation = (function() {
     targets: spherePathEls,
     strokeDashoffset: {
       value: [anime.setDashoffset, 0],
-      duration: 1000,
+      duration: 2000,
       easing: 'easeInOutCirc',
-      delay: anime.stagger(50, {direction: 'reverse'})
+      delay: anime.stagger(100, {direction: 'reverse'})
     },
     opacity: [.001, 1],
-    duration: 750,
-    delay: anime.stagger(80, {direction: 'reverse'}),
+    duration: 1000,
+    delay: anime.stagger(100, {direction: 'reverse'}),
     easing: 'linear'
   }, 0);
 
-  isElementInViewport(sphereEl, breathAnimation.play, breathAnimation.pause);
+  function play() {
+    introAnimation.play();
+    breathAnimation.play();
+  }
+
+  isElementInViewport(sphereEl, play, breathAnimation.pause);
 
 })();
 
@@ -246,7 +251,7 @@ var builtInEasingsAnimation = (function() {
   var dotsWrapperEl = easingVisualizerEl.querySelector('.dots-wrapper');
   var barsFragment = document.createDocumentFragment();
   var dotsFragment = document.createDocumentFragment();
-  var numberOfBars = 99;
+  var numberOfBars = 89;
   var duration = 450;
   var animation;
   var paused = true;
@@ -288,12 +293,12 @@ var builtInEasingsAnimation = (function() {
     .add({
       targets: '.easing-visualizer .bar',
       scaleY: anime.stagger([1, 100], {easing: ease, from: 'center', direction: 'reverse'}),
-      delay: anime.stagger(8, {from: 'center'})
+      delay: anime.stagger(7, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
-      translateY: anime.stagger(['-144px', '144px'], {easing: ease, from: 'last'}),
-      delay: anime.stagger(8, {from: 'center'})
+      translateY: anime.stagger(['-180px', '180px'], {easing: ease, from: 'last'}),
+      delay: anime.stagger(7, {from: 'center'})
     }, 0);
 
   }
@@ -311,13 +316,13 @@ var builtInEasingsAnimation = (function() {
       targets: '.easing-visualizer .bar',
       scaleY: anime.stagger([1, 88], {easing: defaultEase, from: 'center', direction: 'reverse'}),
       duration: duration,
-      delay: anime.stagger(16, {from: 'center'})
+      delay: anime.stagger(7, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
       translateY: anime.stagger(['-144px', '144px'], {easing: defaultEase, from: 'last'}),
       duration: duration,
-      delay: anime.stagger(8, {from: 'center'})
+      delay: anime.stagger(7, {from: 'center'})
     }, 0);
 
   }
@@ -335,7 +340,9 @@ var advancedStaggeringAnimation = (function() {
 
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
   var fragment = document.createDocumentFragment();
-  var numberOfElements = 24*11;
+  var grid = [18, 24];
+  var cell = 30;
+  var numberOfElements = grid[0] * grid[1];
   var animation;
   var paused = true;
 
@@ -353,8 +360,10 @@ var advancedStaggeringAnimation = (function() {
   var nextIndex = 0;
 
   anime.setValue('.stagger-visualizer .cursor', {
-    translateX: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'x'}),
-    translateY: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'y'})
+    translateX: anime.stagger(-cell, {grid: grid, from: index, axis: 'x'}),
+    translateY: anime.stagger(-cell, {grid: grid, from: index, axis: 'y'}),
+    translateZ: 0,
+    scale: 1.25,
   });
 
   function play() {
@@ -371,39 +380,40 @@ var advancedStaggeringAnimation = (function() {
     .add({
       targets: '.stagger-visualizer .cursor',
       keyframes: [
-        { scale: .625 }, 
-        { scale: 1.125 },
-        { scale: 1 }
+        { scale: .625, duration: 150}, 
+        { scale: 1.5, duration: 200},
+        { scale: 1.25, duration: 350},
       ],
-      duration: 600
+      duration: 300
     })
     .add({
       targets: '.stagger-visualizer .dot',
       keyframes: [
         {
-          translateX: anime.stagger('-4px', {grid: [24, 11], from: index, axis: 'x'}),
-          translateY: anime.stagger('-4px', {grid: [24, 11], from: index, axis: 'y'}),
-          duration: 200
+          translateX: anime.stagger('-1px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('-1px', {grid: grid, from: index, axis: 'y'}),
+          duration: 100
         }, {
-          translateX: anime.stagger('4px', {grid: [24, 11], from: index, axis: 'x'}),
-          translateY: anime.stagger('4px', {grid: [24, 11], from: index, axis: 'y'}),
-          scale: anime.stagger([6, 2], {grid: [24, 11], from: index}),
-          duration: 400
+          translateX: anime.stagger('2px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('2px', {grid: grid, from: index, axis: 'y'}),
+          scale: anime.stagger([6, 0], {grid: grid, from: index}),
+          duration: 225
         }, {
           translateX: 0,
           translateY: 0,
           scale: 1,
-          duration: 600,
+          duration: 300,
         }
       ],
-      delay: anime.stagger(40, {grid: [24, 11], from: index})
-    }, '-=600')
+      delay: anime.stagger(80, {grid: grid, from: index})
+    }, 0)
     .add({
       targets: '.stagger-visualizer .cursor',
-      translateX: { value: anime.stagger('-40px', {grid: [24, 11], from: nextIndex, axis: 'x'}), duration: anime.random(400, 1200) },
-      translateY: { value: anime.stagger('-40px', {grid: [24, 11], from: nextIndex, axis: 'y'}), duration: anime.random(400, 1200) },
-      easing: 'easeOutSine'
-    }, '-=1100')
+      translateX: { value: anime.stagger(-cell, {grid: grid, from: nextIndex, axis: 'x'}) },
+      translateY: { value: anime.stagger(-cell, {grid: grid, from: nextIndex, axis: 'y'}) },
+      scale: 1.25,
+      easing: 'cubicBezier(.075, .2, .165, 1)'
+    }, '-=800')
 
     index = nextIndex;
 
@@ -421,8 +431,8 @@ var advancedStaggeringAnimation = (function() {
     })
     .add({
       targets: '.cursor',
-      translateX: { value: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'x'}) },
-      translateY: { value: anime.stagger('-40px', {grid: [24, 11], from: index, axis: 'y'}) },
+      translateX: { value: anime.stagger(-cell, {grid: grid, from: index, axis: 'x'}) },
+      translateY: { value: anime.stagger(-cell, {grid: grid, from: index, axis: 'y'}) },
       scale: 1,
     })
     .add({
@@ -430,7 +440,7 @@ var advancedStaggeringAnimation = (function() {
       translateX: 0,
       translateY: 0,
       scale: 1,
-      delay: anime.stagger(50, {grid: [24, 11], from: index})
+      delay: anime.stagger(50, {grid: grid, from: index})
     }, 0)
 
   }
@@ -572,10 +582,10 @@ var layeredAnimation = (function() {
     })
     .add({
       translateX: createKeyframes(function(el) { 
-        return el.classList.contains('small') ? anime.random(-400, 400) : anime.random(-280, 280);
+        return el.classList.contains('large') ? anime.random(-280, 280) : anime.random(-400, 400);
       }),
       translateY: createKeyframes(function(el) { 
-        return el.classList.contains('small') ? anime.random(-320, 320) : anime.random(-160, 160);
+        return el.classList.contains('large') ? anime.random(-160, 160) : anime.random(-320, 320);
       }),
       rotate: createKeyframes(function() { return anime.random(-180, 180); }),
     }, 0);
@@ -601,6 +611,8 @@ var layeredAnimation = (function() {
         }),
       }, 0);
     }
+
+    isElementInViewport(layeredAnimationEl, animation.play, animation.pause);
 
   }
 

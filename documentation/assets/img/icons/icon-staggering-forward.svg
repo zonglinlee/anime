@@ -1,12 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <g id="icon-staggering-forward" fill="none" fill-rule="evenodd">
-    <g id="Group-6" stroke="#242423" stroke-width="2" transform="translate(11 11)">
-      <rect id="Rectangle-40-Copy-7" width="24" height="24" x="1" y="1"/>
-      <path id="Path-13-Copy-35" d="M5 14v-2"/>
-      <path id="Path-13-Copy-34" d="M9 16v-6"/>
-      <path id="Path-13-Copy-33" d="M13 18V8"/>
-      <path id="Path-13-Copy-32" d="M17 20V6"/>
-      <path id="Path-13-Copy-31" d="M21 22V4"/>
+    <g id="Group-6" stroke="#242423" stroke-width="2" transform="translate(7 7)">
+      <rect id="Rectangle-40-Copy-7" width="32" height="32" x="1" y="1" rx="4"/>
+      <path id="Path-13-Copy-35" d="M9 18v-2"/>
+      <path id="Path-13-Copy-34" d="M13 20v-6"/>
+      <path id="Path-13-Copy-33" d="M17 22V12"/>
+      <path id="Path-13-Copy-32" d="M21 24V10"/>
+      <path id="Path-13-Copy-31" d="M25 26V8"/>
     </g>
+    <rect id="Rectangle-40-Copy-7" width="32" height="32" x="8" y="8" stroke="#242423" stroke-width="2" rx="4"/>
+    <rect id="Path" width="32" height="32" x="8" y="8" stroke="#242423" stroke-width="2" rx="4"/>
+    <path id="Path-13-Copy-35" stroke="#242423" stroke-width="2"/>
+    <path id="Path" stroke="#242423" stroke-width="2"/>
+    <path id="Path-13-Copy-34" stroke="#242423" stroke-width="2"/>
+    <path id="Path" stroke="#242423" stroke-width="2"/>
+    <path id="Path-13-Copy-33" stroke="#242423" stroke-width="2"/>
+    <path id="Path" stroke="#242423" stroke-width="2"/>
+    <path id="Path-13-Copy-32" stroke="#242423" stroke-width="2"/>
+    <path id="Path" stroke="#242423" stroke-width="2"/>
+    <path id="Path-13-Copy-31" stroke="#242423" stroke-width="2"/>
+    <path id="Path" stroke="#242423" stroke-width="2"/>
   </g>
 </svg>

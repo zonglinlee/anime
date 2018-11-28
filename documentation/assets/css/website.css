@@ -60,6 +60,8 @@ a.primary {
 }
 
 .top-header a {
+  display: inline-flex;
+  align-items: center;
   line-height: 1;
 }
 
@@ -81,6 +83,17 @@ a.primary {
   .top-menu a {
     font-size: 18px;
   }
+}
+
+.top-menu .version-number {
+  margin-top: 2px;
+  margin-left: 4px;
+  padding: 2px 4px 3px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #F6F4F2;
+  background-color: #F64E4D;
+  border-radius: 8px;
 }
 
 /* Intro */
@@ -258,9 +271,16 @@ a.primary {
   padding-bottom: 80px;
 }
 
-.feature-description {
+.vertical-grid .feature-description {
   grid-column: 3/11;
   margin-bottom: 32px;
+}
+
+.horizontal-grid .feature-description {
+  grid-column: 8/13;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .feature-title {
@@ -287,9 +307,16 @@ a.primary {
   padding-bottom: 100%;
 }
 
+.vertical-animation {
+  padding-bottom: 150%;
+}
+
 @media (min-width: 788px) {
-  .feature-animation {
+  .vertical-grid .feature-animation {
     grid-column: 2/12;
+  }
+  .horizontal-grid .feature-animation {
+    grid-column: 2/7;
   }
   .square-animation {
     margin-bottom: -400px;
@@ -298,6 +325,7 @@ a.primary {
 
 .feature-icons-container {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 24px;
 }
 
@@ -306,19 +334,24 @@ a.primary {
   height: 48px;
 }
 
-.feature-icon:not(:first-child) {
-  margin-left: 16px;
-}
-
-.feature-icon svg {
-  width: 48px;
-  height: 48px;
-}
-
 .feature-icon figcaption {
   font-family: "InputMono";
   font-weight: bold;
   font-size: 12px;
+}
+
+.vertical-icons .feature-icon {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin-left: -6px;
+}
+
+.horizontal-icons .feature-icon:not(:first-child) {
+  margin-left: 16px;
+}
+
+.horizontal-icons figcaption {
   text-align: center;
 }
 
@@ -334,7 +367,7 @@ a.primary {
 }
 
 .sphere path {
-  opacity: 1;
+  opacity: .001;
   fill: rgba(37,36,35,.5);
   stroke: #FF4847;
   stroke-width: 1px;
@@ -392,16 +425,16 @@ a.primary {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 960px;
-  height: 440px;
-  margin: -220px 0 0 -480px;
+  width: 540px;
+  height: 720px;
+  margin: -360px 0 0 -270px;
 }
 
 .stagger-visualizer .dot {
   position: relative;
   width: 4px;
   height: 4px;
-  margin: 18px;
+  margin: 13px;
   background-color: currentColor;
   border-radius: 50%;
 }
@@ -409,11 +442,11 @@ a.primary {
 .stagger-visualizer .cursor {
   position: absolute;
   z-index: 1;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  margin: 4px;
+  top: -5px;
+  left: -5px;
+  width: 28px;
+  height: 28px;
+  margin: 6px;
   background-color: currentColor;
   border-radius: 50%;
 }
@@ -640,9 +673,16 @@ a.primary {
 }
 
 .layered-animations .small.shape {
-  width: 48px;
-  height: 48px;
-  margin-top: -24px;
+  width: 56px;
+  height: 56px;
+  margin-top: -28px;
+  fill: currentColor;
+}
+
+.layered-animations .x-small.shape {
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
   stroke: currentColor;
   fill: currentColor;
 }
