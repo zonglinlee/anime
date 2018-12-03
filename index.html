@@ -21,7 +21,7 @@
 <body>
 
   <header class="top-header grid-container">
-    <a href="#">
+    <a href="#" class="top-header-logo">
       <svg class="top-mini-logo" viewBox="0 0 93 12">
         <path d="M1 1h9.994c.92 0 1.665.744 1.665 1.662v6.676c0 .918-.746 1.662-1.665 1.662H2.666C1.746 11 1 10.256 1 9.338V5.981c0-.918.746-1.662 1.666-1.662h6.662"/>
         <path d="M16.036 11V2.667c0-.92.744-1.667 1.662-1.667h8.336c.917 0 1.661.746 1.661 1.667V11"/>
@@ -32,9 +32,9 @@
       </svg>
     </a>
     <nav class="top-menu">
-      <a href="#">Documentation</a>
-      <a href="#">Examples</a>
-      <a href="#" class="primary">Download <span class="version-number">3.0.0</span></a>
+      <a href="#" class="primary arrow">Documentation</a>
+      <a href="#" class="primary arrow">Examples</a>
+      <a href="#" class="primary arrow">Download <span class="version-number">3.0.0</span></a>
     </nav>
   </header>
 
@@ -91,7 +91,10 @@
       </div>
 
       <h2 class="logo-text">
-        JavaScript Animation Engine | ＪＳ アニメーション エンジン | Version <em class="version-number">3.0.0</em> | © 2018 Julian Garnier
+        <span class="small-screen-text">JavaScript Animation Engine</span>
+        <span class="large-screen-text"> | ＪＳ アニメーション エンジン</span>
+        <span class="small-screen-text"> | Version <em class="version-number">3.0.0</em></span>
+        <span class="medium-screen-text"> | © 2018 Julian Garnier</span>
       </h2>
 
     </div>
@@ -103,10 +106,12 @@
     <h1 class="description-title">JS animation toolbox.</h1>
     <p class="description-paragraph">
       Anime.js helps you create smooth JavaScript based animations with a simple, yet powerfull API. Advanced staggerring, easy easings, perfect animations synchronisation, and total control on timings and callbacks. It works with CSS, Canvas, JavaScript objects, SVG or any other DOM attributes.
-      <br>
-      <br>
-      <a href="#" class="primary">Download on GitHub</a>
     </p>
+    <nav class="description-menu description-paragraph">
+      <a href="#" class="primary arrow">Download on GitHub <span class="version-number">3.0.0</span></a>
+      <a href="#">Examples on CodePen</a>
+      <a href="#">Documentation</a>
+    </nav>
 
   </section>
 
@@ -125,23 +130,23 @@
         <div class="feature-icons-container horizontal-icons">
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-easing-cubic.svg" />
-            <figcaption>cubic</figcaption>
+            <figcaption class="feature-caption">cubic</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-easing-elastic.svg" />
-            <figcaption>elastic</figcaption>
+            <figcaption class="feature-caption">elastic</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-easing-spring.svg" />
-            <figcaption>spring</figcaption>
+            <figcaption class="feature-caption">spring</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-easing-steps.svg" />
-            <figcaption>steps</figcaption>
+            <figcaption class="feature-caption">steps</figcaption>
           </figure>
         </div>
         <p class="feature-paragraph">
-          <a href="/documentation/#pennerFunctions" class="primary">Learn more about easings</a>
+          <a href="/documentation/#pennerFunctions" class="primary arrow">Learn more about easings</a>
         </p>
       </div>
 
@@ -158,7 +163,7 @@
 
   <section class="feature-section section-feature-staggering">
 
-    <div class="grid-container horizontal-grid">
+    <div class="grid-container horizontal-grid grid-reverse">
 
       <div class="feature-animation vertical-animation">
         <div class="stagger-visualizer">
@@ -176,31 +181,31 @@
         <div class="feature-icons-container vertical-icons">
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-forward.svg" />
-            <figcaption>forward</figcaption>
+            <figcaption class="feature-caption">forward</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-index.svg" />
-            <figcaption>from index</figcaption>
+            <figcaption class="feature-caption">from index</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-center.svg" />
-            <figcaption>from center</figcaption>
+            <figcaption class="feature-caption">from center</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-easing.svg" />
-            <figcaption>easing</figcaption>
+            <figcaption class="feature-caption">easing</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-reverse.svg" />
-            <figcaption>reversed</figcaption>
+            <figcaption class="feature-caption">reversed</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-grid.svg" />
-            <figcaption>2d grid</figcaption>
+            <figcaption class="feature-caption">2d grid</figcaption>
           </figure>
         </div>
         <p class="feature-paragraph">
-          <a href="/documentation/#pennerFunctions" class="primary">Learn more about staggering</a>
+          <a href="/documentation/#pennerFunctions" class="primary arrow">Learn more about staggering</a>
         </p>
       </div>
 
@@ -221,7 +226,7 @@
           Delays, duration, easing, everything is async.
         </p>
         <p class="feature-paragraph">
-          <a href="/documentation/#pennerFunctions" class="primary">Learn more about easings</a>
+          <a href="/documentation/#pennerFunctions" class="primary arrow">Learn more about easings</a>
         </p>
       </div>
 
@@ -263,7 +268,7 @@
 
   <section class="feature-section section-feature-control">
 
-    <div class="grid-container vertical-grid">
+    <div class="grid-container vertical-grid centered-grid">
 
       <div class="feature-description">
 
@@ -272,6 +277,9 @@
         </h1>
         <p class="feature-paragraph">
           Play, pause, control, reverse and trigger events in sync
+        </p>
+        <p class="feature-paragraph">
+          <a href="#" class="primary arrow">Learn more about callbacks</a>
         </p>
 
       </div>
@@ -287,90 +295,92 @@
           <div class="timeline">
             <div class="info-loop-begin info info-large info-left info-bottom" data-delay="0">
               <div class="info-bar"></div>
-              <p class="info-label">loop begin</p>
-              <p class="info-label">animation begin</p>
+              <figcaption class="feature-caption">loop begin</figcaption>
+              <figcaption class="feature-caption">animation begin</figcaption>
             </div>
             <div class="animation">
               <div class="animation-band animation-delay"></div>
               <div class="info-change-begin info info-left info-bottom" data-delay="100">
                 <div class="info-bar"></div>
-                <p class="info-label">change begin</p>
+                <figcaption class="feature-caption">change begin</figcaption>
               </div>
               <div class="animation-band animation-change"></div>
               <div class="info-change-complete info info-right info-top" data-delay="400">
                 <div class="info-bar"></div>
-                <p class="info-label">change complete</p>
+                <figcaption class="feature-caption">change complete</figcaption>
               </div>
               <div class="animation-band animation-end-delay"></div>
             </div>
             <div class="info-loop-complete info info-large info-right info-top" data-delay="500">
               <div class="info-bar"></div>
-              <p class="info-label">loop complete</p>
+              <figcaption class="feature-caption">loop complete</figcaption>
             </div>
             <div class="info info-large info-left info-bottom" data-delay="500">
               <div class="info-bar"></div>
-              <p class="info-label">loop begin</p>
-              <p class="info-label">reverse</p>
+              <figcaption class="feature-caption">loop begin</figcaption>
+              <figcaption class="feature-caption">reverse</figcaption>
             </div>
             <div class="animation">
               <div class="animation-band animation-delay"></div>
               <div class="info-change-begin info info-left info-bottom" data-delay="600">
                 <div class="info-bar"></div>
-                <p class="info-label">change begin</p>
+                <figcaption class="feature-caption">change begin</figcaption>
               </div>
               <div class="animation-band animation-change"></div>
               <div class="info-change-complete info info-right info-top" data-delay="900">
                 <div class="info-bar"></div>
-                <p class="info-label">change complete</p>
+                <figcaption class="feature-caption">change complete</figcaption>
               </div>
               <div class="animation-band animation-end-delay"></div>
             </div>
             <div class="info-loop-complete info info-large info-right info-top" data-delay="1000">
               <div class="info-bar"></div>
-              <p class="info-label">loop complete</p>
+              <figcaption class="feature-caption">loop complete</figcaption>
             </div>
             <div class="info info-large info-left info-bottom" data-delay="1000">
               <div class="info-bar"></div>
-              <p class="info-label">loop begin</p>
-              <p class="info-label">reverse</p>
+              <figcaption class="feature-caption">loop begin</figcaption>
+              <figcaption class="feature-caption">reverse</figcaption>
             </div>
             <div class="animation">
               <div class="animation-band animation-delay"></div>
               <div class="info-change-begin info info-left info-bottom" data-delay="1100">
                 <div class="info-bar"></div>
-                <p class="info-label">change begin</p>
+                <figcaption class="feature-caption">change begin</figcaption>
               </div>
               <div class="animation-band animation-change"></div>
               <div class="info-change-complete info info-right info-top" data-delay="1400">
                 <div class="info-bar"></div>
-                <p class="info-label">change complete</p>
+                <figcaption class="feature-caption">change complete</figcaption>
               </div>
               <div class="animation-band animation-end-delay"></div>
             </div>
             <div class="info-loop-complete info info-large info-right info-top" data-delay="1500">
               <div class="info-bar"></div>
-              <p class="info-label">animation complete</p>
-              <p class="info-label">loop complete</p>
+              <figcaption class="feature-caption">animation complete</figcaption>
+              <figcaption class="feature-caption">loop complete</figcaption>
             </div>
           </div>
 
         </div>
 
-        <div class="timeline-legend">
-          <div class="legend-item legend-delay">
-            <div class="animation-band animation-delay"></div>
-            <p>delay</p>
-          </div>
-          <div class="legend-item legend-delay">
-            <div class="animation-band animation-change"></div>
-            <p>change</p>
-          </div>
-          <div class="legend-item legend-delay">
-            <div class="animation-band animation-end-delay"></div>
-            <p>end-delay</p>
-          </div>
-        </div>
+      </div>
 
+      <div class="feature-description">
+        <div class="feature-icons-container timeline-caption horizontal-icons">
+          <figure class="feature-icon timeline-icon">
+            <div class="animation-band animation-delay"></div>
+            <figcaption class="feature-caption">delay</figcaption>
+          </figure>
+          <figure class="feature-icon timeline-icon">
+            <div class="animation-band animation-change"></div>
+            <figcaption class="feature-caption">change</figcaption>
+          </figure>
+          <figure class="feature-icon timeline-icon">
+            <div class="animation-band animation-end-delay"></div>
+            <figcaption class="feature-caption">end-delay</figcaption>
+          </figure>
+        </div>
       </div>
 
     </div>
@@ -392,23 +402,23 @@
         <div class="feature-icons-container horizontal-icons">
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-html.svg" />
-            <figcaption>html</figcaption>
+            <figcaption class="feature-caption">html</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-js.svg" />
-            <figcaption>js</figcaption>
+            <figcaption class="feature-caption">js</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-css.svg" />
-            <figcaption>css</figcaption>
+            <figcaption class="feature-caption">css</figcaption>
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-svg.svg" />
-            <figcaption>svg</figcaption>
+            <figcaption class="feature-caption">svg</figcaption>
           </figure>
         </div>
         <p class="feature-paragraph">
-          <a href="/documentation/#pennerFunctions" class="primary">Learn more about animatables properties</a>
+          <a href="/documentation/#pennerFunctions" class="primary arrow">Learn more about animatables properties</a>
         </p>
       </div>
 

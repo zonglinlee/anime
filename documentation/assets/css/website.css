@@ -13,7 +13,42 @@ a:hover {
 }
 
 a.primary {
+  position: relative;
+  display: inline-block;
+  margin-right: -1em;
   color: #F64E4D;
+  text-decoration: underline;
+  transform: translateX(-1em);
+  transition: transform .25s ease;
+}
+
+a.primary:before,
+a.primary:after {
+  content: "→";
+  opacity: 0;
+}
+
+a.primary:before {
+  display: inline-block;
+  margin-right: .25em;
+}
+
+a.primary:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  transform: translateX(-.5em);
+  transition: transform .25s ease, opacity .25s ease;
+}
+
+a.primary:hover {
+  transform: translateX(0);
+}
+
+a.primary:hover:after {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 /* Layout */
@@ -29,19 +64,25 @@ a.primary {
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  display: flex;
+  flex-direction: column;
   grid-column-gap: 24px;
   grid-row-gap: 0px;
-  max-width: 1196px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 24px;
   padding-right: 24px;
 }
 
-@media (min-width: 788px) {
+.grid-reverse {
+  flex-direction: column-reverse;
+}
+
+@media (min-width: 800px) {
   .grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
     grid-column-gap: 48px;
     padding-left: 48px;
     padding-right: 48px;
@@ -51,18 +92,13 @@ a.primary {
 /* Top Header */
 
 .top-header {
+  display: none;
   opacity: .001;
   grid-column: 1/13;
-  display: flex;
   justify-content: space-between;
+  flex-direction: row;
   align-items: center;
   height: 48px;
-}
-
-.top-header a {
-  display: inline-flex;
-  align-items: center;
-  line-height: 1;
 }
 
 .top-mini-logo {
@@ -75,14 +111,20 @@ a.primary {
   stroke-width: 2;
 }
 
-.top-menu a {
-  margin-left: .5rem;
+.top-menu {
+  display: flex;
+  justify-content: flex-end;
 }
 
-@media (min-width: 788px) {
-  .top-menu a {
-    font-size: 18px;
-  }
+.top-menu a {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.top-menu a:not(:first-child) {
+  margin-left: .5rem;
 }
 
 .top-menu .version-number {
@@ -96,35 +138,66 @@ a.primary {
   border-radius: 8px;
 }
 
+@media (min-width: 500px) {
+  .top-header {
+    display: flex;
+  }
+  .description-menu a:not(.primary) {
+    display: none;
+  }
+}
+
 /* Intro */
 
 .description-section {
-  margin-top: calc(50vh - 200px);
-  margin-bottom: 10rem;
+  margin-top: 16vw;
+  margin-bottom: 80px;
   text-align: center;
+}
+
+@media (min-width: 1200px) {
+  .description-section {
+    margin-top: calc(50vh - 200px);
+    margin-bottom: 160px;
+  }
 }
 
 .description-title {
   opacity: .001;
-  grid-column: 2/12;
-  font-size: 5rem;
-  line-height: 5rem;
+  grid-column: 1/13;
+  font-size: 8vw;
+  line-height: 1em;
   letter-spacing: -0.034em;
   font-weight: 600;
-  margin-bottom: 2rem;
+  margin-bottom: .5em;
 }
 
 .description-paragraph {
   opacity: .001;
-  grid-column: 2/12;
-  font-size: 24px;
+  grid-column: 1/13;
+  font-size: 18px;
   letter-spacing: 0;
-  line-height: 32px;
+  line-height: 1.333em;
+  margin-bottom: 1em;
 }
 
-.description-paragraph a {
-  margin-left: .5rem;
-  margin-right: .5rem;
+.description-paragraph:not(:last-child) {
+  margin-bottom: 2em;
+}
+
+.description-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 800px) {
+  .description-title,
+  .description-paragraph {
+    grid-column: 2/12;
+  }
+  .description-paragraph {
+    font-size: 24px;
+  }
 }
 
 .main-logo {
@@ -132,10 +205,13 @@ a.primary {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 10rem;
+  margin-top: 24vw;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1200px) {
+  .description-title {
+    font-size: 80px;
+  }
   .main-logo {
     grid-column: 2/12;
     margin-top: calc(50vh - 200px);
@@ -235,16 +311,44 @@ a.primary {
 
 .logo-text {
   opacity: .001;
-  display: block;
-  margin-top: 4px;
-  padding-left: 2px;
-  padding-right: 2px;
+  margin-top: .25em;
+  padding-left: .1em;
+  padding-right: .1em;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
-  letter-spacing: 1.5px;
+  font-size: 3.25vw;
+  line-height: 1;
+  letter-spacing: .1em;
   text-align: justify;
   word-break: keep-all;
+}
+
+.medium-screen-text,
+.large-screen-text {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .logo-text {
+    font-size: 2.25vw;
+  }
+  .medium-screen-text {
+    display: inline;
+  }
+}
+
+@media (min-width: 800px) {
+  .logo-text {
+    font-size: 1.5vw;
+  }
+  .large-screen-text {
+    display: inline;
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo-text {
+    font-size: 17px;
+  }
 }
 
 .logo-text:after {
@@ -272,12 +376,12 @@ a.primary {
 }
 
 .vertical-grid .feature-description {
-  grid-column: 3/11;
+  grid-column: 1/13;
   margin-bottom: 32px;
 }
 
 .horizontal-grid .feature-description {
-  grid-column: 8/13;
+  grid-column: 1/13;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -285,14 +389,31 @@ a.primary {
 
 .feature-title {
   margin-bottom: 32px;
-  font-size: 64px;
+  font-size: 32px;
   line-height: .75;
   letter-spacing: -.025em;
 }
 
 .feature-paragraph {
-  font-size: 18px;
-  margin-bottom: 24px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 800px) {
+  .vertical-grid .feature-description {
+    grid-column: 3/11;
+  }
+  .horizontal-grid .feature-description {
+    grid-column: 8/13;
+  }
+  .feature-title {
+    margin-bottom: 32px;
+    font-size: 64px;
+  }
+  .feature-paragraph {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
 }
 
 .feature-animation {
@@ -311,15 +432,15 @@ a.primary {
   padding-bottom: 150%;
 }
 
-@media (min-width: 788px) {
+@media (min-width: 800px) {
   .vertical-grid .feature-animation {
     grid-column: 2/12;
   }
   .horizontal-grid .feature-animation {
     grid-column: 2/7;
   }
-  .square-animation {
-    margin-bottom: -400px;
+  .vertical-grid .square-animation {
+    grid-column: 3/11;
   }
 }
 
@@ -334,8 +455,8 @@ a.primary {
   height: 48px;
 }
 
-.feature-icon figcaption {
-  font-family: "InputMono";
+.feature-caption {
+  font-family: "InputMono", "Courier New", Courier, monospace;
   font-weight: bold;
   font-size: 12px;
 }
@@ -368,7 +489,7 @@ a.primary {
 
 .sphere path {
   opacity: .001;
-  fill: rgba(37,36,35,.5);
+  fill: rgba(37,36,35,1);
   stroke: #FF4847;
   stroke-width: 1px;
   backface-visibility: hidden;
@@ -455,6 +576,7 @@ a.primary {
 
 .section-feature-control {
   overflow-x: hidden;
+  text-align: center;
 }
 
 .section-feature-control .section-paragraph {
@@ -462,20 +584,21 @@ a.primary {
 }
 
 .section-feature-control .feature-animation {
-  height: 320px;
+  height: 342px;
 }
 
 .time-control {
   position: absolute;
   left: 50%;
+  top: 50%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 814px;
-  height: 288px;
-  margin-top: 64px;
+  height: 342px;
   margin-left: -407px;
+  margin-top: -171px;
   font-size: 18px;
 }
 
@@ -517,10 +640,11 @@ a.primary {
   width: 48px;
   height: 48px;
   color: #FFF;
+  font-weight: 600;
   background-color: transparent;
   border-radius: 50%;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .time-cursor:before {
@@ -543,17 +667,11 @@ a.primary {
   height: 8px;
 }
 
-.timeline-legend {
-  display: flex;
+.timeline-caption {
   justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  font-size: 18px;
 }
 
-.legend-item {
+.timeline-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -561,7 +679,7 @@ a.primary {
   width: 92px;
 }
 
-.legend-item .animation-band {
+.timeline-icon .animation-band {
   width: 40px;
   margin-bottom: 8px;
 }
@@ -630,19 +748,20 @@ a.primary {
 .info-left .info-bar { left: 0; }
 .info-right .info-bar { right: 0; }
 
-.info-label {
+.info .feature-caption {
+  opacity: .001;
   white-space: nowrap;
-  height: 24px;
-  padding-left: 12px;
-  padding-right: 12px;
-  line-height: 24px;
+  height: 18px;
+  padding-left: 8px;
+  padding-right: 8px;
+  line-height: 18px;
 }
 
-.info-top .info-label {
+.info-top .feature-caption {
   margin: -4px 0 0;
 }
 
-.info-bottom .info-label {
+.info-bottom .feature-caption {
   margin: 0 0 -4px 0;
 }
 

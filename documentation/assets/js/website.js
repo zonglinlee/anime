@@ -218,7 +218,7 @@ var sphereAnimation = (function() {
     targets: sphereEl,
     translateX: [60, 0],
     translateY: [60, 0],
-    duration: 3000,
+    duration: 4000,
     easing: 'easeOutSine',
   }, 0)
   .add({
@@ -227,11 +227,15 @@ var sphereAnimation = (function() {
       value: [anime.setDashoffset, 0],
       duration: 2000,
       easing: 'easeInOutCirc',
-      delay: anime.stagger(100, {direction: 'reverse'})
+      delay: anime.stagger(80, {direction: 'reverse'})
+    },
+    fill: {
+      value: 'rgba(37,36,35,.6)',
+      delay: anime.stagger(60, {start: 2000, direction: 'reverse'})
     },
     opacity: [.001, 1],
     duration: 1000,
-    delay: anime.stagger(100, {direction: 'reverse'}),
+    delay: anime.stagger(60, {direction: 'reverse'}),
     easing: 'linear'
   }, 0);
 
@@ -292,12 +296,12 @@ var builtInEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 100], {easing: ease, from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 120], {easing: ease, from: 'center', direction: 'reverse'}),
       delay: anime.stagger(7, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
-      translateY: anime.stagger(['-180px', '180px'], {easing: ease, from: 'last'}),
+      translateY: anime.stagger(['-200px', '200px'], {easing: ease, from: 'last'}),
       delay: anime.stagger(7, {from: 'center'})
     }, 0);
 
@@ -390,13 +394,13 @@ var advancedStaggeringAnimation = (function() {
       targets: '.stagger-visualizer .dot',
       keyframes: [
         {
-          translateX: anime.stagger('-1px', {grid: grid, from: index, axis: 'x'}),
-          translateY: anime.stagger('-1px', {grid: grid, from: index, axis: 'y'}),
+          translateX: anime.stagger('-1.5px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('-1.5px', {grid: grid, from: index, axis: 'y'}),
           duration: 100
         }, {
-          translateX: anime.stagger('2px', {grid: grid, from: index, axis: 'x'}),
-          translateY: anime.stagger('2px', {grid: grid, from: index, axis: 'y'}),
-          scale: anime.stagger([6, 0], {grid: grid, from: index}),
+          translateX: anime.stagger('1.5px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('1.5px', {grid: grid, from: index, axis: 'y'}),
+          scale: anime.stagger([6.5, .5], {grid: grid, from: index}),
           duration: 225
         }, {
           translateX: 0,
@@ -515,10 +519,10 @@ var timeControlAnimation = (function() {
       easing: 'easeOutCirc'
     }, delay)
     .add({
-      targets: infoEl.querySelectorAll('.info-label'),
+      targets: infoEl.querySelectorAll('.info .feature-caption'),
       opacity: [0, 1],
       translateY: [direction * 10, 0],
-      duration: 150,
+      duration: 50,
       delay: anime.stagger(50, {start: 10, direction: direction > 0 ? 'reverse' : 'normal'}),
       easing: 'easeOutSine'
     }, delay)
