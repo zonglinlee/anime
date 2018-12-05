@@ -1,4 +1,4 @@
-// import anime from '../../../src/index.js';
+import anime from '../../../src/index.js';
 
 /* Ontersection observer */
 
@@ -26,7 +26,6 @@ function fitElToParent(el, padding) {
     var elOffsetWidth = el.offsetWidth - pad;
     var parentOffsetWidth = parentEl.offsetWidth;
     var ratio = parentOffsetWidth / elOffsetWidth;
-    // if (ratio < 1) anime.setValue(el, {scale: ratio});
     anime.setValue(el, {scale: ratio});
   }
   resize();
@@ -49,7 +48,7 @@ var logoAnimation = (function() {
 
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine',
-    autoplay: false
+    autoplay: true
   })
   .add({
     targets: '.letter-i .line',
@@ -163,7 +162,10 @@ var logoAnimation = (function() {
     translateY: {value: ['80px', 0], easing: 'cubicBezier(.075, .83, .165, 1)'},
     opacity: {value: [0.001, 1], easing: 'cubicBezier(.075, .83, .165, 1)'},
     duration: 3500,
-    delay: anime.stagger(75)
+    delay: anime.stagger(75),
+    begin: function(anim) {
+      document.body.classList.add('intro-played');
+    }
   }, '-=700')
   .add({
     targets: '.top-header',
@@ -296,7 +298,7 @@ var builtInEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 120], {easing: ease, from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 100], {easing: ease, from: 'center', direction: 'reverse'}),
       delay: anime.stagger(7, {from: 'center'})
     })
     .add({
@@ -586,12 +588,12 @@ var layeredAnimation = (function() {
     })
     .add({
       translateX: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-280, 280) : anime.random(-400, 400);
+        return el.classList.contains('large') ? anime.random(-320, 320) : anime.random(-500, 500);
       }),
       translateY: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-160, 160) : anime.random(-320, 320);
+        return el.classList.contains('large') ? anime.random(-200, 200) : anime.random(-380, 380);
       }),
-      rotate: createKeyframes(function() { return anime.random(-180, 180); }),
+      rotate: createKeyframes(function() { return anime.random(-220, 220); }),
     }, 0);
     if (circleEl) {
       animation.add({
@@ -625,5 +627,3 @@ var layeredAnimation = (function() {
   }
 
 })();
-
-requestAnimationFrame(logoAnimation.play);

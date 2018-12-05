@@ -13,41 +13,38 @@ a:hover {
 }
 
 a.primary {
+  color: #F64E4D;
+}
+
+a.arrow {
   position: relative;
   display: inline-block;
-  margin-right: -1em;
   color: #F64E4D;
   text-decoration: underline;
-  transform: translateX(-1em);
   transition: transform .25s ease;
 }
 
-a.primary:before,
-a.primary:after {
+a.arrow:after {
+  pointer-events: none;
   content: "→";
   opacity: 0;
 }
 
-a.primary:before {
-  display: inline-block;
-  margin-right: .25em;
-}
-
-a.primary:after {
+a.arrow:after {
   position: absolute;
   top: 0;
   left: 0;
   display: block;
-  transform: translateX(-.5em);
+  transform: translateX(-1.5em);
   transition: transform .25s ease, opacity .25s ease;
 }
 
-a.primary:hover {
-  transform: translateX(0);
+a.arrow:hover {
+  transform: translateX(1em);
 }
 
-a.primary:hover:after {
-  transform: translateX(0);
+a.arrow:hover:after {
+  transform: translateX(-1em);
   opacity: 1;
 }
 
@@ -142,9 +139,6 @@ a.primary:hover:after {
   .top-header {
     display: flex;
   }
-  .description-menu a:not(.primary) {
-    display: none;
-  }
 }
 
 /* Intro */
@@ -188,6 +182,13 @@ a.primary:hover:after {
 .description-menu {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 500px) {
+  .description-menu a:not(.primary) {
+    display: none;
+  }
 }
 
 @media (min-width: 800px) {
@@ -206,6 +207,15 @@ a.primary:hover:after {
   flex-direction: column;
   width: 100%;
   margin-top: 24vw;
+  transition: transform 1s ease;
+}
+
+@media (max-width: 500px) {
+
+  .intro-played .main-logo {
+    transform: translateY(calc(-24vw + 24px));
+  }
+
 }
 
 @media (min-width: 1200px) {
