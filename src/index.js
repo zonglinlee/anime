@@ -1010,7 +1010,7 @@ function anime(params = {}) {
     const insReversed = instance.reversed;
     const insTime = adjustTime(engineTime);
     instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
-    if (!instance.began) {
+    if (!instance.began && instance.currentTime > 0) {
       instance.began = true;
       setCallback('begin');
       setCallback('loopBegin');
