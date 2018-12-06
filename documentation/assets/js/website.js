@@ -159,19 +159,19 @@ var logoAnimation = (function() {
   }, '-=970')
   .add({
     targets: ['.description-title','.description-paragraph'],
-    translateY: {value: ['80px', 0], easing: 'cubicBezier(.075, .83, .165, 1)'},
-    opacity: {value: [0.001, 1], easing: 'cubicBezier(.075, .83, .165, 1)'},
+    translateY: {value: ['80px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
+    opacity: {value: [0.001, 1], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
     duration: 3500,
-    delay: anime.stagger(75),
-    begin: function(anim) {
-      document.body.classList.add('intro-played');
-    }
+    delay: anime.stagger(75)
   }, '-=700')
   .add({
     targets: '.top-header',
     opacity: {value: [0.001, 1], easing: 'linear'},
     duration: 700,
-  }, '-=3500')
+    begin: function(anim) {
+      document.body.classList.add('intro-played');
+    }
+  }, '-=3550')
 
   //logoAnimationTL.seek(1400);
   // anime.speed = .1;
