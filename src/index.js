@@ -184,7 +184,7 @@ const bezier = (() => {
 
     function getTForX(aX) {
 
-      let intervalStart = 0.0;
+      let intervalStart = 0;
       let currentSample = 1;
       const lastSample = kSplineTableSize - 1;
 

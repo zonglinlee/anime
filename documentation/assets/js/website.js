@@ -47,8 +47,7 @@ var logoAnimation = (function() {
   anime.setValue('.dot', { translateX: 448, translateY: -100 });
 
   var logoAnimationTL = anime.timeline({
-    easing: 'easeOutSine',
-    autoplay: true
+    easing: 'easeOutSine'
   })
   .add({
     targets: '.letter-i .line',
@@ -165,16 +164,27 @@ var logoAnimation = (function() {
     delay: anime.stagger(75)
   }, '-=700')
   .add({
-    targets: '.top-header',
-    opacity: {value: [0.001, 1], easing: 'linear'},
-    duration: 700,
+    targets: '.top-header a',
+    opacity: {value: [0.001, 1], easing: 'linear', duration: 200},
+    translateY: {value: ['-80px', 0], easing: 'easeOutQuad'},
+    duration: 500,
+    delay: anime.stagger(40, {from: 'center'}),
     begin: function(anim) {
       document.body.classList.add('intro-played');
+      anim.animatables.forEach(function(a) {
+        a.target.style.transition = 'none';
+      });
+    },
+    complete: function(anim) {
+      anim.animatables.forEach(function(a) {
+        a.target.style = 'opacity: 1';
+      });
     }
-  }, '-=3550')
+  }, '-=3850')
 
-  //logoAnimationTL.seek(1400);
-  // anime.speed = .1;
+  logoAnimationTL.pause();
+  logoAnimationTL.seek(2400);
+  logoAnimationTL.play();
 
   return logoAnimationTL;
 
@@ -257,7 +267,7 @@ var builtInEasingsAnimation = (function() {
   var dotsWrapperEl = easingVisualizerEl.querySelector('.dots-wrapper');
   var barsFragment = document.createDocumentFragment();
   var dotsFragment = document.createDocumentFragment();
-  var numberOfBars = 89;
+  var numberOfBars = 99;
   var duration = 450;
   var animation;
   var paused = true;
@@ -346,7 +356,7 @@ var advancedStaggeringAnimation = (function() {
 
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
   var fragment = document.createDocumentFragment();
-  var grid = [18, 24];
+  var grid = [24, 18];
   var cell = 30;
   var numberOfElements = grid[0] * grid[1];
   var animation;
@@ -537,7 +547,7 @@ var timeControlAnimation = (function() {
     var top = rect.top;
     var height = rect.height;
     var windowHeight = window.innerHeight;
-    var scrolled = (top - windowHeight) * -1;
+    var scrolled = (top - windowHeight + 100) * -1.5;
     timelineAnimation.seek((scrolled * 2));
     if (controlAnimationCanMove) requestAnimationFrame(moveControlAnimation);
   }
@@ -547,7 +557,7 @@ var timeControlAnimation = (function() {
     requestAnimationFrame(moveControlAnimation);
   }, function(el, entry) {
     controlAnimationCanMove = false;
-  }, '0%');
+  }, '50px');
 
 })();
 
@@ -588,10 +598,10 @@ var layeredAnimation = (function() {
     })
     .add({
       translateX: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-320, 320) : anime.random(-500, 500);
+        return el.classList.contains('large') ? anime.random(-320, 320) : anime.random(-480, 480);
       }),
       translateY: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-200, 200) : anime.random(-380, 380);
+        return el.classList.contains('large') ? anime.random(-200, 200) : anime.random(-320, 320);
       }),
       rotate: createKeyframes(function() { return anime.random(-220, 220); }),
     }, 0);
