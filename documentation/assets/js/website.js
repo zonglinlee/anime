@@ -36,11 +36,16 @@ var logoAnimation = (function() {
 
   var logoAnimationEl = document.querySelector('.logo-animation');
   var bouncePath = anime.path('.bounce path');
-  var versionNumerEl = document.querySelector('.version-number');
+  var versionNumerEls = document.querySelectorAll('.version-number');
+  var dateEl = document.querySelector('.date');
+  var date = new Date();
+
+  for (var i = 0; i < versionNumerEls.length; i++) {
+    versionNumerEls[i].innerHTML = anime.version;
+  }
+  dateEl.innerHTML = date.getFullYear();
 
   fitElToParent(logoAnimationEl, 20);
-
-  versionNumerEl.innerHTML = anime.version;
 
   anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
   anime.setValue('.letter-e', {translateX: -56});
@@ -73,7 +78,7 @@ var logoAnimation = (function() {
       {value: 1.07, duration: 180, delay: 25, easing: 'easeOutQuad'},
       {value: 1, duration: 250, delay: 15, easing: 'easeOutQuad'}
     ],
-    delay: anime.stagger(90)
+    delay: anime.stagger(80)
   }, 500)
   .add({
     targets: '.dot',
@@ -126,6 +131,13 @@ var logoAnimation = (function() {
       {value: 244, duration: 1000, easing: 'easeOutElastic(1, .8)'}
     ]
   })
+  .add({
+    targets: '.main-logo-circle path',
+    opacity: {value: 1, duration: 10},
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing: 'cubicBezier(0.440, 0.640, 1.000, 0.255)',
+    duration: 900,
+  }, '-=1900')
   .add({
     targets: '.letter-m .line',
     d: function(el) { return el.dataset.d3 },
@@ -181,9 +193,22 @@ var logoAnimation = (function() {
       });
     }
   }, '-=3850')
+  .add({
+    targets: '.main-logo-circle svg',
+    scale: [.825, 1],
+    easing: 'easeInOutCirc',
+    duration: 500,
+  }, '-=3900')
+  .add({
+    targets: '.top-mini-logo path',
+    opacity: {value: [0, 1], duration: 30},
+    strokeDashoffset: [anime.setDashoffset, 0],
+    delay: anime.stagger(100)
+  }, '-=3750')
 
+  // anime.speed = .2;
   logoAnimationTL.pause();
-  logoAnimationTL.seek(2400);
+  logoAnimationTL.seek(1400);
   logoAnimationTL.play();
 
   return logoAnimationTL;

@@ -2,7 +2,7 @@
   <g id="icon-css" fill="none" fill-rule="evenodd" stroke-linecap="square">
     <path id="Oval-Copy-7" stroke="#F6F4F2" stroke-width="2" d="M16 12a4 4 0 0 0-4 4v4a4 4 0 0 1-4 4 4 4 0 0 1 4 4v4a4 4 0 0 0 4 4"/>
     <path id="Oval-Copy-4" stroke="#F6F4F2" stroke-width="2" d="M33 12a4 4 0 0 1 4 4v4a4 4 0 0 0 4 4 4 4 0 0 0-4 4v4a4 4 0 0 1-4 4"/>
-    <rect id="Rectangle-41" width="6" height="6" x="17" y="17" stroke="#F6F4F2" stroke-width="2"/>
-    <circle id="Oval-18" cx="29.5" cy="28.5" r="3.5" stroke="#F6F4F2" stroke-width="2"/>
+    <rect id="Rectangle-41" width="6" height="6" x="17" y="17" stroke="#F6F4F2"/>
+    <circle id="Oval-18" cx="29.5" cy="28.5" r="3.5" stroke="#F6F4F2"/>
   </g>
 </svg>

@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <g id="icon-js" fill="none" fill-rule="evenodd" stroke-linecap="square">
-    <path id="Oval" stroke="#F6F4F2" stroke-width="2" d="M23.5 12a4 4 0 0 0-4 4v4a4 4 0 0 1-4 4 4 4 0 0 1 4 4v4a4 4 0 0 0 4 4"/>
-    <path id="Oval-Copy" stroke="#F6F4F2" stroke-width="2" d="M25 12a4 4 0 0 1 4 4v4a4 4 0 0 0 4 4 4 4 0 0 0-4 4v4a4 4 0 0 1-4 4"/>
+    <path id="Oval" stroke="#F6F4F2" d="M22.5 12a4 4 0 0 0-4 4v4a4 4 0 0 1-4 4 4 4 0 0 1 4 4v4a4 4 0 0 0 4 4"/>
+    <path id="Oval-Copy" stroke="#F6F4F2" d="M34 12a4 4 0 0 0-4 4v4a4 4 0 0 1-4 4 4 4 0 0 1 4 4v4a4 4 0 0 0 4 4" transform="matrix(-1 0 0 1 60 0)"/>
     <path id="Path-10" stroke="#F6F4F2" stroke-width="2" d="M15 12a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5"/>
     <path id="Path-10-Copy" stroke="#F6F4F2" stroke-width="2" d="M33 12a5 5 0 0 1 5 5v14a5 5 0 0 1-5 5"/>
   </g>

@@ -2,6 +2,6 @@
   <g id="icon-svg" fill="none" fill-rule="evenodd" stroke-linecap="square">
     <polyline id="Oval-16" stroke="#F6F4F2" stroke-width="2" points="12 32 12 12 26 12"/>
     <polyline id="Oval-16-Copy" stroke="#F6F4F2" stroke-width="2" points="22 36 22 16 36 16" transform="rotate(-180 29 26)"/>
-    <path id="Path-11" stroke="#F6F4F2" stroke-width="2" d="M12 36c12.072 0 12.072-24 24-24"/>
+    <path id="Path-11" stroke="#F6F4F2" d="M12 36c12.072 0 12.072-24 24-24"/>
   </g>
 </svg>
