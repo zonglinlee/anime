@@ -196,7 +196,7 @@ a.arrow:hover:after {
 
 @media (min-width: 800px) {
   .description-section {
-    margin-top: 80px;
+    margin-top: 0;
     margin-bottom: 128px;
   }
 }
@@ -289,13 +289,16 @@ a.arrow:hover:after {
 }
 
 .main-logo-circle {
+  opacity: .001;
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 80%;
-  padding-bottom: 80%;
-  margin: -40% 0 0 -40%;
+  width: 60%;
+  padding-bottom: 60%;
+  margin: -30% 0 0 -30%;
   border-radius: 50%;
+  transform: rotate(-315deg);
+  background-image: linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);
 }
 
 @media (min-width: 800px; & max-height: 800px;) {
@@ -330,7 +333,7 @@ a.arrow:hover:after {
 .logo-animation-wrapper {
   position: relative;
   width: 100%;
-  padding-bottom: 17.777777778%;
+  padding-bottom: 13%;
 }
 
 .logo-animation {
@@ -344,9 +347,9 @@ a.arrow:hover:after {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 740px;
+  width: 945px;
   height: 544px;
-  margin: -272px 0 0 -370px;
+  margin: -272px 0 0 -475px;
   transform: scale(.633333);
 }
 
@@ -355,8 +358,8 @@ a.arrow:hover:after {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 720px;
-  height: 128px;
+  width: 950px;
+  height: 120px;
 }
 
 .anime-logo-signs {
@@ -378,14 +381,15 @@ a.arrow:hover:after {
 
 .bounced {
   transform-origin: 50% 100% 0px;
-  transform: translateY(100px) scaleX(.55) scaleY(.8);
+  transform: translateY(200px) scaleX(.55) scaleY(.8);
 }
 
 .logo-animation .bounce {
   overflow: visible;
   position: absolute;
   left: 0;
-  bottom: 63px;
+  bottom: 70px;
+  /*stroke: red;*/
 }
 
 .logo-animation .dot {
@@ -394,9 +398,9 @@ a.arrow:hover:after {
   z-index: 10;
   top: 0;
   left: 0;
-  width: 22px;
-  height: 22px;
-  margin: -11px 0 0 -11px;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
   background-color: currentColor;
   transform: translate3d(0,0,0);
 }
@@ -408,20 +412,23 @@ a.arrow:hover:after {
 }
 
 .logo-animation .line {
+  fill: none;
+  fill-rule: evenodd;
+  stroke-linecap: square;
+  stroke-width: 40;
   stroke: currentColor;
-  stroke-width: 22px;
 }
 
 .logo-animation .fill {
   opacity: .001;
   stroke: currentColor;
-  stroke-width: 22px;
+  stroke-width: 40px;
 }
 
 .logo-text {
   opacity: .001;
   display: none;
-  margin-top: .25em;
+  margin-top: .5em;
   padding-left: .1em;
   padding-right: .1em;
   font-weight: 400;
@@ -665,16 +672,17 @@ a.arrow:hover:after {
   bottom: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   width: 100%;
   height: 100%;
 }
 
 .easing-visualizer .bar {
-  width: 1px;
+  width: 11px;
   height: 5px;
-  margin: 0 4px;
-  background-color: currentColor;
+  margin: 0;
+  background-color: transparent;
+  background-image: linear-gradient(180deg, #373734 0%, #242423 52%, #0D0D0C 100%);
   transform-origin: 50% 50%;
 }
 
@@ -715,6 +723,7 @@ a.arrow:hover:after {
   height: 4px;
   margin: 13px;
   background-color: currentColor;
+  /*background-image: linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);*/
   border-radius: 50%;
 }
 

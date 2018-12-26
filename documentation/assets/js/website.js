@@ -45,11 +45,11 @@ var logoAnimation = (function() {
   }
   dateEl.innerHTML = date.getFullYear();
 
-  fitElToParent(logoAnimationEl, 20);
+  fitElToParent(logoAnimationEl, 0);
 
-  anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 56});
-  anime.setValue('.letter-e', {translateX: -56});
-  anime.setValue('.dot', { translateX: 448, translateY: -100 });
+  anime.setValue(['.letter-a', '.letter-n', '.letter-i'], {translateX: 70});
+  anime.setValue('.letter-e', {translateX: -70});
+  anime.setValue('.dot', { translateX: 595, translateY: -200 });
 
   var logoAnimationTL = anime.timeline({
     easing: 'easeOutSine'
@@ -63,39 +63,39 @@ var logoAnimation = (function() {
     targets: '.bounced',
     transformOrigin: ['50% 100% 0px', '50% 100% 0px'],
     translateY: [
-      {value: [100, -152], duration: 190, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
+      {value: [150, -160], duration: 190, endDelay: 20, easing: 'cubicBezier(0.225, 1, 0.915, 0.980)'},
       {value: 4, duration: 120, easing: 'easeInQuad'},
       {value: 0, duration: 120, easing: 'easeOutQuad'}
     ],
     scaleX: [
-      {value: [.35, .85], duration: 190, easing: 'easeOutQuad'},
-      {value: 1.1, duration: 120, delay: 85, easing: 'easeInOutSine'},
+      {value: [.25, .85], duration: 190, easing: 'easeOutQuad'},
+      {value: 1.08, duration: 120, delay: 85, easing: 'easeInOutSine'},
       {value: 1, duration: 260, delay: 25, easing: 'easeOutQuad'}
     ],
     scaleY: [
-      {value: [.8, 1.3], duration: 120, easing: 'easeOutSine'},
-      {value: .75, duration: 120, delay: 180, easing: 'easeInOutSine'},
-      {value: 1.07, duration: 180, delay: 25, easing: 'easeOutQuad'},
-      {value: 1, duration: 250, delay: 15, easing: 'easeOutQuad'}
+      {value: [.3, .8], duration: 120, easing: 'easeOutSine'},
+      {value: .35, duration: 120, delay: 180, easing: 'easeInOutSine'},
+      {value: .57, duration: 180, delay: 25, easing: 'easeOutQuad'},
+      {value: .5, duration: 190, delay: 15, easing: 'easeOutQuad'}
     ],
-    delay: anime.stagger(80)
+    delay: anime.stagger(120)
   }, 500)
   .add({
     targets: '.dot',
     opacity: { value: 1, duration: 100 },
-    translateY: 270,
+    translateY: 250,
     scaleY: [4, .7],
     scaleX: { value: 1.3, delay: 100, duration: 200},
-    duration: 320,
+    duration: 280,
     easing: 'cubicBezier(0.350, 0.560, 0.305, 1)'
-  }, '-=490')
+  }, '-=290')
   .add({
     targets: '.letter-m .line',
     easing: 'easeOutElastic(1, .8)',
     duration: 600,
     d: function(el) { return el.dataset.d2 },
     begin: function(a) { a.animatables[0].target.removeAttribute('stroke-dasharray'); }
-  }, '-=330')
+  }, '-=140')
   .add({
     targets: ['.letter-a', '.letter-n', '.letter-i', '.letter-e'],
     translateX: 0,
@@ -105,10 +105,15 @@ var logoAnimation = (function() {
     change: function(a) { a.animatables[2].target.removeAttribute('stroke-dasharray'); }
   }, '-=600')
   .add({
+    targets: '.letter-m .line',
+    d: function(el) { return el.dataset.d3 },
+    easing: 'spring(.2, 200, 3, 60)',
+  }, '-=680')
+  .add({
     targets: '.dot',
     translateX: bouncePath('x'),
     translateY: bouncePath('y'),
-    rotate: '1turn',
+    rotate: {value: '1turn', duration: 790},
     scaleX: { value: 1, duration: 50, easing: 'easeOutSine' },
     scaleY: [
       { value: [1, 1.5], duration: 50, easing: 'easeInSine' },
@@ -116,49 +121,55 @@ var logoAnimation = (function() {
     ],
     easing: 'cubicBezier(0, .74, 1, .255)',
     duration: 800
-  }, '-=660')
-  .add({
-    targets: '.letter-i rect',
-    opacity: 0.001,
-    duration: 1
-  })
+  }, '-=1273')
   .add({
     targets: '.dot',
-    scaleY: 1,
-    scaleX: 1,
+    scale: 1,
+    rotate: '1turn',
+    scaleY: {value: .5, delay: 0, duration: 150, delay: 230},
+    translateX: 405,
     translateY: [
-      {value: 262, duration: 100, easing: 'easeOutSine'},
-      {value: 244, duration: 1000, easing: 'easeOutElastic(1, .8)'}
-    ]
-  })
-  .add({
-    targets: '.main-logo-circle path',
-    opacity: {value: 1, duration: 10},
-    strokeDashoffset: [anime.setDashoffset, 0],
-    easing: 'cubicBezier(0.440, 0.640, 1.000, 0.255)',
-    duration: 900,
-  }, '-=1900')
-  .add({
-    targets: '.letter-m .line',
-    d: function(el) { return el.dataset.d3 },
-    easing: 'spring(.2, 200, 3, 60)',
-  }, '-=1908')
+      {value: 244, duration: 100},
+      {value: 204, duration: 200, delay: 130},
+      {value: 224, duration: 225, easing: 'easeOutQuad', delay: 25}
+    ],
+    duration: 200,
+    easing: 'easeOutSine'
+  }, '-=474')
   .add({
     targets: '.letter-i .line',
     transformOrigin: ['50% 100% 0', '50% 100% 0'],
     d: function(el) { return el.dataset.d2 },
     easing: 'cubicBezier(0.400, 0.530, 0.070, 1)',
     duration: 80
-  }, '-=1100')
+  }, '-=670')
   .add({
     targets: '.logo-letter',
     translateY: [
-      {value: 33, duration: 150, easing: 'easeOutQuart'},
+      {value: 40, duration: 150, easing: 'easeOutQuart'},
       {value: 0, duration: 800, easing: 'easeOutElastic(1, .5)'}
     ],
     strokeDashoffset: [anime.setDashoffset, 0],
-    delay: anime.stagger(35, {from: 'center'})
-  }, '-=1100')
+    delay: anime.stagger(60, {from: 'center'})
+  }, '-=670')
+  .add({
+    targets: '.bounced',
+    scaleY: [
+      {value: .4, duration: 150, easing: 'easeOutQuart'},
+      {value: .5, duration: 800, easing: 'easeOutElastic(1, .5)'}
+    ],
+    delay: anime.stagger(60, {from: 'center'})
+  }, '-=1090')
+  // .add({
+  //   targets: '.dot',
+  //   scaleY: .5,
+  //   translateY: [
+  //     {value: '-=8', duration: 80},
+  //     {value: 224, duration: 160, delay: 40}
+  //   ],
+  //   duration: 100,
+  //   easing: 'easeOutSine'
+  // }, '-=820')
   .add({
     targets: '.logo-text',
     translateY: [
@@ -169,12 +180,20 @@ var logoAnimation = (function() {
     duration: 500
   }, '-=970')
   .add({
+    targets: '.main-logo-circle',
+    opacity: {value: [0.001, 1], duration: 2000},
+    rotate: [0, 45],
+    translateY: {value: ['60px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
+    duration: 2000,
+    easing: 'easeInOutQuad'
+  }, '-=970')
+  .add({
     targets: ['.description-title','.description-paragraph'],
-    translateY: {value: ['80px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
     opacity: {value: [0.001, 1], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
+    translateY: {value: ['80px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
     duration: 3500,
     delay: anime.stagger(75)
-  }, '-=700')
+  }, '-=1300')
   .add({
     targets: '.top-header a',
     opacity: {value: [0.001, 1], easing: 'linear', duration: 200},
@@ -194,21 +213,15 @@ var logoAnimation = (function() {
     }
   }, '-=3850')
   .add({
-    targets: '.main-logo-circle svg',
-    scale: [.825, 1],
-    easing: 'easeInOutCirc',
-    duration: 500,
-  }, '-=3900')
-  .add({
     targets: '.top-mini-logo path',
     opacity: {value: [0, 1], duration: 30},
     strokeDashoffset: [anime.setDashoffset, 0],
     delay: anime.stagger(100)
   }, '-=3750')
 
-  // anime.speed = .2;
+  // anime.speed = .1;
   logoAnimationTL.pause();
-  logoAnimationTL.seek(1400);
+  // logoAnimationTL.seek(1500);
   logoAnimationTL.play();
 
   return logoAnimationTL;
@@ -433,16 +446,19 @@ var advancedStaggeringAnimation = (function() {
         {
           translateX: anime.stagger('-1.5px', {grid: grid, from: index, axis: 'x'}),
           translateY: anime.stagger('-1.5px', {grid: grid, from: index, axis: 'y'}),
+          backgroundImage: 'linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #000000 100%)',
           duration: 100
         }, {
           translateX: anime.stagger('1.5px', {grid: grid, from: index, axis: 'x'}),
           translateY: anime.stagger('1.5px', {grid: grid, from: index, axis: 'y'}),
           scale: anime.stagger([6.5, .5], {grid: grid, from: index}),
+          backgroundImage: 'linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #000000 100%)',
           duration: 225
         }, {
           translateX: 0,
           translateY: 0,
           scale: 1,
+          backgroundImage: 'linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #000000 100%)',
           duration: 300,
         }
       ],
