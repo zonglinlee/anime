@@ -78,7 +78,7 @@ var logoAnimation = (function() {
       {value: .57, duration: 180, delay: 25, easing: 'easeOutQuad'},
       {value: .5, duration: 190, delay: 15, easing: 'easeOutQuad'}
     ],
-    delay: anime.stagger(120)
+    delay: anime.stagger(80)
   }, 500)
   .add({
     targets: '.dot',
@@ -196,8 +196,7 @@ var logoAnimation = (function() {
   }, '-=1300')
   .add({
     targets: '.top-header a',
-    opacity: {value: [0.001, 1], easing: 'linear', duration: 200},
-    translateY: {value: ['-80px', 0], easing: 'easeOutQuad'},
+    opacity: {value: [0.001, 1], easing: 'linear', duration: 400},
     duration: 500,
     delay: anime.stagger(40, {from: 'center'}),
     begin: function(anim) {
@@ -214,14 +213,14 @@ var logoAnimation = (function() {
   }, '-=3850')
   .add({
     targets: '.top-mini-logo path',
-    opacity: {value: [0, 1], duration: 30},
+    opacity: {value: [0, 1], duration: 20},
     strokeDashoffset: [anime.setDashoffset, 0],
-    delay: anime.stagger(100)
+    delay: anime.stagger(120)
   }, '-=3750')
 
   // anime.speed = .1;
   logoAnimationTL.pause();
-  // logoAnimationTL.seek(1500);
+  logoAnimationTL.seek(3200);
   logoAnimationTL.play();
 
   return logoAnimationTL;
@@ -243,9 +242,10 @@ var sphereAnimation = (function() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
           targets: spherePathEls[i],
-          stroke: {value: '#F6F4F2', duration: 150},
-          translateX: [1, -2],
-          translateY: [1, -2],
+          // stroke: {value: '#F6F4F2', duration: 150},
+          stroke: {value: ['rgba(255,75,75,1)', 'rgba(80,80,80,.35)'], duration: 500},
+          translateX: [2, -4],
+          translateY: [2, -4],
           easing: 'easeOutQuad',
           autoplay: false
         }));
@@ -266,46 +266,60 @@ var sphereAnimation = (function() {
   })
   .add({
     targets: sphereEl,
-    translateX: [60, 0],
+    opacity: [.001, 1],
     translateY: [60, 0],
-    duration: 4000,
+    duration: 2000,
     easing: 'easeOutSine',
   }, 0)
   .add({
     targets: spherePathEls,
     strokeDashoffset: {
       value: [anime.setDashoffset, 0],
-      duration: 2000,
+      duration: 3700,
       easing: 'easeInOutCirc',
-      delay: anime.stagger(80, {direction: 'reverse'})
+      delay: anime.stagger(190, {direction: 'reverse'})
     },
-    fill: {
-      value: 'rgba(37,36,35,.6)',
-      delay: anime.stagger(60, {start: 2000, direction: 'reverse'})
-    },
-    opacity: [.001, 1],
-    duration: 1000,
+    duration: 2000,
     delay: anime.stagger(60, {direction: 'reverse'}),
     easing: 'linear'
   }, 0);
 
+  var shadowAnimation = anime({
+      targets: '#sphereGradient',
+      x1: '25%',
+      x2: '25%',
+      y1: '0%',
+      y2: '75%',
+      duration: 30000,
+      easing: 'easeOutQuint',
+      // direction: 'alternate',
+      // loop: true,
+      autoplay: false
+    }, 0);
+
   function play() {
     introAnimation.play();
     breathAnimation.play();
+    shadowAnimation.play();
   }
 
-  isElementInViewport(sphereEl, play, breathAnimation.pause);
+  function pause() {
+    breathAnimation.pause();
+    shadowAnimation.pause();
+  }
+
+  isElementInViewport(sphereEl, play, pause);
 
 })();
 
-var builtInEasingsAnimation = (function() {
+var easyEasingsAnimation = (function() {
 
   var easingVisualizerEl = document.querySelector('.easing-visualizer');
   var barsWrapperEl = easingVisualizerEl.querySelector('.bars-wrapper');
   var dotsWrapperEl = easingVisualizerEl.querySelector('.dots-wrapper');
   var barsFragment = document.createDocumentFragment();
   var dotsFragment = document.createDocumentFragment();
-  var numberOfBars = 99;
+  var numberOfBars = 91;
   var duration = 450;
   var animation;
   var paused = true;
@@ -346,12 +360,12 @@ var builtInEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 100], {easing: ease, from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 111], {easing: ease, from: 'center', direction: 'reverse'}),
       delay: anime.stagger(7, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
-      translateY: anime.stagger(['-200px', '200px'], {easing: ease, from: 'last'}),
+      translateY: anime.stagger(['-160px', '160px'], {easing: ease, from: 'last'}),
       delay: anime.stagger(7, {from: 'center'})
     }, 0);
 
@@ -393,9 +407,9 @@ var builtInEasingsAnimation = (function() {
 var advancedStaggeringAnimation = (function() {
 
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
-  var fragment = document.createDocumentFragment();
-  var grid = [24, 18];
-  var cell = 30;
+  var dotsFragment = document.createDocumentFragment();
+  var grid = [15, 12];
+  var cell = 48;
   var numberOfElements = grid[0] * grid[1];
   var animation;
   var paused = true;
@@ -405,10 +419,10 @@ var advancedStaggeringAnimation = (function() {
   for (var i = 0; i < numberOfElements; i++) {
     var dotEl = document.createElement('div');
     dotEl.classList.add('dot');
-    fragment.appendChild(dotEl);
+    dotsFragment.appendChild(dotEl);
   }
 
-  staggerVisualizerEl.appendChild(fragment);
+  staggerVisualizerEl.appendChild(dotsFragment);
 
   var index = anime.random(0, numberOfElements-1);
   var nextIndex = 0;
@@ -434,9 +448,9 @@ var advancedStaggeringAnimation = (function() {
     .add({
       targets: '.stagger-visualizer .cursor',
       keyframes: [
-        { scale: .625, duration: 150}, 
-        { scale: 1.5, duration: 200},
-        { scale: 1.25, duration: 350},
+        { scale: .75, duration: 120}, 
+        { scale: 2, duration: 220},
+        { scale: 1.5, duration: 450},
       ],
       duration: 300
     })
@@ -444,22 +458,19 @@ var advancedStaggeringAnimation = (function() {
       targets: '.stagger-visualizer .dot',
       keyframes: [
         {
-          translateX: anime.stagger('-1.5px', {grid: grid, from: index, axis: 'x'}),
-          translateY: anime.stagger('-1.5px', {grid: grid, from: index, axis: 'y'}),
-          backgroundImage: 'linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #000000 100%)',
+          translateX: anime.stagger('-2px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('-2px', {grid: grid, from: index, axis: 'y'}),
           duration: 100
         }, {
-          translateX: anime.stagger('1.5px', {grid: grid, from: index, axis: 'x'}),
-          translateY: anime.stagger('1.5px', {grid: grid, from: index, axis: 'y'}),
-          scale: anime.stagger([6.5, .5], {grid: grid, from: index}),
-          backgroundImage: 'linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #000000 100%)',
+          translateX: anime.stagger('8px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('8px', {grid: grid, from: index, axis: 'y'}),
+          scale: anime.stagger([2.9, .5], {grid: grid, from: index}),
           duration: 225
         }, {
           translateX: 0,
           translateY: 0,
           scale: 1,
-          backgroundImage: 'linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #000000 100%)',
-          duration: 300,
+          duration: 800,
         }
       ],
       delay: anime.stagger(80, {grid: grid, from: index})
@@ -518,7 +529,7 @@ var timeControlAnimation = (function() {
   var timeEl = document.querySelector('.time-cursor input');
   var infoEls = document.querySelectorAll('.info');
   var fragment = document.createDocumentFragment();
-  var numberOfElements = 136;
+  var numberOfElements = 271;
 
   for (let i = 0; i < numberOfElements; i++) {
     var dotEl = document.createElement('div');
@@ -528,7 +539,7 @@ var timeControlAnimation = (function() {
 
   rullerEl.appendChild(fragment);
 
-  var animationPXOffset = (timeControlEl.offsetWidth - (timeControlEl.parentNode.offsetWidth - 32)) / 2;
+  var animationPXOffset = (timeControlEl.offsetWidth - (timeControlEl.parentNode.offsetWidth - 20)) / 2;
   if (animationPXOffset < 0) animationPXOffset = 0;
 
   var timelineAnimation = anime.timeline({
@@ -544,7 +555,7 @@ var timeControlAnimation = (function() {
     targets: '.time-cursor',
     keyframes: [
       { translateY: [-24, 0], duration: 100, easing: 'easeInQuad' },
-      { translateX: 810, duration: 1500 },
+      { translateX: 1080, duration: 1500 },
       { translateY: -24, duration: 100, easing: 'easeOutQuad' }
     ],
     duration: 1500,
@@ -555,10 +566,10 @@ var timeControlAnimation = (function() {
   .add({
     targets: '.ruller .line',
     translateY: [ {value: 24}, {value: 0} ],
-    duration: 200,
+    duration: 160,
     delay: anime.stagger([0, 1500]),
     easing: 'easeInOutSine'
-  }, -100)
+  }, -80)
 
   for (var i = 0; i < infoEls.length; i++) {
     var infoEl = infoEls[i];
@@ -633,37 +644,37 @@ var layeredAnimation = (function() {
 
     var animation = anime.timeline({
       targets: el,
-      duration: function() { return anime.random(800, 2000); },
+      duration: function() { return anime.random(600, 2200); },
       easing: function() { return easings[anime.random(0, easings.length - 1)]; },
       complete: function(anim) { animateShape(anim.animatables[0].target); },
     })
     .add({
       translateX: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-320, 320) : anime.random(-480, 480);
+        return el.classList.contains('large') ? anime.random(-280, 280) : anime.random(-480, 480);
       }),
       translateY: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-200, 200) : anime.random(-320, 320);
+        return el.classList.contains('large') ? anime.random(-96, 96) : anime.random(-200, 200);
       }),
-      rotate: createKeyframes(function() { return anime.random(-220, 220); }),
+      rotate: createKeyframes(function() { return anime.random(-180, 180); }),
     }, 0);
     if (circleEl) {
       animation.add({
         targets: circleEl,
-        r: createKeyframes(function() { return anime.random(24, 56); }),
+        r: createKeyframes(function() { return anime.random(32, 72); }),
       }, 0);
     }
     if (rectEl) {
       animation.add({
         targets: rectEl,
-        width: createKeyframes(function() { return anime.random(56, 96); }),
-        height: createKeyframes(function() { return anime.random(56, 96); }),
+        width: createKeyframes(function() { return anime.random(64, 120); }),
+        height: createKeyframes(function() { return anime.random(64, 120); }),
       }, 0);
     }
     if (polyEl) {
       animation.add({
         targets: polyEl,
         points: createKeyframes(function() { 
-          var scale = anime.random(64, 148) / 100;
+          var scale = anime.random(72, 180) / 100;
           return trianglePoints.map(function(p) { return p * scale; }).join(' ');
         }),
       }, 0);

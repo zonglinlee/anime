@@ -24,15 +24,15 @@
 
   <header class="top-header grid-container">
     <a href="#" class="top-header-logo">
-      <svg class="top-mini-logo" fill="none" fill-rule="evenodd" stroke-linecap="square" viewBox="0 0 93 12">
-        <path d="M1 1h9.994c.92 0 1.665.744 1.665 1.662v6.676c0 .918-.746 1.662-1.665 1.662H2.666C1.746 11 1 10.256 1 9.338V5.981c0-.918.746-1.662 1.666-1.662h6.662"/>
-        <path d="M16.036 11V2.667c0-.92.744-1.667 1.662-1.667h8.336c.917 0 1.661.746 1.661 1.667V11"/>
-        <path d="M31 11V4.36"/>
-        <path d="M31 1.05V1"/>
-        <path class="large-screen" d="M34.45 11V2.667c0-.92.745-1.667 1.665-1.667h39.183c.92 0 1.666.746 1.666 1.667V11"/>
-        <path class="large-screen" d="M92 11h-9.994c-.92 0-1.665-.744-1.665-1.662V2.662c0-.918.746-1.662 1.665-1.662h8.328C91.254 1 92 1.744 92 2.662v3.324c0 .918-.746 1.662-1.666 1.662h-6.662"/>
-        <path class="small-screen" d="M34.45 11V2.667c0-.92.562-1.667 1.255-1.667H56.195c.693 0 1.255.746 1.255 1.667V11"/>
-        <path class="small-screen" d="M72.66 11h-9.994C61.746 11 61 10.256 61 9.338V2.662C61 1.744 61.746 1 62.666 1h8.328c.92 0 1.665.744 1.665 1.662v3.324c0 .918-.746 1.662-1.665 1.662H64.33"/>
+      <svg class="top-mini-logo" viewBox="0 0 940 240">
+        <g id="anime-mini-logo" fill="none" fill-rule="evenodd" stroke-linecap="square">
+          <path id="a" stroke="#3E3E3E" stroke-width="40" d="M20 20h130c5.523 0 10 8.954 10 40v160H30c-5.523 0-10-8.954-10-40v-60c0-31.046 4.477-40 10-40h110"/>
+          <path id="n" stroke="#3E3E3E" stroke-width="40" d="M210 220V60c0-31.046 8.656-40 19.333-40h101.334C341.344 20 350 28.954 350 60v160"/>
+          <path id="i" stroke="#3E3E3E" stroke-width="40" d="M400 80v140"/>
+          <path id="i" stroke="#3E3E3E" stroke-width="40" d="M400 20.2v.6"/>
+          <path id="m" stroke="#3E3E3E" stroke-width="40" d="M450 220V60c0-31.046 8.656-40 19.333-40h241.334C721.344 20 730 28.954 730 60v160"/>
+          <path id="e" stroke="#3E3E3E" stroke-width="40" d="M800 160h110c5.523 0 10-8.954 10-40V60c0-31.046-4.477-40-10-40H790c-5.523 0-10 8.95-10 40v120c0 31.046 4.477 40 10 40h130"/>
+        </g>
       </svg>
     </a>
     <nav class="top-menu">
@@ -204,7 +204,7 @@
           </figure>
           <figure class="feature-icon">
             <img src="documentation/assets/img/icons/icon-staggering-grid.svg" />
-            <figcaption class="feature-caption">2d grid</figcaption>
+            <figcaption class="feature-caption">ripple</figcaption>
           </figure>
         </div>
         <p class="feature-paragraph">
@@ -234,32 +234,53 @@
 
       <div class="feature-animation">
         <div class="layered-animations">
-          <svg class="x-small shape" viewBox="0 0 96 96">
-            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
+          <svg class="large shape" viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="circleGradient" x1="0%" x2="100%" y1="20%" y2="80%">
+                <stop stop-color="#373734" offset="0%"/>
+                <stop stop-color="#242423" offset="50%"/>
+                <stop stop-color="#0D0D0C" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <circle cx="48" cy="48" r="28" fill-rule="evenodd" stroke-linecap="square" fill="url(#circleGradient)"/>
+          </svg>
+          <svg class="small shape color-red" viewBox="0 0 96 96">
+            <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square"/>
+          </svg>
+          <svg class="large shape" viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="triangleGradient" x1="0%" x2="100%" y1="20%" y2="80%">
+                <stop stop-color="#373734" offset="0%"/>
+                <stop stop-color="#242423" offset="50%"/>
+                <stop stop-color="#0D0D0C" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square" fill="url(#triangleGradient)"/>
           </svg>
           <svg class="x-small shape" viewBox="0 0 96 96">
             <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square"/>
+          </svg>
+          <svg class="x-small shape" viewBox="0 0 96 96">
+            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
+          </svg>
+          <svg class="small shape color-red" viewBox="0 0 96 96">
+            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
+          </svg>
+          <svg class="large shape" viewBox="0 0 96 96">
+            <defs>
+              <linearGradient id="rectGradient" x1="0%" x2="100%" y1="20%" y2="80%">
+                <stop stop-color="#373734" offset="0%"/>
+                <stop stop-color="#242423" offset="50%"/>
+                <stop stop-color="#0D0D0C" offset="100%"/>
+              </linearGradient>
+            </defs>
+            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square" fill="url(#rectGradient)"/>
+          </svg>
+          <svg class="small shape color-red" viewBox="0 0 96 96">
+            <circle cx="48" cy="48" r="32" fill-rule="evenodd" stroke-linecap="square"/>
           </svg>
           <svg class="x-small shape" viewBox="0 0 96 96">
             <circle cx="48" cy="48" r="32" fill-rule="evenodd" stroke-linecap="square"/>
-          </svg>
-          <svg class="small shape color-red" viewBox="0 0 96 96">
-            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
-          </svg>
-          <svg class="small shape color-red" viewBox="0 0 96 96">
-            <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square"/>
-          </svg>
-          <svg class="small shape color-red" viewBox="0 0 96 96">
-            <circle cx="48" cy="48" r="32" fill-rule="evenodd" stroke-linecap="square"/>
-          </svg>
-          <svg class="large shape" viewBox="0 0 96 96">
-            <circle cx="48" cy="48" r="28" fill-rule="evenodd" stroke-linecap="square"/>
-          </svg>
-          <svg class="large shape" viewBox="0 0 96 96">
-            <rect width="48" height="48" x="24" y="24" fill-rule="evenodd" stroke-linecap="square"/>
-          </svg>
-          <svg class="large shape" viewBox="0 0 96 96">
-            <polygon fill-rule="evenodd" points="48 17.28 86.4 80.11584 9.6 80.11584" stroke-linecap="square"/>
           </svg>
         </div>
       </div>
@@ -273,11 +294,16 @@
     <div class="grid-container vertical-grid centered-grid">
 
       <div class="feature-description">
-
         <h1 class="feature-title">Time controls & callbacks.</h1>
         <p class="feature-paragraph">
           Have complte control on your animations playback: play, pause, control, reverse and trigger events in sync using the complete callbacks built-in functions.
         </p>
+        <p class="feature-paragraph">
+          <a href="#" class="primary arrow">Learn more about callbacks</a>
+        </p>
+      </div>
+
+      <div class="feature-description">
         <div class="feature-icons-container timeline-caption horizontal-icons">
           <figure class="feature-icon timeline-icon">
             <div class="animation-band animation-delay"></div>
@@ -292,9 +318,6 @@
             <figcaption class="feature-caption">change</figcaption>
           </figure>
         </div>
-        <p class="feature-paragraph">
-          <a href="#" class="primary arrow">Learn more about callbacks</a>
-        </p>
       </div>
 
       <div class="feature-animation">
@@ -421,6 +444,13 @@
       <div class="feature-animation square-animation">
         <div class="sphere-animation">
           <svg class="sphere" viewBox="0 0 440 440">
+            <defs>
+              <linearGradient id="sphereGradient" x1="0%" x2="0%" y1="0%" y2="0%">
+                <stop stop-color="#373734" offset="0%"/>
+                <stop stop-color="#242423" offset="50%"/>
+                <stop stop-color="#0D0D0C" offset="100%"/>
+              </linearGradient>
+            </defs>
             <path d="M361.604 361.238c-24.407 24.408-51.119 37.27-59.662 28.727-8.542-8.543 4.319-35.255 28.726-59.663 24.408-24.407 51.12-37.269 59.663-28.726 8.542 8.543-4.319 35.255-28.727 59.662z"/>
             <path d="M360.72 360.354c-35.879 35.88-75.254 54.677-87.946 41.985-12.692-12.692 6.105-52.067 41.985-87.947 35.879-35.879 75.254-54.676 87.946-41.984 12.692 12.692-6.105 52.067-41.984 87.946z"/>
             <path d="M357.185 356.819c-44.91 44.91-94.376 68.258-110.485 52.149-16.11-16.11 7.238-65.575 52.149-110.485 44.91-44.91 94.376-68.259 110.485-52.15 16.11 16.11-7.239 65.576-52.149 110.486z"/>
