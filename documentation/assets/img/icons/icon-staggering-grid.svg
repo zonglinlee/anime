@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <g id="icon-staggering-grid" fill="none" fill-rule="evenodd">
-    <g id="Group-7" transform="translate(7 7)">
-      <rect id="Mask" width="33" height="33" x=".5" y=".5" stroke="#242423" opacity=".5"/>
-      <circle id="Oval" cx="17" cy="17" r="1" fill="#242423"/>
-      <circle id="Oval-Copy" cx="17" cy="17" r="4" stroke="#242423" stroke-width="2"/>
-      <circle id="Oval-Copy-2" cx="17" cy="17" r="8" stroke="#242423" stroke-width="2"/>
-    </g>
+    <rect id="Mask" width="34" height="34" x="7" y="7" opacity=".5"/>
+    <circle id="Oval" cx="24" cy="24" r="1" fill="#242423"/>
+    <circle id="Oval-Copy" cx="24" cy="24" r="4" stroke="#242423" stroke-width="2"/>
+    <circle id="Oval-Copy-2" cx="24" cy="24" r="8" stroke="#242423" stroke-width="2"/>
   </g>
 </svg>

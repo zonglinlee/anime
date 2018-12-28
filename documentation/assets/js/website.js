@@ -220,7 +220,7 @@ var logoAnimation = (function() {
 
   // anime.speed = .1;
   logoAnimationTL.pause();
-  logoAnimationTL.seek(3200);
+  // logoAnimationTL.seek(3200);
   logoAnimationTL.play();
 
   return logoAnimationTL;
@@ -242,7 +242,6 @@ var sphereAnimation = (function() {
       for (var i = 0; i < pathLength; i++) {
         aimations.push(anime({
           targets: spherePathEls[i],
-          // stroke: {value: '#F6F4F2', duration: 150},
           stroke: {value: ['rgba(255,75,75,1)', 'rgba(80,80,80,.35)'], duration: 500},
           translateX: [2, -4],
           translateY: [2, -4],
@@ -275,7 +274,7 @@ var sphereAnimation = (function() {
     targets: spherePathEls,
     strokeDashoffset: {
       value: [anime.setDashoffset, 0],
-      duration: 3700,
+      duration: 3900,
       easing: 'easeInOutCirc',
       delay: anime.stagger(190, {direction: 'reverse'})
     },
@@ -292,8 +291,6 @@ var sphereAnimation = (function() {
       y2: '75%',
       duration: 30000,
       easing: 'easeOutQuint',
-      // direction: 'alternate',
-      // loop: true,
       autoplay: false
     }, 0);
 
@@ -407,6 +404,7 @@ var easyEasingsAnimation = (function() {
 var advancedStaggeringAnimation = (function() {
 
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
+  var dotsWrapperEl = staggerVisualizerEl.querySelector('.dots-wrapper');
   var dotsFragment = document.createDocumentFragment();
   var grid = [15, 12];
   var cell = 48;
@@ -422,7 +420,7 @@ var advancedStaggeringAnimation = (function() {
     dotsFragment.appendChild(dotEl);
   }
 
-  staggerVisualizerEl.appendChild(dotsFragment);
+  dotsWrapperEl.appendChild(dotsFragment);
 
   var index = anime.random(0, numberOfElements-1);
   var nextIndex = 0;
@@ -431,7 +429,7 @@ var advancedStaggeringAnimation = (function() {
     translateX: anime.stagger(-cell, {grid: grid, from: index, axis: 'x'}),
     translateY: anime.stagger(-cell, {grid: grid, from: index, axis: 'y'}),
     translateZ: 0,
-    scale: 1.25,
+    scale: 1.5,
   });
 
   function play() {
@@ -449,7 +447,7 @@ var advancedStaggeringAnimation = (function() {
       targets: '.stagger-visualizer .cursor',
       keyframes: [
         { scale: .75, duration: 120}, 
-        { scale: 2, duration: 220},
+        { scale: 2.5, duration: 220},
         { scale: 1.5, duration: 450},
       ],
       duration: 300
@@ -464,7 +462,7 @@ var advancedStaggeringAnimation = (function() {
         }, {
           translateX: anime.stagger('8px', {grid: grid, from: index, axis: 'x'}),
           translateY: anime.stagger('8px', {grid: grid, from: index, axis: 'y'}),
-          scale: anime.stagger([2.9, .5], {grid: grid, from: index}),
+          scale: anime.stagger([2.2, .5], {grid: grid, from: index}),
           duration: 225
         }, {
           translateX: 0,
@@ -474,12 +472,12 @@ var advancedStaggeringAnimation = (function() {
         }
       ],
       delay: anime.stagger(80, {grid: grid, from: index})
-    }, 0)
+    }, 10)
     .add({
       targets: '.stagger-visualizer .cursor',
       translateX: { value: anime.stagger(-cell, {grid: grid, from: nextIndex, axis: 'x'}) },
       translateY: { value: anime.stagger(-cell, {grid: grid, from: nextIndex, axis: 'y'}) },
-      scale: 1.25,
+      scale: 1.5,
       easing: 'cubicBezier(.075, .2, .165, 1)'
     }, '-=800')
 
@@ -650,10 +648,10 @@ var layeredAnimation = (function() {
     })
     .add({
       translateX: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-280, 280) : anime.random(-480, 480);
+        return el.classList.contains('large') ? anime.random(-300, 300) : anime.random(-520, 520);
       }),
       translateY: createKeyframes(function(el) { 
-        return el.classList.contains('large') ? anime.random(-96, 96) : anime.random(-200, 200);
+        return el.classList.contains('large') ? anime.random(-110, 110) : anime.random(-280, 280);
       }),
       rotate: createKeyframes(function() { return anime.random(-180, 180); }),
     }, 0);

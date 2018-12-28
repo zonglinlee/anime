@@ -532,7 +532,7 @@ a.arrow:hover:after {
 
 .feature-paragraph {
   font-size: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 @media (min-width: 800px) {
@@ -566,12 +566,15 @@ a.arrow:hover:after {
   position: relative;
   width: 100%;
   margin: auto;
-  padding-bottom: 75%;
+  padding-bottom: 50%;
+}
+
+.horizontal-animation {
+  padding-bottom: 80%;
 }
 
 .square-animation {
   padding-bottom: 100%;
-  /*margin-bottom: -25%;*/
 }
 
 @media (min-width: 800px) {
@@ -585,14 +588,14 @@ a.arrow:hover:after {
     padding-bottom: 100%;
   }
   .vertical-grid .feature-animation {
+    grid-column: 2/12;
+  }
+  .centered-grid .feature-animation {
     grid-column: 1/13;
   }
   .horizontal-grid .feature-animation {
     grid-column: 1/8;
   }
-/*  .vertical-grid .square-animation {
-    grid-column: 2/12;
-  }*/
 }
 
 .feature-icons-container {
@@ -706,20 +709,21 @@ a.arrow:hover:after {
   }
 }
 
+.section-feature-staggering .feature-animation {
+  margin-top: 16px;
+}
+
 .stagger-visualizer {
   position: absolute;
   top: 50%;
   left: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   width: 720px;
   height: 576px;
   margin: -288px 0 0 -360px;
 }
 
-.dots-shadows {
+.dots-wrapper {
+  transform: translateZ(0);
   position: absolute;
   top: 0;
   left: 0;
@@ -733,24 +737,23 @@ a.arrow:hover:after {
 
 .stagger-visualizer .dot {
   position: relative;
-  width: 20px;
-  height: 20px;
-  margin: 14px;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  margin: 11px;
   background-color: currentColor;
-  /*background-color: transparent;*/
-  /*background-image: linear-gradient(180deg, #FFFFFF 10%, rgba(219, 214, 208) 90%);*/
-  /*background-image: linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);*/
+  background-color: transparent;
+  background-image: linear-gradient(180deg, #FFFFFF 8%, #D3CDC6 100%);
   border-radius: 50%;
 }
 
 .stagger-visualizer .cursor {
   position: absolute;
-  z-index: 1;
   top: 0px;
   left: 0px;
-  width: 30px;
-  height: 30px;
-  margin: 9px;
+  width: 42px;
+  height: 42px;
+  margin: 3px;
   background-color: currentColor;
   border-radius: 50%;
 }
@@ -997,9 +1000,9 @@ a.arrow:hover:after {
 }
 
 .layered-animations .small.shape {
-  width: 56px;
-  height: 56px;
-  margin-top: -28px;
+  width: 64px;
+  height: 64px;
+  margin-top: -32px;
   stroke: currentColor;
   fill: currentColor;
 }
