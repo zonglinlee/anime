@@ -181,8 +181,8 @@ var logoAnimation = (function() {
   }, '-=970')
   .add({
     targets: '.main-logo-circle',
-    opacity: {value: [0.001, 1], duration: 2000},
-    rotate: [0, 45],
+    opacity: {value: [0.001, 1], duration: 1500},
+    backgroundImage: ['linear-gradient(-135deg, #FFFFFF 50%, #F6F4F2 75%, #F6F4F2 100%, #DDDAD7 100%)', 'linear-gradient(-135deg, #FFFFFF 5%, #F6F4F2 40%, #F6F4F2 70%, #DDDAD7 100%)'],
     translateY: {value: ['60px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
     duration: 2000,
     easing: 'easeInOutQuad'
@@ -472,7 +472,7 @@ var advancedStaggeringAnimation = (function() {
         }
       ],
       delay: anime.stagger(80, {grid: grid, from: index})
-    }, 10)
+    }, 30)
     .add({
       targets: '.stagger-visualizer .cursor',
       translateX: { value: anime.stagger(-cell, {grid: grid, from: nextIndex, axis: 'x'}) },
