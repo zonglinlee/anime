@@ -96,6 +96,10 @@ a.arrow:hover:after {
 }
 
 .top-header {
+  margin-top: 32px;
+}
+
+.header-content {
   display: flex;
   flex-direction: row;
   grid-column: 1/13;
@@ -103,36 +107,6 @@ a.arrow:hover:after {
   flex-direction: row;
   align-items: center;
   height: 48px;
-  margin-top: 32px;
-}
-
-.top-header-logo {
-  height: 24px;
-}
-
-.top-mini-logo {
-  position: absolute;
-  width: 94px;
-  height: 24px;
-  transform: scaleY(.5);
-  fill: none;
-  stroke: currentColor;
-  fill-rule: evenodd;
-  stroke-linecap: square;
-  stroke-width: 2;
-}
-
-.top-mini-logo .large-screen {
-  display: none;
-}
-
-@media (min-width: 340px) {
-  .top-mini-logo .small-screen {
-    display: none;
-  }
-  .top-mini-logo .large-screen {
-    display: block;
-  }
 }
 
 .top-menu {
@@ -148,33 +122,46 @@ a.arrow:hover:after {
   line-height: 1;
 }
 
-.top-menu a:not(:first-child) {
-  margin-left: 12px;
-}
-
 a.main-cta {
   color: #2E2C2C;
   display: inline-flex;
+  align-items: baseline;
   height: 32px;
   padding-left: 12px;
   padding-right: 12px;
   border-radius: 16px;
+  line-height: 2;
   background-color: #F64E4D;
 }
 
+.top-menu a:not(:first-child) {
+  margin-left: 12px;
+}
+
+.top-menu a:not(.main-cta) {
+  display: none;
+}
+
 @media (min-width: 500px) {
-  .top-header {
-    display: flex;
+  .top-menu a:not(.main-cta) {
+    display: inline-flex;
   }
 }
 
-/* Header */
+/* Logo */
 
 .main-logo {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 180px;
+  width: 110px;
+  height: 14px;
+}
+
+@media (min-width: 500px) {
+  .main-logo {
+    width: 160px;
+  }
 }
 
 .logo-animation-wrapper {
@@ -420,10 +407,6 @@ a.main-cta {
   padding-bottom: 50%;
 }
 
-.horizontal-animation {
-  padding-bottom: 80%;
-}
-
 .square-animation {
   padding-bottom: 100%;
 }
@@ -431,10 +414,7 @@ a.main-cta {
 @media (min-width: 800px) {
   .feature-animation {
     padding-bottom: 50%;
-    margin-bottom: 80px;
-  }
-  .horizontal-animation {
-    padding-bottom: 75%;
+    margin-bottom: 96px;
   }
   .square-animation {
     padding-bottom: 100%;
@@ -474,6 +454,13 @@ a.main-cta {
   justify-content: space-between;
 }
 
+.horizontal-icons .feature-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .horizontal-icons .feature-icon:not(:first-child) {
   margin-left: 16px;
 }
@@ -485,7 +472,13 @@ a.main-cta {
 /** Intro **/
 
 .section-intro {
-  padding-top: 80px;
+  padding-top: 48px;
+}
+
+@media (min-width: 500px) {
+  .section-intro {
+    padding-top: 80px;
+  }
 }
 
 .easing-visualizer {
