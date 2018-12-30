@@ -72,7 +72,7 @@
 html,
 body {
   background-color: #F6F4F2;
-  color: #3E3E3E;
+  color: #2E2C2C;
 }
 
 body {
@@ -105,7 +105,7 @@ strong {
 }
 
 .color-white { color: #F6F4F2; } /* White */
-.color-black { color: #3E3E3E; } /* Black */
+.color-black { color: #2E2C2C; } /* Black */
 .color-red, .color-targets { color: #F64E4D; } /* Red */
 .color-orange, .color-properties { color: #F6984E; } /* Orange */
 .color-yellow, .color-prop-params { color: #C8CB48; } /* Yellow */

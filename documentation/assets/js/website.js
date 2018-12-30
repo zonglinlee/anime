@@ -160,16 +160,6 @@ var logoAnimation = (function() {
     ],
     delay: anime.stagger(60, {from: 'center'})
   }, '-=1090')
-  // .add({
-  //   targets: '.dot',
-  //   scaleY: .5,
-  //   translateY: [
-  //     {value: '-=8', duration: 80},
-  //     {value: 224, duration: 160, delay: 40}
-  //   ],
-  //   duration: 100,
-  //   easing: 'easeOutSine'
-  // }, '-=820')
   .add({
     targets: '.logo-text',
     translateY: [
@@ -220,7 +210,7 @@ var logoAnimation = (function() {
 
   // anime.speed = .1;
   logoAnimationTL.pause();
-  // logoAnimationTL.seek(3200);
+  logoAnimationTL.seek(3200);
   logoAnimationTL.play();
 
   return logoAnimationTL;
@@ -406,8 +396,8 @@ var advancedStaggeringAnimation = (function() {
   var staggerVisualizerEl = document.querySelector('.stagger-visualizer');
   var dotsWrapperEl = staggerVisualizerEl.querySelector('.dots-wrapper');
   var dotsFragment = document.createDocumentFragment();
-  var grid = [15, 12];
-  var cell = 48;
+  var grid = [20, 10];
+  var cell = 55;
   var numberOfElements = grid[0] * grid[1];
   var animation;
   var paused = true;
@@ -460,15 +450,15 @@ var advancedStaggeringAnimation = (function() {
           translateY: anime.stagger('-2px', {grid: grid, from: index, axis: 'y'}),
           duration: 100
         }, {
-          translateX: anime.stagger('8px', {grid: grid, from: index, axis: 'x'}),
-          translateY: anime.stagger('8px', {grid: grid, from: index, axis: 'y'}),
-          scale: anime.stagger([2.2, .5], {grid: grid, from: index}),
+          translateX: anime.stagger('4px', {grid: grid, from: index, axis: 'x'}),
+          translateY: anime.stagger('4px', {grid: grid, from: index, axis: 'y'}),
+          scale: anime.stagger([2.6, 1], {grid: grid, from: index}),
           duration: 225
         }, {
           translateX: 0,
           translateY: 0,
           scale: 1,
-          duration: 800,
+          duration: 1200,
         }
       ],
       delay: anime.stagger(80, {grid: grid, from: index})
@@ -613,6 +603,7 @@ var timeControlAnimation = (function() {
 
 var layeredAnimation = (function() {
 
+  var transformEls = document.querySelectorAll('.transform-progress');
   var layeredAnimationEl = document.querySelector('.layered-animations');
   var shapeEls = layeredAnimationEl.querySelectorAll('.shape');
   var triangleEl = layeredAnimationEl.querySelector('polygon');
@@ -621,24 +612,17 @@ var layeredAnimation = (function() {
 
   fitElToParent(layeredAnimationEl);
 
+  function createKeyframes(value) {
+    var keyframes = [];
+    for (var i = 0; i < 30; i++) keyframes.push({ value: value });
+    return keyframes;
+  }
+
   function animateShape(el) {
 
     var circleEl = el.querySelector('circle');
     var rectEl = el.querySelector('rect');
     var polyEl = el.querySelector('polygon');
-
-    function createKeyframes(total, min, max, unit) {
-      var keyframes = [];
-      var unit = unit || 0;
-      for (var i = 0; i < total; i++) keyframes.push({ value: function() { return anime.random(min, max) + unit; } });
-      return keyframes;
-    }
-
-    function createKeyframes(value) {
-      var keyframes = [];
-      for (var i = 0; i < 30; i++) keyframes.push({ value: value });
-      return keyframes;
-    }
 
     var animation = anime.timeline({
       targets: el,
@@ -684,6 +668,30 @@ var layeredAnimation = (function() {
 
   for (var i = 0; i < shapeEls.length; i++) {
     animateShape(shapeEls[i]);
+  }
+
+  function animateProgress(el) {
+    var animation = anime.timeline({
+      targets: el,
+      duration: function() { return anime.random(400, 1800); },
+      easing: function() { return easings[anime.random(0, easings.length - 2)]; },
+      complete: function(anim) { animateProgress(anim.animatables[0].target); },
+    })
+    .add({
+      transformOrigin: createKeyframes(function(el) { 
+        return anime.random(0, 100) + '%';
+      })
+    }, 0)
+    .add({
+      scaleX: createKeyframes(function(el) { 
+        return anime.random(10, 100) / 100;
+      })
+    }, 0);
+    isElementInViewport(layeredAnimationEl, animation.play, animation.pause);
+  }
+
+  for (var i = 0; i < transformEls.length; i++) {
+    animateProgress(transformEls[i]);
   }
 
 })();
