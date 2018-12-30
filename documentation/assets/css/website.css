@@ -53,8 +53,8 @@ a.arrow:hover:after {
 }
 
 .inverted-section {
-  background-color: #252423;
-  color: #F6F4F2;
+  background-color: #F6F4F2;
+  color: #2E2C2C;
 }
 
 .grid-container {
@@ -103,6 +103,7 @@ a.arrow:hover:after {
   flex-direction: row;
   align-items: center;
   height: 48px;
+  margin-top: 32px;
 }
 
 .top-header-logo {
@@ -139,178 +140,41 @@ a.arrow:hover:after {
   justify-content: flex-end;
 }
 
-.top-header a {
-  opacity: .001;
-}
-
 .top-menu a {
   display: inline-flex;
   align-items: center;
   font-size: 16px;
+  font-weight: 600;
   line-height: 1;
 }
 
 .top-menu a:not(:first-child) {
-  margin-left: .5rem;
+  margin-left: 12px;
 }
 
-.top-menu a.primary {
-  display: none;
-}
-
-.top-menu .version-number {
-  margin-top: 2px;
-  margin-left: 4px;
-  padding: 1px 3px 2px;
-  font-size: 10px;
-  font-weight: 600;
-  color: #F6F4F2;
+a.main-cta {
+  color: #2E2C2C;
+  display: inline-flex;
+  height: 32px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 16px;
   background-color: #F64E4D;
-  border-radius: 8px;
 }
 
 @media (min-width: 500px) {
   .top-header {
     display: flex;
   }
-  .top-menu a.primary {
-    display: inline-flex;
-    align-items: center;
-  }
 }
 
-/* Intro */
-
-.description-section {
-  margin-bottom: 80px;
-}
-
-@media (min-width: 500px) {
-  .description-section {
-    text-align: center;
-  }
-}
-
-@media (min-width: 800px) {
-  .description-section {
-    margin-top: 0;
-    margin-bottom: 128px;
-  }
-}
-
-.description-title {
-  opacity: .001;
-  display: none;
-  grid-column: 1/13;
-  font-size: 56px;
-  line-height: .9;
-  letter-spacing: -0.034em;
-  font-weight: 600;
-  margin-bottom: .5em;
-}
-
-.description-paragraph {
-  opacity: .001;
-  grid-column: 1/13;
-  font-size: 18px;
-  letter-spacing: 0;
-  line-height: 1.333em;
-}
-
-.description-paragraph:not(:last-child) {
-  margin-bottom: 2em;
-}
-
-.description-menu {
-  display: flex;
-  flex-direction: column;
-}
-
-@media (min-width: 500px) {
-  .description-title {
-    display: block;
-  }
-  .description-menu {
-    align-items: center;
-  }
-  .description-menu a:not(.primary) {
-    display: none;
-  }
-}
-
-@media (min-width: 1000px) {
-  .description-title,
-  .description-paragraph {
-    grid-column: 2/12;
-  }
-  .description-title {
-    font-size: 72px;
-  }
-  .description-paragraph {
-    font-size: 24px;
-  }
-}
+/* Header */
 
 .main-logo {
   position: relative;
-  grid-column: 1/13;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-top: 40%;
-  margin-bottom: 40%;
-}
-
-@media (min-width: 800px) {
-  .main-logo {
-    margin-top: 28%;
-    margin-bottom: 28%;
-  }
-}
-
-@media (min-width: 800px) {
-  .main-logo {
-    grid-column: 2/12;
-  }
-}
-
-@media (max-height: 800px) {
-  .intro-section {
-    height: calc(100vh - 96px);
-  }
-  .main-logo {
-    margin-top: auto;
-    margin-bottom: auto;
-    justify-content: center;
-  }
-}
-
-.main-logo-circle {
-  opacity: .001;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 80%;
-  padding-bottom: 80%;
-  margin: -40% 0 0 -40%;
-  border-radius: 50%;
-  background-image: linear-gradient(225deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);
-}
-
-@media (min-width: 800px) {
-  .main-logo-circle {
-    width: 60%;
-    padding-bottom: 60%;
-    margin: -30% 0 0 -30%;
-  }
-}
-
-@media (min-width: 800px; & max-height: 800px;) {
-  .main-logo-circle {
-    width: 90vh;
-    padding-bottom: 90vh;
-    margin: -45vh 0 0 -45vh;
-  }
+  width: 180px;
 }
 
 .logo-animation-wrapper {
@@ -410,46 +274,13 @@ a.arrow:hover:after {
 
 .logo-text {
   opacity: .001;
-  display: none;
-  margin-top: .5em;
-  padding-left: .1em;
-  padding-right: .1em;
+  margin-top: .25em;
   font-weight: 400;
-  font-size: 3.75vw;
+  font-size: 11px;
   line-height: 1;
-  letter-spacing: .1em;
+  letter-spacing: .125em;
   text-align: justify;
   word-break: keep-all;
-}
-
-.medium-screen-text,
-.large-screen-text {
-  display: none;
-}
-
-@media (min-width: 600px) {
-  .logo-text {
-    font-size: 2.25vw;
-    display: block;
-  }
-  .medium-screen-text {
-    display: inline;
-  }
-}
-
-@media (min-width: 800px) {
-  .logo-text {
-    font-size: 1.3vw;
-  }
-  .large-screen-text {
-    display: inline;
-  }
-}
-
-@media (min-width: 1200px) {
-  .logo-text {
-    font-size: 17px;
-  }
 }
 
 .logo-text:after {
@@ -461,17 +292,9 @@ a.arrow:hover:after {
   line-height: 0;
 }
 
-.dash {
-  width: 100%;
-  height: 1px;
-  margin-top: 6px;
-  background-color: currentColor;
-}
-
 /* Features */
 
 .feature-section {
-  opacity: .001;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -479,10 +302,6 @@ a.arrow:hover:after {
   padding-top: 96px;
   padding-bottom: 96px;
   transition: opacity .25s ease;
-}
-
-.intro-played .feature-section {
-  opacity: 1;
 }
 
 @media (min-width: 800px) {
@@ -663,35 +482,11 @@ a.arrow:hover:after {
   text-align: center;
 }
 
-/** Sphere **/
+/** Intro **/
 
-.sphere-animation {
-  position: absolute;
-  opacity: .001;
-  top: 50%;
-  left: 50%;
-  width: 580px;
-  height: 580px;
-  margin: -290px 0 0 -290px;
+.section-intro {
+  padding-top: 80px;
 }
-
-.sphere path {
-  /*opacity: .001;*/
-  fill: rgba(37,36,35,.5);
-  /*fill: linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);*/
-  fill: url(#sphereGradient);
-  stroke-width: 1px;
-  stroke: #FF4847;
-  backface-visibility: hidden;
-}
-
-@media (min-width: 500px) {
-  .sphere path {
-    stroke-width: .4px;
-  }
-}
-
-/** Easings **/
 
 .easing-visualizer {
   position: absolute;
@@ -1066,3 +861,30 @@ a.arrow:hover:after {
   height: 2px;
   background-color: currentColor;
 }
+
+/** Sphere **/
+
+.sphere-animation {
+  position: absolute;
+  opacity: .001;
+  top: 50%;
+  left: 50%;
+  width: 580px;
+  height: 580px;
+  margin: -290px 0 0 -290px;
+}
+
+.sphere path {
+  /*opacity: .001;*/
+  fill: rgba(37,36,35,.5);
+  /*fill: linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);*/
+  fill: url(#sphereGradient);
+  stroke-width: 1px;
+  stroke: #FF4847;
+  backface-visibility: hidden;
+}
+
+@media (min-width: 500px) {
+  .sphere path {
+    stroke-width: .4px;
+  }

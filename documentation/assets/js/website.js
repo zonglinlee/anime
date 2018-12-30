@@ -43,7 +43,7 @@ var logoAnimation = (function() {
   for (var i = 0; i < versionNumerEls.length; i++) {
     versionNumerEls[i].innerHTML = anime.version;
   }
-  dateEl.innerHTML = date.getFullYear();
+  // dateEl.innerHTML = date.getFullYear();
 
   fitElToParent(logoAnimationEl, 0);
 
@@ -184,33 +184,33 @@ var logoAnimation = (function() {
     duration: 3500,
     delay: anime.stagger(75)
   }, '-=1300')
-  .add({
-    targets: '.top-header a',
-    opacity: {value: [0.001, 1], easing: 'linear', duration: 400},
-    duration: 500,
-    delay: anime.stagger(40, {from: 'center'}),
-    begin: function(anim) {
-      document.body.classList.add('intro-played');
-      anim.animatables.forEach(function(a) {
-        a.target.style.transition = 'none';
-      });
-    },
-    complete: function(anim) {
-      anim.animatables.forEach(function(a) {
-        a.target.style = 'opacity: 1';
-      });
-    }
-  }, '-=3850')
-  .add({
-    targets: '.top-mini-logo path',
-    opacity: {value: [0, 1], duration: 20},
-    strokeDashoffset: [anime.setDashoffset, 0],
-    delay: anime.stagger(120)
-  }, '-=3750')
+  // .add({
+  //   targets: '.top-header a',
+  //   opacity: {value: [0.001, 1], easing: 'linear', duration: 400},
+  //   duration: 500,
+  //   delay: anime.stagger(40, {from: 'center'}),
+  //   begin: function(anim) {
+  //     document.body.classList.add('intro-played');
+  //     anim.animatables.forEach(function(a) {
+  //       a.target.style.transition = 'none';
+  //     });
+  //   },
+  //   complete: function(anim) {
+  //     anim.animatables.forEach(function(a) {
+  //       a.target.style = 'opacity: 1';
+  //     });
+  //   }
+  // }, '-=3850')
+  // .add({
+  //   targets: '.top-mini-logo path',
+  //   opacity: {value: [0, 1], duration: 20},
+  //   strokeDashoffset: [anime.setDashoffset, 0],
+  //   delay: anime.stagger(120)
+  // }, '-=3750')
 
   // anime.speed = .1;
   logoAnimationTL.pause();
-  logoAnimationTL.seek(3200);
+  // logoAnimationTL.seek(3200);
   logoAnimationTL.play();
 
   return logoAnimationTL;
