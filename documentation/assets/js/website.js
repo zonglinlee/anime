@@ -4,6 +4,63 @@ import anime from '../../../src/index.js';
 
 !function(t,e){"use strict";function n(t){this.time=t.time,this.target=t.target,this.rootBounds=t.rootBounds,this.boundingClientRect=t.boundingClientRect,this.intersectionRect=t.intersectionRect||a(),this.isIntersecting=!!t.intersectionRect;var e=this.boundingClientRect,n=e.width*e.height,i=this.intersectionRect,o=i.width*i.height;n?this.intersectionRatio=o/n:this.intersectionRatio=this.isIntersecting?1:0}function i(t,e){var n=e||{};if("function"!=typeof t)throw new Error("callback must be a function");if(n.root&&1!=n.root.nodeType)throw new Error("root must be an Element");this._checkForIntersections=r(this._checkForIntersections.bind(this),this.THROTTLE_TIMEOUT),this._callback=t,this._observationTargets=[],this._queuedEntries=[],this._rootMarginValues=this._parseRootMargin(n.rootMargin),this.thresholds=this._initThresholds(n.threshold),this.root=n.root||null,this.rootMargin=this._rootMarginValues.map(function(t){return t.value+t.unit}).join(" ")}function o(){return t.performance&&performance.now&&performance.now()}function r(t,e){var n=null;return function(){n||(n=setTimeout(function(){t(),n=null},e))}}function s(t,e,n,i){"function"==typeof t.addEventListener?t.addEventListener(e,n,i||!1):"function"==typeof t.attachEvent&&t.attachEvent("on"+e,n)}function h(t,e,n,i){"function"==typeof t.removeEventListener?t.removeEventListener(e,n,i||!1):"function"==typeof t.detatchEvent&&t.detatchEvent("on"+e,n)}function c(t,e){var n=Math.max(t.top,e.top),i=Math.min(t.bottom,e.bottom),o=Math.max(t.left,e.left),r=Math.min(t.right,e.right),s=r-o,h=i-n;return s>=0&&h>=0&&{top:n,bottom:i,left:o,right:r,width:s,height:h}}function u(t){var e;try{e=t.getBoundingClientRect()}catch(n){}return e?(e.width&&e.height||(e={top:e.top,right:e.right,bottom:e.bottom,left:e.left,width:e.right-e.left,height:e.bottom-e.top}),e):a()}function a(){return{top:0,bottom:0,left:0,right:0,width:0,height:0}}function l(t,e){for(var n=e;n;){if(n==t)return!0;n=p(n)}return!1}function p(t){var e=t.parentNode;return e&&11==e.nodeType&&e.host?e.host:e}if("IntersectionObserver"in t&&"IntersectionObserverEntry"in t&&"intersectionRatio"in t.IntersectionObserverEntry.prototype)return void("isIntersecting"in t.IntersectionObserverEntry.prototype||Object.defineProperty(t.IntersectionObserverEntry.prototype,"isIntersecting",{get:function(){return this.intersectionRatio>0}}));var f=[];i.prototype.THROTTLE_TIMEOUT=100,i.prototype.POLL_INTERVAL=null,i.prototype.observe=function(t){var e=this._observationTargets.some(function(e){return e.element==t});if(!e){if(!t||1!=t.nodeType)throw new Error("target must be an Element");this._registerInstance(),this._observationTargets.push({element:t,entry:null}),this._monitorIntersections(),this._checkForIntersections()}},i.prototype.unobserve=function(t){this._observationTargets=this._observationTargets.filter(function(e){return e.element!=t}),this._observationTargets.length||(this._unmonitorIntersections(),this._unregisterInstance())},i.prototype.disconnect=function(){this._observationTargets=[],this._unmonitorIntersections(),this._unregisterInstance()},i.prototype.takeRecords=function(){var t=this._queuedEntries.slice();return this._queuedEntries=[],t},i.prototype._initThresholds=function(t){var e=t||[0];return Array.isArray(e)||(e=[e]),e.sort().filter(function(t,e,n){if("number"!=typeof t||isNaN(t)||0>t||t>1)throw new Error("threshold must be a number between 0 and 1 inclusively");return t!==n[e-1]})},i.prototype._parseRootMargin=function(t){var e=t||"0px",n=e.split(/\s+/).map(function(t){var e=/^(-?\d*\.?\d+)(px|%)$/.exec(t);if(!e)throw new Error("rootMargin must be specified in pixels or percent");return{value:parseFloat(e[1]),unit:e[2]}});return n[1]=n[1]||n[0],n[2]=n[2]||n[0],n[3]=n[3]||n[1],n},i.prototype._monitorIntersections=function(){this._monitoringIntersections||(this._monitoringIntersections=!0,this.POLL_INTERVAL?this._monitoringInterval=setInterval(this._checkForIntersections,this.POLL_INTERVAL):(s(t,"resize",this._checkForIntersections,!0),s(e,"scroll",this._checkForIntersections,!0),"MutationObserver"in t&&(this._domObserver=new MutationObserver(this._checkForIntersections),this._domObserver.observe(e,{attributes:!0,childList:!0,characterData:!0,subtree:!0}))))},i.prototype._unmonitorIntersections=function(){this._monitoringIntersections&&(this._monitoringIntersections=!1,clearInterval(this._monitoringInterval),this._monitoringInterval=null,h(t,"resize",this._checkForIntersections,!0),h(e,"scroll",this._checkForIntersections,!0),this._domObserver&&(this._domObserver.disconnect(),this._domObserver=null))},i.prototype._checkForIntersections=function(){var t=this._rootIsInDom(),e=t?this._getRootRect():a();this._observationTargets.forEach(function(i){var r=i.element,s=u(r),h=this._rootContainsTarget(r),c=i.entry,a=t&&h&&this._computeTargetAndRootIntersection(r,e),l=i.entry=new n({time:o(),target:r,boundingClientRect:s,rootBounds:e,intersectionRect:a});c?t&&h?this._hasCrossedThreshold(c,l)&&this._queuedEntries.push(l):c&&c.isIntersecting&&this._queuedEntries.push(l):this._queuedEntries.push(l)},this),this._queuedEntries.length&&this._callback(this.takeRecords(),this)},i.prototype._computeTargetAndRootIntersection=function(n,i){if("none"!=t.getComputedStyle(n).display){for(var o=u(n),r=o,s=p(n),h=!1;!h;){var a=null,l=1==s.nodeType?t.getComputedStyle(s):{};if("none"==l.display)return;if(s==this.root||s==e?(h=!0,a=i):s!=e.body&&s!=e.documentElement&&"visible"!=l.overflow&&(a=u(s)),a&&(r=c(a,r),!r))break;s=p(s)}return r}},i.prototype._getRootRect=function(){var t;if(this.root)t=u(this.root);else{var n=e.documentElement,i=e.body;t={top:0,left:0,right:n.clientWidth||i.clientWidth,width:n.clientWidth||i.clientWidth,bottom:n.clientHeight||i.clientHeight,height:n.clientHeight||i.clientHeight}}return this._expandRectByRootMargin(t)},i.prototype._expandRectByRootMargin=function(t){var e=this._rootMarginValues.map(function(e,n){return"px"==e.unit?e.value:e.value*(n%2?t.width:t.height)/100}),n={top:t.top-e[0],right:t.right+e[1],bottom:t.bottom+e[2],left:t.left-e[3]};return n.width=n.right-n.left,n.height=n.bottom-n.top,n},i.prototype._hasCrossedThreshold=function(t,e){var n=t&&t.isIntersecting?t.intersectionRatio||0:-1,i=e.isIntersecting?e.intersectionRatio||0:-1;if(n!==i)for(var o=0;o<this.thresholds.length;o++){var r=this.thresholds[o];if(r==n||r==i||n>r!=i>r)return!0}},i.prototype._rootIsInDom=function(){return!this.root||l(e,this.root)},i.prototype._rootContainsTarget=function(t){return l(this.root||e,t)},i.prototype._registerInstance=function(){f.indexOf(this)<0&&f.push(this)},i.prototype._unregisterInstance=function(){var t=f.indexOf(this);-1!=t&&f.splice(t,1)},t.IntersectionObserver=i,t.IntersectionObserverEntry=n}(window,document);
 
+/* Draggable elements */
+
+function draggable(el, events) {
+
+  function getPointer(e) {
+    var x = 'clientX';
+    var y = 'clientY';
+    var evt = e.touches ? e.touches[0] : e;
+    return { x: evt[x], y: evt[y] };
+  }
+
+  var drag = { x: 0, y: 0, deltaX: 0, deltaY: 0, active: true, events: events || {} };
+  var originalX = 0;
+  var originalY = 0;
+  var pointerX = 0;
+  var pointerY = 0;
+
+  function move(e) {
+    if (drag.active) return;
+    drag.deltaX = pointerX - getPointer(e).x;
+    drag.deltaY = pointerY - getPointer(e).y;
+    drag.x = originalX - drag.deltaX;
+    drag.y = originalY - drag.deltaY;
+    if (drag.events.move) drag.events.move(drag);
+  }
+
+  function release(e) {
+    drag.active = true;
+    if (drag.events.release) drag.events.release(drag);
+    document.removeEventListener('mousemove', move, false);
+    document.removeEventListener('mouseup', release, false);
+    document.removeEventListener('touchmove', move, false);
+    document.removeEventListener('touchend', release, false);
+  }
+
+  function start(e) {
+    if (!drag.active) return;
+    e.preventDefault();
+    drag.active = false;
+    pointerX = getPointer(e).x;
+    pointerY = getPointer(e).y;
+    originalX = drag.x;
+    originalY = drag.y;
+    if (drag.events.begin) drag.events.begin(drag);
+    document.addEventListener('mousemove', move, false);
+    document.addEventListener('mouseup', release, false);
+    document.addEventListener('touchmove', move, false);
+    document.addEventListener('touchend', release, false);
+  }
+
+  el.addEventListener('mousedown', start, false);
+  el.addEventListener('touchstart', start, false);
+
+  return drag;
+
+}
+
 function isElementInViewport(el, inCB, outCB, rootMargin) {
   var margin = rootMargin || '-10%';
   function handleIntersect(entries, observer) {
@@ -52,6 +109,7 @@ var logoAnimation = (function() {
   anime.setValue('.dot', { translateX: 595, translateY: -200 });
 
   var logoAnimationTL = anime.timeline({
+    autoplay: false,
     easing: 'easeOutSine'
   })
   .add({
@@ -79,7 +137,7 @@ var logoAnimation = (function() {
       {value: .5, duration: 190, delay: 15, easing: 'easeOutQuad'}
     ],
     delay: anime.stagger(80)
-  }, 500)
+  })
   .add({
     targets: '.dot',
     opacity: { value: 1, duration: 100 },
@@ -184,36 +242,165 @@ var logoAnimation = (function() {
     duration: 3500,
     delay: anime.stagger(75)
   }, '-=1300')
-  // .add({
-  //   targets: '.top-header a',
-  //   opacity: {value: [0.001, 1], easing: 'linear', duration: 400},
-  //   duration: 500,
-  //   delay: anime.stagger(40, {from: 'center'}),
-  //   begin: function(anim) {
-  //     document.body.classList.add('intro-played');
-  //     anim.animatables.forEach(function(a) {
-  //       a.target.style.transition = 'none';
-  //     });
-  //   },
-  //   complete: function(anim) {
-  //     anim.animatables.forEach(function(a) {
-  //       a.target.style = 'opacity: 1';
-  //     });
-  //   }
-  // }, '-=3850')
-  // .add({
-  //   targets: '.top-mini-logo path',
-  //   opacity: {value: [0, 1], duration: 20},
-  //   strokeDashoffset: [anime.setDashoffset, 0],
-  //   delay: anime.stagger(120)
-  // }, '-=3750')
-
-  // anime.speed = .1;
-  logoAnimationTL.pause();
-  // logoAnimationTL.seek(3200);
-  logoAnimationTL.play();
 
   return logoAnimationTL;
+
+})();
+
+var headerIntroAnimation = anime.timeline({
+  easing: 'easeOutQuad',
+  autoplay: false
+})
+.add({
+  targets: ['.top-header a', '.secondary-menu a', '.section-intro .feature-description-text'],
+  opacity: {value: [0.001, 1], easing: 'linear', duration: 400},
+  translateY: [40, 0],
+  duration: 500,
+  delay: anime.stagger(40, {start: 400, from: 'last'}),
+  begin: function(anim) {
+    anim.animatables.forEach(function(a) {
+      a.target.style.transition = 'none';
+    });
+  },
+  complete: function(anim) {
+    // anime.speed = .1;
+    // logoAnimation.pause();
+    // logoAnimation.seek(3200);
+    logoAnimation.play();
+    anim.animatables.forEach(function(a) {
+      a.target.style = 'opacity: 1';
+    });
+  }
+}, 0);
+
+var introEasingsAnimation = (function() {
+
+  var easingVisualizerEl = document.querySelector('.easing-visualizer');
+  var barsWrapperEl = easingVisualizerEl.querySelector('.bars-wrapper');
+  var dotsWrapperEl = easingVisualizerEl.querySelector('.dots-wrapper');
+  var barsFragment = document.createDocumentFragment();
+  var dotsFragment = document.createDocumentFragment();
+  var numberOfBars = 91;
+  var duration = 450;
+  var animation;
+  var paused = true;
+
+  fitElToParent(easingVisualizerEl);
+
+  for (var i = 0; i < numberOfBars; i++) {
+    var barEl = document.createElement('div');
+    var dotEl = document.createElement('div');
+    barEl.classList.add('bar');
+    dotEl.classList.add('dot');
+    dotEl.classList.add('color-red');
+    barsFragment.appendChild(barEl);
+    dotsFragment.appendChild(dotEl);
+  }
+
+  barsWrapperEl.appendChild(barsFragment);
+  dotsWrapperEl.appendChild(dotsFragment);
+
+  var defaultEase = 'easeOutElastic';
+
+  function play() {
+
+    paused = false;
+
+    if (animation) animation.pause();
+
+    var easings = [];
+    for (let ease in anime.penner) easings.push(ease);
+    easings.push('steps('+anime.random(5, 20)+')');
+    easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
+    var ease = easings[anime.random(0, easings.length - 1)];
+
+    animation = anime.timeline({
+      duration: duration,
+      easing: ease,
+      complete: play
+    })
+    .add({
+      targets: '.easing-visualizer .bar',
+      scaleY: anime.stagger([1, 110], {easing: ease, from: 'center', direction: 'reverse'}),
+      delay: anime.stagger(7, {from: 'center'})
+    })
+    .add({
+      targets: '.easing-visualizer .dot',
+      translateY: anime.stagger(['-160px', '160px'], {easing: ease, from: 'last'}),
+      delay: anime.stagger(7, {from: 'center'})
+    }, 0);
+
+  }
+
+  function pause() {
+
+    if (paused) return;
+    paused = true;
+    if (animation) animation.pause();
+
+    animation = anime.timeline({
+      easing: 'easeInOutQuad'
+    })
+    .add({
+      targets: '.easing-visualizer .bar',
+      scaleY: anime.stagger([1, 110], {easing: defaultEase, from: 'center', direction: 'reverse'}),
+      duration: duration,
+      delay: anime.stagger(7, {from: 'center'})
+    })
+    .add({
+      targets: '.easing-visualizer .dot',
+      translateY: anime.stagger(['-144px', '144px'], {easing: defaultEase, from: 'last'}),
+      duration: duration,
+      delay: anime.stagger(7, {from: 'center'})
+    }, 0);
+
+  }
+
+  function init() {
+
+    animation = anime.timeline({
+      duration: 600,
+      easing: 'easeInOutQuad',
+      complete: function() {
+        isElementInViewport(easingVisualizerEl, play, pause);
+      }
+    })
+    .add({
+      targets: '.easing-visualizer .bar',
+      scale: [0, 1],
+      delay: anime.stagger(8, {from: 'center'})
+    })
+    .add({
+      targets: '.easing-visualizer .dot',
+      scale: [0, 1],
+      delay: anime.stagger(8, {from: 'center'}),
+      complete: function() {
+        headerIntroAnimation.play();
+      }
+    }, 0)
+    .add({
+      targets: '.easing-visualizer .bar',
+      scaleY: anime.stagger([1, 110], {easing: 'easeInOutSine', from: 'center', direction: 'reverse'}),
+      duration: duration,
+      easing: 'easeInOutSine',
+      delay: anime.stagger(7, {from: 'center'})
+    })
+    .add({
+      targets: '.easing-visualizer .dot',
+      translateY: anime.stagger(['-144px', '144px'], {easing: 'easeInOutSine', from: 'last'}),
+      duration: duration,
+      easing: 'easeInOutSine',
+      delay: anime.stagger(7, {from: 'center'})
+    }, '-=600');
+
+
+  }
+
+  return {
+    init: init,
+    play: play,
+    pause: pause
+  }
 
 })();
 
@@ -296,98 +483,6 @@ var sphereAnimation = (function() {
   }
 
   isElementInViewport(sphereEl, play, pause);
-
-})();
-
-var easyEasingsAnimation = (function() {
-
-  var easingVisualizerEl = document.querySelector('.easing-visualizer');
-  var barsWrapperEl = easingVisualizerEl.querySelector('.bars-wrapper');
-  var dotsWrapperEl = easingVisualizerEl.querySelector('.dots-wrapper');
-  var barsFragment = document.createDocumentFragment();
-  var dotsFragment = document.createDocumentFragment();
-  var numberOfBars = 91;
-  var duration = 450;
-  var animation;
-  var paused = true;
-
-  fitElToParent(easingVisualizerEl);
-
-  for (var i = 0; i < numberOfBars; i++) {
-    var barEl = document.createElement('div');
-    var dotEl = document.createElement('div');
-    barEl.classList.add('bar');
-    dotEl.classList.add('dot');
-    dotEl.classList.add('color-red');
-    barsFragment.appendChild(barEl);
-    dotsFragment.appendChild(dotEl);
-  }
-
-  barsWrapperEl.appendChild(barsFragment);
-  dotsWrapperEl.appendChild(dotsFragment);
-
-  var defaultEase = 'easeOutElastic';
-
-  function play() {
-
-    paused = false;
-
-    if (animation) animation.pause();
-
-    var easings = [];
-    for (let ease in anime.penner) easings.push(ease);
-    easings.push('steps('+anime.random(5, 20)+')');
-    easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
-    var ease = easings[anime.random(0, easings.length - 1)];
-
-    animation = anime.timeline({
-      duration: duration,
-      easing: ease,
-      complete: play
-    })
-    .add({
-      targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 111], {easing: ease, from: 'center', direction: 'reverse'}),
-      delay: anime.stagger(7, {from: 'center'})
-    })
-    .add({
-      targets: '.easing-visualizer .dot',
-      translateY: anime.stagger(['-160px', '160px'], {easing: ease, from: 'last'}),
-      delay: anime.stagger(7, {from: 'center'})
-    }, 0);
-
-  }
-
-  function pause() {
-
-    if (paused) return;
-    paused = true;
-    if (animation) animation.pause();
-
-    animation = anime.timeline({
-      easing: 'easeInOutQuad'
-    })
-    .add({
-      targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 88], {easing: defaultEase, from: 'center', direction: 'reverse'}),
-      duration: duration,
-      delay: anime.stagger(7, {from: 'center'})
-    })
-    .add({
-      targets: '.easing-visualizer .dot',
-      translateY: anime.stagger(['-144px', '144px'], {easing: defaultEase, from: 'last'}),
-      duration: duration,
-      delay: anime.stagger(7, {from: 'center'})
-    }, 0);
-
-  }
-
-  isElementInViewport(easingVisualizerEl, play, pause);
-
-  return {
-    play: play,
-    pause: pause
-  }
 
 })();
 
@@ -514,10 +609,12 @@ var timeControlAnimation = (function() {
 
   var timeControlEl = document.querySelector('.time-control');
   var rullerEl = document.querySelector('.ruller');
+  var timeCursorEl = document.querySelector('.time-cursor');
   var timeEl = document.querySelector('.time-cursor input');
   var infoEls = document.querySelectorAll('.info');
   var fragment = document.createDocumentFragment();
   var numberOfElements = 271;
+  var controlAnimationCanMove = false;
 
   for (let i = 0; i < numberOfElements; i++) {
     var dotEl = document.createElement('div');
@@ -530,6 +627,49 @@ var timeControlAnimation = (function() {
   var animationPXOffset = (timeControlEl.offsetWidth - (timeControlEl.parentNode.offsetWidth - 20)) / 2;
   if (animationPXOffset < 0) animationPXOffset = 0;
 
+  function pxToTime(px) {
+    var percent = px / (rullerEl.offsetWidth + 180);
+    return percent * (timelineAnimation.duration);
+  }
+
+  var time = {
+    start: 0,
+    end: 0,
+    anim: null
+  };
+
+  var drag = draggable(timeCursorEl, {
+    begin: function(e) {
+      anime.remove(time);
+      time.start = timelineAnimation.currentTime;
+      controlAnimationCanMove = false;
+    },
+    move: function(e) {
+      timelineAnimation.seek(time.start + pxToTime(-e.deltaX));
+    },
+    release: function(e) {
+      time.end = timelineAnimation.currentTime;
+      time.anim = anime({
+        targets: time,
+        end: time.start,
+        easing: 'spring(.3, 200, 5, 1)',
+        update: function() { timelineAnimation.seek(time.end); },
+        complete: function() { 
+          controlAnimationCanMove = true;
+          moveControlAnimation();
+        }
+      })
+    }
+  });
+
+  document.addEventListener('scroll', function() {
+    if (!controlAnimationCanMove) {
+      anime.remove(time);
+      controlAnimationCanMove = true;
+      moveControlAnimation();
+    }
+  });
+
   var timelineAnimation = anime.timeline({
     easing: 'linear',
     autoplay: false
@@ -540,7 +680,7 @@ var timeControlAnimation = (function() {
     duration: 1500
   }, 0)
   .add({
-    targets: '.time-cursor',
+    targets: timeCursorEl,
     keyframes: [
       { translateY: [-24, 0], duration: 100, easing: 'easeInQuad' },
       { translateX: 1080, duration: 1500 },
@@ -579,8 +719,6 @@ var timeControlAnimation = (function() {
       easing: 'easeOutSine'
     }, delay)
   }
-
-  var controlAnimationCanMove = false;
 
   function moveControlAnimation() {
     var rect = timeControlEl.getBoundingClientRect();
@@ -695,3 +833,5 @@ var layeredAnimation = (function() {
   }
 
 })();
+
+window.onload = introEasingsAnimation.init;

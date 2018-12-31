@@ -470,8 +470,10 @@ function getElementTransforms(el) {
 function getTransformValue(el, propName, animatable, unit) {
   const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
   const value = getElementTransforms(el).get(propName) || defaultVal;
-  animatable.transforms.list.set(propName, value);
-  animatable.transforms['last'] = propName;
+  if (animatable) {
+    animatable.transforms.list.set(propName, value);
+    animatable.transforms['last'] = propName;
+  }
   return unit ? convertPxToUnit(el, value, unit) : value;
 }
 
@@ -929,6 +931,7 @@ function anime(params = {}) {
   function syncInstanceChildren(time) {
     for (let i = 0; i < childrenLength; i++) {
       const child = children[i];
+      if (!child) return;
       child.seek(time - child.timelineOffset);
     }
   }
