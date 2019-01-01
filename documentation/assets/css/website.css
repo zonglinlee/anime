@@ -160,7 +160,7 @@ a.main-cta {
 
 @media (min-width: 500px) {
   .main-logo {
-    width: 160px;
+    width: 128px;
   }
 }
 
@@ -605,9 +605,9 @@ a.main-cta {
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
-  width: 1081px;
+  width: 1082px;
   height: 342px;
-  margin-left: -540px;
+  margin-left: -541px;
   margin-top: -171px;
   font-size: 18px;
 }
@@ -662,7 +662,7 @@ a.main-cta {
   background-color: transparent;
   border-radius: 50%;
   text-align: center;
-  font-size: 14px;
+  font-size: 15px;
   transition: transform .125s ease;
 }
 
@@ -683,7 +683,7 @@ a.main-cta {
 
 .timeline {
   position: relative;
-  width: 1077px;
+  width: 1082px;
   z-index: 1;
   overflow: visible;
   display: flex;
@@ -712,33 +712,34 @@ a.main-cta {
 }
 
 @media (min-width: 800px) {
-  .feature-description-icons .horizontal-icons {
-/*    display: flex;
-    flex-direction: column;*/
+  .section-feature-control .vertical-icons {
+    display: flex;
+    flex-direction: column;
   }
-  .feature-description-icons .horizontal-icons .timeline-icon {
+  .section-feature-control .vertical-icons .timeline-icon {
     margin-left: 0;
+    width: 100%;
   }
 }
 
 .timeline-icon .animation-band {
-  width: 24px;
-  height: 24px;
-  border-radius: 12px;
-  margin-right: 12px;
+  width: 64px;
+  height: 16px;
+  border-radius: 8px;
+  margin-right: 16px;
 }
 
 .animation-delay {
   background-color: currentColor;
-  width: 80px;
+  width: 66px;
 }
 .animation-change {
   background-image: linear-gradient(-180deg, #FFFFFF 3%, #DBD6D0 100%);
-  width: 180px;
+  width: 207px;
 }
 .animation-end-delay {
   background-color: #F64E4D;
-  width: 78px;
+  width: 66px;
 }
 
 .info {
@@ -857,13 +858,13 @@ a.main-cta {
 }
 
 .transform-anim:not(:last-child) {
-  margin-bottom: 12px;
+  margin-bottom: 11px;
 }
 
 .transform-timeline {
   width: 100%;
   height: 2px;
-  margin-top: 3px;
+  margin-top: 7px;
   background-color: rgba(255,255,255,.2);
 }
 

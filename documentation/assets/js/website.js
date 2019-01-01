@@ -628,7 +628,8 @@ var timeControlAnimation = (function() {
   if (animationPXOffset < 0) animationPXOffset = 0;
 
   function pxToTime(px) {
-    var percent = px / (rullerEl.offsetWidth + 180);
+    var width = window.innerWidth > rullerEl.offsetWidth ? rullerEl.offsetWidth + 180 : window.innerWidth;
+    var percent = px / (width);
     return percent * (timelineAnimation.duration);
   }
 
@@ -658,13 +659,13 @@ var timeControlAnimation = (function() {
           controlAnimationCanMove = true;
           moveControlAnimation();
         }
-      })
+      });
     }
   });
 
   document.addEventListener('scroll', function() {
     if (!controlAnimationCanMove) {
-      anime.remove(time);
+      if (time.anim) time.anim.pause();
       controlAnimationCanMove = true;
       moveControlAnimation();
     }
@@ -686,10 +687,7 @@ var timeControlAnimation = (function() {
       { translateX: 1080, duration: 1500 },
       { translateY: -24, duration: 100, easing: 'easeOutQuad' }
     ],
-    duration: 1500,
-    update: function(anim) {
-      timeEl.value = Math.round(anim.currentTime);
-    }
+    duration: 1500
   }, -100)
   .add({
     targets: '.ruller .line',
@@ -698,6 +696,13 @@ var timeControlAnimation = (function() {
     delay: anime.stagger([0, 1500]),
     easing: 'easeInOutSine'
   }, -80)
+  .add({
+    targets: timeEl,
+    value: [ {value: [0, 100]}, {value: 0}, {value: 100} ],
+    duration: 1500,
+    round: 1,
+    easing: 'linear'
+  }, 0)
 
   for (var i = 0; i < infoEls.length; i++) {
     var infoEl = infoEls[i];
