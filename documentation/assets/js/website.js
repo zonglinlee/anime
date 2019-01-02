@@ -846,4 +846,13 @@ var layeredAnimation = (function() {
 
 })();
 
+
+anime({
+  targets: '.getting-started-image polygon',
+  strokeDashoffset: [anime.setDashoffset, 0],
+  duration: 2000,
+  easing: 'easeInOutQuad',
+  delay: anime.stagger(100)
+})
+
 window.onload = introEasingsAnimation.init;

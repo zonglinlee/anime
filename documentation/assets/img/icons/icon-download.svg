@@ -1,9 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 108">
-  <g fill="none" fill-rule="evenodd" stroke="currentColor" transform="translate(1 1)">
-    <rect width="154" height="106" stroke-width="2"/>
-    <rect width="89" height="49" x="33" y="16"/>
-    <rect width="89" height="32" x="33" y="73"/>
-    <rect width="152" height="8" x="1" y="1"/>
-    <rect width="152" height="96" x="1" y="9"/>
+  <g id="icon-download" fill="none" fill-rule="evenodd">
+    <polygon id="Rectangle-50-Copy-39" stroke="#242423" stroke-width=".75" points="34 33 123 33 123 41 34 41"/>
+    <polygon id="Rectangle-50-Copy-37" stroke="#242423" stroke-width=".75" points="34 17 123 17 123 25 34 25"/>
+    <polygon id="Rectangle-50-Copy-38" stroke="#242423" stroke-width=".75" points="34 25 123 25 123 33 34 33"/>
+    <polygon id="Rectangle-50-Copy-40" stroke="#242423" stroke-width=".75" points="34 41 123 41 123 49 34 49"/>
+    <polygon id="Rectangle-50-Copy-41" stroke="#242423" stroke-width=".75" points="34 49 123 49 123 57 34 57"/>
+    <polygon id="Rectangle-50-Copy-42" stroke="#242423" stroke-width=".75" points="34 57 123 57 123 65 34 65"/>
+    <polygon id="Rectangle-50-Copy-36" stroke="#242423" stroke-width=".75" points="34 72 123 72 123 106 34 106"/>
+    <polygon id="Rectangle-51-Copy" stroke="#242423" stroke-width=".75" points="2 2 154 2 154 10 2 10"/>
+    <polygon id="Rectangle-51-Copy-2" stroke="#242423" stroke-width=".75" points="2 10 154 10 154 106 2 106"/>
   </g>
 </svg>
