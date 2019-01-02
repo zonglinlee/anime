@@ -4,6 +4,17 @@ body {
   line-height: 1.333333333;
 }
 
+body {
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+@media (min-width: 740px) {
+  body {
+    font-size: 18px;
+  }
+}
+
 a {
   text-decoration: none;
 }
@@ -12,11 +23,12 @@ a:hover {
   text-decoration: underline;
 }
 
+.primary,
 a.primary {
   color: #F64E4D;
 }
 
-a.arrow {
+.arrow {
   position: relative;
   display: inline-block;
   color: #F64E4D;
@@ -24,7 +36,7 @@ a.arrow {
   transition: transform .25s ease;
 }
 
-a.arrow:after {
+.arrow:after {
   pointer-events: none;
   content: "→";
   opacity: 0;
@@ -36,11 +48,13 @@ a.arrow:after {
   transition: transform .25s ease, opacity .25s ease;
 }
 
-a.arrow:hover {
+a:hover .arrow,
+.arrow:hover {
   transform: translateX(1em);
 }
 
-a.arrow:hover:after {
+a:hover .arrow:after,
+.arrow:hover:after {
   transform: translateX(-1em);
   opacity: 1;
 }
@@ -91,7 +105,7 @@ a.arrow:hover:after {
 /* Top Header */
 
 .top-header {
-  margin-top: 32px;
+  margin-top: 16px;
 }
 
 .header-content {
@@ -298,7 +312,8 @@ a.main-cta {
 
 .feature-description-icons {
   margin-bottom: 32px;
-  width: 312px;
+  width: 100%;
+  max-width: 350px;
 }
 
 @media (min-width: 740px) {
@@ -351,11 +366,6 @@ a.main-cta {
   margin-bottom: 8px;
 }
 
-.feature-paragraph {
-  font-size: 17px;
-  line-height: 1.3;
-}
-
 .feature-paragraph:not(:last-child) {
   margin-bottom: 24px;
 }
@@ -375,9 +385,6 @@ a.main-cta {
   }
   .feature-title:not(:last-child) {
     margin-bottom: 8px;
-  }
-  .feature-paragraph {
-    font-size: 18px;
   }
   .feature-paragraph:not(:last-child) {
     margin-bottom: 24px;
@@ -634,11 +641,11 @@ a.main-cta {
 }
 
 .time-control .line:nth-child(9n+2) {
-  height: 18px;
+  height: 20px;
 }
 
 .time-control .line:nth-child(90n+2) {
-  height: 28px;
+  height: 32px;
 }
 
 .time-control .line:not(:last-child) {
@@ -912,7 +919,6 @@ a.main-cta {
   }
 }
 
-
 /** Getting started **/
 
 .getting-started-blocks {
@@ -928,7 +934,7 @@ a.main-cta {
 }
 
 .getting-started-image {
-  width: 154px;
+  width: 156px;
   height: auto;
   margin-bottom: 24px;
   margin-left: auto;
@@ -937,15 +943,15 @@ a.main-cta {
 
 @media (min-width: 500px) {
   .getting-started-blocks {
-    grid-column: 2/12;
+    grid-column: 3/11;
     flex-direction: row;
   }
   .getting-started-block {
     width: calc(33.33% - 48px);
   }
-  .getting-started-image {
+/*  .getting-started-image {
     width: 100%;
-  }
+  }*/
 }
 
 .getting-statred-main-link {
@@ -953,6 +959,10 @@ a.main-cta {
   margin-bottom: 24px;
   font-weight: 600;
 }
+
+/*.highlight:hover {
+  fill: #FF4B4B;
+}*/
 
 .getting-statred-main-link:hover .getting-started-image {
   color: #F64E4D;
