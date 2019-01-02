@@ -111,10 +111,16 @@ strong {
 .color-yellow, .color-prop-params { color: #C8CB48; } /* Yellow */
 .color-citrus, .color-anim-params { color: #EECD4F; } /* Citrus */
 .color-green, .color-values { color: #98C762; } /* Green */
-.color-darkgreen, .color-tl { color: #56BD9C; } /* Darkgreen */
-.color-turquoise, .color-controls { color: #53D3D3; } /* Turquoise */
-.color-skyblue, .color-states { color: #6AAAE1; } /* Skyblue */
+.color-darkgreen, .color-staggering { color: #56BD9C; } /* Darkgreen */
+.color-turquoise, .color-tl { color: #53D3D3; } /* Turquoise */
+.color-skyblue, .color-controls { color: #6AAAE1; } /* Skyblue */
 .color-kingblue, .color-callbacks { color: #6A7BE0; } /* Kingblue */
 .color-lavender, .color-svg { color: #86589E; } /* Lavender */
 .color-purple, .color-easings { color: #D758A0; } /* Purple */
 .color-pink, .color-helpers { color: #F07B8E; } /* Pink */
+
+.anime-mini-logo {
+  width: 100px;
+  height: 24px;
+  transform: scaleY(.5);
+}

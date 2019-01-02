@@ -1564,6 +1564,186 @@ anime({
 </article>
 <!-- -->
 
+<!-- STAGGERING -->
+<article id="staggering" class="color-staggering">
+<header>
+  <h2 class="demos-title">Staggering</h2>
+</header>
+
+<div id="staggeringBasics" class="demo">
+  <h3 class="demo-title">Basics</h3>
+  <div class="demo-description">
+    <p>
+      <code>anime.stagger(value, options)</code> let you assign values to each element following certains rules.
+    </p>
+    <p>
+      Staggered value is comonly used as delay to creates "follow trough" animations. But it can also be used for any other properties values.
+    </p>
+<pre><code>anime.stagger(timeInMs)</code></pre>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td>The duration of the delay in ms between each animations</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content basic-staggering-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var staggeringBasics = function() {
+/*DEMO*/
+anime({
+  targets: '.basic-staggering-demo .el',
+  translateX: anime.stagger(50, {from: 'last'}),
+  delay: anime.stagger(100, {from: 'last'})
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="forwardStaggering" class="demo">
+  <h3 class="demo-title">Forward</h3>
+  <div class="demo-description">
+    <p>
+      Forward staggering
+    </p>
+<pre><code>anime.stagger(timeInMs)</code></pre>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td>The duration of the delay in ms between each animations</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content forward-staggering-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var forwardStaggering = function() {
+/*DEMO*/
+anime({
+  targets: '.forward-staggering-demo .el',
+  translateX: 200,
+  delay: anime.stagger(100)
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="backwardStaggering" class="demo">
+  <h3 class="demo-title">Backward</h3>
+  <div class="demo-description">
+    <p>
+      Forward staggering
+    </p>
+<pre><code>anime.stagger(timeInMs)</code></pre>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>Number</code></td>
+        <td>The duration of the delay in ms between each animations</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content backward-staggering-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var backwardStaggering = function() {
+/*DEMO*/
+anime({
+  targets: '.backward-staggering-demo .el',
+  translateX: 200,
+  delay: anime.stagger(100, {direction: 'reverse'})
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+</article>
+<!-- -->
+
 <!-- TIMELINE -->
 <article id="timeline" class="color-tl">
 <header>
