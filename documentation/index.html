@@ -24,17 +24,9 @@
 <body>
   <div class="content">
     <header class="header">
-    <a class="top-header-logo" href="https://github.com/juliangarnier/anime/">
-      <svg class="top-mini-logo" fill="none" fill-rule="evenodd" stroke-linecap="square" viewBox="0 0 93 12">
-        <path d="M1 1h9.994c.92 0 1.665.744 1.665 1.662v6.676c0 .918-.746 1.662-1.665 1.662H2.666C1.746 11 1 10.256 1 9.338V5.981c0-.918.746-1.662 1.666-1.662h6.662"/>
-        <path d="M16.036 11V2.667c0-.92.744-1.667 1.662-1.667h8.336c.917 0 1.661.746 1.661 1.667V11"/>
-        <path d="M31 11V4.36"/>
-        <path d="M31 1.05V1"/>
-        <path class="large-screen" d="M34.45 11V2.667c0-.92.745-1.667 1.665-1.667h39.183c.92 0 1.666.746 1.666 1.667V11"/>
-        <path class="large-screen" d="M92 11h-9.994c-.92 0-1.665-.744-1.665-1.662V2.662c0-.918.746-1.662 1.665-1.662h8.328C91.254 1 92 1.744 92 2.662v3.324c0 .918-.746 1.662-1.666 1.662h-6.662"/>
-        <path class="small-screen" d="M34.45 11V2.667c0-.92.562-1.667 1.255-1.667H56.195c.693 0 1.255.746 1.255 1.667V11"/>
-        <path class="small-screen" d="M72.66 11h-9.994C61.746 11 61 10.256 61 9.338V2.662C61 1.744 61.746 1 62.666 1h8.328c.92 0 1.665.744 1.665 1.662v3.324c0 .918-.746 1.662-1.665 1.662H64.33"/>
-      </svg>
+    <a class="logo" href="https://github.com/juliangarnier/anime/">
+      <img class="anime-mini-logo" src="assets/img/anime-mini-logo.svg" />
+      <span class="version-number"></span>
     </a>
     </header>
     <section class="pane sidebar">
@@ -1089,62 +1081,6 @@ anime({
   </script>
 </div>
 
-<div id="startTime" class="demo">
-  <h3 class="demo-title">StartTime</h3>
-  <div class="demo-description">
-    <table>
-      <thead>
-        <td>Type</td>
-        <td>Default</td>
-        <td>Example</td>
-      </thead>
-      <tr>
-        <td>Number</td>
-        <td><code>0</code></td>
-        <td><code>startTime: 2000</code></td>
-      </tr>
-    </table>
-    <p>
-      Force the animation to start at a certain time in milliseconds.
-    </p>
-  </div>
-  <div class="demo-content start-time-demo">
-    <div class="line">
-      <div class="label">startTime: 0</div>
-      <div class="square shadow"></div>
-      <div class="square el"></div>
-    </div>
-    <div class="line">
-      <div class="label">startTime: 75</div>
-      <div class="square shadow"></div>
-      <div class="square el"></div>
-    </div>
-    <div class="line">
-      <div class="label">startTime: 150</div>
-      <div class="square shadow"></div>
-      <div class="square el"></div>
-    </div>
-  </div>
-  <script>var startTime = function() {
-/*DEMO*/
-var els = document.querySelectorAll('.start-time-demo .el');
-
-for (var i = 0; i < els.length; i++) {
-  anime({
-    targets: els[i],
-    translateX: 250,
-    direction: 'alternate',
-    loop: true,
-    easing: 'linear',
-    duration: 1000,
-    startTime: i * 200
-  });
-}
-/*DEMO*/
-}
-  </script>
-</div>
-
 </article>
 <!-- -->
 
@@ -1571,48 +1507,61 @@ anime({
 </header>
 
 <div id="staggeringBasics" class="demo">
-  <h3 class="demo-title">Basics</h3>
+  <h3 class="demo-title">Staggering basics</h3>
   <div class="demo-description">
     <p>
-      <code>anime.stagger(value, options)</code> let you assign values to each element following certains rules.
+      Staggering allow you to animate multiple elements with <a href="https://en.wikipedia.org/wiki/Follow_through_and_overlapping_action">follow through and overlapping action</a>.
     </p>
-    <p>
-      Staggered value is comonly used as delay to creates "follow trough" animations. But it can also be used for any other properties values.
-    </p>
-<pre><code>anime.stagger(timeInMs)</code></pre>
+    <pre><code>anime.stagger(value, options)</code></pre>
     <table>
       <thead>
+        <td>Arguments</td>
         <td>Type</td>
         <td>Info</td>
+        <td>Required</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td>The duration of the delay in ms between each animations</td>
+        <td>Value</td>
+        <td><code>Number</code>, <code>String</code>, <code>Array</code></td>
+        <td>The manipulated value(s)</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>Options</td>
+        <td><code>Object</code></td>
+        <td>Stagger parameters</td>
+        <td>No</td>
       </tr>
     </table>
   </div>
   <div class="demo-content basic-staggering-demo">
     <div class="line">
+      <div class="label">delay = (100 * 0) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = (100 * 1) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = (100 * 2) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = (100 * 3) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = (100 * 4) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = (100 * 5) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
@@ -1621,89 +1570,179 @@ anime({
 /*DEMO*/
 anime({
   targets: '.basic-staggering-demo .el',
-  translateX: anime.stagger(50, {from: 'last'}),
-  delay: anime.stagger(100, {from: 'last'})
+  translateX: 270,
+  delay: anime.stagger(100) // increase delay by 100ms for each elements.
 });
 /*DEMO*/
 }
   </script>
 </div>
 
-<div id="forwardStaggering" class="demo">
-  <h3 class="demo-title">Forward</h3>
+<div id="staggeringStartValue" class="demo">
+  <h3 class="demo-title">Start value</h3>
   <div class="demo-description">
+    <pre><code>anime.stagger(value, {start: startValue})</code></pre>
     <p>
-      Forward staggering
+      Force the staggering effect to start at a certain value.
     </p>
-<pre><code>anime.stagger(timeInMs)</code></pre>
     <table>
       <thead>
-        <td>Type</td>
+        <td>Types</td>
         <td>Info</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td>The duration of the delay in ms between each animations</td>
+        <td><code>Number</code>, <code>String</code>
+        <td>Same as propety values, see <a href="#unitlessValue" class="color-values">values section</a></td>
       </tr>
     </table>
   </div>
-  <div class="demo-content forward-staggering-demo">
+  <div class="demo-content staggering-start-value-demo">
     <div class="line">
+      <div class="label">delay = 500 + (100 * 0) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = 500 + (100 * 1) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = 500 + (100 * 2) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = 500 + (100 * 3) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = 500 + (100 * 4) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
+      <div class="label">delay = 500 + (100 * 5) ms</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
   </div>
-  <script>var forwardStaggering = function() {
+  <script>var staggeringStartValue = function() {
 /*DEMO*/
 anime({
-  targets: '.forward-staggering-demo .el',
-  translateX: 200,
-  delay: anime.stagger(100)
+  targets: '.staggering-start-value-demo .el',
+  translateX: 270,
+  delay: anime.stagger(100, {start: 500}) // delay starts at 500ms then increase by 100ms for each elements.
 });
 /*DEMO*/
 }
   </script>
 </div>
 
-<div id="backwardStaggering" class="demo">
-  <h3 class="demo-title">Backward</h3>
+<div id="rangeValueStaggering" class="demo">
+  <h3 class="demo-title">Range value</h3>
   <div class="demo-description">
     <p>
-      Forward staggering
+      Distribute evenly values between two numbers.
     </p>
-<pre><code>anime.stagger(timeInMs)</code></pre>
+    <pre><code>anime.stagger([startValue, endValue])</code></pre>
     <table>
       <thead>
         <td>Type</td>
         <td>Info</td>
       </thead>
       <tr>
-        <td><code>Number</code></td>
-        <td>The duration of the delay in ms between each animations</td>
+        <td><code>'easingName'</code></td>
+        <td>All valid easing names are accepted, see <a href="#easings" class="color-easings">easings section</a></td>
+      </tr>
+      <tr>
+        <td><code>function(i)</code></td>
+        <td>Custom easing function, see <a href="#customEasing" class="color-easings">custom easings section</a></td>
       </tr>
     </table>
   </div>
-  <div class="demo-content backward-staggering-demo">
+  <div class="demo-content range-value-staggering-demo">
+    <div class="line">
+      <div class="label">rotate = ((360 - (-360)) / 5) * 0</div>
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">rotate = ((360 - (-360)) / 5) * 1</div>
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">rotate = ((360 - (-360)) / 5) * 2</div>
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">rotate = ((360 - (-360)) / 5) * 3</div>
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">rotate = ((360 - (-360)) / 5) * 4</div>
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="label">rotate = ((360 - (-360)) / 5) * 5</div>
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var rangeValueStaggering = function() {
+/*DEMO*/
+anime({
+  targets: '.range-value-staggering-demo .el',
+  translateX: 270,
+  rotate: anime.stagger([-360, 360]), // rotation will be distributed from -360deg to 360deg evenly between all elements
+  easing: 'easeInOutQuad'
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="staggeringFrom" class="demo">
+  <h3 class="demo-title">From value</h3>
+  <div class="demo-description">
+    <p>
+      Start the stagger effect from a specific position.
+    </p>
+    <pre><code>anime.stagger(value, {from: startingPosition})</code></pre>
+    <table>
+      <thead>
+        <td>Options</td>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>'first'</code> (default)</td>
+        <td><code>'string'</code></td>
+        <td>Start the effect from the first element</td>
+      </tr>
+      <tr>
+        <td><code>'last'</code></td>
+        <td><code>'string'</code></td>
+        <td>Start the effect from the last element</td>
+      </tr>
+      <tr>
+        <td><code>'center'</code></td>
+        <td><code>'string'</code></td>
+        <td>Start the effect from the center</td>
+      </tr>
+      <tr>
+        <td><code>index</code></td>
+        <td><code>number</code></td>
+        <td>Start the effect from the specified index</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content staggering-from-demo">
     <div class="line">
       <div class="small square shadow"></div>
       <div class="small square el"></div>
@@ -1729,12 +1768,309 @@ anime({
       <div class="small square el"></div>
     </div>
   </div>
-  <script>var backwardStaggering = function() {
+  <script>var staggeringFrom = function() {
 /*DEMO*/
 anime({
-  targets: '.backward-staggering-demo .el',
-  translateX: 200,
+  targets: '.staggering-from-demo .el',
+  translateX: 270,
+  delay: anime.stagger(100, {from: 'center'})
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="staggeringDirection" class="demo">
+  <h3 class="demo-title">Direction</h3>
+  <div class="demo-description">
+    <p>
+      Change the order in which the stagger operates.
+    </p>
+    <pre><code>anime.stagger(value, {direction: 'reverse'})</code></pre>
+    <table>
+      <thead>
+        <td>Options</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>'normal'</code> (default)</td>
+        <td>Normal staggering, from the first elelemnt to the last</td>
+      </tr>
+      <tr>
+        <td><code>'reverse'</code></td>
+        <td>Reversed staggering, from the last elelemnt to the first</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content staggering-direction-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var staggeringDirection = function() {
+/*DEMO*/
+anime({
+  targets: '.staggering-direction-demo .el',
+  translateX: 270,
   delay: anime.stagger(100, {direction: 'reverse'})
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="staggeringEasing" class="demo">
+  <h3 class="demo-title">Easing</h3>
+  <div class="demo-description">
+    <p>
+      Stagger values using an easing function.
+    </p>
+    <pre><code>anime.stagger(value, {easing: 'easingName'})</code></pre>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>'string'</code></td>
+        <td>All valid <a href="#easings" class="color-easings">easing names</a> are accepted</td>
+      </tr>
+      <tr>
+        <td><code>function(i)</code></td>
+        <td>Use your own <a href="#customEasing" class="color-easings">custom easings function</a></td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content staggering-easing-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+  </div>
+  <script>var staggeringEasing = function() {
+/*DEMO*/
+anime({
+  targets: '.staggering-easing-demo .el',
+  translateX: 270,
+  delay: anime.stagger(300, {easing: 'easeOutQuad'})
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="gridStaggering" class="demo">
+  <h3 class="demo-title">Grid</h3>
+  <div class="demo-description">
+    <p>
+      Staggering values based a 2D array that allow "ripple" effects.
+    </p>
+    <pre><code>anime.stagger(value, {grid: [rows, columns]})</code></pre>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>array</code></td>
+        <td>A 2 items array, the first value is the number of rows, the second the number of columns</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content staggering-grid-demo">
+    <div class="grid">
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="grid shadow">
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+    </div>
+  </div>
+  <script>var gridStaggering = function() {
+/*DEMO*/
+anime({
+  targets: '.staggering-grid-demo .el',
+  scale: .1,
+  delay: anime.stagger(200, {grid: [14, 5], from: 'center'}),
+  easing: 'easeInOutQuad'
 });
 /*DEMO*/
 }

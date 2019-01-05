@@ -100,6 +100,7 @@ var date = new Date();
 for (var i = 0; i < versionNumerEls.length; i++) {
   versionNumerEls[i].innerHTML = anime.version;
 }
+
 dateEl.innerHTML = date.getFullYear();
 
 // main logo animation
@@ -255,13 +256,14 @@ var logoAnimation = (function() {
 })();
 
 var headerIntroAnimation = anime.timeline({
-  easing: 'easeOutQuad',
+  easing: 'easeOutSine',
   autoplay: false
 })
 .add({
   targets: ['.top-header a', '.secondary-menu a', '.section-intro .feature-description-text'],
-  opacity: {value: [0.001, 1], easing: 'linear', duration: 400},
+  opacity: {value: [0.001, 1], easing: 'linear', duration: 300},
   translateY: [40, 0],
+  translateZ: 0,
   duration: 500,
   delay: anime.stagger(40, {start: 400, from: 'last'}),
   begin: function(anim) {
@@ -270,9 +272,6 @@ var headerIntroAnimation = anime.timeline({
     });
   },
   complete: function(anim) {
-    // anime.speed = .1;
-    // logoAnimation.pause();
-    // logoAnimation.seek(3200);
     logoAnimation.play();
     anim.animatables.forEach(function(a) {
       a.target.style = 'opacity: 1';
@@ -317,6 +316,7 @@ var introEasingsAnimation = (function() {
 
     var easings = [];
     for (let ease in anime.penner) easings.push(ease);
+    easings.push('steps('+anime.random(5, 20)+')');
     easings.push('steps('+anime.random(5, 20)+')');
     easings.push('cubicBezier(0.545, 0.475, 0.145, 1)');
     var ease = easings[anime.random(0, easings.length - 1)];

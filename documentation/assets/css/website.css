@@ -16,11 +16,16 @@ body {
 }
 
 a {
+  color: inherit;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+a:visited {
+  color: inherit;
 }
 
 .primary,
@@ -31,12 +36,10 @@ a.primary {
 .arrow {
   position: relative;
   display: inline-block;
-  color: #F64E4D;
-  text-decoration: underline;
   transition: transform .25s ease;
 }
 
-.arrow:after {
+.arrow:before {
   pointer-events: none;
   content: "→";
   opacity: 0;
@@ -53,8 +56,8 @@ a:hover .arrow,
   transform: translateX(1em);
 }
 
-a:hover .arrow:after,
-.arrow:hover:after {
+a:hover .arrow:before,
+.arrow:hover:before {
   transform: translateX(-1em);
   opacity: 1;
 }
@@ -408,6 +411,8 @@ a.main-cta {
 }
 
 .square-animation {
+  margin-top: -20px;
+  margin-bottom: 20px;
   padding-bottom: 100%;
 }
 
@@ -417,6 +422,8 @@ a.main-cta {
     margin-bottom: 96px;
   }
   .square-animation {
+    margin-top: -70px;
+    margin-bottom: 20px;
     padding-bottom: 100%;
   }
 }
@@ -728,6 +735,12 @@ a.main-cta {
   margin-bottom: 16px;
 }
 
+.section-feature-control .vertical-icons .timeline-icon {
+  margin-left: 0;
+  margin-right: 32px;
+  width: auto;
+}
+
 @media (min-width: 740px) {
   .section-feature-control .vertical-icons {
     display: flex;
@@ -740,9 +753,9 @@ a.main-cta {
 }
 
 .timeline-icon .animation-band {
-  width: 64px;
-  height: 16px;
-  border-radius: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
   margin-right: 16px;
 }
 
