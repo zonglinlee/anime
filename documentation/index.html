@@ -2925,7 +2925,7 @@ anime({
   </div>
   <script>var finishedPromise = function() {
 if (window.demoPromiseResetTimeout) clearTimeout(window.demoPromiseResetTimeout);
-anime.setValue('.promise-demo .el', {backgroundColor: ''});
+anime.set('.promise-demo .el', {backgroundColor: ''});
 /*DEMO*/
 var progressLogEl = document.querySelector('.promise-demo .progress-log');
 var promiseEl = document.querySelector('.promise-demo .el');
@@ -2934,7 +2934,7 @@ var demoPromiseResetTimeout;
 
 function logFinished() {
   finishedLogEl.value = 'Promise resolved';
-  anime.setValue(promiseEl, {backgroundColor: '#18FF92'});
+  anime.set(promiseEl, {backgroundColor: '#18FF92'});
   // Rebind the promise, since this demo can be looped.
   window.demoPromiseResetTimeout = setTimeout(function() {
     promise = animation.finished.then(logFinished);
@@ -3038,6 +3038,9 @@ anime({
     </p>
     <p class="bubble warning">
       Shapes must have the same number of points!
+    </p><br>
+    <p class="bubble info">
+      More info on SVG shape morphing <a href="https://hackernoon.com/metamorphosis-morphing-svgs-378cf4f3aa58">here</a>.
     </p>
   </div>
   <div class="demo-content align-center morphing-demo">
@@ -3080,25 +3083,13 @@ anime({
   <h3 class="demo-title">Line drawing</h3>
   <div class="demo-description">
     <p>
-      <i>Anime</i> has a built in helper to create path drawing animation with the <code>'stroke-dashoffset'</code> property.<br>
-      Set the path <code>'dash-offset'</code> value with <code>anime.setDashoffset()</code> in a <a href="#fromToValues" class="color-values">From To</a> formated value:
+      Create path drawing animation using the <code>'stroke-dashoffset'</code> property.<br>
+      Set the path <code>'dash-offset'</code> value with <code>anime.setDashoffset()</code> in a <a href="#fromToValues" class="color-values">From To</a> formated value.
     </p>
-<pre><code>anime({
-  targets: 'svg path',
-  strokeDashoffset: [anime.setDashoffset, 0]
-});</code></pre>
-    <table>
-      <thead>
-        <td>Accepts</td>
-        <td>Parameters</td>
-        <td>Info</td>
-      </thead>
-      <tr>
-        <td><code>Function</code></td>
-        <td>animation</td>
-        <td>Return the current animation Object</td>
-      </tr>
-    </table>
+    <pre><code>strokeDashoffset: [anime.setDashoffset, 0]</code></pre>
+    <p class="bubble info">
+      More info on line drawing animation <a href="https://css-tricks.com/svg-line-animation-works/">here</a>.
+    </p>
   </div>
   <div class="demo-content align-center line-drawing-demo">
     <svg viewBox="0 0 280 100">
@@ -3529,68 +3520,6 @@ anime({
     <h2 class="demos-title">Helpers</h2>
   </header>
 
-<div id="running" class="demo">
-  <h3 class="demo-title">running</h3>
-  <div class="demo-description">
-    <pre><code>anime.running()</code></pre>
-    <p>
-      Returns an Array of all active <i>Anime</i> instances currently running.
-    </p>
-  </div>
-  <div class="demo-content running-demo">
-    <div class="line">
-      <div class="small square shadow"></div>
-      <div class="small square el"></div>
-    </div>
-    <div class="line">
-      <div class="small circle shadow"></div>
-      <div class="small circle el"></div>
-    </div>
-    <div class="line">
-      <div class="small triangle shadow"></div>
-      <div class="small triangle el"></div>
-    </div>
-    <div class="line">
-      <pre class="bottom log running-log"></pre>
-    </div>
-  </div>
-  <script>var running = function() {
-/*DEMO*/
-var runninLogEl = document.querySelector('.running-log');
-
-anime({
-  targets: '.running-demo .square.el',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  easing: 'linear'
-});
-
-anime({
-  targets: '.running-demo .circle.el',
-  translateX: 250,
-  direction: 'alternate',
-  loop: true,
-  easing: 'easeInOutCirc'
-});
-
-anime({
-  targets: '.running-demo .triangle.el',
-  translateX: 250,
-  direction: 'alternate',
-  easing: 'easeInOutQuad',
-  loop: true,
-  run: function() {
-    runninLogEl.innerHTML = 'there are currently ' + anime.running.length + ' instances running';
-  }
-});
-
-/*DEMO*/
-}
-  </script>
-
-</div>
-
 <div id="remove" class="demo">
   <h3 class="demo-title">remove</h3>
   <div class="demo-description">
@@ -3637,45 +3566,79 @@ document.querySelector('.remove-el-button').addEventListener('click', function()
 
 </div>
 
-<div id="getValue" class="demo">
-  <h3 class="demo-title">getValue</h3>
+<div id="get" class="demo">
+  <h3 class="demo-title">get</h3>
   <div class="demo-description">
-    <p>Returns the original value of an element:</p>
-    <pre><code>anime.getValue(target, propertyName, unit);</code></pre>
+    <p>Returns the original value of an element.</p>
+    <pre><code>anime.get(target, propertyName, unit);</code></pre>
     <p>
       Since <i>Anime</i> uses <a href="https://developer.mozilla.org/fr/docs/Web/API/Window/getComputedStyle">getComputedStyle</a> to access original CSS, the values are almost always returned in <code>'px'</code>, the third (optional) argument converts the value in the desired unit.
     </p>
-    <pre><code>anime.getValue(domNode, 'width', 'rem');</code></pre>
+    <pre><code>anime.get(domNode, 'width', 'rem');</code></pre>
+    <table>
+      <thead>
+        <td>Parameter</td>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td>target</td>
+        <td><code>'string'</code>, <code>var</code></td>
+        <td>Any valid <a class="color-targets" href="#cssSelector">targets</a> can be used</td>
+      </tr>
+    </table>
     <p class="bubble warning">
-      Only inlined transforms values can be accessed.
+      CSS transforms : Only inlined values can be accessed.
     </p>
   </div>
   <div class="demo-content get-value-demo">
     <div class="line">
+      <div class="logs">
+        <div class="log get-value-demo-log"></div>
+      </div>
       <div class="large circle shadow"></div>
       <div class="large circle el"></div>
-      <div class="log get-value-demo-log"></div>
     </div>
   </div>
-  <script>var getValue = function() {
+  <script>var get = function() {
 /*DEMO*/
 var logEl = document.querySelector('.get-value-demo-log');
 var el = document.querySelector('.get-value-demo .el');
 
-logEl.innerHTML = '".el" width is "' + anime.getValue(el, 'width', 'rem') + 'rem"';
+logEl.innerHTML = '';
+logEl.innerHTML += '".el" width is :<br>';
+logEl.innerHTML += '"' + anime.get(el, 'width', 'px') + '"';
+logEl.innerHTML += ' or "' + anime.get(el, 'width', 'rem') + 'rem"'
 /*DEMO*/
 }
   </script>
 
 </div>
 
-<div id="setValue" class="demo">
-  <h3 class="demo-title">setValue</h3>
+<div id="set" class="demo">
+  <h3 class="demo-title">set</h3>
   <div class="demo-description">
     <p>
-      Imadiatly set values to the specified targets:<br>
+      Imadiatly set values to the specified targets.
     </p>
-    <pre><code>anime.setValue(targets, {property: value});</code></pre>
+    <pre><code>anime.set(targets, {property: value});</code></pre>
+    <table>
+      <thead>
+        <td>Parameters</td>
+        <td>Type</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td>target(s)</td>
+        <td><code>'string'</code>, <code>var</code></td>
+        <td>Any valid <a class="color-targets" href="#cssSelector">targets</a> can be used</td>
+      </tr>
+      <tr>
+        <td>values</td>
+        <td><code>object</code></td>
+        <td>Any valid <a class="color-properties" href="#cssProperties">properties</a> can be used</td>
+      </tr>
+    </table>
   </div>
   <div class="demo-content set-value-demo">
     <div class="line">
@@ -3691,9 +3654,9 @@ logEl.innerHTML = '".el" width is "' + anime.getValue(el, 'width', 'rem') + 'rem
       <div class="small square el"></div>
     </div>
   </div>
-  <script>var setValue = function() {
+  <script>var set = function() {
 /*DEMO*/
-anime.setValue('.set-value-demo .el', {
+anime.set('.set-value-demo .el', {
   translateX: function() { return anime.random(50, 250); },
   rotate: function() { return anime.random(0, 360); },
 });
@@ -3706,11 +3669,10 @@ anime.setValue('.set-value-demo .el', {
 <div id="random" class="demo">
   <h3 class="demo-title">random</h3>
   <div class="demo-description">
-    <pre><code>anime.random(minValue, maxValue)</code></pre>
     <p>
       Returns a random integer within a specific range.
     </p>
-    <pre><code>var randomValue = anime.random(-100, 100);</code></pre>
+    <pre><code>anime.random(minValue, maxValue);</code></pre>
   </div>
   <div class="demo-content random-demo">
     <div class="line">
@@ -3750,10 +3712,10 @@ randomValues();
 <div id="tick" class="demo">
   <h3 class="demo-title">tick</h3>
   <div class="demo-description">
-    <pre><code>animation.tick(time)</code></pre>
     <p>
-      Let you use an external requestAnimationFrame loop.<br>
+      Control and play an animation using an external requestAnimationFrame loop.<br>
     </p>
+    <pre><code>animation.tick(time)</code></pre>
     <p class="bubble warning">
       Don't forget to set the <code>autoplay</code> parameter to <code>false</code> to prevent the <i>Anime</i> built-in RAF loop to start.
     </p>
@@ -3788,6 +3750,67 @@ requestAnimationFrame(loop);
 }
   </script>
 
+</div>
+
+<div id="running" class="demo">
+  <h3 class="demo-title">running</h3>
+  <div class="demo-description">
+    <p>
+      Returns an Array of all active <i>Anime</i> instances currently running.
+    </p>
+    <pre><code>anime.running</code></pre>
+  </div>
+  <div class="demo-content running-demo">
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="line">
+      <div class="small circle shadow"></div>
+      <div class="small circle el"></div>
+    </div>
+    <div class="line">
+      <div class="small triangle shadow"></div>
+      <div class="small triangle el"></div>
+    </div>
+    <div class="line">
+      <pre class="bottom log running-log"></pre>
+    </div>
+  </div>
+  <script>var running = function() {
+/*DEMO*/
+var runninLogEl = document.querySelector('.running-log');
+
+anime({
+  targets: '.running-demo .square.el',
+  translateX: 270,
+  direction: 'alternate',
+  loop: true,
+  easing: 'linear'
+});
+
+anime({
+  targets: '.running-demo .circle.el',
+  translateX: 270,
+  direction: 'alternate',
+  loop: true,
+  easing: 'easeInOutCirc'
+});
+
+anime({
+  targets: '.running-demo .triangle.el',
+  translateX: 270,
+  direction: 'alternate',
+  easing: 'easeInOutQuad',
+  loop: true,
+  update: function() {
+    runninLogEl.innerHTML = 'there are currently ' + anime.running.length + ' instances running';
+  }
+});
+
+/*DEMO*/
+}
+  </script>
 </div>
 
 </article>
