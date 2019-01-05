@@ -184,7 +184,7 @@ const bezier = (() => {
 
     function getTForX(aX) {
 
-      let intervalStart = 0.0;
+      let intervalStart = 0;
       let currentSample = 1;
       const lastSample = kSplineTableSize - 1;
 
@@ -470,8 +470,10 @@ function getElementTransforms(el) {
 function getTransformValue(el, propName, animatable, unit) {
   const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
   const value = getElementTransforms(el).get(propName) || defaultVal;
-  animatable.transforms.list.set(propName, value);
-  animatable.transforms['last'] = propName;
+  if (animatable) {
+    animatable.transforms.list.set(propName, value);
+    animatable.transforms['last'] = propName;
+  }
   return unit ? convertPxToUnit(el, value, unit) : value;
 }
 
@@ -929,6 +931,7 @@ function anime(params = {}) {
   function syncInstanceChildren(time) {
     for (let i = 0; i < childrenLength; i++) {
       const child = children[i];
+      if (!child) return;
       child.seek(time - child.timelineOffset);
     }
   }
@@ -1242,8 +1245,8 @@ anime.version = '3.0.0';
 anime.speed = 1;
 anime.running = activeInstances;
 anime.remove = removeTargets;
-anime.getValue = getOriginalTargetValue;
-anime.setValue = setTargetValue;
+anime.get = getOriginalTargetValue;
+anime.set = setTargetValue;
 anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
