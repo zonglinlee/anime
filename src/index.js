@@ -928,11 +928,15 @@ function anime(params = {}) {
     lastTime = adjustTime(instance.currentTime) * (1 / anime.speed);
   }
 
+  function seekCild(time, child) {
+    if (child) child.seek(time - child.timelineOffset);
+  }
+
   function syncInstanceChildren(time) {
-    for (let i = 0; i < childrenLength; i++) {
-      const child = children[i];
-      if (!child) return;
-      child.seek(time - child.timelineOffset);
+    if (time >= instance.currentTime) {
+      for (let i = 0; i < childrenLength; i++) seekCild(time, children[i]);
+    } else {
+      for (let i = childrenLength; i--;) seekCild(time, children[i]);
     }
   }
 
@@ -1018,48 +1022,34 @@ function anime(params = {}) {
       setCallback('begin');
       setCallback('loopBegin');
     }
-    if (
-      (!instance.changeBegan && !insReversed && insTime >= insDelay && insTime <= insEndDelay) || 
-      (!instance.changeBegan && insReversed && insTime <= insEndDelay && insTime >= insDelay)) {
-      instance.changeBegan = true;
-      instance.changeCompleted = false;
-      setCallback('changeBegin');
-    }
-    if ((insTime >= insDelay && insTime <= insEndDelay)) {
-      setCallback('change');
-    }
-    if (
-      (!instance.changeCompleted && !insReversed && insTime >= insEndDelay) || 
-      (!instance.changeCompleted && insReversed && insTime <= insDelay)) {
-      instance.changeCompleted = true;
-      instance.changeBegan = false;
-      setCallback('changeComplete');
-    }
     if (children) { syncInstanceChildren(insTime); };
-    if (insTime >= insDelay && insTime <= insDuration) {
-      setAnimationsProgress(insTime);
-    } else {
-      if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
-        setAnimationsProgress(insDuration);
-      }
-      if (insTime <= insDelay && instance.currentTime !== 0) {
-        setAnimationsProgress(0);
-      }
+    if (insTime <= insDelay && instance.currentTime !== 0) {
+      setCallback('changeBegin');
+      setAnimationsProgress(0);
     }
-    instance.currentTime = minMax(insTime, 0, insDuration);
+    if (insTime >= insDelay && insTime <= insDuration) {
+      setCallback('change');
+      setAnimationsProgress(insTime);
+    }
+    if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
+      setCallback('changeComplete');
+      setAnimationsProgress(insDuration);
+    }
     setCallback('update');
+    instance.currentTime = minMax(insTime, 0, insDuration);
     if (engineTime >= insDuration) {
       lastTime = 0;
-      setCallback('loopComplete');
       countIteration();
       if (instance.remaining) {
         startTime = now;
+        setCallback('loopComplete');
         setCallback('loopBegin');
         if (instance.direction === 'alternate') { toggleInstanceDirection(); }
       } else {
         instance.paused = true;
         if (!instance.completed) {
           instance.completed = true;
+          setCallback('loopComplete');
           setCallback('complete');
           if ('Promise' in window) {
             resolve();
@@ -1078,8 +1068,6 @@ function anime(params = {}) {
     instance.progress = 0;
     instance.paused = true;
     instance.began = false;
-    instance.changeBegan = false;
-    instance.changeCompleted = false;
     instance.completed = false;
     instance.reversed = direction === 'reverse';
     instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
