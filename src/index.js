@@ -774,7 +774,7 @@ const setProgressValue = {
 
 // Set Value helper
 
-function setTargetValue(targets, properties) {
+function setTargetsValue(targets, properties) {
   const animatables = getAnimatables(targets);
   animatables.forEach(animatable => {
     for (let property in properties) {
@@ -1077,6 +1077,13 @@ function anime(params = {}) {
     setAnimationsProgress(0);
   }
 
+  // Set Value helper
+
+  instance.set = function(targets, properties) {
+    setTargetsValue(targets, properties);
+    return instance;
+  }
+
   instance.tick = function(t) {
     now = t;
     if (!startTime) startTime = now;
@@ -1234,7 +1241,7 @@ anime.speed = 1;
 anime.running = activeInstances;
 anime.remove = removeTargets;
 anime.get = getOriginalTargetValue;
-anime.set = setTargetValue;
+anime.set = setTargetsValue;
 anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;

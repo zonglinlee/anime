@@ -110,12 +110,8 @@
     console.log(instance.id, completed, 'CHANGE COMPLETE', instance.changeCompleted);
   }
 
-  function logChange(instance) {
-    // console.log(instance.id, 'CHANGING');
-  }
-
   window.tl = anime.timeline({
-    easing: 'easeOutQuad',
+    easing: 'easeInOutSine',
     autoplay: false,
     duration: 1000
   })
@@ -124,29 +120,28 @@
     translateY: '-100vh',
     background: '#FF1461',
     changeBegin: logChangeBegan,
-    changeComplete: logChangeComplete,
-    change: logChange
+    changeComplete: logChangeComplete
   })
+  .set('.pane-02', {'translateY': '-100vh'})
   .add({
     targets: '.pane-02',
     translateX: ['100%', 0],
-    translateY: '-100vh',
     background: '#FF1461',
     changeBegin: logChangeBegan,
-    changeComplete: logChangeComplete,
-    change: logChange
+    changeComplete: logChangeComplete
   }, '-=500')
+  .set('.pane-03', {'translateY': '-200vh'})
   .add({
     targets: '.pane-03',
     translateY: '-100vh',
     background: '#FF1461',
     changeBegin: logChangeBegan,
-    changeComplete: logChangeComplete,
-    change: logChange
+    changeComplete: logChangeComplete
   }, '-=500')
+  .set('.pane-04', {'translateY': '-100vh'})
   .add({
     targets: '.pane-04',
-    translateY: '-100vh',
+    scale: [0, 1],
     background: '#FF1461',
     changeBegin: logChangeBegan,
     changeComplete: logChangeComplete,
@@ -154,6 +149,7 @@
   .add({
     targets: '.pane-05',
     translateY: '-100vh',
+    rotate: [-180, 0],
     background: '#FF1461',
     changeBegin: logChangeBegan,
     changeComplete: logChangeComplete,
