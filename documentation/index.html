@@ -1422,9 +1422,22 @@ anime({
 
 </div>
 
-<div id="keyframes" class="demo">
-  <h3 class="demo-title">Keyframes</h3>
+</article>
+<!-- -->
+
+<!-- KEYFRAMES -->
+<article id="keyframes" class="color-keyframes">
+<header>
+  <h2 class="demos-title">Keyframes</h2>
+</header>
+
+<div id="animationKeyframes" class="demo">
+  <h3 class="demo-title">Animation keyframes</h3>
   <div class="demo-description">
+    <p>
+      Keyframes are defined using an Array of property Object.<br>
+      More details on Object values in the <a class="color-anim-params" href="#specificPropParameters">Specific property parameters</a>.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -1439,33 +1452,18 @@ anime({
 ]</code></td>
       </tr>
     </table>
-    <p>
-      Keyframes are defined using an Array of property Object.<br>
-      More details on Object values in the <a class="color-anim-params" href="#specificPropParameters">Specific property parameters</a>.
-    </p>
     <p class="bubble info">
       If their is no duration specified inside the keyframes of one property, each keyframe duration will be equal to the animation total duration divided by the number of keyframes:
     </p>
-<pre><code>anime({
-  targets: '.el',
-  translateX: [
-    {value: 100}, // duration -> 2000 / 4 = 500 ms
-    {value: 200}, // duration -> 2000 / 4 = 500 ms
-    {value: 300}, // duration -> 2000 / 4 = 500 ms
-    {value: 400} // duration -> 2000 / 4 = 500 ms
-  ],
-  duration: 2000
-});
-</code></pre>
   </div>
-  <div class="demo-content keyframes-demo">
+  <div class="demo-content animation-keyframes-demo">
     <div class="circle shadow"></div>
     <div class="circle el keyframes"></div>
   </div>
-  <script>var keyframes = function() {
+  <script>var animationKeyframes = function() {
 /*DEMO*/
 anime({
-  targets: '.el.keyframes',
+  targets: '.animation-keyframes-demo .el',
   translateX: [
     { value: 250, duration: 1000, delay: 500 },
     { value: 0, duration: 1000, delay: 500 }
@@ -1494,7 +1492,69 @@ anime({
 /*DEMO*/
 }
   </script>
+</div>
 
+<div id="propertyKeyframes" class="demo">
+  <h3 class="demo-title">Property keyframes</h3>
+  <div class="demo-description">
+    <p>
+      Keyframes are defined using an Array of property Object.<br>
+      More details on Object values in the <a class="color-anim-params" href="#specificPropParameters">Specific property parameters</a>.
+    </p>
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td><code>Array</code></td>
+        <td><code>[
+  {value: 100, easing: 'easeOutExpo'},
+  {value: 200, delay: 500},
+  {value: 300, duration: 1000}
+]</code></td>
+      </tr>
+    </table>
+    <p class="bubble info">
+      If their is no duration specified inside the keyframes of one property, each keyframe duration will be equal to the animation total duration divided by the number of keyframes:
+    </p>
+  </div>
+  <div class="demo-content property-keyframes-demo">
+    <div class="circle shadow"></div>
+    <div class="circle el keyframes"></div>
+  </div>
+  <script>var propertyKeyframes = function() {
+/*DEMO*/
+anime({
+  targets: '.property-keyframes-demo .el',
+  translateX: [
+    { value: 250, duration: 1000, delay: 500 },
+    { value: 0, duration: 1000, delay: 500 }
+  ],
+  translateY: [
+    { value: -40, duration: 500 },
+    { value: 40, duration: 500, delay: 1000 },
+    { value: 0, duration: 500, delay: 1000 }
+  ],
+  scaleX: [
+    { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
+    { value: 1, duration: 900 },
+    { value: 4, duration: 100, delay: 500, easing: 'easeOutExpo' },
+    { value: 1, duration: 900 }
+  ],
+  scaleY: [
+    { value: [1.75, 1], duration: 500 },
+    { value: 2, duration: 50, delay: 1000, easing: 'easeOutExpo' },
+    { value: 1, duration: 450 },
+    { value: 1.75, duration: 50, delay: 1000, easing: 'easeOutExpo' },
+    { value: 1, duration: 450 }
+  ],
+  easing: 'easeOutElastic(1, .8)',
+  loop: true
+});
+/*DEMO*/
+}
+  </script>
 </div>
 
 </article>
