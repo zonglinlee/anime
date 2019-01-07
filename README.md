@@ -22,12 +22,6 @@
 * [kenzo.com/en/thejunglebook](https://kenzo.com/en/thejunglebook)
 * [Stress test](http://codepen.io/juliangarnier/pen/9aea7f045d7db301eab41bc09dcfc04d?editors=0010)
 
-### Browser support
-
-| Chrome | Safari | IE / Edge | Firefox | Opera |
-| --- | --- | --- | --- | --- |
-| 24+ | 8+ | 11+ | 32+ | 15+ |
-
 ## Usage
 
 Download via NPM package
@@ -44,7 +38,7 @@ Then link `anime.min.js` in your HTML :
 <script src="anime.min.js"></script>
 ```
 
-Or import with ES6 modules :
+Or import `anime` with ES6 modules :
 
 ```javascript
 import anime from '/anime.es.js'
@@ -55,15 +49,24 @@ And start animating :
 ```javascript
 anime({
   targets: 'div',
-  translateX: 260,
+  translateX: [
+    { value: 100, duration: 1200 },
+    { value: 0, duration: 800 }
+  ],
   rotate: '1turn',
   backgroundColor: '#FFF',
-  duration: 800
+  duration: 2000,
+  loop: true
 });
 ```
 
-👋
+## Browser support
+
+| Chrome | Safari | IE / Edge | Firefox | Opera |
+| --- | --- | --- | --- | --- |
+| 24+ | 8+ | 11+ | 32+ | 15+ |
+
 
 ====
 
-[MIT License](LICENSE.md). © 2017 [Julian Garnier](http://juliangarnier.com).
+[MIT License](LICENSE.md). ©2019 [Julian Garnier](http://juliangarnier.com).
