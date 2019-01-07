@@ -23,17 +23,18 @@ anime({
 });
 ```
 
-## Documentation [→](/documentation)
+## [Documentation]("http://animejs.com/documentation/")
 
-* [Keyframes](#keyframes): Chain multiple animation properties.
-* [Timeline](#timeline): Synchronize multiple instances together.
-* [Playback controls](#playback-controls): Play, pause, restart, seek animations or timelines.
-* [CSS transforms](#individual-CSS-transforms): Animate CSS transforms individually.
-* [Function based values](#function-based-values): Multiple animated targets can have individual value.
-* [SVG Animations](#svg): Motion path, line drawing and morphing animations.
-* [Easing functions](#easing-functions): Use the built in functions or create your own Cubic Bézier curve easing.
+* [Keyframes](http://animejs.com/documentation/#animationKeyframes)
+* [Stagering](http://animejs.com/documentation/#staggeringBasics)
+* [Timeline](http://animejs.com/documentation/#timelineBasics)
+* [Controls](http://animejs.com/documentation/#playPause)
+* [CSS transforms](http://animejs.com/documentation/#CSStransforms)
+* [Function based values](http://animejs.com/documentation/#functionBasedPropVal)
+* [SVG Animations](http://animejs.com/documentation/#motionPath)
+* [Easing functions](http://animejs.com/documentation/#linearEasing)
 
-## Demos and examples [→](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
+## Demos and examples
 
 * [CodePen demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
 * [juliangarnier.com](http://juliangarnier.com)
