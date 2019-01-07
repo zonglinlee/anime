@@ -1,27 +1,7 @@
 # <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-logo-animation.gif" width="200" height="80" alt="anime-js-v3-logo"/></a>
 
-### Javascript animation engine
+### Javascript animation engine | v3.0.0 | [animejs.com]("http://animejs.com/documentation/")
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
-
-## Getting started
-
-```bash
-$ npm install animejs
-```
-
-Or manually [download](https://github.com/juliangarnier/anime/archive/master.zip) the code.
-
-```javascript
-import anime from '/animejs'
-
-anime({
-  targets: 'div',
-  translateX: 260,
-  rotate: '1turn',
-  backgroundColor: '#FFF',
-  duration: 800
-});
-```
 
 ## [Documentation]("http://animejs.com/documentation/")
 
@@ -47,3 +27,43 @@ anime({
 | Chrome | Safari | IE / Edge | Firefox | Opera |
 | --- | --- | --- | --- | --- |
 | 24+ | 8+ | 11+ | 32+ | 15+ |
+
+## Usage
+
+Download via NPM package
+
+```bash
+$ npm install animejs
+```
+
+Or manually [download](https://github.com/juliangarnier/anime/archive/master.zip) the code.
+
+Then link `anime.min.js` in your HTML :
+
+```html
+<script src="anime.min.js"></script>
+```
+
+Or import with ES6 modules :
+
+```javascript
+import anime from '/anime.es.js'
+```
+
+And start animating :
+
+```javascript
+anime({
+  targets: 'div',
+  translateX: 260,
+  rotate: '1turn',
+  backgroundColor: '#FFF',
+  duration: 800
+});
+```
+
+👋
+
+====
+
+[MIT License](LICENSE.md). © 2017 [Julian Garnier](http://juliangarnier.com).
