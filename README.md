@@ -1,4 +1,4 @@
-# <a href="http://animejs.com"><img src="/documentation/assets/img/read-me-animation.gif" width="100%" alt="anime-js-v3-logo"/></a>
+# <a href="http://animejs.com"><img src="/documentation/assets/img/anime-readme-header.gif" width="100%" alt="anime-js-v3-logo"/></a>
 
 ### Javascript animation engine.
 
