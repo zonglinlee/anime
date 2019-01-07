@@ -1,8 +1,10 @@
-# anime.js 
 # <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-logo-animation.gif" width="200" height="80" alt="anime-js-v3-logo"/></a>
 
+### Javascript animation engine
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
+## <a href="/documentation" >Documentation</a>
+## <a href="/documentation" >Examples</a>
 ## Getting started
 
 ```bash
