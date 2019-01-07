@@ -933,7 +933,7 @@ function anime(params = {}) {
   }
 
   function syncInstanceChildren(time) {
-    if (time >= instance.currentTime) {
+    if (!instance.reversePlayback) {
       for (let i = 0; i < childrenLength; i++) seekCild(time, children[i]);
     } else {
       for (let i = childrenLength; i--;) seekCild(time, children[i]);
@@ -1014,9 +1014,9 @@ function anime(params = {}) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
     const insEndDelay = insDuration - instance.endDelay;
-    const insReversed = instance.reversed;
     const insTime = adjustTime(engineTime);
     instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
+    instance.reversePlayback = insTime < instance.currentTime;
     if (children) { syncInstanceChildren(insTime); };
     if (!instance.began && instance.currentTime > 0) {
       instance.began = true;
@@ -1031,21 +1031,21 @@ function anime(params = {}) {
     }
     if (insTime > insDelay && insTime < insEndDelay) {
       if (!instance.changeBegan) {
-        setCallback('changeBegin');
         instance.changeBegan = true;
         instance.changeCompleted = false;
+        setCallback('changeBegin');
       }
       setCallback('change');
       setAnimationsProgress(insTime);
     } else {
       if (instance.changeBegan) {
-        setCallback('changeComplete');
         instance.changeCompleted = true;
         instance.changeBegan = false;
+        setCallback('changeComplete');
       }
     }
     instance.currentTime = minMax(insTime, 0, insDuration);
-    setCallback('update');
+    if (instance.began) setCallback('update');
     if (engineTime >= insDuration) {
       lastTime = 0;
       countIteration();
@@ -1080,6 +1080,7 @@ function anime(params = {}) {
     instance.changeBegan = false;
     instance.completed = false;
     instance.changeCompleted = false;
+    instance.reversePlayback = false;
     instance.reversed = direction === 'reverse';
     instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
     children = instance.children;

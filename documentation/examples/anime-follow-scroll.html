@@ -104,12 +104,12 @@
 
   function logChangeBegan(instance) {
     began++;
-    console.log(instance.id, 'CHANGE BEGAN', instance.changeBegan);
+    // console.log(instance.id, 'CHANGE BEGAN', instance.changeBegan);
   }
 
   function logChangeComplete(instance) {
     completed++;
-    console.log(instance.id, 'CHANGE COMPLETE', instance.changeCompleted);
+    // console.log(instance.id, 'CHANGE COMPLETE', instance.changeCompleted);
   }
 
   window.tl = anime.timeline({
@@ -119,7 +119,7 @@
     // delay: 500,
     // endDelay: 500,
     update: function(instane) {
-      // console.log(instane.directionReversed);
+      console.log(instane.reversePlayback);
     }
   })
   .add({
