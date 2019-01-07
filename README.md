@@ -3,35 +3,27 @@
 ### Javascript animation engine
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
-### <a href="/documentation" >Documentation →</a>
-
-### <a href="/documentation" >Examples →</a>
-
 ### Getting started
 
 ```bash
 $ npm install animejs
 ```
 
-Or manually [download](https://github.com/juliangarnier/anime/archive/master.zip)
+Or manually [download](https://github.com/juliangarnier/anime/archive/master.zip) the code.
 
 ```javascript
 import anime from '/animejs'
 
 anime({
   targets: 'div',
-  translateX: [
-    { value: 100, duration: 1200 },
-    { value: 0, duration: 800 }
-  ],
+  translateX: 260,
   rotate: '1turn',
   backgroundColor: '#FFF',
-  duration: 2000,
-  loop: true
+  duration: 800
 });
 ```
 
-### Learn
+### Documentation
 
 * [Keyframes](#keyframes): Chain multiple animation properties.
 * [Timeline](#timeline): Synchronize multiple instances together.
