@@ -3,7 +3,7 @@
 ### Javascript animation engine
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
-### Getting started
+## Getting started
 
 ```bash
 $ npm install animejs
@@ -23,7 +23,7 @@ anime({
 });
 ```
 
-### Documentation
+## Documentation [→](/documentation)
 
 * [Keyframes](#keyframes): Chain multiple animation properties.
 * [Timeline](#timeline): Synchronize multiple instances together.
@@ -33,7 +33,7 @@ anime({
 * [SVG Animations](#svg): Motion path, line drawing and morphing animations.
 * [Easing functions](#easing-functions): Use the built in functions or create your own Cubic Bézier curve easing.
 
-### Demos and examples
+## Demos and examples [→](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
 
 * [CodePen demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
 * [juliangarnier.com](http://juliangarnier.com)
