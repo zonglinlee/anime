@@ -1,4 +1,4 @@
-# <a href="http://animejs.com"><img src="/documentation/assets/img/anime-v3-logo.gif" width="236" height="100" alt="anime-js-v3-logo"/></a>
+# <a href="http://animejs.com"><img src="/documentation/assets/img/anime-v3-logo.gif" width="118" height="50" alt="anime-js-v3-logo"/></a>
 
 ### Javascript animation engine.
 
@@ -8,21 +8,19 @@
 
 ```bash
 $ npm install animejs
-# OR
-$ bower install animejs
 ```
 
 ```javascript
 import anime from 'animejs'
 ```
 
-Or manually [download](https://github.com/juliangarnier/anime/archive/master.zip) and link `anime.min.js` in your HTML:
+Or manually [download](https://github.com/juliangarnier/anime/archive/master.zip) and link `anime.min.js` in your HTML :
 
 ```html
 <script src="anime.min.js"></script>
 ```
 
-Then start animating:
+Then start animating :
 
 ```javascript
 anime({
