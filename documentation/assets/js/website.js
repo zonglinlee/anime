@@ -61,6 +61,31 @@ function dragElement(el, events) {
 
 }
 
+// Better scroll events
+
+function onScroll(cb) {
+  var isTicking = false;
+  var scrollY = 0;
+  var body = document.body;
+  var html = document.documentElement;
+  var scrollHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+  function scroll() {
+    scrollY = window.scrollY;
+    if (cb) cb(scrollY, scrollHeight);
+    requestTick();
+  }
+  function requestTick() {
+    if (!isTicking) requestAnimationFrame(updateScroll);
+    isTicking = true;
+  }
+  function updateScroll() {
+    isTicking = false;
+    var currentScrollY = scrollY;
+  }
+  scroll();
+  window.onscroll = scroll;
+}
+
 function isElementInViewport(el, inCB, outCB, rootMargin) {
   var margin = rootMargin || '-10%';
   function handleIntersect(entries, observer) {
@@ -94,12 +119,13 @@ function fitElementToParent(el, padding) {
 // Update date and version number
 
 var versionNumerEls = document.querySelectorAll('.version-number');
-var dateEl = document.querySelector('.date');
-var date = new Date();
 
 for (var i = 0; i < versionNumerEls.length; i++) {
   versionNumerEls[i].innerHTML = anime.version;
 }
+
+var dateEl = document.querySelector('.date');
+var date = new Date();
 
 dateEl.innerHTML = date.getFullYear();
 
@@ -387,16 +413,16 @@ var introEasingsAnimation = (function() {
     }, 0)
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 110], {easing: 'easeInOutSine', from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 110], {easing: 'easeInOutQuad', from: 'center', direction: 'reverse'}),
       duration: duration,
-      easing: 'easeInOutSine',
+      easing: 'easeInOutQuad',
       delay: anime.stagger(7, {from: 'center'})
     })
     .add({
       targets: '.easing-visualizer .dot',
-      translateY: anime.stagger(['-144px', '144px'], {easing: 'easeInOutSine', from: 'last'}),
+      translateY: anime.stagger(['-144px', '144px'], {easing: 'easeInOutQuad', from: 'last'}),
       duration: duration,
-      easing: 'easeInOutSine',
+      easing: 'easeInOutQuad',
       delay: anime.stagger(7, {from: 'center'})
     }, '-=600');
 
@@ -585,7 +611,7 @@ var advancedStaggeringAnimation = (function() {
 
     animation = anime.timeline({
       easing: 'easeInOutQuad',
-      duration: 300
+      duration: 100
     })
     .add({
       targets: '.cursor',
@@ -670,14 +696,6 @@ var timeControlAnimation = (function() {
     }
   });
 
-  document.addEventListener('scroll', function() {
-    if (!controlAnimationCanMove) {
-      if (time.anim) time.anim.pause();
-      controlAnimationCanMove = true;
-      moveControlAnimation();
-    }
-  });
-
   var timelineAnimation = anime.timeline({
     easing: 'linear',
     autoplay: false
@@ -738,7 +756,7 @@ var timeControlAnimation = (function() {
     var height = rect.height;
     var windowHeight = window.innerHeight;
     var scrolled = (top - windowHeight + 100) * -1.5;
-    timelineAnimation.seek((scrolled * 2));
+    timelineAnimation.seek(scrolled * 2);
     if (controlAnimationCanMove) requestAnimationFrame(moveControlAnimation);
   }
 
@@ -748,6 +766,14 @@ var timeControlAnimation = (function() {
   }, function(el, entry) {
     controlAnimationCanMove = false;
   }, '50px');
+
+  onScroll(function() {
+    if (!controlAnimationCanMove) {
+      if (time.anim) time.anim.pause();
+      controlAnimationCanMove = true;
+      moveControlAnimation();
+    }
+  });
 
 })();
 
