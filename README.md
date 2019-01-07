@@ -3,6 +3,7 @@
 ### Javascript animation engine | v3.0.0 | [animejs.com](http://animejs.com/documentation/)
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
+
 ## [Documentation](http://animejs.com/documentation/)
 
 * [Keyframes](http://animejs.com/documentation/#animationKeyframes)
@@ -14,6 +15,7 @@
 * [SVG Animations](http://animejs.com/documentation/#motionPath)
 * [Easing functions](http://animejs.com/documentation/#linearEasing)
 
+
 ## Demos and examples
 
 * [CodePen demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
@@ -21,6 +23,7 @@
 * [animejs.com](http://animejs.com)
 * [kenzo.com/en/thejunglebook](https://kenzo.com/en/thejunglebook)
 * [Stress test](http://codepen.io/juliangarnier/pen/9aea7f045d7db301eab41bc09dcfc04d?editors=0010)
+
 
 ## Usage
 
@@ -60,6 +63,7 @@ anime({
 });
 ```
 
+
 ## Browser support
 
 | Chrome | Safari | IE / Edge | Firefox | Opera |
@@ -67,6 +71,5 @@ anime({
 | 24+ | 8+ | 11+ | 32+ | 15+ |
 
 
-====
 
-[MIT License](LICENSE.md). ©2019 [Julian Garnier](http://juliangarnier.com).
+[animejs.com](http://animejs.com/documentation/) | Javascript animation engine | v3.0.0 | [MIT License](LICENSE.md). ©2019 [Julian Garnier](http://juliangarnier.com).
