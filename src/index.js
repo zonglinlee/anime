@@ -1026,7 +1026,7 @@ function anime(params = {}) {
     if (insTime <= insDelay && instance.currentTime !== 0) {
       setAnimationsProgress(0);
     }
-    if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
+    if ((insTime >= insEndDelay && instance.currentTime !== insDuration) || !insDuration) {
       setAnimationsProgress(insDuration);
     }
     if (insTime > insDelay && insTime < insEndDelay) {
@@ -1071,7 +1071,6 @@ function anime(params = {}) {
 
   instance.reset = function() {
     const direction = instance.direction;
-    const loops = instance.loop;
     instance.passThrough = false;
     instance.currentTime = 0;
     instance.progress = 0;
@@ -1082,10 +1081,11 @@ function anime(params = {}) {
     instance.changeCompleted = false;
     instance.reversePlayback = false;
     instance.reversed = direction === 'reverse';
-    instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
+    instance.remaining = instance.loop;
     children = instance.children;
     childrenLength = children.length;
     for (let i = childrenLength; i--;) instance.children[i].reset();
+    if (instance.reversed && instance.loop !== true || (direction === 'alternate' && instance.loop === 1)) instance.remaining++;
     setAnimationsProgress(0);
   }
 

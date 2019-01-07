@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Documentation | anime.js • JavaScript animation engine</title>
+  <title>Documentation | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -54,6 +54,8 @@
 <div id="cssSelector" class="demo">
   <h3 class="demo-title">CSS Selector</h3>
   <div class="demo-description">
+    <p>Can be any CSS selector.</p>
+    <p class="bubble warning">Pseudo elements can't be targeted using JavaScript.</p>
     <table>
       <thead>
         <td>Type</td>
@@ -66,7 +68,6 @@
         <td><code>targets: '.item'</code></td>
       </tr>
     </table>
-    <p>Can be any CSS selector except pseudo elements (they can't be animated in JavaScript).</p>
   </div>
   <div class="demo-content css-selector-demo">
     <div class="line">
@@ -89,6 +90,9 @@ anime({
 <div id="domNode" class="demo">
   <h3 class="demo-title">DOM Node / NodeList</h3>
   <div class="demo-description">
+    <p>
+      Can be any DOM Node or NodeList.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -106,9 +110,6 @@ anime({
         <td><code>targets: el.querySelectorAll('.item')</code></td>
       </tr>
     </table>
-    <p>
-      Can be any DOM Node or NodeList.
-    </p>
   </div>
   <div class="demo-content dom-node-demo">
     <div class="line">
@@ -140,6 +141,9 @@ anime({
 <div id="JSobject" class="demo">
   <h3 class="demo-title">JavaScript Object</h3>
   <div class="demo-description">
+    <p>
+      A JavaScript Object with at least one property containing a numerical value.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -152,9 +156,6 @@ anime({
         <td><code>targets: myObjectProp</code></td>
       </tr>
     </table>
-    <p>
-      A JavaScript Object with at least one property containing a numerical value.
-    </p>
   </div>
   <div class="demo-content">
     <pre class="battery-log">{"charged":"0%","cycles":120}</pre>
@@ -188,6 +189,12 @@ anime({
 <div id="array" class="demo">
   <h3 class="demo-title">Array</h3>
   <div class="demo-description">
+    <p>
+      An array containing multiple targets.
+    </p>
+    <p class="bubble info">
+      Targets type can by mixed. E.g. <code>['.el', domNode, jsObject]</code>
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -200,9 +207,6 @@ anime({
         <td><code>targets: ['.item', el.getElementById('#thing')]</code></td>
       </tr>
     </table>
-    <p>
-      An array containing different multiple targets.
-    </p>
   </div>
   <div class="demo-content mixed-array-demo">
     <div class="line">
@@ -249,8 +253,9 @@ anime({
     </p>
     <p class="bubble warning">
       Most CSS properties will cause layout changes or repaint, and will result in choppy animation.
-      Prroritize opacity, and Transforms as much as possible.
+      Prioritize opacity and CSS transforms as much as possible.
     </p>
+    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
     <table>
       <thead>
         <td>Example</td>
@@ -265,7 +270,6 @@ anime({
         <td><code>'100px'</code></td>
       </tr>
     </table>
-    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
   </div>
   <div class="demo-content css-prop-demo">
     <div class="large square shadow"></div>
@@ -294,6 +298,7 @@ anime({
     <p class="bubble info">
       It's possible to specify different timing for each transforms properties, more details in the <a class="color-prop-params" href="#specificPropParameters">specific property parameters</a> section.
     </p>
+    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
     <table>
       <thead>
         <td>Valid properties</td>
@@ -315,7 +320,6 @@ anime({
       <tr><td><code>'skewY'</code></td><td><code>'deg'</code></td></tr>
       <tr><td><code>'perspective'</code></td><td><code>'px'</code></td></tr>
     </table>
-    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
   </div>
   <div class="demo-content css-transforms-demo">
     <div class="square shadow"></div>
@@ -338,7 +342,8 @@ anime({
   <h3 class="demo-title">Object properties</h3>
   <div class="demo-description">
     <p>
-      Any Object property containing a numerical value can be animated.
+      Any Object property containing a numerical value can be animated.<br>
+      More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.
     </p>
     <table>
       <thead>
@@ -354,7 +359,6 @@ anime({
         <td><code>'100%'</code></td>
       </tr>
     </table>
-    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
   </div>
   <div class="demo-content">
     <pre class="js-object-log">{"prop1":0,"prop2":"0%"}</pre>
@@ -387,7 +391,8 @@ anime({
   <h3 class="demo-title">DOM Attributes</h3>
   <div class="demo-description">
     <p>
-      Any DOM Attribute containing a numerical value can be animated.
+      Any DOM Attributes containing a numerical value can be animated.<br>
+      More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.
     </p>
     <table>
       <thead>
@@ -407,7 +412,6 @@ anime({
         <td><code>'3 dogs'</code></td>
       </tr>
     </table>
-    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section.</p>
   </div>
   <div class="demo-content dom-attribute-demo">
     <input class="el text-output" value="0"></input>
@@ -429,7 +433,8 @@ anime({
   <h3 class="demo-title">SVG Attributes</h3>
   <div class="demo-description">
     <p>
-      Like any other <a class="color-properties" href="#domAttr">DOM attributes</a>, all SVG attributes containing at least one numerical value can be animated.
+      Like any other <a class="color-properties" href="#domAttr">DOM attributes</a>, all SVG attributes containing at least one numerical value can be animated.<br>
+      More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section and SVG animation in the <a class="color-svg" href="#motionPath">SVG</a> section.
     </p>
     <table>
       <thead>
@@ -449,7 +454,6 @@ anime({
         <td><code>0</code></td>
       </tr>
     </table>
-    <p>More details about accepted values in the <a class="color-values" href="#unitlessValue">Values</a> section and SVG animation in the <a class="color-svg" href="#motionPath">SVG</a> section</p>
   </div>
   <div class="demo-content align-center svg-attributes-demo">
 <svg width="128" height="128" viewBox="0 0 128 128">
@@ -496,6 +500,9 @@ anime({
 <div id="duration" class="demo">
   <h3 class="demo-title">Duration</h3>
   <div class="demo-description">
+    <p>
+      Defines the duration in milliseconds of the animation.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -505,17 +512,19 @@ anime({
       <tr>
         <td>Number</td>
         <td><code>1000</code></td>
-        <td><code>duration: 3000</code></td>
+        <td><code>3000</code></td>
+      </tr>
+      <tr>
+        <td>anime.stagger</td>
+        <td>See <a class="color-staggering" href="#staggeringBasics">Staggering</a> section</td>
+        <td><code>anime.stagger(150)</code></td>
       </tr>
       <tr>
         <td>Function</td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
-        <td><code>duration: (el, i) => i * 500</code></td>
+        <td><code>(el, i) => i * 150</code></td>
       </tr>
     </table>
-    <p>
-      Defines the duration in milliseconds of the animation.
-    </p>
   </div>
   <div class="demo-content duration-demo">
     <div class="label">3000 ms</div>
@@ -537,6 +546,9 @@ anime({
 <div id="delay" class="demo">
   <h3 class="demo-title">Delay</h3>
   <div class="demo-description">
+    <p>
+      Defines the delay in milliseconds of the animation.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -546,17 +558,19 @@ anime({
       <tr>
         <td>Number</td>
         <td><code>0</code></td>
-        <td><code>delay: 1000</code></td>
+        <td><code>1000</code></td>
+      </tr>
+      <tr>
+        <td>anime.stagger</td>
+        <td>See <a class="color-staggering" href="#staggeringBasics">Staggering</a> section</td>
+        <td><code>anime.stagger(150)</code></td>
       </tr>
       <tr>
         <td>Function</td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
-        <td><code>delay: (el, i) => i * 150</code></td>
+        <td><code>(el, i) => i * 150</code></td>
       </tr>
     </table>
-    <p>
-      Defines the delay in milliseconds of the animation.
-    </p>
   </div>
   <div class="demo-content delay-demo">
     <div class="label">1000 ms</div>
@@ -578,7 +592,9 @@ anime({
 <div id="endDelay" class="demo">
   <h3 class="demo-title">end delay</h3>
   <div class="demo-description">
-    <pre><code>endDelay: 2000</code></pre>
+    <p>
+      Add some extra time in milliseconds at the end of the animation.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -588,17 +604,19 @@ anime({
       <tr>
         <td>Number</td>
         <td><code>0</code></td>
-        <td><code>endDelay: 1000</code></td>
+        <td><code>1000</code></td>
+      </tr>
+      <tr>
+        <td>anime.stagger</td>
+        <td>See <a class="color-staggering" href="#staggeringBasics">Staggering</a> section</td>
+        <td><code>anime.stagger(150)</code></td>
       </tr>
       <tr>
         <td>Function</td>
         <td>See <a class="color-prop-params" href="#functionBasedParameters">Function based parameters</a> section</td>
-        <td><code>endDelay: (el, i, t) => (t - i) * 150</code></td>
+        <td><code>(el, i) => i * 150</code></td>
       </tr>
     </table>
-    <p>
-      Add some extra time in milliseconds at the end of the animation.
-    </p>
   </div>
   <div class="demo-content end-delay-demo">
     <div class="label">1000 ms</div>
@@ -622,6 +640,12 @@ anime({
 <div id="easing" class="demo">
   <h3 class="demo-title">Easing</h3>
   <div class="demo-description">
+    <p>
+      Defines the timing function of the animation.
+    </p>
+    <p class="bubble info">
+      Check out the <a class="color-easings" href="#linearEasing">Easings</a> section for a complete list of available easing and parameters.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -634,12 +658,6 @@ anime({
         <td><code>easing: 'easeInOutQuad'</code></td>
       </tr>
     </table>
-    <p>
-      Defines the timing function of the animation.
-    </p>
-    <p class="bubble info">
-      Check out the <a class="color-easings" href="#linearEasing">Easings</a> section for a complete list of available easing and parameters.
-    </p>
   </div>
   <div class="demo-content easing-demo">
     <div class="label">easeInOutExpo</div>
@@ -662,6 +680,9 @@ anime({
 <div id="round" class="demo">
   <h3 class="demo-title">Round</h3>
   <div class="demo-description">
+    <p>
+      Rounds the value to x decimals.
+    </p>
     <table>
       <thead>
         <td>Type</td>
@@ -674,9 +695,6 @@ anime({
         <td><code>round: 10</code></td>
       </tr>
     </table>
-    <p>
-      Rounds the value to x decimals.
-    </p>
   </div>
   <div class="demo-content">
     <pre class="round-log">0</pre>
@@ -703,14 +721,20 @@ anime({
       Defines specific parameters to each property of the animation using an Object as value.<br>
       Other properties that aren't specified in the Object are inheritted from the main animation.
     </p>
-<pre><code>translateX: {
-  value: 250,
-  duration: 800
-},
-rotate: {
+    <table>
+      <thead>
+        <td>Type</td>
+        <td>Example</td>
+      </thead>
+      <tr>
+        <td>Object</td>
+<td><code>rotate: {
   value: 360,
-  duration: 1600
-}</code></pre>
+  duration: 1800,
+  easing: 'easeInOutSine'
+}</code></td>
+      </tr>
+    </table>
   </div>
   <div class="demo-content specific-prop-params-demo">
     <div class="square shadow"></div>
@@ -747,11 +771,8 @@ anime({
   <h3 class="demo-title">Function based parameters</h3>
   <div class="demo-description">
     <p>
-      Get different values for every target and property of the animation.<br>
+      Get different values for every target and property of the animation.
     </p>
-<pre><code>translateX: function(target, index, targetsLength) {
-  return (targetsLength - index) * 200;
-}</code></pre>
     <p>
       The function accepts 3 arguments:
     </p>
@@ -773,6 +794,9 @@ anime({
         <td>The total number of animated targets</td>
       </tr>
     </table>
+    <p class="bubble info">
+      See <a class="color-staggering" href="#staggeringBasics">staggering</a> section for easier values manipulation.
+    </p>
   </div>
   <div class="demo-content function-based-params-demo">
     <div class="line">
