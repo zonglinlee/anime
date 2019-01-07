@@ -1,4 +1,5 @@
-# anime.js <a href="http://animejs.com"><img src="/documentation/assets/img/anime-readme-header.gif" width="100%" alt="anime-js-v3-logo"/></a>
+# anime.js 
+# <a href="http://animejs.com"><img src="/documentation/assets/img/anime-readme-header.gif" width="100%" alt="anime-js-v3-logo"/></a>
 
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
