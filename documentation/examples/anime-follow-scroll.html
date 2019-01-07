@@ -104,18 +104,23 @@
 
   function logChangeBegan(instance) {
     began++;
-    console.log(instance.id, began, 'CHANGE BEGAN', instance.changeBegan);
+    console.log(instance.id, 'CHANGE BEGAN', instance.changeBegan);
   }
 
   function logChangeComplete(instance) {
     completed++;
-    console.log(instance.id, completed, 'CHANGE COMPLETE', instance.changeCompleted);
+    console.log(instance.id, 'CHANGE COMPLETE', instance.changeCompleted);
   }
 
   window.tl = anime.timeline({
     easing: 'easeInOutSine',
     autoplay: false,
-    duration: 1000
+    duration: 1000,
+    // delay: 500,
+    // endDelay: 500,
+    update: function(instane) {
+      // console.log(instane.directionReversed);
+    }
   })
   .add({
     targets: '.pane-01',
