@@ -1,4 +1,4 @@
-// import anime from '../../../src/index.js';
+import anime from '../../../lib/anime.es.js';
 
 /* Ontersection observer */
 
