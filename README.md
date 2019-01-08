@@ -1,7 +1,19 @@
-# <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="100%"/></a>
+<h1 align="center">
+  <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="100%"/></a>
+  <br>
+  anime.js
+  <br>
+</h1>
 
+<h4 align="center">Javascript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">Electron</a></h4>
 ### Javascript animation engine | v3.0.0 | [animejs.com](http://animejs.com/documentation/)
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
+
+<p align="center">
+  <a href="#download">Downwload</a> |
+  <a href="#demos-and-examples">Demos and examples</a> |
+  <a href="#how-to-use">How to use</a>
+</p>
 
 ## [Documentation](http://animejs.com/documentation/)
 
@@ -22,7 +34,7 @@
 * [kenzo.com/en/thejunglebook](https://kenzo.com/en/thejunglebook)
 * [Stress test](http://codepen.io/juliangarnier/pen/9aea7f045d7db301eab41bc09dcfc04d?editors=0010)
 
-## Usage
+## How to use
 
 Download via NPM package
 
