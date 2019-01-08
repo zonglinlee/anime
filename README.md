@@ -13,7 +13,7 @@
 
 <p align="center">
   <a href="#getting-started">Getting started</a>&nbsp;|&nbsp;
-  <a href="http://animejs.com/documentation/">Documentation</a>&nbsp;|&nbsp;
+  <a href="#documentation">Documentation</a>&nbsp;|&nbsp;
   <a href="#demos-and-examples">Demos and examples</a>&nbsp;|&nbsp;
   <a href="#browser-support">Browser support</a>
 </p>
@@ -57,14 +57,10 @@ Link `anime.min.js` in your HTML :
 ```javascript
 anime({
   targets: 'div',
-  translateX: [
-    { value: 100, duration: 1200 },
-    { value: 0, duration: 800 }
-  ],
+  translateX: 250,
   rotate: '1turn',
   backgroundColor: '#FFF',
-  duration: 2000,
-  loop: true
+  duration: 800
 });
 ```
 
@@ -95,4 +91,4 @@ anime({
 
 ## <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-logo-animation.gif" width="200" height="80" alt="anime-js-v3-logo"/></a>
 
-[animejs.com](http://animejs.com/documentation/) | [Documentation](http://animejs.com/documentation/) | [Demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/) | [MIT License](LICENSE.md). © 2019 [Julian Garnier](http://juliangarnier.com).
+[animejs.com](http://animejs.com/documentation/) | [Documentation](http://animejs.com/documentation/) | [Demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/) | [MIT License](LICENSE.md) | © 2019 [Julian Garnier](http://juliangarnier.com).
