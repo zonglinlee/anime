@@ -1,11 +1,11 @@
 <h1 align="center">
-  <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="100%"/></a>
+  <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="250"/></a>
   <br>
   anime.js
   <br>
 </h1>
 
-<h4 align="center">Javascript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">anime.js</a></h4>
+<h4 align="center">Javascript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">animejs.com</a></h4>
 
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
