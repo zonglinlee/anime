@@ -1,4 +1,4 @@
-# <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="200" height="80" alt="anime-js-v3-logo"/></a>
+# <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="100%"/></a>
 
 ### Javascript animation engine | v3.0.0 | [animejs.com](http://animejs.com/documentation/)
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
@@ -68,4 +68,4 @@ anime({
 
 ## <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-logo-animation.gif" width="200" height="80" alt="anime-js-v3-logo"/></a>
 
-[animejs.com](http://animejs.com/documentation/) | Javascript animation engine | v3.0.0 | [MIT License](LICENSE.md). ©2019 [Julian Garnier](http://juliangarnier.com).
+[animejs.com](http://animejs.com/documentation/) | Javascript animation engine | v3.0.0 | [MIT License](LICENSE.md). © 2019 [Julian Garnier](http://juliangarnier.com).
