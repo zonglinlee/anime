@@ -666,9 +666,9 @@ var timeControlAnimation = (function() {
   }
 
   var time = {
+    anim: null,
     start: 0,
-    end: 0,
-    anim: null
+    end: 0
   };
 
   var drag = dragElement(timeCursorEl, {
@@ -682,6 +682,7 @@ var timeControlAnimation = (function() {
     },
     release: function(e) {
       time.end = timelineAnimation.currentTime;
+      anime.remove(time);
       time.anim = anime({
         targets: time,
         end: time.start,
@@ -751,6 +752,7 @@ var timeControlAnimation = (function() {
   }
 
   var windowHeight = window.innerHeight;
+  var scrollAnim;
 
   function moveControlAnimation() {
     var rect = timeControlEl.getBoundingClientRect();
@@ -758,19 +760,20 @@ var timeControlAnimation = (function() {
     var height = rect.height;
     var scrolled = (top - windowHeight + 100) * -1.5;
     timelineAnimation.seek(scrolled * 2);
-    if (controlAnimationCanMove) requestAnimationFrame(moveControlAnimation);
+    if (controlAnimationCanMove) scrollAnim = requestAnimationFrame(moveControlAnimation);
   }
 
   isElementInViewport(timeControlEl, function(el, entry) {
     windowHeight = window.innerHeight;
     controlAnimationCanMove = true;
+    moveControlAnimation();
   }, function(el, entry) {
     controlAnimationCanMove = false;
   }, '50px');
 
   onScroll(function() {
-    if (!controlAnimationCanMove) {
-      if (time.anim) time.anim.pause();
+    if (time.anim && !time.anim.paused) {
+      time.anim.pause();
       controlAnimationCanMove = true;
       moveControlAnimation();
     }

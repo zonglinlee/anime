@@ -27,8 +27,8 @@
 </head>
 <body>
 
-  <header class="top-header grid-container">
-    <div class="header-content">
+  <header class="header nav-bar grid-container">
+    <div class="nav-bar-content">
       <a href="https://animejs.com/" class="top-header-logo">
         <div class="main-logo">
           <div class="logo-animation-wrapper">
@@ -79,9 +79,9 @@
           </div>
         </div>
       </a>
-      <nav class="top-menu">
-        <a href="/documentation">Documentation</a>
-        <a href="https://codepen.io/collection/XLebem/">Examples</a>
+      <nav class="nav-menu">
+        <a class="nav-link" href="documentation">Documentation</a>
+        <a class="nav-link" href="https://codepen.io/collection/XLebem/">Examples</a>
         <a href="https://github.com/juliangarnier/anime/" class="main-cta">Download v<span class="version-number">3.0.0</span></a>
       </nav>
     </div>
@@ -534,9 +534,10 @@
             <span class="primary arrow">Download</span>
           </a>
           <ul class="getting-statred-links">
-            <li><a class="arrow" href="#">GitHub project page</a></li>
-            <li><a class="arrow" href="#">Minified ES5</a></li>
-            <li><a class="arrow" href="#">Unminified ES6</a></li>
+            <li><a class="arrow" href="https://github.com/juliangarnier/anime">GitHub project page</a></li>
+            <li><a class="arrow" href="https://github.com/juliangarnier/anime/blob/master/src/index.js">Source</a></li>
+            <li><a class="arrow" href="https://github.com/juliangarnier/anime/blob/master/lib/anime.es.js">ES6 Module</a></li>
+            <li><a class="arrow" href="https://github.com/juliangarnier/anime/blob/master/lib/anime.min.js">Minified ES5</a></li>
             <li><a class="arrow" href="https://github.com/juliangarnier/anime/issues">Issues</a></li>
             <li><a class="arrow" href="https://github.com/juliangarnier/anime/releases">Releases</a></li>
           </ul>
@@ -613,17 +614,27 @@
 
   </section>
 
-  <footer class="bottom-footer grid-container">
-    <div class="footer-content">
-      <img class="anime-mini-logo" src="documentation/assets/img/anime-mini-logo.svg" />
-      <p class="footer-text footer-separator">&nbsp;&nbsp;|&nbsp;</p>
-      <p class="footer-text">JavaScript Animation Engine</p>
-      <p class="footer-text footer-separator">&nbsp;|&nbsp;</p>
-      <p class="footer-text">ＪＳ アニメーション エンジン</p>
-      <p class="footer-text footer-separator">&nbsp;|&nbsp;</p>
-      <p class="footer-text">Version <em class="version-number">3.0.0</em></p>
-      <p class="footer-text footer-separator">&nbsp;|&nbsp;</p>
-      <p class="footer-text"><a href="http://juliangarnier.com/">© <em class="date">2019</em> Julian Garnier</a></p>
+  <footer class="footer nav-bar grid-container">
+    <div class="nav-bar-content">
+      <a href="https://animejs.com/">
+        <img class="anime-mini-logo" src="documentation/assets/img/anime-mini-logo.svg"/>
+      </a>
+      <nav class="nav-menu">
+        <a class="nav-link" href="documentation">Documentation</a>
+        <a class="nav-link" href="https://codepen.io/collection/XLebem/">Examples</a>
+        <a href="https://github.com/juliangarnier/anime/" class="main-cta">Download v<span class="version-number">3.0.0</span></a>
+      </nav>
+    </div>
+    <div class="nav-bar-content">
+      <div class="footer-block">
+        <p class="footer-text">v<em class="version">3.0.0</em></p>
+        <p class="footer-text footer-separator">&nbsp;|&nbsp;</p>
+        <p class="footer-text"><a href="https://github.com/juliangarnier/anime/blob/website/LICENSE.md">MIT License</a></p>
+        <p class="footer-text footer-separator">&nbsp;|&nbsp;</p>
+        <p class="footer-text">2016 - <em class="date">2019</em></p>
+        <p class="footer-text footer-separator">&nbsp;|&nbsp;</p>
+        <p class="footer-text">© <a href="http://juliangarnier.com">Julian Garnier</a></p>
+      </div>
     </div>
   </footer>
 
