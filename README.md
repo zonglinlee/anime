@@ -7,9 +7,7 @@
 
 <h4 align="center">JavaScript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">animejs.com</a></h4>
 
-<p align="center">
-  *Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
-</p>
+>*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
 <p align="center">
   <a href="#download">Downwload</a> |
