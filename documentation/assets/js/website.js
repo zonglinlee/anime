@@ -86,6 +86,23 @@ function onScroll(cb) {
   window.onscroll = scroll;
 }
 
+// Scroll to element
+
+function scrollToElement(el, offset) {
+  var off = offset || 0;
+  var rect = el.getBoundingClientRect();
+  var top = rect.top + off;
+  var animation = anime({
+    targets: [document.body, document.documentElement],
+    scrollTop: '+='+top,
+    easing: 'easeInOutQuad',
+    duration: 1500
+  });
+  // onScroll(animation.pause);
+}
+
+// Check if element is in viewport
+
 function isElementInViewport(el, inCB, outCB, rootMargin) {
   var margin = rootMargin || '-10%';
   function handleIntersect(entries, observer) {
@@ -877,5 +894,12 @@ var layeredAnimation = (function() {
   }
 
 })();
+
+var scrollToGettingStartedLink = document.querySelector('.scroll-to-getting-started');
+
+scrollToGettingStartedLink.addEventListener('click', function(e) {
+  e.preventDefault();
+  scrollToElement(document.querySelector('#getting-started'));
+})
 
 window.onload = introEasingsAnimation.init;

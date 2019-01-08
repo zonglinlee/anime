@@ -1,11 +1,11 @@
 <h1 align="center">
-  <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="250"/></a>
+  <a href="https://animejs.com"><img src="/documentation/assets/img/animejs-v3-header-animation.gif" width="250"/></a>
   <br>
   anime.js
   <br>
 </h1>
 
-<h4 align="center">JavaScript animation engine | <a href="http://animejs.com" target="_blank">animejs.com</a></h4>
+<h4 align="center">JavaScript animation engine | <a href="https://animejs.com" target="_blank">animejs.com</a></h4>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/animejs" rel="nofollow"><img src="https://camo.githubusercontent.com/011820ee25bf1d3ddaf635d869903b98eccaeae7/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f616e696d656a732e7376673f7374796c653d666c61742d737175617265" alt="npm version" data-canonical-src="https://img.shields.io/npm/v/animejs.svg?style=flat-square" style="max-width:100%;"></a>
@@ -70,22 +70,22 @@ anime({
 });
 ```
 
-## [Documentation](http://animejs.com/documentation/)
+## [Documentation](https://animejs.com/documentation/)
 
-* [Keyframes](http://animejs.com/documentation/#animationKeyframes)
-* [Stagering](http://animejs.com/documentation/#staggeringBasics)
-* [Timeline](http://animejs.com/documentation/#timelineBasics)
-* [Controls](http://animejs.com/documentation/#playPause)
-* [CSS transforms](http://animejs.com/documentation/#CSStransforms)
-* [Function based values](http://animejs.com/documentation/#functionBasedPropVal)
-* [SVG Animations](http://animejs.com/documentation/#motionPath)
-* [Easing functions](http://animejs.com/documentation/#linearEasing)
+* [Keyframes](https://animejs.com/documentation/#animationKeyframes)
+* [Stagering](https://animejs.com/documentation/#staggeringBasics)
+* [Timeline](https://animejs.com/documentation/#timelineBasics)
+* [Controls](https://animejs.com/documentation/#playPause)
+* [CSS transforms](https://animejs.com/documentation/#CSStransforms)
+* [Function based values](https://animejs.com/documentation/#functionBasedPropVal)
+* [SVG Animations](https://animejs.com/documentation/#motionPath)
+* [Easing functions](https://animejs.com/documentation/#linearEasing)
 
 ## [Demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
 
 * [CodePen demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
 * [juliangarnier.com](http://juliangarnier.com)
-* [animejs.com](http://animejs.com)
+* [animejs.com](https://animejs.com)
 * [Moving letters](http://tobiasahlin.com/moving-letters/) by [@tobiasahlin](https://twitter.com/tobiasahlin)
 * [Gradient topography animation](https://tympanus.net/Development/GradientTopographyAnimation/) by [@crnacura](https://twitter.com/crnacura)
 * [Organic shape animations](https://tympanus.net/Development/OrganicShapeAnimations/) by [@crnacura](https://twitter.com/crnacura)
@@ -103,6 +103,6 @@ anime({
 | --- | --- | --- | --- | --- |
 | 24+ | 8+ | 11+ | 32+ | 15+ |
 
-## <a href="http://animejs.com"><img src="/documentation/assets/img/animejs-v3-logo-animation.gif" width="150" alt="anime-js-v3-logo"/></a>
+## <a href="https://animejs.com"><img src="/documentation/assets/img/animejs-v3-logo-animation.gif" width="150" alt="anime-js-v3-logo"/></a>
 
-[Website](http://animejs.com/documentation/) | [Documentation](http://animejs.com/documentation/) | [Demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/) | [MIT License](LICENSE.md) | © 2019 [Julian Garnier](http://juliangarnier.com).
+[Website](https://animejs.com/documentation/) | [Documentation](https://animejs.com/documentation/) | [Demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/) | [MIT License](LICENSE.md) | © 2019 [Julian Garnier](http://juliangarnier.com).
