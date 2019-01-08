@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
-  <meta property="og:url" content="http://animejs.com">
+  <meta property="og:url" content="https://animejs.com">
   <meta property="og:description" content="Javascript Animation Engine">
-  <meta property="og:image" content="http://animejs.com/documentation/assets/img/icons/og.png">
+  <meta property="og:image" content="https://animejs.com/documentation/assets/img/icons/og.png">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="anime.js">
   <meta name="twitter:site" content="@juliangarnier">
   <meta name="twitter:description" content="Javascript Animation Engine">
-  <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
+  <meta name="twitter:image" content="https://animejs.com/documentation/assets/img/icons/twitter.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
   <link href="../assets/css/animejs.css" rel="stylesheet">
@@ -348,13 +348,9 @@
   .add({
     targets: '.time-cursor',
     keyframes: [
-      {
-        translateY: ['-1rem', 0], duration: 100, easing: 'easeInQuad'
-      }, {
-        translateX: 'calc(34rem - 6px)', duration: 1500
-      }, {
-        translateY: '-1rem', duration: 100, easing: 'easeOutQuad'
-      }
+      { translateY: ['-1rem', 0], duration: 100, easing: 'easeInQuad' },
+      { translateX: 'calc(34rem - 6px)', duration: 1500 },
+      { translateY: '-1rem', duration: 100, easing: 'easeOutQuad' }
     ],
     duration: 1500,
     update: function(anim) {
@@ -377,15 +373,15 @@
     .add({
       targets: infoEl.querySelector('.info-bar'),
       scaleY: [0, 1],
-      duration: 500,
+      duration: 250,
       easing: 'easeOutCirc'
     }, delay)
     .add({
       targets: infoEl.querySelectorAll('.info-label'),
       opacity: [0, 1],
       translateY: [direction * 10, 0],
-      duration: 250,
-      delay: anime.stagger(50, {start: 115, direction: direction > 0 ? 'reverse' : 'normal'}),
+      duration: 150,
+      delay: anime.stagger(50, {start: 10, direction: direction > 0 ? 'reverse' : 'normal'}),
       easing: 'easeOutSine'
     }, delay)
   }

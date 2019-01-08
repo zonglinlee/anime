@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:title" content="anime.js">
-  <meta property="og:url" content="http://animejs.com">
+  <meta property="og:url" content="https://animejs.com">
   <meta property="og:description" content="Javascript Animation Engine">
-  <meta property="og:image" content="http://animejs.com/documentation/assets/img/icons/og.png">
+  <meta property="og:image" content="https://animejs.com/documentation/assets/img/icons/og.png">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="anime.js">
   <meta name="twitter:site" content="@juliangarnier">
   <meta name="twitter:description" content="Javascript Animation Engine">
-  <meta name="twitter:image" content="http://animejs.com/documentation/assets/img/icons/twitter.png">
+  <meta name="twitter:image" content="https://animejs.com/documentation/assets/img/icons/twitter.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/img/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/icons/favicon.png" >
   <link href="../assets/css/documentation.css" rel="stylesheet">
@@ -79,7 +79,9 @@
   function onScroll(cb) {
     var isTicking = false;
     var scrollY = 0;
-    var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var body = document.body;
+    var html = document.documentElement;
+    var scrollHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
     function scroll() {
       scrollY = window.scrollY;
       if (cb) cb(scrollY, scrollHeight);
@@ -102,51 +104,51 @@
 
   function logChangeBegan(instance) {
     began++;
-    console.log(instance.id, began, 'CHANGE BEGAN', instance.changeBegan);
+    // console.log(instance.id, 'CHANGE BEGAN', instance.changeBegan);
   }
 
   function logChangeComplete(instance) {
     completed++;
-    console.log(instance.id, completed, 'CHANGE COMPLETE', instance.changeCompleted);
-  }
-
-  function logChange(instance) {
-    // console.log(instance.id, 'CHANGING');
+    // console.log(instance.id, 'CHANGE COMPLETE', instance.changeCompleted);
   }
 
   window.tl = anime.timeline({
-    easing: 'easeOutQuad',
+    easing: 'easeInOutSine',
     autoplay: false,
-    duration: 1000
+    duration: 1000,
+    // delay: 500,
+    // endDelay: 500,
+    update: function(instane) {
+      console.log(instane.reversePlayback);
+    }
   })
   .add({
     targets: '.pane-01',
     translateY: '-100vh',
     background: '#FF1461',
     changeBegin: logChangeBegan,
-    changeComplete: logChangeComplete,
-    change: logChange
+    changeComplete: logChangeComplete
   })
+  .set('.pane-02', {'translateY': '-100vh'})
   .add({
     targets: '.pane-02',
     translateX: ['100%', 0],
-    translateY: '-100vh',
     background: '#FF1461',
     changeBegin: logChangeBegan,
-    changeComplete: logChangeComplete,
-    change: logChange
+    changeComplete: logChangeComplete
   }, '-=500')
+  .set('.pane-03', {'translateY': '-200vh'})
   .add({
     targets: '.pane-03',
     translateY: '-100vh',
     background: '#FF1461',
     changeBegin: logChangeBegan,
-    changeComplete: logChangeComplete,
-    change: logChange
+    changeComplete: logChangeComplete
   }, '-=500')
+  .set('.pane-04', {'translateY': '-100vh'})
   .add({
     targets: '.pane-04',
-    translateY: '-100vh',
+    scale: [0, 1],
     background: '#FF1461',
     changeBegin: logChangeBegan,
     changeComplete: logChangeComplete,
@@ -154,6 +156,7 @@
   .add({
     targets: '.pane-05',
     translateY: '-100vh',
+    rotate: [-180, 0],
     background: '#FF1461',
     changeBegin: logChangeBegan,
     changeComplete: logChangeComplete,
@@ -222,10 +225,10 @@
     changeComplete: logChangeComplete,
   }, '-=500')
 
-  onScroll(function(top, height) {
+  onScroll(function(top, scrollHeight) {
 
-    var currentTime = tl.duration * (top / height);
-    tl.seek(tl.duration * (top / height));
+    var currentTime = tl.duration * (top / (scrollHeight - window.innerHeight));
+    tl.seek(currentTime);
 
   });
 

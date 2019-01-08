@@ -23,26 +23,6 @@ function scrollTo(selector, offset, cb) {
   });
 }
 
-function parseHTML(el, parentId) {
-  var parentEl = document.createElement('div');
-  var clone = el.cloneNode(true);
-  var shadowEls = clone.querySelectorAll('.shadow');
-  var els = clone.querySelectorAll('.el');
-  for (var i = 0; i < shadowEls.length; i++ ) {
-    var shadowEl = shadowEls[i];
-    shadowEl.parentNode.removeChild(shadowEl);
-  }
-  for (var i = 0; i < els.length; i++ ) {
-    els[i].removeAttribute('style');
-  }
-  parentEl.id = parentId;
-  parentEl.innerHTML = clone.innerHTML;
-  return html_beautify(parentEl.outerHTML, {
-    preserve_newlines: false,
-    indent_size: 2
-  });
-}
-
 function parseJS(demoCode) {
   var split = demoCode.split('/*DEMO*/\n');
   return split[1] || '';
@@ -270,6 +250,18 @@ function keyboardNavigation(e) {
       break;
   }
 }
+
+// Update date and version number
+
+var versionNumerEls = document.querySelectorAll('.version-number');
+var dateEl = document.querySelector('.date');
+var date = new Date();
+
+for (var i = 0; i < versionNumerEls.length; i++) {
+  versionNumerEls[i].innerHTML = anime.version;
+}
+
+// Init
 
 updateDemos();
 window.onhashchange = updateDemos;

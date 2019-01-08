@@ -1,6 +1,6 @@
 /*
  * Anime v1.0.0
- * http://animejs.com
+ * https://animejs.com
  * JavaScript animation engine
  * Copyright (c) 2016 Julian Garnier
  * http://juliangarnier.com
