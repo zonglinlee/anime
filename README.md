@@ -13,7 +13,8 @@
 </p>
 
 <blockquote align="center">
-  <em>Anime</em> <code>/ˈæn.ə.meɪ/</code> is a lightweight JavaScript animation library with a simple, yet powerfull API.<br>It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
+  <em>Anime.js</em> (<code>/ˈæn.ə.meɪ/</code>) is a lightweight JavaScript animation library with a simple, yet powerfull API.
+  It works with CSS properties, SVG, DOM attributes and JavaScript Objects.
 </blockquote>
 
 <p align="center">
@@ -86,8 +87,9 @@ anime({
 * [juliangarnier.com](http://juliangarnier.com)
 * [animejs.com](http://animejs.com)
 * [Moving letters](http://tobiasahlin.com/moving-letters/) by [@tobiasahlin](https://twitter.com/tobiasahlin)
-* [Animated image pieces](https://tympanus.net/Development/AnimatedImagePieces/) by [@crnacura](https://twitter.com/crnacura)
+* [Gradient topography animation](https://tympanus.net/Development/GradientTopographyAnimation/) by [@crnacura](https://twitter.com/crnacura)
 * [Organic shape animations](https://tympanus.net/Development/OrganicShapeAnimations/) by [@crnacura](https://twitter.com/crnacura)
+* [Pieces slider](https://tympanus.net/Tutorials/PiecesSlider/) by [@lmgonzalves](https://twitter.com/lmgonzalves)
 * [Staggering animations](https://codepen.io/juliangarnier/pen/4fe31bbe8579a256e828cd4d48c86182?editors=0100)
 * [Easings animations](https://codepen.io/juliangarnier/pen/444ed909fd5de38e3a77cc6e95fc1884)
 * [Sphere animation](https://codepen.io/juliangarnier/pen/b3bb8ca599ad0f9d00dd044e56cbdea5?editors=0010)

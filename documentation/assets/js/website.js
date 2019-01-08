@@ -294,13 +294,19 @@ var headerIntroAnimation = anime.timeline({
   delay: anime.stagger(40, {start: 400, from: 'last'}),
   begin: function(anim) {
     anim.animatables.forEach(function(a) {
-      a.target.style.transition = 'none';
+      anime.set(a.target, {
+        transition: 'transform 0s ease'
+      });
     });
   },
   complete: function(anim) {
     logoAnimation.play();
     anim.animatables.forEach(function(a) {
-      a.target.style = 'opacity: 1';
+      a.target.style = '';
+      anime.set(a.target, {
+        opacity: 1,
+        transition: 'transform .225s ease'
+      });
     });
   }
 }, 0);

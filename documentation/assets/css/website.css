@@ -144,6 +144,7 @@ a.main-cta {
   border-radius: 16px;
   line-height: 2;
   background-color: #F64E4D;
+  transition: transform .25s ease;
 }
 
 .top-menu a:not(:first-child) {
@@ -158,6 +159,11 @@ a.main-cta {
   .top-menu a:not(.main-cta) {
     display: inline-flex;
   }
+}
+
+a.main-cta:hover {
+  transform: scale(1.08);
+  text-decoration: none;
 }
 
 /* Logo */
@@ -373,6 +379,10 @@ a.main-cta {
   margin-bottom: 24px;
 }
 
+.feature-paragraph code {
+  opacity: .6;
+}
+
 @media (min-width: 740px) {
   .feature-description-grid .feature-description {
     width: calc(50% - 16px);
@@ -445,6 +455,12 @@ a.main-cta {
 .feature-icon img {
   width: 48px;
   height: 48px;
+  transition: transform .65s ease;
+}
+
+a.feature-icon:hover img {
+  transform: translateY(-8px);
+  transition: transform .225s ease;
 }
 
 .feature-caption {
