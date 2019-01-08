@@ -354,7 +354,7 @@ var introEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 110], {easing: ease, from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 44], {easing: ease, from: 'center', direction: 'reverse'}),
       delay: anime.stagger(7, {from: 'center'})
     })
     .add({
@@ -376,7 +376,7 @@ var introEasingsAnimation = (function() {
     })
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 110], {easing: defaultEase, from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 44], {easing: defaultEase, from: 'center', direction: 'reverse'}),
       duration: duration,
       delay: anime.stagger(7, {from: 'center'})
     })
@@ -413,7 +413,7 @@ var introEasingsAnimation = (function() {
     }, 0)
     .add({
       targets: '.easing-visualizer .bar',
-      scaleY: anime.stagger([1, 110], {easing: 'easeInOutQuad', from: 'center', direction: 'reverse'}),
+      scaleY: anime.stagger([1, 44], {easing: 'easeInOutQuad', from: 'center', direction: 'reverse'}),
       duration: duration,
       easing: 'easeInOutQuad',
       delay: anime.stagger(7, {from: 'center'})
