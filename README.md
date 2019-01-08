@@ -68,14 +68,19 @@ anime({
 
 ## [Documentation](https://animejs.com/documentation/)
 
+* [Targets](https://animejs.com/documentation/#cssSelector)
+* [Properties](https://animejs.com/documentation/#cssProperties)
+* [Property parameters](https://animejs.com/documentation/#duration)
+* [Animation parameters](https://animejs.com/documentation/#direction)
+* [Values](https://animejs.com/documentation/#unitlessValue)
 * [Keyframes](https://animejs.com/documentation/#animationKeyframes)
 * [Stagering](https://animejs.com/documentation/#staggeringBasics)
 * [Timeline](https://animejs.com/documentation/#timelineBasics)
 * [Controls](https://animejs.com/documentation/#playPause)
-* [CSS transforms](https://animejs.com/documentation/#CSStransforms)
-* [Function based values](https://animejs.com/documentation/#functionBasedPropVal)
+* [Callbacks and promises](https://animejs.com/documentation/#update)
 * [SVG Animations](https://animejs.com/documentation/#motionPath)
 * [Easing functions](https://animejs.com/documentation/#linearEasing)
+* [Helpers](https://animejs.com/documentation/#remove)
 
 ## [Demos and examples](http://codepen.io/collection/b392d3a52d6abf5b8d9fda4e4cab61ab/)
 

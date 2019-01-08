@@ -749,7 +749,7 @@ a.feature-icon:hover img {
 
 .section-feature-control .vertical-icons .timeline-icon {
   margin-left: 0;
-  margin-right: 32px;
+  margin-right: 16px;
   width: auto;
 }
 
@@ -768,7 +768,7 @@ a.feature-icon:hover img {
   width: 24px;
   height: 24px;
   border-radius: 12px;
-  margin-right: 16px;
+  margin-right: 8px;
 }
 
 .animation-delay {
@@ -961,14 +961,14 @@ a.feature-icon:hover img {
 }
 
 .getting-started-block:last-child {
-  width: 100%;
+  display: none;
 }
 
 .getting-statred-main-link {
   display: flex;
   flex-direction: column;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .getting-statred-main-link span {
@@ -982,25 +982,18 @@ a.feature-icon:hover img {
   margin-bottom: 24px;
 }
 
-.getting-started-block:last-child .getting-started-image {
-  width: calc(50% - 16px);
-}
-
 @media (min-width: 400px) {
   .getting-statred-main-link {
-    font-size: 32px;
-  }
-  .getting-started-block:last-child .getting-started-image,
-  .getting-started-image {
-    width: 156px;
+    font-size: 24px;
   }
 }
 
-
 @media (min-width: 600px) {
-  .getting-started-block:last-child,
   .getting-started-block {
     width: calc(33.33% - 24px);
+  }
+  .getting-started-block:last-child {
+    display: block;
   }
 }
 
@@ -1008,7 +1001,6 @@ a.feature-icon:hover img {
   .getting-started-blocks {
     grid-column: 2/12;
   }
-  .getting-started-block:last-child,
   .getting-started-block {
     width: calc(33.33% - 48px);
   }
@@ -1032,7 +1024,7 @@ a.feature-icon:hover img {
 
 .footer {
   padding-top: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
 }
 
 .footer-block {

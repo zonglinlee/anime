@@ -1,12 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 156 107">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 136">
   <g id="icon-download" fill="none" fill-rule="evenodd">
-    <path id="Rectangle-51-Copy-2" stroke="#242423" stroke-width="2" d="M3 2v103h150V2H3z"/>
-    <polygon id="Rectangle-50-Copy-39" stroke="#242423" points="34 32 123 32 123 40 34 40"/>
-    <polygon id="Rectangle-50-Copy-37" stroke="#242423" points="34 16 123 16 123 24 34 24"/>
-    <polygon id="Rectangle-50-Copy-40" stroke="#242423" points="34 40 123 40 123 48 34 48"/>
-    <polygon id="Rectangle-50-Copy-41" stroke="#242423" points="34 48 123 48 123 56 34 56"/>
-    <polygon id="Rectangle-50-Copy-36" stroke="#242423" points="34 69 123 69 123 105 34 105"/>
-    <path id="Rectangle-51-Copy" stroke="#242423" d="M154 9H2h152z"/>
-    <polygon id="Rectangle-50-Copy-38" fill="#FF4B4B" stroke="#242423" points="34 24 123 24 123 32 34 32"/>
+    <polygon stroke="currentColor" stroke-width="2" points="1 1 239 1 239 135 1 135"/>
+    <polygon stroke="currentColor" points="48 32 192 32 192 40 48 40"/>
+    <polygon stroke="currentColor" points="48 56 192 56 192 64 48 64"/>
+    <path stroke="currentColor" d="M0 16h240"/>
+    <polygon stroke="currentColor" points="48 40 192 40 192 48 48 48"/>
+    <polygon stroke="currentColor" points="48 64 192 64 192 72 48 72"/>
+    <polygon stroke="currentColor" points="48 48 192 48 192 56 48 56"/>
+    <polygon stroke="currentColor" points="48 72 192 72 192 80 48 80"/>
+    <polygon stroke="currentColor" points="48 96 192 96 192 135 48 135"/>
   </g>
 </svg>

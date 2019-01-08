@@ -127,7 +127,7 @@ function fitElementToParent(el, padding) {
     var elOffsetWidth = el.offsetWidth - pad;
     var parentOffsetWidth = parentEl.offsetWidth;
     var ratio = parentOffsetWidth / elOffsetWidth;
-    timeout = setTimeout(anime.set(el, {scale: ratio}), 10);
+    timeout = setTimeout(anime.set(el, {scale: ratio}), 100);
   }
   resize();
   window.addEventListener('resize', resize);
@@ -279,7 +279,7 @@ var headerIntroAnimation = anime.timeline({
   autoplay: false
 })
 .add({
-  targets: ['.top-header a', '.secondary-menu a', '.section-intro .feature-description-text'],
+  targets: ['.header a', '.secondary-menu a', '.section-intro .feature-description-text'],
   opacity: {value: [0.001, 1], easing: 'linear', duration: 300},
   translateY: [40, 0],
   translateZ: 0,

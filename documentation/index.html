@@ -131,7 +131,7 @@ var elements = document.querySelectorAll('.dom-node-demo .el');
 
 anime({
   targets: elements,
-  translateX: 250
+  translateX: 270
 });
 /*DEMO*/
 }
@@ -819,7 +819,7 @@ anime({
 /*DEMO*/
 anime({
   targets: '.function-based-params-demo .el',
-  translateX: 250,
+  translateX: 270,
   direction: 'alternate',
   loop: true,
   delay: function(el, i, l) {
@@ -970,21 +970,21 @@ anime({
 /*DEMO*/
 anime({
   targets: '.loop',
-  translateX: 250,
+  translateX: 270,
   loop: 3,
   easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-infinity',
-  translateX: 250,
+  translateX: 270,
   loop: true,
   easing: 'easeInOutSine'
 });
 
 anime({
   targets: '.loop-reverse',
-  translateX: 250,
+  translateX: 270,
   loop: 3,
   direction: 'reverse',
   easing: 'easeInOutSine'
@@ -992,7 +992,7 @@ anime({
 
 anime({
   targets: '.loop-reverse-infinity',
-  translateX: 250,
+  translateX: 270,
   direction: 'reverse',
   loop: true,
   easing: 'easeInOutSine'
@@ -1000,7 +1000,7 @@ anime({
 
 anime({
   targets: '.loop-alternate',
-  translateX: 250,
+  translateX: 270,
   loop: 3,
   direction: 'alternate',
   easing: 'easeInOutSine'
@@ -1008,7 +1008,7 @@ anime({
 
 anime({
   targets: '.loop-alternate-infinity',
-  translateX: 250,
+  translateX: 270,
   direction: 'alternate',
   loop: true,
   easing: 'easeInOutSine'
@@ -1289,7 +1289,7 @@ var colorsExamples = anime.timeline({
 .add({ targets: '.color-hsl',  background: 'hsl(0, 100%, 100%)' }, 0)
 .add({ targets: '.color-rgba', background: 'rgba(255,255,255, .2)' }, 0)
 .add({ targets: '.color-hsla', background: 'hsla(0, 100%, 100%, .2)' }, 0)
-.add({ targets: '.colors-demo .el', translateX: 250 }, 0);
+.add({ targets: '.colors-demo .el', translateX: 270 }, 0);
 /*DEMO*/
 }
   </script>
@@ -1363,7 +1363,7 @@ anime({
   <div class="demo-content function-based-values-demo">
     <div class="line">
       <div class="small circle shadow"></div>
-      <div data-x="160" class="small circle el"></div>
+      <div data-x="170" class="small circle el"></div>
     </div>
     <div class="line">
       <div class="small circle shadow"></div>
@@ -1371,7 +1371,7 @@ anime({
     </div>
     <div class="line">
       <div class="small circle shadow"></div>
-      <div data-x="250" class="small circle el"></div>
+      <div data-x="270" class="small circle el"></div>
     </div>
   </div>
   <script>var functionBasedPropVal = function() {
@@ -2395,7 +2395,7 @@ tl
 /*DEMO*/
 var animation = anime({
   targets: '.play-pause-demo .el',
-  translateX: 250,
+  translateX: 270,
   delay: function(el, i) { return i * 100; },
   direction: 'alternate',
   loop: true,
@@ -2480,7 +2480,7 @@ document.querySelector('.restart-demo .restart').onclick = animation.restart;
 
   var reverseAnimDemo = anime({
     targets: '.reverse-anim-demo .el',
-    translateX: 250,
+    translateX: 270,
     duration: 2000,
     delay: function(el, i) { return i * 200; }
   });
@@ -2493,7 +2493,7 @@ document.querySelector('.restart-demo .restart').onclick = animation.restart;
 /*DEMO*/
 var animation = anime({
   targets: '.reverse-anim-demo .el',
-  translateX: 250,
+  translateX: 270,
   loop: true,
   direction: 'alternate',
   delay: function(el, i) { return i * 200; },
@@ -2536,7 +2536,7 @@ document.querySelector('.reverse-anim-demo .reverse').onclick = animation.revers
 /*DEMO*/
 var animation = anime({
   targets: '.seek-anim-demo .el',
-  translateX: 250,
+  translateX: 270,
   delay: function(el, i) { return i * 100; },
   elasticity: 200,
   easing: 'easeInOutSine',
@@ -2600,15 +2600,15 @@ var tl = anime.timeline({
 tl
 .add({
   targets: '.timeline-controls-demo .square.el',
-  translateX: 250,
+  translateX: 270,
 })
 .add({
   targets: '.timeline-controls-demo .circle.el',
-  translateX: 250,
+  translateX: 270,
 }, '-=100')
 .add({
   targets: '.timeline-controls-demo .triangle.el',
-  translateX: 250,
+  translateX: 270,
 }, '-=100');
 
 document.querySelector('.timeline-controls-demo .play').onclick = tl.play;
@@ -3439,7 +3439,7 @@ anime({
 /*DEMO*/
 anime({
   targets: '.elastic-easing-demo .el',
-  translateX: 250,
+  translateX: 270,
   easing: function(el) {
     return el.getAttribute('data-ease');
   },
@@ -3530,7 +3530,7 @@ anime({
 /*DEMO*/
 anime({
   targets: '.custom-easing-demo .el',
-  translateX: 250,
+  translateX: 270,
   direction: 'alternate',
   loop: true,
   duration: 2000,
@@ -3585,7 +3585,7 @@ anime({
 /*DEMO*/
 anime({
   targets: '.remove-demo .el',
-  translateX: 250,
+  translateX: 270,
   direction: 'alternate',
   loop: true,
   easing: 'easeInOutQuad'
@@ -3728,7 +3728,7 @@ function randomValues() {
   anime({
     targets: '.random-demo .el',
     translateX: function() {
-      return anime.random(0, 250);
+      return anime.random(0, 270);
     },
     easing: 'easeInOutQuad',
     duration: 750,
@@ -3767,7 +3767,7 @@ if (customRAF) cancelAnimationFrame(customRAF);
 /*DEMO*/
 var animation = anime({
   targets: '.tick-demo .el',
-  translateX: 250,
+  translateX: 270,
   direction: 'alternate',
   loop: true,
   easing: 'easeInOutQuad',
