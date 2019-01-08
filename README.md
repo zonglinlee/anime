@@ -12,7 +12,7 @@
 </p>
 
 <blockquote align="center">
-  <em>Anime.js</em> (<code>/ˈæn.ə.meɪ/</code>) is a lightweight JavaScript animation library with a simple, yet powerfull API.<br>
+  <em>Anime.js</em> (<code>/ˈæn.ə.meɪ/</code>) is a lightweight JavaScript animation library with a simple, yet powerful API.<br>
   It works with CSS properties, SVG, DOM attributes and JavaScript Objects.
 </blockquote>
 
