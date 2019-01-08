@@ -7,6 +7,12 @@
 
 <h4 align="center">JavaScript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">animejs.com</a></h4>
 
+<p align="center">
+  [![npm version](https://img.shields.io/npm/v/animejs.svg?style=flat-square)](https://www.npmjs.com/package/animejs)
+  [![npm downloads](https://img.shields.io/npm/dm/animejs.svg?style=flat-square)](https://www.npmjs.com/package/animejs)
+  [![GitHub downloads](https://img.shields.io/github/downloads/atom/atom/animejs.svg?style=flat-square)](https://github.com/juliangarnier/anime)
+</p>
+
 <blockquote align="center">
   <em>Anime</em> <code>/ˈæn.ə.meɪ/</code> is a lightweight JavaScript animation library with a simple, yet powerfull API.<br>It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 </blockquote>
