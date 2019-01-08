@@ -5,8 +5,8 @@
   <br>
 </h1>
 
-<h4 align="center">Javascript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">Electron</a></h4>
-### Javascript animation engine | v3.0.0 | [animejs.com](http://animejs.com/documentation/)
+<h4 align="center">Javascript animation engine | v3.0.0 | <a href="http://animejs.com" target="_blank">anime.js</a></h4>
+
 >*Anime* `(/ˈæn.ə.meɪ/)` is a lightweight JavaScript animation library with a simple, yet powerfull API. It works with any CSS Properties, individual CSS transforms, SVG or any DOM attributes, and JavaScript Objects.
 
 <p align="center">
