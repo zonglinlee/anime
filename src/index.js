@@ -774,7 +774,7 @@ const setProgressValue = {
 
 // Set Value helper
 
-function setTargetValue(targets, properties) {
+function setTargetsValue(targets, properties) {
   const animatables = getAnimatables(targets);
   animatables.forEach(animatable => {
     for (let property in properties) {
@@ -933,7 +933,7 @@ function anime(params = {}) {
   }
 
   function syncInstanceChildren(time) {
-    if (time >= instance.currentTime) {
+    if (!instance.reversePlayback) {
       for (let i = 0; i < childrenLength; i++) seekCild(time, children[i]);
     } else {
       for (let i = childrenLength; i--;) seekCild(time, children[i]);
@@ -1014,29 +1014,38 @@ function anime(params = {}) {
     const insDuration = instance.duration;
     const insDelay = instance.delay;
     const insEndDelay = insDuration - instance.endDelay;
-    const insReversed = instance.reversed;
     const insTime = adjustTime(engineTime);
     instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
+    instance.reversePlayback = insTime < instance.currentTime;
+    if (children) { syncInstanceChildren(insTime); };
     if (!instance.began && instance.currentTime > 0) {
       instance.began = true;
       setCallback('begin');
       setCallback('loopBegin');
     }
-    if (children) { syncInstanceChildren(insTime); };
     if (insTime <= insDelay && instance.currentTime !== 0) {
-      setCallback('changeBegin');
       setAnimationsProgress(0);
     }
-    if (insTime >= insDelay && insTime <= insDuration) {
-      setCallback('change');
-      setAnimationsProgress(insTime);
-    }
-    if ((insTime >= insDuration && instance.currentTime !== insDuration) || !insDuration) {
-      setCallback('changeComplete');
+    if ((insTime >= insEndDelay && instance.currentTime !== insDuration) || !insDuration) {
       setAnimationsProgress(insDuration);
     }
-    setCallback('update');
+    if (insTime > insDelay && insTime < insEndDelay) {
+      if (!instance.changeBegan) {
+        instance.changeBegan = true;
+        instance.changeCompleted = false;
+        setCallback('changeBegin');
+      }
+      setCallback('change');
+      setAnimationsProgress(insTime);
+    } else {
+      if (instance.changeBegan) {
+        instance.changeCompleted = true;
+        instance.changeBegan = false;
+        setCallback('changeComplete');
+      }
+    }
     instance.currentTime = minMax(insTime, 0, insDuration);
+    if (instance.began) setCallback('update');
     if (engineTime >= insDuration) {
       lastTime = 0;
       countIteration();
@@ -1062,19 +1071,29 @@ function anime(params = {}) {
 
   instance.reset = function() {
     const direction = instance.direction;
-    const loops = instance.loop;
     instance.passThrough = false;
     instance.currentTime = 0;
     instance.progress = 0;
     instance.paused = true;
     instance.began = false;
+    instance.changeBegan = false;
     instance.completed = false;
+    instance.changeCompleted = false;
+    instance.reversePlayback = false;
     instance.reversed = direction === 'reverse';
-    instance.remaining = direction === 'alternate' && loops === 1 ? 2 : loops;
+    instance.remaining = instance.loop;
     children = instance.children;
     childrenLength = children.length;
     for (let i = childrenLength; i--;) instance.children[i].reset();
+    if (instance.reversed && instance.loop !== true || (direction === 'alternate' && instance.loop === 1)) instance.remaining++;
     setAnimationsProgress(0);
+  }
+
+  // Set Value helper
+
+  instance.set = function(targets, properties) {
+    setTargetsValue(targets, properties);
+    return instance;
   }
 
   instance.tick = function(t) {
@@ -1234,7 +1253,7 @@ anime.speed = 1;
 anime.running = activeInstances;
 anime.remove = removeTargets;
 anime.get = getOriginalTargetValue;
-anime.set = setTargetValue;
+anime.set = setTargetsValue;
 anime.convertPx = convertPxToUnit;
 anime.path = getPath;
 anime.setDashoffset = setDashoffset;
