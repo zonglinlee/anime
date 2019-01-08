@@ -1,4 +1,4 @@
-import anime from '../../../lib/anime.es.js';
+// import anime from '../../../lib/anime.es.js';
 
 /* Ontersection observer */
 
@@ -95,7 +95,7 @@ function scrollToElement(el, offset) {
   var animation = anime({
     targets: [document.body, document.documentElement],
     scrollTop: '+='+top,
-    easing: 'easeInOutQuad',
+    easing: 'easeInOutSine',
     duration: 1500
   });
   // onScroll(animation.pause);
@@ -269,30 +269,6 @@ var logoAnimation = (function() {
     ],
     delay: anime.stagger(60, {from: 'center'})
   }, '-=1090')
-  .add({
-    targets: '.logo-text',
-    translateY: [
-      {value: 20, easing: 'easeOutQuad', duration: 100},
-      {value: 0, easing: 'easeOutElastic(1, .9)', duration: 450}
-    ],
-    opacity: {value: [0.001, 1], duration: 50},
-    duration: 500
-  }, '-=970')
-  .add({
-    targets: '.main-logo-circle',
-    opacity: {value: [0.001, 1], duration: 1500},
-    backgroundImage: ['linear-gradient(-135deg, #FFFFFF 50%, #F6F4F2 75%, #F6F4F2 100%, #DDDAD7 100%)', 'linear-gradient(-135deg, #FFFFFF 5%, #F6F4F2 40%, #F6F4F2 70%, #DDDAD7 100%)'],
-    translateY: {value: ['60px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
-    duration: 2000,
-    easing: 'easeInOutQuad'
-  }, '-=970')
-  .add({
-    targets: ['.description-title','.description-paragraph'],
-    opacity: {value: [0.001, 1], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
-    translateY: {value: ['80px', 0], easing: 'cubicBezier(0.175, 0.865, 0.245, 0.840)'},
-    duration: 3500,
-    delay: anime.stagger(75)
-  }, '-=1300')
 
   return logoAnimationTL;
 
@@ -730,6 +706,7 @@ var timeControlAnimation = (function() {
   }, 0)
   .add({
     targets: timeCursorEl,
+    translateZ: 0,
     keyframes: [
       { translateY: [-24, 0], duration: 100, easing: 'easeInQuad' },
       { translateX: 1080, duration: 1500 },
@@ -773,19 +750,20 @@ var timeControlAnimation = (function() {
     }, delay)
   }
 
+  var windowHeight = window.innerHeight;
+
   function moveControlAnimation() {
     var rect = timeControlEl.getBoundingClientRect();
     var top = rect.top;
     var height = rect.height;
-    var windowHeight = window.innerHeight;
     var scrolled = (top - windowHeight + 100) * -1.5;
     timelineAnimation.seek(scrolled * 2);
     if (controlAnimationCanMove) requestAnimationFrame(moveControlAnimation);
   }
 
   isElementInViewport(timeControlEl, function(el, entry) {
+    windowHeight = window.innerHeight;
     controlAnimationCanMove = true;
-    requestAnimationFrame(moveControlAnimation);
   }, function(el, entry) {
     controlAnimationCanMove = false;
   }, '50px');
