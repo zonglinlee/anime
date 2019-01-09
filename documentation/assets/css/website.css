@@ -125,6 +125,10 @@ a:hover .arrow:before,
   height: 48px;
 }
 
+.header a {
+  opacity: .001;
+}
+
 .nav-bar {
   display: flex;
   justify-content: flex-end;
