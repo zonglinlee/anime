@@ -126,7 +126,7 @@ function elastic(amplitude = 1, period = .5) {
   const a = minMax(amplitude, 1, 10);
   const p = minMax(period, .1, 2);
   return t => {
-    return (t === 0 || t === 1) ? t : 
+    return (t === 0 || t === 1) ? t :
       -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
   }
 }
@@ -262,14 +262,14 @@ const penner = (() => {
     ]
   }
 
-  let eases = { 
+  let eases = {
     linear: [0.250, 0.250, 0.750, 0.750]
   }
 
   for (let coords in curves) {
-    curves[coords].forEach((ease, i) => {
-      eases['ease'+coords+names[i]] = ease;
-    });
+    for (let i = 0, len = curves[coords].length; i < len; i++) {
+      eases['ease'+coords+names[i]] = curves[coords][i];
+    }
   }
 
   return eases;
@@ -523,7 +523,7 @@ function getRectLength(el) {
 
 function getLineLength(el) {
   return getDistance(
-    {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')}, 
+    {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')},
     {x: getAttribute(el, 'x2'), y: getAttribute(el, 'y2')}
   );
 }
@@ -776,7 +776,10 @@ const setProgressValue = {
 
 function setTargetsValue(targets, properties) {
   const animatables = getAnimatables(targets);
-  animatables.forEach(animatable => {
+
+  for (let i = 0, len = animatables.length; i < len; i++) {
+    const animatable = animatables[i];
+
     for (let property in properties) {
       const value = getFunctionValue(properties[property], animatable);
       const target = animatable.target;
@@ -787,7 +790,7 @@ function setTargetsValue(targets, properties) {
       const animType = getAnimationType(target, property);
       setProgressValue[animType](target, property, to, animatable.transforms, true);
     }
-  });
+  }
 }
 
 // Animations
@@ -858,7 +861,7 @@ let pausedInstances = [];
 let raf;
 
 const engine = (() => {
-  function play() { 
+  function play() {
     raf = requestAnimationFrame(step);
   }
   function step(t) {
@@ -888,11 +891,15 @@ const engine = (() => {
 
 function handleVisibilityChange() {
   if (document.hidden) {
-    activeInstances.forEach(ins => ins.pause());
+    for (let i = 0, len = activeInstance.length; i < len; i++) {
+      activeInstance[i].pause();
+    }
     pausedInstances = activeInstances.slice(0);
     activeInstances = [];
   } else {
-    pausedInstances.forEach(ins => ins.play());
+    for (let i = 0, len = pausedInstances.length; i < len; i++) {
+      pausedInstances[i].play();
+    }
   }
 }
 
@@ -916,7 +923,9 @@ function anime(params = {}) {
 
   function toggleInstanceDirection() {
     instance.reversed = !instance.reversed;
-    children.forEach(child => child.reversed = instance.reversed);
+    for (let i = 0, len = children.length; i < len; i++) {
+      children[i].reversed = instance.reversed;
+    }
   }
 
   function adjustTime(time) {
