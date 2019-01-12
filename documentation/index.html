@@ -2093,7 +2093,192 @@ anime({
 /*DEMO*/
 anime({
   targets: '.staggering-grid-demo .el',
-  scale: .1,
+  scale: [
+    {value: .1, easing: 'easeOutSine', duration: 500},
+    {value: 1, easing: 'easeInOutQuad', duration: 1200}
+  ],
+  delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
+});
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="gridAxisStaggering" class="demo">
+  <h3 class="demo-title">Axis</h3>
+  <div class="demo-description">
+    <p>
+      Forces the direction of a <a href="gridStaggering" class="color-staggering">grid starrering</a> effect.
+    </p>
+    <pre><code>anime.stagger(value, {grid: [rows, columns], axis: 'x'})</code></pre>
+    <table>
+      <thead>
+        <td>Parameters</td>
+        <td>Info</td>
+      </thead>
+      <tr>
+        <td><code>'x'</code></td>
+        <td>Follows the x axis</td>
+      </tr>
+      <tr>
+        <td><code>'y'</code></td>
+        <td>Follows the y axis</td>
+      </tr>
+    </table>
+  </div>
+  <div class="demo-content staggering-axis-grid-demo">
+    <div class="grid">
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+      <div class="small square el"></div>
+    </div>
+    <div class="grid shadow">
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+      <div class="small square"></div>
+    </div>
+  </div>
+  <script>var gridAxisStaggering = function() {
+/*DEMO*/
+anime({
+  targets: '.staggering-axis-grid-demo .el',
+  translateX: anime.stagger(10, {grid: [14, 5], from: 'center', axis: 'x'}),
+  translateY: anime.stagger(10, {grid: [14, 5], from: 'center', axis: 'y'}),
+  rotateZ: anime.stagger([0, 90], {grid: [14, 5], from: 'center', axis: 'x'}),
   delay: anime.stagger(200, {grid: [14, 5], from: 'center'}),
   easing: 'easeInOutQuad'
 });
