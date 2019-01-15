@@ -707,13 +707,15 @@
 
     let resolve = null;
 
-    function makePromise() {
-      return window.Promise && new Promise(_resolve => resolve = _resolve);
+    function makePromise(instance) {
+      const promise = window.Promise && new Promise(_resolve => resolve = _resolve);
+      instance.finished = promise;
+      return promise;
     }
 
-    let promise = makePromise();
-
     let instance = createNewInstance(params);
+
+    let promise = makePromise(instance);
 
     function toggleInstanceDirection() {
       instance.reversed = !instance.reversed;
@@ -855,7 +857,7 @@
             setCallback('complete');
             if ('Promise' in window) {
               resolve();
-              promise = makePromise();
+              promise = makePromise(instance);
             }
           }
         }
@@ -899,6 +901,7 @@
     instance.play = function() {
       if (!instance.paused) return;
       instance.paused = false;
+      instance.completed = false;
       startTime = 0;
       lastTime = adjustTime(instance.currentTime);
       activeInstances.push(instance);
@@ -916,8 +919,6 @@
       instance.reset();
       instance.play();
     }
-
-    instance.finished = promise;
 
     instance.reset();
 
