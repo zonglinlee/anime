@@ -896,7 +896,9 @@ function handleVisibilityChange() {
   }
 }
 
-document.addEventListener('visibilitychange', handleVisibilityChange);
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+}
 
 // Public Instance
 
