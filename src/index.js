@@ -46,6 +46,10 @@ function applyArguments(func, args) {
   return func.apply(null, args);
 }
 
+const hexRegex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+const rgbPrefixRegex = /^rgb/;
+const hslRegex = /^hsl/;
+
 const is = {
   arr: a => Array.isArray(a),
   obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
@@ -56,17 +60,19 @@ const is = {
   str: a => typeof a === 'string',
   fnc: a => typeof a === 'function',
   und: a => typeof a === 'undefined',
-  hex: a => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a),
-  rgb: a => /^rgb/.test(a),
-  hsl: a => /^hsl/.test(a),
+  hex: a => hexRegex.test(a),
+  rgb: a => rgbPrefixRegex.test(a),
+  hsl: a => hslRegex.test(a),
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
   key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes'
 }
 
 // Easings
 
+const easingFunctionRegex = /\(([^)]+)\)/;
+
 function parseEasingParameters(string) {
-  const match = /\(([^)]+)\)/.exec(string);
+  const match = easingFunctionRegex.exec(string);
   return match ? match[1].split(',').map(p => parseFloat(p)) : [];
 }
 
@@ -354,23 +360,30 @@ function mergeObjects(o1, o2) {
 
 // Colors
 
+const rgbRegex = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g;
+
 function rgbToRgba(rgbValue) {
-  const rgb = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g.exec(rgbValue);
+  const rgb = rgbRegex.exec(rgbValue);
   return rgb ? `rgba(${rgb[1]},1)` : rgbValue;
 }
 
+const hexToRgbaHexRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+const hexToRgbaRgbRegex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
+
 function hexToRgba(hexValue) {
-  const rgx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  const hex = hexValue.replace(rgx, (m, r, g, b) => r + r + g + g + b + b );
-  const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const hex = hexValue.replace(hexToRgbaHexRegex, (m, r, g, b) => r + r + g + g + b + b );
+  const rgb = hexToRgbaRgbRegex.exec(hex);
   const r = parseInt(rgb[1], 16);
   const g = parseInt(rgb[2], 16);
   const b = parseInt(rgb[3], 16);
   return `rgba(${r},${g},${b},1)`;
 }
 
+const hslToRgbaHsl1Regex = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g;
+const hslToRgbaHsl2Regex = /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g;
+
 function hslToRgba(hslValue) {
-  const hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hslValue) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(hslValue);
+  const hsl = hslToRgbaHsl1Regex.exec(hslValue) || hslToRgbaHsl2Regex.exec(hslValue);
   const h = parseInt(hsl[1], 10) / 360;
   const s = parseInt(hsl[2], 10) / 100;
   const l = parseInt(hsl[3], 10) / 100;
@@ -404,8 +417,10 @@ function colorToRgb(val) {
 
 // Units
 
+const unitRegex = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/;
+
 function getUnit(val) {
-  const split = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(val);
+  const split = unitRegex.exec(val);
   if (split) return split[2];
 }
 
@@ -458,12 +473,13 @@ function getAnimationType(el, prop) {
   if (el[prop] != null) return 'object';
 }
 
+const transformRegex = /(\w+)\(([^)]*)\)/g;
+
 function getElementTransforms(el) {
   if (!is.dom(el)) return;
   const str = el.style.transform || '';
-  const reg  = /(\w+)\(([^)]*)\)/g;
   const transforms = new Map();
-  let m; while (m = reg.exec(str)) transforms.set(m[1], m[2]);
+  let m; while (m = reg.exec(transformRegex)) transforms.set(m[1], m[2]);
   return transforms;
 }
 
@@ -486,8 +502,10 @@ function getOriginalTargetValue(target, propName, unit, animatable) {
   }
 }
 
+const operatorRegex = /^(\*=|\+=|-=)/;
+
 function getRelativeValue(to, from) {
-  const operator = /^(\*=|\+=|-=)/.exec(to);
+  const operator = operatorRegex.exec(to);
   if (!operator) return to;
   const u = getUnit(to) || 0;
   const x = parseFloat(from);
@@ -499,11 +517,13 @@ function getRelativeValue(to, from) {
   }
 }
 
+const whitespaceRegex = /\s/g;
+
 function validateValue(val, unit) {
   if (is.col(val)) return colorToRgb(val);
   const originalUnit = getUnit(val);
   const unitLess = originalUnit ? val.substr(0, val.length - originalUnit.length) : val;
-  return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
+  return unit && !whitespaceRegex.test(val) ? unitLess + unit : unitLess;
 }
 
 // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes
@@ -624,13 +644,14 @@ function getPathProgress(path, progress) {
 
 // Decompose value
 
+const valueRegex = /-?\d*\.?\d+/g;
+
 function decomposeValue(val, unit) {
-  const rgx = /-?\d*\.?\d+/g;
   const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
   return {
     original: value,
-    numbers: value.match(rgx) ? value.match(rgx).map(Number) : [0],
-    strings: (is.str(val) || unit) ? value.split(rgx) : []
+    numbers: value.match(valueRegex) ? value.match(valueRegex).map(Number) : [0],
+    strings: (is.str(val) || unit) ? value.split(valueRegex) : []
   }
 }
 
@@ -650,10 +671,12 @@ function getAnimatables(targets) {
 
 // Properties
 
+const springRegex = /^spring/;
+
 function normalizePropertyTweens(prop, tweenSettings) {
   let settings = cloneObject(tweenSettings);
   // Override duration if easing is a spring
-  if (/^spring/.test(settings.easing)) settings.duration = spring(settings.easing);
+  if (springRegex.test(settings.easing)) settings.duration = spring(settings.easing);
   if (is.arr(prop)) {
     const l = prop.length;
     const isFromTo = (l === 2 && !is.obj(prop[0]));
