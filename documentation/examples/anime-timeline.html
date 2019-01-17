@@ -104,7 +104,9 @@
       <div class="buttons">
         <button class="play">Play</button>
         <button class="pause">Pause</button>
+        <button class="reverse">Reverse</button>
         <button class="restart">Restart</button>
+        <label>Is reversed : <input class="is-reversed"></input></label>
       </div>
       <div class="timeline">
         <input class="progress" type="range" min="0" max="100" step=".1" value="0">
@@ -121,6 +123,7 @@
 
   var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
+  var isReversedEl = document.querySelector('.is-reversed');
 
   window.tl = anime.timeline({
     targets: els,
@@ -128,23 +131,30 @@
     delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
+      isReversedEl.value = anim.reversePlayback;
     },
-    loopComplete: (a) => console.log('END'),
+    loopComplete: (a) => console.log('TL loop completed'),
     autoplay: true,
-    loop: true,
-    // direction: 'alternate',
-    easing: 'easeOutQuad'
+    easing: 'easeOutQuad',
+    direction: 'alternate'
   });
 
   document.querySelector('.controls .play').onclick = tl.play;
   document.querySelector('.controls .pause').onclick = tl.pause;
+  document.querySelector('.controls .reverse').onclick = tl.reverse;
   document.querySelector('.controls .restart').onclick = tl.restart;
 
   tl
   .add({
     translateY: -100,
     scale: 8,
-    background: '#FF1461'
+    background: '#FF1461',
+    begin: function() {
+      console.log('first began')
+    },
+    complete: function() {
+      console.log('first completed')
+    }
   })
   .add({
     background: '#18FF92',
@@ -161,6 +171,12 @@
     scaleX: 3,
     scaleY: .5,
     background: '#FBF38C',
+    begin: function() {
+      console.log('last began')
+    },
+    complete: function() {
+      console.log('last completed')
+    }
   }, '-=400');
 
   controlsProgressEl.addEventListener('input', function() {

@@ -1,7 +1,7 @@
 {
   "name": "animejs",
-  "version": "3.0.0",
-  "homepage": "https://animejs.com",
+  "version": "3.0.1",
+  "homepage": "http://animejs.com",
   "repository": "juliangarnier/anime",
   "description": "JavaScript animation engine",
   "umd:main": "lib/anime.min.js",
