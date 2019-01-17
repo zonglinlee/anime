@@ -106,6 +106,7 @@
         <button class="pause">Pause</button>
         <button class="reverse">Reverse</button>
         <button class="restart">Restart</button>
+        <label>Is reversed : <input class="is-reversed"></input></label>
       </div>
       <div class="timeline">
         <input class="progress" type="range" min="0" max="100" step=".1" value="0">
@@ -122,6 +123,7 @@
 
   var els = document.querySelectorAll('.el');
   var controlsProgressEl = document.querySelector('.controls .progress');
+  var isReversedEl = document.querySelector('.is-reversed');
 
   window.tl = anime.timeline({
     targets: els,
@@ -129,10 +131,12 @@
     delay: function(el, i) { return 75 * i; },
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
+      isReversedEl.value = anim.reversePlayback;
     },
     loopComplete: (a) => console.log('TL loop completed'),
     autoplay: true,
-    easing: 'easeOutQuad'
+    easing: 'easeOutQuad',
+    direction: 'alternate'
   });
 
   document.querySelector('.controls .play').onclick = tl.play;

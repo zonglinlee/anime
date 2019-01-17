@@ -918,6 +918,10 @@ function anime(params = {}) {
   let promise = makePromise(instance);
 
   function toggleInstanceDirection() {
+    const direction = instance.direction;
+    if (direction !== 'alternate') {
+      instance.direction = direction !== 'normal' ? 'normal' : 'reverse';
+    }
     instance.reversed = !instance.reversed;
     children.forEach(child => child.reversed = instance.reversed);
   }
@@ -1116,8 +1120,8 @@ function anime(params = {}) {
 
   instance.play = function() {
     if (!instance.paused) return;
+    if (instance.completed) instance.reset();
     instance.paused = false;
-    instance.completed = false;
     activeInstances.push(instance);
     resetTime();
     if (!raf) engine();
