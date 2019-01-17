@@ -3137,7 +3137,6 @@ anime({
     <div class="circle el"></div>
   </div>
   <script>var finishedPromise = function() {
-// if (window.demoPromiseResetTimeout) clearTimeout(window.demoPromiseResetTimeout);
 anime.set('.promise-demo .el', {backgroundColor: ''});
 anime.set('.promise-demo .finished-log', {value: ''});
 /*DEMO*/
@@ -3147,12 +3146,8 @@ var finishedLogEl = document.querySelector('.promise-demo .finished-log');
 var demoPromiseResetTimeout;
 
 function logFinished() {
-  finishedLogEl.value = 'Promise resolved';
+  anime.set(finishedLogEl, {value: 'Promise resolved'});
   anime.set(promiseEl, {backgroundColor: '#18FF92'});
-  // Rebind the promise, since this demo can be looped.
-  // window.demoPromiseResetTimeout = setTimeout(function() {
-  //   promise = animation.finished.then(logFinished);
-  // });
 }
 
 var animation = anime.timeline({
@@ -3172,7 +3167,7 @@ var animation = anime.timeline({
   translateX: 0
 });
 
-var promise = animation.finished.then(logFinished);
+animation.finished.then(logFinished);
 
 /*DEMO*/
 }
