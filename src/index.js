@@ -908,13 +908,14 @@ function anime(params = {}) {
   let children, childrenLength = 0;
   let resolve = null;
 
-  function makePromise() {
-    return window.Promise && new Promise(_resolve => resolve = _resolve);
+  function makePromise(instance) {
+    const promise = window.Promise && new Promise(_resolve => resolve = _resolve);
+    instance.finished = promise;
+    return promise;
   }
 
-  let promise = makePromise();
-
   let instance = createNewInstance(params);
+  let promise = makePromise(instance);
 
   function toggleInstanceDirection() {
     instance.reversed = !instance.reversed;
@@ -1064,7 +1065,7 @@ function anime(params = {}) {
           setCallback('complete');
           if (!instance.passThrough && 'Promise' in window) {
             resolve();
-            promise = makePromise();
+            promise = makePromise(instance);
           }
         }
       }
@@ -1116,6 +1117,7 @@ function anime(params = {}) {
   instance.play = function() {
     if (!instance.paused) return;
     instance.paused = false;
+    instance.completed = false;
     activeInstances.push(instance);
     resetTime();
     if (!raf) engine();
