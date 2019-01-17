@@ -104,6 +104,7 @@
       <div class="buttons">
         <button class="play">Play</button>
         <button class="pause">Pause</button>
+        <button class="reverse">Reverse</button>
         <button class="restart">Restart</button>
       </div>
       <div class="timeline">
@@ -129,22 +130,27 @@
     update: function(anim) {
       controlsProgressEl.value = anim.progress;
     },
-    loopComplete: (a) => console.log('END'),
+    loopComplete: (a) => console.log('TL loop completed'),
     autoplay: true,
-    loop: true,
-    // direction: 'alternate',
     easing: 'easeOutQuad'
   });
 
   document.querySelector('.controls .play').onclick = tl.play;
   document.querySelector('.controls .pause').onclick = tl.pause;
+  document.querySelector('.controls .reverse').onclick = tl.reverse;
   document.querySelector('.controls .restart').onclick = tl.restart;
 
   tl
   .add({
     translateY: -100,
     scale: 8,
-    background: '#FF1461'
+    background: '#FF1461',
+    begin: function() {
+      console.log('first began')
+    },
+    complete: function() {
+      console.log('first completed')
+    }
   })
   .add({
     background: '#18FF92',
@@ -161,6 +167,12 @@
     scaleX: 3,
     scaleY: .5,
     background: '#FBF38C',
+    begin: function() {
+      console.log('last began')
+    },
+    complete: function() {
+      console.log('last completed')
+    }
   }, '-=400');
 
   controlsProgressEl.addEventListener('input', function() {

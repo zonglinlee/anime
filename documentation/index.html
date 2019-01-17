@@ -3137,8 +3137,9 @@ anime({
     <div class="circle el"></div>
   </div>
   <script>var finishedPromise = function() {
-if (window.demoPromiseResetTimeout) clearTimeout(window.demoPromiseResetTimeout);
+// if (window.demoPromiseResetTimeout) clearTimeout(window.demoPromiseResetTimeout);
 anime.set('.promise-demo .el', {backgroundColor: ''});
+anime.set('.promise-demo .finished-log', {value: ''});
 /*DEMO*/
 var progressLogEl = document.querySelector('.promise-demo .progress-log');
 var promiseEl = document.querySelector('.promise-demo .el');
@@ -3149,20 +3150,26 @@ function logFinished() {
   finishedLogEl.value = 'Promise resolved';
   anime.set(promiseEl, {backgroundColor: '#18FF92'});
   // Rebind the promise, since this demo can be looped.
-  window.demoPromiseResetTimeout = setTimeout(function() {
-    promise = animation.finished.then(logFinished);
-  });
+  // window.demoPromiseResetTimeout = setTimeout(function() {
+  //   promise = animation.finished.then(logFinished);
+  // });
 }
 
-var animation = anime({
+var animation = anime.timeline({
   targets: promiseEl,
-  translateX: 250,
-  delay: 1000,
-  endDelay: 1000,
+  delay: 400,
+  duration: 500,
+  endDelay: 400,
+  easing: 'easeInOutSine',
   update: function(anim) {
     progressLogEl.value = 'progress : '+Math.round(anim.progress)+'%';
-    if (!anim.completed) finishedLogEl.value = 'Promise not resolved';
   }
+}).add({
+  translateX: 250
+}).add({
+  scale: 2
+}).add({
+  translateX: 0
 });
 
 var promise = animation.finished.then(logFinished);
