@@ -1062,7 +1062,7 @@ function anime(params = {}) {
           instance.completed = true;
           setCallback('loopComplete');
           setCallback('complete');
-          if ('Promise' in window) {
+          if (!instance.passThrough && 'Promise' in window) {
             resolve();
             promise = makePromise();
           }
