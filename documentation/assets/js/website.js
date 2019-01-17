@@ -441,7 +441,7 @@ var sphereAnimation = (function() {
   var sphereEl = document.querySelector('.sphere-animation');
   var spherePathEls = sphereEl.querySelectorAll('.sphere path');
   var pathLength = spherePathEls.length;
-  var hasStarted = false;
+  var introPlayed = false;
   var aimations = [];
 
   fitElementToParent(sphereEl);
@@ -504,7 +504,10 @@ var sphereAnimation = (function() {
     }, 0);
 
   function play() {
-    introAnimation.play();
+    if (!introPlayed) {
+      introAnimation.play();
+      introPlayed = true;
+    }
     breathAnimation.play();
     shadowAnimation.play();
   }
