@@ -1133,7 +1133,6 @@ function anime(params = {}) {
     instance.play();
   }
 
-  instance.finished = promise;
   instance.reset();
 
   if (instance.autoplay) instance.play();
