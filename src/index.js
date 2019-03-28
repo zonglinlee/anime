@@ -890,7 +890,7 @@ function handleVisibilityChange() {
   if (document.hidden) {
     activeInstances.forEach(ins => ins.pause());
     pausedInstances = activeInstances.slice(0);
-    activeInstances = [];
+    anime.running = activeInstances = [];
   } else {
     pausedInstances.forEach(ins => ins.play());
   }
