@@ -547,8 +547,8 @@ function setDashoffset(el) {
 function getParentSvgEl(el) {
   let parentEl = el.parentNode;
   while (is.svg(parentEl)) {
-    parentEl = parentEl.parentNode;
     if (!is.svg(parentEl.parentNode)) break;
+    parentEl = parentEl.parentNode;
   }
   return parentEl;
 }
