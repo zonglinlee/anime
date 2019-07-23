@@ -3436,6 +3436,11 @@ anime({
         <td><code>'easeOutBack'</code></td>
         <td><code>'easeInOutBack'</code></td>
       <tr>
+      <tr>
+        <td><code>'easeInBounce'</code></td>
+        <td><code>'easeOutBounce'</code></td>
+        <td><code>'easeInOutBounce'</code></td>
+      <tr>
     </table>
   </div>
   <div class="demo-content penner-equations-demo">
@@ -3445,10 +3450,39 @@ anime({
 /*DEMO*/
 var demoContentEl = document.querySelector('.penner-equations-demo');
 var fragment = document.createDocumentFragment();
+var easingNames = [
+  'easeInQuad',
+  'easeInCubic',
+  'easeInQuart',
+  'easeInQuint',
+  'easeInSine',
+  'easeInExpo',
+  'easeInCirc',
+  'easeInBack',
+  'easeInBounce',
+  'easeInOutQuad',
+  'easeInOutCubic',
+  'easeInOutQuart',
+  'easeInOutQuint',
+  'easeInOutSine',
+  'easeInOutExpo',
+  'easeInOutCirc',
+  'easeInOutBack',
+  'easeInOutBounce',
+  'easeOutQuad',
+  'easeOutCubic',
+  'easeOutQuart',
+  'easeOutQuint',
+  'easeOutSine',
+  'easeOutExpo',
+  'easeOutCirc',
+  'easeOutBack',
+  'easeOutBounce'
+]
 
 function createEasingDemo(easing) {
   var demoEl = document.createElement('div');
-  demoEl.classList.add('stretched','square','el');
+  demoEl.classList.add('stretched','square','el', 'easing-'+easing);
   anime({
     targets: demoEl,
     translateX: 250,
@@ -3456,16 +3490,15 @@ function createEasingDemo(easing) {
     loop: true,
     delay: 200,
     endDelay: 200,
-    easing: easing,
+    duration: 2000,
+    easing: easing
   });
   fragment.appendChild(demoEl);
 }
 
-for (var easeName in anime.penner) {
-  if (Array.isArray(anime.penner[easeName])) {
-    createEasingDemo(easeName);
-  }
-}
+easingNames.forEach(function(easeName) {
+  createEasingDemo(easeName);
+});
 
 demoContentEl.innerHTML = '';
 demoContentEl.appendChild(fragment);
