@@ -1002,7 +1002,7 @@ function anime(params = {}) {
     const insTime = adjustTime(engineTime);
     instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
     instance.reversePlayback = insTime < instance.currentTime;
-    if (children) { syncInstanceChildren(insTime); };
+    if (children) { syncInstanceChildren(insTime); }
     if (!instance.began && instance.currentTime > 0) {
       instance.began = true;
       setCallback('begin');
