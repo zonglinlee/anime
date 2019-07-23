@@ -913,15 +913,15 @@ function anime(params = {}) {
     lastTime = adjustTime(instance.currentTime) * (1 / anime.speed);
   }
 
-  function seekCild(time, child) {
+  function seekChild(time, child) {
     if (child) child.seek(time - child.timelineOffset);
   }
 
   function syncInstanceChildren(time) {
     if (!instance.reversePlayback) {
-      for (let i = 0; i < childrenLength; i++) seekCild(time, children[i]);
+      for (let i = 0; i < childrenLength; i++) seekChild(time, children[i]);
     } else {
-      for (let i = childrenLength; i--;) seekCild(time, children[i]);
+      for (let i = childrenLength; i--;) seekChild(time, children[i]);
     }
   }
 
