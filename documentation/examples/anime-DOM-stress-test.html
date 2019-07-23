@@ -45,23 +45,22 @@
   function createEl(i) {
     var el = document.createElement('div');
     var hue = Math.round(360 / numberOfEls * i);
-    var angle = i;
     el.classList.add('el');
     //el.style.border = '5px solid hsl(' + hue + ', 50%, 50%)';
     el.style.backgroundColor = 'hsl(' + hue + ', 50%, 50%)';
     wrapperEl.appendChild(el);
     anime({
       targets: el,
-      translateX: Math.sin(angle) * distance + 'rem',
-      translateY: Math.cos(angle) * distance + 'rem',
+      translateX: Math.sin(i) * distance + 'rem',
+      translateY: Math.cos(i) * distance + 'rem',
       scale: [
-        {value: [0, 1]},
-        {value: 0}
+        {value: [.1, 2]},
+        {value: .1}
       ],
       easing: 'easeInOutSine',
       loop: true,
       duration: duration,
-      startTime: i * (duration / numberOfEls)
+      delay: i * (duration / numberOfEls)
     });
   };
 

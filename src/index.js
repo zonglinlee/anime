@@ -477,9 +477,11 @@ function getRelativeValue(to, from) {
 
 function validateValue(val, unit) {
   if (is.col(val)) return colorToRgb(val);
+  if (/\s/g.test(val)) return val;
   const originalUnit = getUnit(val);
   const unitLess = originalUnit ? val.substr(0, val.length - originalUnit.length) : val;
-  return unit && !/\s/g.test(val) ? unitLess + unit : unitLess;
+  if (unit) return unitLess + unit;
+  return unitLess;
 }
 
 // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes
