@@ -1071,7 +1071,7 @@ function anime(params = {}) {
     childrenLength = children.length;
     for (let i = childrenLength; i--;) instance.children[i].reset();
     if (instance.reversed && instance.loop !== true || (direction === 'alternate' && instance.loop === 1)) instance.remaining++;
-    setAnimationsProgress(0);
+    setAnimationsProgress(instance.reversed ? instance.duration : 0);
   }
 
   // Set Value helper
