@@ -126,22 +126,29 @@
 
   anime({
     targets: '.easing-visualizer div',
+    translateZ: 0,
     translateY: (() => {
       const keyframes = [];
+      // keyframes.push({ value: 0, delay: stagger(.125) });
+      // keyframes.push({ value: stagger([0, -400], {easing: 'steps(10)'}), delay: stagger(.125) });
       for (let ease in anime.penner) {
         keyframes.push({
           value: stagger([0, -400], {easing: ease}),
           delay: stagger(.125)
         });
       };
-      keyframes.push({ value: stagger([0, -400], {easing: 'steps(10)'}), delay: stagger(.125) });
-      keyframes.push({ value: 0, delay: stagger(.125) });
       return keyframes;
     })(),
+    // translateY: {
+    //   value: stagger([0, -400], {easing:'easeInOutSine'}),
+    //   delay: stagger(.125)
+    // },
     easing: 'easeInOutSine',
-    duration: 16000,
+    duration: 6000,
     loop: true
   });
+
+  console.log(anime.penner);
 
 </script>
 </html>
