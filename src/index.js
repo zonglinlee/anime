@@ -603,7 +603,7 @@ function getPathProgress(path, progress) {
 // Decompose value
 
 function decomposeValue(val, unit) {
-  const rgx = /-?\d*\.?\d+/g;
+  const rgx = /[-+]?\d*\.?\d+([eE][-+]?\d+)?/g;
   const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
   return {
     original: value,
