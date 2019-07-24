@@ -1006,6 +1006,9 @@ function anime(params = {}) {
     if (!instance.began && instance.currentTime > 0) {
       instance.began = true;
       setCallback('begin');
+    }
+    if (!instance.loopBegan && instance.currentTime > 0) {
+      instance.loopBegan = true;
       setCallback('loopBegin');
     }
     if (insTime <= insDelay && instance.currentTime !== 0) {
@@ -1034,12 +1037,7 @@ function anime(params = {}) {
     if (engineTime >= insDuration) {
       lastTime = 0;
       countIteration();
-      if (instance.remaining) {
-        startTime = now;
-        setCallback('loopComplete');
-        setCallback('loopBegin');
-        if (instance.direction === 'alternate') { toggleInstanceDirection(); }
-      } else {
+      if (!instance.remaining) {
         instance.paused = true;
         if (!instance.completed) {
           instance.completed = true;
@@ -1049,6 +1047,13 @@ function anime(params = {}) {
             resolve();
             promise = makePromise(instance);
           }
+        }
+      } else {
+        startTime = now;
+        setCallback('loopComplete');
+        instance.loopBegan = false;
+        if (instance.direction === 'alternate') {
+          toggleInstanceDirection();
         }
       }
     }
@@ -1061,6 +1066,7 @@ function anime(params = {}) {
     instance.progress = 0;
     instance.paused = true;
     instance.began = false;
+    instance.loopBegan = false;
     instance.changeBegan = false;
     instance.completed = false;
     instance.changeCompleted = false;
