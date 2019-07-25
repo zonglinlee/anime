@@ -381,8 +381,8 @@ function colorToRgb(val) {
 // Units
 
 function getUnit(val) {
-  const split = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(val);
-  if (split) return split[2];
+  const split = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(val);
+  if (split) return split[1];
 }
 
 function getTransformUnit(propName) {
@@ -603,7 +603,9 @@ function getPathProgress(path, progress) {
 // Decompose value
 
 function decomposeValue(val, unit) {
-  const rgx = /[-+]?\d*\.?\d+([eE][-+]?\d+)?/g;
+  // const rgx = /-?\d*\.?\d+/g; // handles basic numbers
+  // const rgx = /[+-]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g; // handles exponents notation
+  const rgx = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g; // handles exponents notation
   const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
   return {
     original: value,

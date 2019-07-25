@@ -45,6 +45,11 @@
       background-image: radial-gradient(50% 100%, #FFF7A0 50%, #FF7A6D 100%);
       background-size: auto 100px;
     }
+    .exponent-values {
+      width: 300px;
+      background-color: transparent;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -67,6 +72,7 @@
   <input class="item" type="range" value="0" min="0" max="100">
   <div class="basic-css color-lavender item"></div>
   <div class="auto-property color-purple item"></div>
+  <input class="exponent-values color-pink item" value="-1.1234567890123456789e+30px"></input>
   <script type="module">
     
     import anime from "../../src/index.js";
@@ -91,7 +97,7 @@
     });
     var specifiedUnit = anime({
       targets: '.specified-unit',
-      borderRadius: ['0px', '50px'],
+      borderRadius: ['16px', '1em'],
       loop: true,
       direction: 'alternate',
       easing: 'linear'
@@ -99,74 +105,81 @@
     var filter = anime({
       targets: '.filter',
       filter: ["blur(20px)", "blur(0px)"],
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var rgba = anime({
       targets: '.rgba',
       backgroundColor: ['rgba(255,100,50,1)', 'rgba(255,100,50,.0)'],
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var calc = anime({
       targets: '.calc',
       height: ['calc(25% - 100px)', 'calc(25% - 0px)'],
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var zeroValue = anime({
       targets: '.zero-value',
       scale: 0,
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var roundValue = anime({
       targets: '.round-value',
       translateY: 100,
-      loop: true,
-      round: 1,
-      direction: 'alternate',
+      round: .1,
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var clipPath = anime({
       targets: '.clip-path',
       clipPath: ['circle(0px at center)', 'circle(100px at center)'],
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var svgTransform = anime({
       targets: 'rect',
       transform: 'translate(10 10) scale(2)',
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var rangeValue = anime({
       targets: 'input',
       value: 100,
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var basicCSS = anime({
       targets: '.basic-css',
       width: 50,
       height: 50,
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
     var autoProperty = anime({
       targets: '.auto-property',
       backgroundSize: ['auto 10px', 'auto 400px'],
       margin: '20% 40px 10px 30px',
-      loop: true,
-      direction: 'alternate',
+      // loop: true,
+      // direction: 'alternate',
+      easing: 'linear'
+    });
+    var exponentValues = anime({
+      targets: '.exponent-values',
+      value: '+1.0123456789012346e+21px',
+      // loop: true,
+      // direction: 'alternate',
       easing: 'linear'
     });
   </script>
