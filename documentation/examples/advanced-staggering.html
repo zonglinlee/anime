@@ -92,7 +92,7 @@
 
     nextIndex = anime.random(0, numberOfElements);
 
-    anime.setValue('.cursor', {
+    anime.set('.cursor', {
       translateX: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'x'}),
       translateY: anime.stagger('-1rem', {grid: [16, 16], from: index, axis: 'y'})
     });
