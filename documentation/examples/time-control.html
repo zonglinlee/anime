@@ -367,7 +367,7 @@
 
   for (var i = 0; i < infoEls.length; i++) {
     var infoEl = infoEls[i];
-    var delay = parseFloat(anime.getValue(infoEl, 'data-delay'));
+    var delay = parseFloat(anime.get(infoEl, 'data-delay'));
     var direction = infoEl.classList.contains('info-bottom') ? -1 : 1;
     timeControlAnimation
     .add({
