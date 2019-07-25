@@ -1,4 +1,4 @@
-// import anime from '../../../lib/anime.es.js';
+// import anime from '../../../src/index.js';
 
 /* Ontersection observer */
 
@@ -132,7 +132,7 @@ function resize() {
   timeout = setTimeout(function() {
     anime.set(el, {scale: ratio});
     if (exception) anime.set(exception, {scale: invertedRatio});
-  }, 10);
+  }, 1);
 }
 resize();
 window.addEventListener('resize', resize);
@@ -448,8 +448,6 @@ var sphereAnimation = (function() {
   var pathLength = spherePathEls.length;
   var introPlayed = false;
   var aimations = [];
-
-  fitElementToParent(sphereEl);
 
   var breathAnimation = anime({
     begin: function() {
