@@ -64,23 +64,59 @@
 
   easingVisualizerEl.appendChild(fragment);
 
+  var easings = [
+    "easeInSine",
+    "easeOutSine",
+    "easeInOutSine",
+    "easeInCirc",
+    "easeOutCirc",
+    "easeInOutCirc",
+    "easeInBack",
+    "easeOutBack",
+    "easeInOutBack",
+    "easeInBounce",
+    "easeOutBounce",
+    "easeInOutBounce",
+    "easeInElastic",
+    "easeOutElastic",
+    "easeInOutElastic",
+    "easeInQuad",
+    "easeOutQuad",
+    "easeInOutQuad",
+    "easeInCubic",
+    "easeOutCubic",
+    "easeInOutCubic",
+    "easeInQuart",
+    "easeOutQuart",
+    "easeInOutQuart",
+    "easeInQuint",
+    "easeOutQuint",
+    "easeInOutQuint",
+    "easeInExpo",
+    "easeOutExpo",
+    "easeInOutExpo",
+    "linear"
+  ]
+
+  anime.set('.easing-visualizer div', {
+    translateY: anime.stagger([0, -400], {easing: 'linear'})
+  })
+
   anime({
     targets: '.easing-visualizer div',
-    translateZ: 0,
     translateY: (() => {
       const keyframes = [];
-      keyframes.push(anime.penner['linear']);
-      for (let ease in anime.penner) {
+      easings.forEach(function(ease) {
         keyframes.push({
           value: anime.stagger([0, -400], {easing: ease}),
           delay: anime.stagger(.125)
         });
-      };
-      keyframes.push(anime.penner['linear']);
+      })
       return keyframes;
     })(),
+    translateZ: 0,
     easing: 'easeInOutSine',
-    duration: 6000,
+    duration: 9000,
     loop: true
   });
 
