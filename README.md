@@ -43,7 +43,7 @@ import anime from 'animejs/lib/anime.es.js';
 #### CommonJS
 
 ```javascript
-const anime = require('anime');
+const anime = require('animejs');
 ```
 
 #### File include
