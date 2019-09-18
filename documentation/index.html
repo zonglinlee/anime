@@ -2471,7 +2471,7 @@ tl
   <h3 class="demo-title">Parameters inheritance</h3>
   <div class="demo-description">
     <p>
-      Parameters set in the parent timeline instance will be inherited by all the children.
+      Some parameters set in the parent timeline instance can be inherited by all the children.
     </p>
     <table>
       <thead>
@@ -2479,6 +2479,9 @@ tl
       </thead>
       <tr>
         <td><code>targets</code></td>
+      </tr>
+      <tr>
+        <td><code>easing</code></td>
       </tr>
       <tr>
         <td><code>duration</code></td>
@@ -2513,10 +2516,10 @@ tl
 var tl = anime.timeline({
   targets: '.params-inheritance-demo .el',
   delay: function(el, i) { return i * 200 },
-  duration: 500,
-  easing: 'easeOutExpo',
-  direction: 'alternate',
-  loop: true
+  duration: 500, // Can be inherited
+  easing: 'easeOutExpo', // Can be inherited
+  direction: 'alternate', // Is not inherited
+  loop: true // Is not inherited
 });
 
 tl
