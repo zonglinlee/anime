@@ -2682,7 +2682,7 @@ document.querySelector('.restart-demo .restart').onclick = animation.restart;
 var animation = anime({
   targets: '.reverse-anim-demo .el',
   translateX: 270,
-  loop: true,
+  loop: false,
   delay: function(el, i) { return i * 200; },
   easing: 'easeInOutSine'
 });
