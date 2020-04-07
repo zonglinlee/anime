@@ -2687,7 +2687,10 @@ var animation = anime({
   easing: 'easeInOutSine'
 });
 
-document.querySelector('.reverse-anim-demo .reverse').onclick = animation.reverse;
+document.querySelector('.reverse-anim-demo .reverse').onclick = () => {
+  animation.reverse();
+  animation.play();
+}
 /*DEMO*/
 }
   </script>

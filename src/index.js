@@ -1115,6 +1115,7 @@ function anime(params = {}) {
 
   instance.reverse = function() {
     toggleInstanceDirection();
+    instance.completed = instance.reversed ? false : true;
     resetTime();
   }
 
