@@ -123,7 +123,7 @@ function spring(string, duration) {
 // Basic steps easing implementation https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function
 
 function steps(steps = 10) {
-  return t => Math.ceil(t * steps) * (1 / steps);
+  return t => Math.ceil((minMax(t, 0.000001, 1)) * steps) * (1 / steps);
 }
 
 // BezierEasing https://github.com/gre/bezier-easing
