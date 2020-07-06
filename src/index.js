@@ -834,12 +834,13 @@ function createNewInstance(params) {
 // Core
 
 let activeInstances = [];
-let pausedInstances = [];
 let raf;
 
 const engine = (() => {
-  function play() { 
-    raf = requestAnimationFrame(step);
+  function play() {
+    if (!raf && !isDocumentHidden() && activeInstances.length > 0) {
+      raf = requestAnimationFrame(step);
+    }
   }
   function step(t) {
     // memo on algorithm issue:
@@ -862,13 +863,20 @@ const engine = (() => {
   return play;
 })();
 
+function isDocumentHidden() {
+  return !!document && document.hidden;
+}
+
 function handleVisibilityChange() {
-  if (document.hidden) {
-    activeInstances.forEach(ins => ins.pause());
-    pausedInstances = activeInstances.slice(0);
-    anime.running = activeInstances = [];
-  } else {
-    pausedInstances.forEach(ins => ins.play());
+  if (isDocumentHidden()) {
+    // suspend ticks
+    raf = cancelAnimationFrame(raf);
+  } else { // is back to active tab
+    // first adjust animations to consider the time that ticks were suspended
+    activeInstances.forEach(
+      instance => instance._onDocumentVisibility()
+    );
+    engine();
   }
 }
 
@@ -1078,6 +1086,9 @@ function anime(params = {}) {
     setAnimationsProgress(instance.reversed ? instance.duration : 0);
   }
 
+  // internal method (for engine) to adjust animation timings before restoring engine ticks (rAF)
+  instance._onDocumentVisibility = resetTime;
+
   // Set Value helper
 
   instance.set = function(targets, properties) {
@@ -1106,7 +1117,7 @@ function anime(params = {}) {
     instance.paused = false;
     activeInstances.push(instance);
     resetTime();
-    if (!raf) engine();
+    engine();
   }
 
   instance.reverse = function() {
