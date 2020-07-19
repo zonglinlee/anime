@@ -846,22 +846,18 @@ const engine = (() => {
     // dangerous iteration over mutable `activeInstances`
     // (that collection may be updated from within callbacks of `tick`-ed animation instances)
     let activeInstancesLength = activeInstances.length;
-    if (activeInstancesLength) {
-      let i = 0;
-      while (i < activeInstancesLength) {
-        const activeInstance = activeInstances[i];
-        if (!activeInstance.paused) {
-          activeInstance.tick(t);
-          i++;
-        } else {
-          activeInstances.splice(i, 1);
-          activeInstancesLength--;
-        }
+    let i = 0;
+    while (i < activeInstancesLength) {
+      const activeInstance = activeInstances[i];
+      if (!activeInstance.paused) {
+        activeInstance.tick(t);
+        i++;
+      } else {
+        activeInstances.splice(i, 1);
+        activeInstancesLength--;
       }
-      play();
-    } else {
-      raf = cancelAnimationFrame(raf);
     }
+    raf = i > 0 ? requestAnimationFrame(step) : undefined;
   }
   return play;
 })();
