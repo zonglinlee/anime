@@ -834,9 +834,10 @@ function createNewInstance(params) {
 // Core
 
 let activeInstances = [];
-let raf;
 
 const engine = (() => {
+  let raf;
+
   function play() {
     if (!raf && !isDocumentHidden() && activeInstances.length > 0) {
       raf = requestAnimationFrame(step);
@@ -860,28 +861,28 @@ const engine = (() => {
     }
     raf = i > 0 ? requestAnimationFrame(step) : undefined;
   }
+
+  function handleVisibilityChange() {
+    if (isDocumentHidden()) {
+      // suspend ticks
+      raf = cancelAnimationFrame(raf);
+    } else { // is back to active tab
+      // first adjust animations to consider the time that ticks were suspended
+      activeInstances.forEach(
+        instance => instance ._onDocumentVisibility()
+      );
+      engine();
+    }
+  }
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  }
+
   return play;
 })();
 
 function isDocumentHidden() {
   return !!document && document.hidden;
-}
-
-function handleVisibilityChange() {
-  if (isDocumentHidden()) {
-    // suspend ticks
-    raf = cancelAnimationFrame(raf);
-  } else { // is back to active tab
-    // first adjust animations to consider the time that ticks were suspended
-    activeInstances.forEach(
-      instance => instance._onDocumentVisibility()
-    );
-    engine();
-  }
-}
-
-if (typeof document !== 'undefined') {
-  document.addEventListener('visibilitychange', handleVisibilityChange);
 }
 
 // Public Instance
