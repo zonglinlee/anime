@@ -842,6 +842,9 @@ const engine = (() => {
     raf = requestAnimationFrame(step);
   }
   function step(t) {
+    // memo on algorithm issue:
+    // dangerous iteration over mutable `activeInstances`
+    // (that collection may be updated from within callbacks of `tick`-ed animation instances)
     let activeInstancesLength = activeInstances.length;
     if (activeInstancesLength) {
       let i = 0;
@@ -849,14 +852,11 @@ const engine = (() => {
         const activeInstance = activeInstances[i];
         if (!activeInstance.paused) {
           activeInstance.tick(t);
+          i++;
         } else {
-          const instanceIndex = activeInstances.indexOf(activeInstance);
-          if (instanceIndex > -1) {
-            activeInstances.splice(instanceIndex, 1);
-            activeInstancesLength = activeInstances.length;
-          }
+          activeInstances.splice(i, 1);
+          activeInstancesLength--;
         }
-        i++;
       }
       play();
     } else {
