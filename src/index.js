@@ -839,7 +839,7 @@ const engine = (() => {
   let raf;
 
   function play() {
-    if (!raf && !isDocumentHidden() && activeInstances.length > 0) {
+    if (!raf && (!isDocumentHidden() || !anime.suspendWhenDocumentHidden) && activeInstances.length > 0) {
       raf = requestAnimationFrame(step);
     }
   }
@@ -863,6 +863,8 @@ const engine = (() => {
   }
 
   function handleVisibilityChange() {
+    if (!anime.suspendWhenDocumentHidden) return;
+
     if (isDocumentHidden()) {
       // suspend ticks
       raf = cancelAnimationFrame(raf);
@@ -1252,6 +1254,8 @@ function timeline(params = {}) {
 
 anime.version = '3.2.0';
 anime.speed = 1;
+// TODO:#review: naming, documentation
+anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;
 anime.remove = removeTargets;
 anime.get = getOriginalTargetValue;
