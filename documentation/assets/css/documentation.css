@@ -644,6 +644,7 @@ input.progress[value]::-webkit-slider-thumb {
   height: auto;
   padding-left: 38px;
   transition: opacity .5s ease;
+  white-space: nowrap
 }
 
 .demo.active .label {
