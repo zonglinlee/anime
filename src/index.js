@@ -836,50 +836,57 @@ function createNewInstance(params) {
 // Core
 
 let activeInstances = [];
-let pausedInstances = [];
-let raf;
 
 const engine = (() => {
-  function play() { 
-    raf = requestAnimationFrame(step);
-  }
-  function step(t) {
-    let activeInstancesLength = activeInstances.length;
-    if (activeInstancesLength) {
-      let i = 0;
-      while (i < activeInstancesLength) {
-        const activeInstance = activeInstances[i];
-        if (!activeInstance.paused) {
-          activeInstance.tick(t);
-        } else {
-          const instanceIndex = activeInstances.indexOf(activeInstance);
-          if (instanceIndex > -1) {
-            activeInstances.splice(instanceIndex, 1);
-            activeInstancesLength = activeInstances.length;
-          }
-        }
-        i++;
-      }
-      play();
-    } else {
-      raf = cancelAnimationFrame(raf);
+  let raf;
+
+  function play() {
+    if (!raf && (!isDocumentHidden() || !anime.suspendWhenDocumentHidden) && activeInstances.length > 0) {
+      raf = requestAnimationFrame(step);
     }
   }
+  function step(t) {
+    // memo on algorithm issue:
+    // dangerous iteration over mutable `activeInstances`
+    // (that collection may be updated from within callbacks of `tick`-ed animation instances)
+    let activeInstancesLength = activeInstances.length;
+    let i = 0;
+    while (i < activeInstancesLength) {
+      const activeInstance = activeInstances[i];
+      if (!activeInstance.paused) {
+        activeInstance.tick(t);
+        i++;
+      } else {
+        activeInstances.splice(i, 1);
+        activeInstancesLength--;
+      }
+    }
+    raf = i > 0 ? requestAnimationFrame(step) : undefined;
+  }
+
+  function handleVisibilityChange() {
+    if (!anime.suspendWhenDocumentHidden) return;
+
+    if (isDocumentHidden()) {
+      // suspend ticks
+      raf = cancelAnimationFrame(raf);
+    } else { // is back to active tab
+      // first adjust animations to consider the time that ticks were suspended
+      activeInstances.forEach(
+        instance => instance ._onDocumentVisibility()
+      );
+      engine();
+    }
+  }
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  }
+
   return play;
 })();
 
-function handleVisibilityChange() {
-  if (document.hidden) {
-    activeInstances.forEach(ins => ins.pause());
-    pausedInstances = activeInstances.slice(0);
-    anime.running = activeInstances = [];
-  } else {
-    pausedInstances.forEach(ins => ins.play());
-  }
-}
-
-if (typeof document !== 'undefined') {
-  document.addEventListener('visibilitychange', handleVisibilityChange);
+function isDocumentHidden() {
+  return !!document && document.hidden;
 }
 
 // Public Instance
@@ -1084,6 +1091,9 @@ function anime(params = {}) {
     setAnimationsProgress(instance.reversed ? instance.duration : 0);
   }
 
+  // internal method (for engine) to adjust animation timings before restoring engine ticks (rAF)
+  instance._onDocumentVisibility = resetTime;
+
   // Set Value helper
 
   instance.set = function(targets, properties) {
@@ -1112,7 +1122,7 @@ function anime(params = {}) {
     instance.paused = false;
     activeInstances.push(instance);
     resetTime();
-    if (!raf) engine();
+    engine();
   }
 
   instance.reverse = function() {
@@ -1246,6 +1256,8 @@ function timeline(params = {}) {
 
 anime.version = '3.2.0';
 anime.speed = 1;
+// TODO:#review: naming, documentation
+anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;
 anime.remove = removeTargets;
 anime.get = getOriginalTargetValue;
