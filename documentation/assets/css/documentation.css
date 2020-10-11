@@ -414,6 +414,10 @@ article {
   height: 100%;
 }
 
+.demo-content.vertical {
+  flex-direction: row;
+}
+
 .demo-title {
   position: absolute;
   top: 0;
