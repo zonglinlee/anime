@@ -1689,32 +1689,32 @@ anime({
   </div>
   <div class="demo-content range-value-staggering-demo">
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 0</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 0</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 1</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 1</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 2</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 2</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 3</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 3</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 4</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 4</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 5</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 5</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
@@ -3381,55 +3381,65 @@ anime({
         <td>in</td>
         <td>out</td>
         <td>in-out</td>
+        <td>out-in</td>
       </thead>
       <tr>
         <td><code>'easeInQuad'</code></td>
         <td><code>'easeOutQuad'</code></td>
         <td><code>'easeInOutQuad'</code></td>
+        <td><code>'easeOutInQuad'</code></td>
       </tr>
       <tr>
         <td><code>'easeInCubic'</code></td>
         <td><code>'easeOutCubic'</code></td>
         <td><code>'easeInOutCubic'</code></td>
+        <td><code>'easeOutInCubic'</code></td>
       </tr>
       <tr>
         <td><code>'easeInQuart'</code></td>
         <td><code>'easeOutQuart'</code></td>
         <td><code>'easeInOutQuart'</code></td>
+        <td><code>'easeOutInQuart'</code></td>
       </tr>
       <tr>
         <td><code>'easeInQuint'</code></td>
         <td><code>'easeOutQuint'</code></td>
         <td><code>'easeInOutQuint'</code></td>
+        <td><code>'easeOutInQuint'</code></td>
       </tr>
       <tr>
         <td><code>'easeInSine'</code></td>
         <td><code>'easeOutSine'</code></td>
         <td><code>'easeInOutSine'</code></td>
+        <td><code>'easeOutInSine'</code></td>
       </tr>
       <tr>
         <td><code>'easeInExpo'</code></td>
         <td><code>'easeOutExpo'</code></td>
         <td><code>'easeInOutExpo'</code></td>
+        <td><code>'easeOutInExpo'</code></td>
       </tr>
       <tr>
         <td><code>'easeInCirc'</code></td>
         <td><code>'easeOutCirc'</code></td>
         <td><code>'easeInOutCirc'</code></td>
+        <td><code>'easeOutInCirc'</code></td>
       </tr>
       <tr>
         <td><code>'easeInBack'</code></td>
         <td><code>'easeOutBack'</code></td>
         <td><code>'easeInOutBack'</code></td>
+        <td><code>'easeOutInBack'</code></td>
       <tr>
       <tr>
         <td><code>'easeInBounce'</code></td>
         <td><code>'easeOutBounce'</code></td>
         <td><code>'easeInOutBounce'</code></td>
+        <td><code>'easeOutInBounce'</code></td>
       <tr>
     </table>
   </div>
-  <div class="demo-content penner-equations-demo">
+  <div class="demo-content vertical penner-equations-demo">
 
   </div>
   <script>var pennerFunctions = function() {
@@ -3445,6 +3455,14 @@ var easingNames = [
   'easeInExpo',
   'easeInCirc',
   'easeInBack',
+  'easeOutQuad',
+  'easeOutCubic',
+  'easeOutQuart',
+  'easeOutQuint',
+  'easeOutSine',
+  'easeOutExpo',
+  'easeOutCirc',
+  'easeOutBack',
   'easeInBounce',
   'easeInOutQuad',
   'easeInOutCubic',
@@ -3455,28 +3473,29 @@ var easingNames = [
   'easeInOutCirc',
   'easeInOutBack',
   'easeInOutBounce',
-  'easeOutQuad',
-  'easeOutCubic',
-  'easeOutQuart',
-  'easeOutQuint',
-  'easeOutSine',
-  'easeOutExpo',
-  'easeOutCirc',
-  'easeOutBack',
-  'easeOutBounce'
+  'easeOutBounce',
+  'easeOutInQuad',
+  'easeOutInCubic',
+  'easeOutInQuart',
+  'easeOutInQuint',
+  'easeOutInSine',
+  'easeOutInExpo',
+  'easeOutInCirc',
+  'easeOutInBack',
+  'easeOutInBounce',
 ]
 
 function createEasingDemo(easing) {
   var demoEl = document.createElement('div');
-  demoEl.classList.add('stretched','square','el', 'easing-'+easing);
+  demoEl.classList.add('el', 'square', 'stretched', 'easing-'+easing);
   anime({
     targets: demoEl,
-    translateX: 250,
+    translateY: [50, -50],
     direction: 'alternate',
     loop: true,
-    delay: 200,
-    endDelay: 200,
-    duration: 2000,
+    delay: 100,
+    endDelay: 100,
+    duration: 1000,
     easing: easing
   });
   fragment.appendChild(demoEl);

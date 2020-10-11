@@ -414,6 +414,10 @@ article {
   height: 100%;
 }
 
+.demo-content.vertical {
+  flex-direction: row;
+}
+
 .demo-title {
   position: absolute;
   top: 0;
@@ -644,6 +648,7 @@ input.progress[value]::-webkit-slider-thumb {
   height: auto;
   padding-left: 38px;
   transition: opacity .5s ease;
+  white-space: nowrap
 }
 
 .demo.active .label {

@@ -246,6 +246,8 @@ const penner = (() => {
     eases['easeOut' + name] = (a, b) => t => 1 - easeIn(a, b)(1 - t);
     eases['easeInOut' + name] = (a, b) => t => t < 0.5 ? easeIn(a, b)(t * 2) / 2 : 
       1 - easeIn(a, b)(t * -2 + 2) / 2;
+    eases['easeOutIn' + name] = (a, b) => t => t < 0.5 ? (1 - easeIn(a, b)(1 - t * 2)) / 2 : 
+      (easeIn(a, b)(t * 2 - 1) + 1) / 2;
   });
 
   return eases;
