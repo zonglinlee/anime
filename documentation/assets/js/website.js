@@ -129,10 +129,8 @@ function resize() {
   var parentOffsetWidth = parentEl.offsetWidth;
   var ratio = parentOffsetWidth / elOffsetWidth;
   var invertedRatio = elOffsetWidth / parentOffsetWidth;
-  timeout = setTimeout(function() {
-    anime.set(el, {scale: ratio});
-    if (exception) anime.set(exception, {scale: invertedRatio});
-  }, 1);
+  anime.set(el, {scale: ratio});
+  if (exception) anime.set(exception, {scale: invertedRatio});
 }
 resize();
 window.addEventListener('resize', resize);
