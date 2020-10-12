@@ -3623,10 +3623,10 @@ anime({
         <td>out-in</td>
       </thead>
       <tr>
-        <td><code>'inElastic'</code></td>
-        <td><code>'outElastic'</code></td>
-        <td><code>'inOutElastic'</code></td>
-        <td><code>'OutInElastic'</code></td>
+        <td><code>'easeInElastic'</code></td>
+        <td><code>'easeOutElastic'</code></td>
+        <td><code>'easeInOutElastic'</code></td>
+        <td><code>'easeOutInElastic'</code></td>
       </tr>
     </table>
     <table>
@@ -3642,14 +3642,14 @@ anime({
         <td><code>1</code></td>
         <td><code>1</code></td>
         <td><code>10</code></td>
-        <td>Controls the overshoot of the curve</td>
+        <td>Controls the overshoot of the curve. The larger this number, the more overshoot there is.</td>
       </tr>
       <tr>
         <td>Period</td>
         <td><code>.5</code></td>
         <td><code>0.1</code></td>
         <td><code>2</code></td>
-        <td>Controls how many times the curve goes back and forth</td>
+        <td>Controls how many times the curve goes back and forth. The smaller this number, the more times the curtain goes back and forth.</td>
       </tr>
     </table>
   </div>
@@ -3674,12 +3674,27 @@ anime({
   <script>var elasticEasing = function() {
 /*DEMO*/
 anime({
-  targets: '.elastic-easing-demo .el',
+  targets: '.elastic-easing-demo .line:nth-child(1) .el',
   translateX: 270,
-  easing: function(el) {
-    return el.getAttribute('data-ease');
-  },
-  duration: 1000
+  easing: 'easeInElastic(1, .6)'
+});
+
+anime({
+  targets: '.elastic-easing-demo .line:nth-child(2) .el',
+  translateX: 270,
+  easing: 'easeOutElastic(1, .6)'
+});
+
+anime({
+  targets: '.elastic-easing-demo .line:nth-child(3) .el',
+  translateX: 270,
+  easing: 'easeInOutElastic(1, .6)'
+});
+
+anime({
+  targets: '.elastic-easing-demo .line:nth-child(4) .el',
+  translateX: 270,
+  easing: 'easeOutInElastic(1, .6)'
 });
 /*DEMO*/
 }
