@@ -568,8 +568,10 @@ function getParentSvg(pathEl, svgData) {
     viewBox: viewBox,
     x: viewBox[0] / 1,
     y: viewBox[1] / 1,
-    w: width / viewBox[2],
-    h: height / viewBox[3]
+    w: width,
+    h: height,
+    vW: viewBox[2],
+    vH: viewBox[3]
   }
 }
 
@@ -586,7 +588,7 @@ function getPath(path, percent) {
   }
 }
 
-function getPathProgress(path, progress) {
+function getPathProgress(path, progress, isPathTargetInsideSVG) {
   function point(offset = 0) {
     const l = progress + offset >= 1 ? progress + offset : 0;
     return path.el.getPointAtLength(l);
@@ -595,9 +597,11 @@ function getPathProgress(path, progress) {
   const p = point();
   const p0 = point(-1);
   const p1 = point(+1);
+  const scaleX = isPathTargetInsideSVG ? 1 : svg.w / svg.vW;
+  const scaleY = isPathTargetInsideSVG ? 1 : svg.h / svg.vH;
   switch (path.property) {
-    case 'x': return (p.x - svg.x) * svg.w;
-    case 'y': return (p.y - svg.y) * svg.h;
+    case 'x': return (p.x - svg.x) * scaleX;
+    case 'y': return (p.y - svg.y) * scaleY;
     case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
   }
 }
@@ -731,6 +735,7 @@ function normalizeTweens(prop, animatable) {
     tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
     tween.easing = parseEasings(tween.easing, tween.duration);
     tween.isPath = is.pth(tweenValue);
+    tween.isPathTargetInsideSVG = tween.isPath && is.svg(animatable.target);
     tween.isColor = is.col(tween.from.original);
     if (tween.isColor) tween.round = 1;
     previousTween = tween;
@@ -962,7 +967,7 @@ function anime(params = {}) {
         if (!tween.isPath) {
           value = fromNumber + (eased * (toNumber - fromNumber));
         } else {
-          value = getPathProgress(tween.value, eased * toNumber);
+          value = getPathProgress(tween.value, eased * toNumber, tween.isPathTargetInsideSVG);
         }
         if (round) {
           if (!(tween.isColor && n > 2)) {
