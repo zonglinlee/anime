@@ -1689,32 +1689,32 @@ anime({
   </div>
   <div class="demo-content range-value-staggering-demo">
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 0</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 0</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 1</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 1</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 2</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 2</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 3</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 3</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 4</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 4</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
     <div class="line">
-      <div class="label">rotate = ((360 - (-360)) / 5) * 5</div>
+      <div class="label">rotate = -360 + ((360 - (-360)) / 5) * 5</div>
       <div class="small square shadow"></div>
       <div class="small square el"></div>
     </div>
@@ -2663,21 +2663,7 @@ document.querySelector('.restart-demo .restart').onclick = animation.restart;
       <button class="reverse">Reverse</button>
     </div>
   </div>
-
-  <script>
-
-  var reverseAnimDemo = anime({
-    targets: '.reverse-anim-demo .el',
-    translateX: 270,
-    duration: 2000,
-    delay: function(el, i) { return i * 200; }
-  });
-
-  document.querySelector('.reverse-anim-demo .reverse').onclick = function() {
-    reverseAnimDemo.reverse();
-  }
-
-  var reverseAnim = function() {
+  <script>var reverseAnim = function() {
 /*DEMO*/
 var animation = anime({
   targets: '.reverse-anim-demo .el',
@@ -3395,55 +3381,65 @@ anime({
         <td>in</td>
         <td>out</td>
         <td>in-out</td>
+        <td>out-in</td>
       </thead>
       <tr>
         <td><code>'easeInQuad'</code></td>
         <td><code>'easeOutQuad'</code></td>
         <td><code>'easeInOutQuad'</code></td>
+        <td><code>'easeOutInQuad'</code></td>
       </tr>
       <tr>
         <td><code>'easeInCubic'</code></td>
         <td><code>'easeOutCubic'</code></td>
         <td><code>'easeInOutCubic'</code></td>
+        <td><code>'easeOutInCubic'</code></td>
       </tr>
       <tr>
         <td><code>'easeInQuart'</code></td>
         <td><code>'easeOutQuart'</code></td>
         <td><code>'easeInOutQuart'</code></td>
+        <td><code>'easeOutInQuart'</code></td>
       </tr>
       <tr>
         <td><code>'easeInQuint'</code></td>
         <td><code>'easeOutQuint'</code></td>
         <td><code>'easeInOutQuint'</code></td>
+        <td><code>'easeOutInQuint'</code></td>
       </tr>
       <tr>
         <td><code>'easeInSine'</code></td>
         <td><code>'easeOutSine'</code></td>
         <td><code>'easeInOutSine'</code></td>
+        <td><code>'easeOutInSine'</code></td>
       </tr>
       <tr>
         <td><code>'easeInExpo'</code></td>
         <td><code>'easeOutExpo'</code></td>
         <td><code>'easeInOutExpo'</code></td>
+        <td><code>'easeOutInExpo'</code></td>
       </tr>
       <tr>
         <td><code>'easeInCirc'</code></td>
         <td><code>'easeOutCirc'</code></td>
         <td><code>'easeInOutCirc'</code></td>
+        <td><code>'easeOutInCirc'</code></td>
       </tr>
       <tr>
         <td><code>'easeInBack'</code></td>
         <td><code>'easeOutBack'</code></td>
         <td><code>'easeInOutBack'</code></td>
+        <td><code>'easeOutInBack'</code></td>
       <tr>
       <tr>
         <td><code>'easeInBounce'</code></td>
         <td><code>'easeOutBounce'</code></td>
         <td><code>'easeInOutBounce'</code></td>
+        <td><code>'easeOutInBounce'</code></td>
       <tr>
     </table>
   </div>
-  <div class="demo-content penner-equations-demo">
+  <div class="demo-content vertical penner-equations-demo">
 
   </div>
   <script>var pennerFunctions = function() {
@@ -3459,6 +3455,14 @@ var easingNames = [
   'easeInExpo',
   'easeInCirc',
   'easeInBack',
+  'easeOutQuad',
+  'easeOutCubic',
+  'easeOutQuart',
+  'easeOutQuint',
+  'easeOutSine',
+  'easeOutExpo',
+  'easeOutCirc',
+  'easeOutBack',
   'easeInBounce',
   'easeInOutQuad',
   'easeInOutCubic',
@@ -3469,28 +3473,29 @@ var easingNames = [
   'easeInOutCirc',
   'easeInOutBack',
   'easeInOutBounce',
-  'easeOutQuad',
-  'easeOutCubic',
-  'easeOutQuart',
-  'easeOutQuint',
-  'easeOutSine',
-  'easeOutExpo',
-  'easeOutCirc',
-  'easeOutBack',
-  'easeOutBounce'
+  'easeOutBounce',
+  'easeOutInQuad',
+  'easeOutInCubic',
+  'easeOutInQuart',
+  'easeOutInQuint',
+  'easeOutInSine',
+  'easeOutInExpo',
+  'easeOutInCirc',
+  'easeOutInBack',
+  'easeOutInBounce',
 ]
 
 function createEasingDemo(easing) {
   var demoEl = document.createElement('div');
-  demoEl.classList.add('stretched','square','el', 'easing-'+easing);
+  demoEl.classList.add('el', 'square', 'stretched', 'easing-'+easing);
   anime({
     targets: demoEl,
-    translateX: 250,
+    translateY: [50, -50],
     direction: 'alternate',
     loop: true,
-    delay: 200,
-    endDelay: 200,
-    duration: 2000,
+    delay: 100,
+    endDelay: 100,
+    duration: 1000,
     easing: easing
   });
   fragment.appendChild(demoEl);
@@ -3615,11 +3620,13 @@ anime({
         <td>in</td>
         <td>out</td>
         <td>in-out</td>
+        <td>out-in</td>
       </thead>
       <tr>
         <td><code>'inElastic'</code></td>
         <td><code>'outElastic'</code></td>
         <td><code>'inOutElastic'</code></td>
+        <td><code>'OutInElastic'</code></td>
       </tr>
     </table>
     <table>
@@ -3659,6 +3666,10 @@ anime({
       <div class="small square shadow"></div>
       <div class="small square el" data-ease="easeInOutElastic(1, .6)"></div>
     </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el" data-ease="easeOutInElastic(1, .6)"></div>
+    </div>
   </div>
   <script>var elasticEasing = function() {
 /*DEMO*/
@@ -3669,7 +3680,7 @@ anime({
     return el.getAttribute('data-ease');
   },
   duration: 1000
-})
+});
 /*DEMO*/
 }
   </script>
@@ -4067,6 +4078,60 @@ anime({
   loop: true,
   update: function() {
     runninLogEl.innerHTML = 'there are currently ' + anime.running.length + ' instances running';
+  }
+});
+
+/*DEMO*/
+}
+  </script>
+</div>
+
+<div id="visibilitychange" class="demo">
+  <h3 class="demo-title">Suspend on visibility change</h3>
+  <div class="demo-description">
+    <pre><code>anime.suspendWhenDocumentHidden = false; // default true</code></pre>
+    <p>
+      By default all animations are paused when switching tabs, useful if you want to make sure the user sees everything and doesn't miss an important part of your animation.<br>
+      But you can choose to let the animation runs normally without any pause, like a video or an audio track that can continuously plays in the background.
+    </p>
+  </div>
+  <div class="demo-content visibilitychange-demo">
+    <div class="line">
+      <div class="label visibilitychange-log"></div>
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+    <div class="line controls">
+      <button class="toggle-documenthidden-true-button is-active">true</button>
+      <button class="toggle-documenthidden-false-button">false</button>
+    </div>
+  </div>
+  <script>
+var visibilitychangeLogButtons = document.querySelectorAll('.visibilitychange-demo button');
+
+function switchVisibilityChange() {
+  anime.suspendWhenDocumentHidden = this.innerHTML === 'true';
+  visibilitychangeLogButtons.forEach(function(el) {
+    el.classList.toggle('is-active');
+  });
+}
+
+visibilitychangeLogButtons.forEach(function(el) {
+  el.addEventListener('click', switchVisibilityChange, false);
+});
+    var visibilitychange = function() {
+/*DEMO*/
+var visibilitychangeLogEl = document.querySelector('.visibilitychange-log');
+
+anime({
+  targets: '.visibilitychange-demo .el',
+  translateX: 270,
+  direction: 'alternate',
+  easing: 'easeInOutQuad',
+  loop: true,
+  duration: 2000,
+  update: function(a) {
+    visibilitychangeLogEl.innerHTML = 'animation progress ' + Math.round(a.progress);
   }
 });
 
