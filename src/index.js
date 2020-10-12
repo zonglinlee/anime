@@ -56,11 +56,12 @@ const is = {
   str: a => typeof a === 'string',
   fnc: a => typeof a === 'function',
   und: a => typeof a === 'undefined',
+  nil: a => is.und(a) || a === null,
   hex: a => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a),
   rgb: a => /^rgb/.test(a),
   hsl: a => /^hsl/.test(a),
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
-  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes'
+  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes',
 }
 
 // Easings
@@ -246,6 +247,8 @@ const penner = (() => {
     eases['easeOut' + name] = (a, b) => t => 1 - easeIn(a, b)(1 - t);
     eases['easeInOut' + name] = (a, b) => t => t < 0.5 ? easeIn(a, b)(t * 2) / 2 : 
       1 - easeIn(a, b)(t * -2 + 2) / 2;
+    eases['easeOutIn' + name] = (a, b) => t => t < 0.5 ? (1 - easeIn(a, b)(1 - t * 2)) / 2 : 
+      (easeIn(a, b)(t * 2 - 1) + 1) / 2;
   });
 
   return eases;
@@ -428,7 +431,7 @@ function getCSSValue(el, prop, unit) {
 }
 
 function getAnimationType(el, prop) {
-  if (is.dom(el) && !is.inp(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
+  if (is.dom(el) && !is.inp(el) && (!is.nil(getAttribute(el, prop)) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
   if (el[prop] != null) return 'object';
@@ -566,8 +569,10 @@ function getParentSvg(pathEl, svgData) {
     viewBox: viewBox,
     x: viewBox[0] / 1,
     y: viewBox[1] / 1,
-    w: width / viewBox[2],
-    h: height / viewBox[3]
+    w: width,
+    h: height,
+    vW: viewBox[2],
+    vH: viewBox[3]
   }
 }
 
@@ -584,7 +589,7 @@ function getPath(path, percent) {
   }
 }
 
-function getPathProgress(path, progress) {
+function getPathProgress(path, progress, isPathTargetInsideSVG) {
   function point(offset = 0) {
     const l = progress + offset >= 1 ? progress + offset : 0;
     return path.el.getPointAtLength(l);
@@ -593,9 +598,11 @@ function getPathProgress(path, progress) {
   const p = point();
   const p0 = point(-1);
   const p1 = point(+1);
+  const scaleX = isPathTargetInsideSVG ? 1 : svg.w / svg.vW;
+  const scaleY = isPathTargetInsideSVG ? 1 : svg.h / svg.vH;
   switch (path.property) {
-    case 'x': return (p.x - svg.x) * svg.w;
-    case 'y': return (p.y - svg.y) * svg.h;
+    case 'x': return (p.x - svg.x) * scaleX;
+    case 'y': return (p.y - svg.y) * scaleY;
     case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
   }
 }
@@ -729,6 +736,7 @@ function normalizeTweens(prop, animatable) {
     tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
     tween.easing = parseEasings(tween.easing, tween.duration);
     tween.isPath = is.pth(tweenValue);
+    tween.isPathTargetInsideSVG = tween.isPath && is.svg(animatable.target);
     tween.isColor = is.col(tween.from.original);
     if (tween.isColor) tween.round = 1;
     previousTween = tween;
@@ -834,50 +842,57 @@ function createNewInstance(params) {
 // Core
 
 let activeInstances = [];
-let pausedInstances = [];
-let raf;
 
 const engine = (() => {
-  function play() { 
-    raf = requestAnimationFrame(step);
-  }
-  function step(t) {
-    let activeInstancesLength = activeInstances.length;
-    if (activeInstancesLength) {
-      let i = 0;
-      while (i < activeInstancesLength) {
-        const activeInstance = activeInstances[i];
-        if (!activeInstance.paused) {
-          activeInstance.tick(t);
-        } else {
-          const instanceIndex = activeInstances.indexOf(activeInstance);
-          if (instanceIndex > -1) {
-            activeInstances.splice(instanceIndex, 1);
-            activeInstancesLength = activeInstances.length;
-          }
-        }
-        i++;
-      }
-      play();
-    } else {
-      raf = cancelAnimationFrame(raf);
+  let raf;
+
+  function play() {
+    if (!raf && (!isDocumentHidden() || !anime.suspendWhenDocumentHidden) && activeInstances.length > 0) {
+      raf = requestAnimationFrame(step);
     }
   }
+  function step(t) {
+    // memo on algorithm issue:
+    // dangerous iteration over mutable `activeInstances`
+    // (that collection may be updated from within callbacks of `tick`-ed animation instances)
+    let activeInstancesLength = activeInstances.length;
+    let i = 0;
+    while (i < activeInstancesLength) {
+      const activeInstance = activeInstances[i];
+      if (!activeInstance.paused) {
+        activeInstance.tick(t);
+        i++;
+      } else {
+        activeInstances.splice(i, 1);
+        activeInstancesLength--;
+      }
+    }
+    raf = i > 0 ? requestAnimationFrame(step) : undefined;
+  }
+
+  function handleVisibilityChange() {
+    if (!anime.suspendWhenDocumentHidden) return;
+
+    if (isDocumentHidden()) {
+      // suspend ticks
+      raf = cancelAnimationFrame(raf);
+    } else { // is back to active tab
+      // first adjust animations to consider the time that ticks were suspended
+      activeInstances.forEach(
+        instance => instance ._onDocumentVisibility()
+      );
+      engine();
+    }
+  }
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+  }
+
   return play;
 })();
 
-function handleVisibilityChange() {
-  if (document.hidden) {
-    activeInstances.forEach(ins => ins.pause());
-    pausedInstances = activeInstances.slice(0);
-    anime.running = activeInstances = [];
-  } else {
-    pausedInstances.forEach(ins => ins.play());
-  }
-}
-
-if (typeof document !== 'undefined') {
-  document.addEventListener('visibilitychange', handleVisibilityChange);
+function isDocumentHidden() {
+  return !!document && document.hidden;
 }
 
 // Public Instance
@@ -953,7 +968,7 @@ function anime(params = {}) {
         if (!tween.isPath) {
           value = fromNumber + (eased * (toNumber - fromNumber));
         } else {
-          value = getPathProgress(tween.value, eased * toNumber);
+          value = getPathProgress(tween.value, eased * toNumber, tween.isPathTargetInsideSVG);
         }
         if (round) {
           if (!(tween.isColor && n > 2)) {
@@ -1082,6 +1097,9 @@ function anime(params = {}) {
     setAnimationsProgress(instance.reversed ? instance.duration : 0);
   }
 
+  // internal method (for engine) to adjust animation timings before restoring engine ticks (rAF)
+  instance._onDocumentVisibility = resetTime;
+
   // Set Value helper
 
   instance.set = function(targets, properties) {
@@ -1110,7 +1128,7 @@ function anime(params = {}) {
     instance.paused = false;
     activeInstances.push(instance);
     resetTime();
-    if (!raf) engine();
+    engine();
   }
 
   instance.reverse = function() {
@@ -1122,6 +1140,11 @@ function anime(params = {}) {
   instance.restart = function() {
     instance.reset();
     instance.play();
+  }
+
+  instance.remove = function(targets) {
+    const targetsArray = parseTargets(targets);
+    removeTargetsFromInstance(targetsArray, instance);
   }
 
   instance.reset();
@@ -1142,20 +1165,24 @@ function removeTargetsFromAnimations(targetsArray, animations) {
   }
 }
 
-function removeTargets(targets) {
+function removeTargetsFromInstance(targetsArray, instance) {
+  const animations = instance.animations;
+  const children = instance.children;
+  removeTargetsFromAnimations(targetsArray, animations);
+  for (let c = children.length; c--;) {
+    const child = children[c];
+    const childAnimations = child.animations;
+    removeTargetsFromAnimations(targetsArray, childAnimations);
+    if (!childAnimations.length && !child.children.length) children.splice(c, 1);
+  }
+  if (!animations.length && !children.length) instance.pause();
+}
+
+function removeTargetsFromActiveInstances(targets) {
   const targetsArray = parseTargets(targets);
   for (let i = activeInstances.length; i--;) {
     const instance = activeInstances[i];
-    const animations = instance.animations;
-    const children = instance.children;
-    removeTargetsFromAnimations(targetsArray, animations);
-    for (let c = children.length; c--;) {
-      const child = children[c];
-      const childAnimations = child.animations;
-      removeTargetsFromAnimations(targetsArray, childAnimations);
-      if (!childAnimations.length && !child.children.length) children.splice(c, 1);
-    }
-    if (!animations.length && !children.length) instance.pause();
+    removeTargetsFromInstance(targetsArray, instance);
   }
 }
 
@@ -1242,10 +1269,12 @@ function timeline(params = {}) {
   return tl;
 }
 
-anime.version = '3.2.0';
+anime.version = '3.2.1';
 anime.speed = 1;
+// TODO:#review: naming, documentation
+anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;
-anime.remove = removeTargets;
+anime.remove = removeTargetsFromActiveInstances;
 anime.get = getOriginalTargetValue;
 anime.set = setTargetsValue;
 anime.convertPx = convertPxToUnit;
