@@ -4077,6 +4077,60 @@ anime({
   </script>
 </div>
 
+<div id="visibilitychange" class="demo">
+  <h3 class="demo-title">Suspend on visibility change</h3>
+  <div class="demo-description">
+    <pre><code>anime.suspendWhenDocumentHidden = false; // default true</code></pre>
+    <p>
+      By default all animations are paused when switching tabs, useful if you want to make sure the user sees everything and doesn't miss an important part of your animation.<br>
+      But you can choose to let the animation runs normally without any pause, like a video or an audio track that can continuously plays in the background.
+    </p>
+  </div>
+  <div class="demo-content visibilitychange-demo">
+    <div class="line">
+      <div class="label visibilitychange-log"></div>
+      <div class="square shadow"></div>
+      <div class="square el"></div>
+    </div>
+    <div class="line controls">
+      <button class="toggle-documenthidden-true-button is-active">true</button>
+      <button class="toggle-documenthidden-false-button">false</button>
+    </div>
+  </div>
+  <script>
+var visibilitychangeLogButtons = document.querySelectorAll('.visibilitychange-demo button');
+
+function switchVisibilityChange() {
+  anime.suspendWhenDocumentHidden = this.innerHTML === 'true';
+  visibilitychangeLogButtons.forEach(function(el) {
+    el.classList.toggle('is-active');
+  });
+}
+
+visibilitychangeLogButtons.forEach(function(el) {
+  el.addEventListener('click', switchVisibilityChange, false);
+});
+    var visibilitychange = function() {
+/*DEMO*/
+var visibilitychangeLogEl = document.querySelector('.visibilitychange-log');
+
+anime({
+  targets: '.visibilitychange-demo .el',
+  translateX: 270,
+  direction: 'alternate',
+  easing: 'easeInOutQuad',
+  loop: true,
+  duration: 2000,
+  update: function(a) {
+    visibilitychangeLogEl.innerHTML = 'animation progress ' + Math.round(a.progress);
+  }
+});
+
+/*DEMO*/
+}
+  </script>
+</div>
+
 </article>
 <!-- -->
 
