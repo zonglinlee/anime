@@ -118,22 +118,29 @@ function isElementInViewport(el, inCB, outCB, rootMargin) {
 }
 
 function fitElementToParent(el, padding, exception) {
-var timeout = null;
-function resize() {
-  if (timeout) clearTimeout(timeout);
-  anime.set(el, {scale: 1});
-  if (exception) anime.set(exception, {scale: 1});
-  var pad = padding || 0;
-  var parentEl = el.parentNode;
-  var elOffsetWidth = el.offsetWidth - pad;
-  var parentOffsetWidth = parentEl.offsetWidth;
-  var ratio = parentOffsetWidth / elOffsetWidth;
-  var invertedRatio = elOffsetWidth / parentOffsetWidth;
-  anime.set(el, {scale: ratio});
-  if (exception) anime.set(exception, {scale: invertedRatio});
-}
-resize();
-window.addEventListener('resize', resize);
+  let windowWidth = 0;
+  let timeout = 0;
+  function resize() {
+    anime.set(el, {scale: 1});
+    if (exception) anime.set(exception, {scale: 1});
+    var pad = padding || 0;
+    var parentEl = el.parentNode;
+    var elOffsetWidth = el.offsetWidth - pad;
+    var parentOffsetWidth = parentEl.offsetWidth;
+    var ratio = parentOffsetWidth / elOffsetWidth;
+    var invertedRatio = elOffsetWidth / parentOffsetWidth;
+    anime.set(el, {scale: ratio});
+    if (exception) anime.set(exception, {scale: invertedRatio});
+  }
+  resize();
+  window.addEventListener('resize', function() {
+    if (window.innerWidth === windowWidth) return;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      windowWidth = window.innerWidth;
+      resize();
+    }, 15);
+  });
 }
 
 // Update date and version number
