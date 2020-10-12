@@ -3620,11 +3620,13 @@ anime({
         <td>in</td>
         <td>out</td>
         <td>in-out</td>
+        <td>out-in</td>
       </thead>
       <tr>
         <td><code>'inElastic'</code></td>
         <td><code>'outElastic'</code></td>
         <td><code>'inOutElastic'</code></td>
+        <td><code>'OutInElastic'</code></td>
       </tr>
     </table>
     <table>
@@ -3664,6 +3666,10 @@ anime({
       <div class="small square shadow"></div>
       <div class="small square el" data-ease="easeInOutElastic(1, .6)"></div>
     </div>
+    <div class="line">
+      <div class="small square shadow"></div>
+      <div class="small square el" data-ease="easeOutInElastic(1, .6)"></div>
+    </div>
   </div>
   <script>var elasticEasing = function() {
 /*DEMO*/
@@ -3674,7 +3680,7 @@ anime({
     return el.getAttribute('data-ease');
   },
   duration: 1000
-})
+});
 /*DEMO*/
 }
   </script>
