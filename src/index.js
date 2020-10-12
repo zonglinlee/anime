@@ -60,7 +60,8 @@ const is = {
   rgb: a => /^rgb/.test(a),
   hsl: a => /^hsl/.test(a),
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
-  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes'
+  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes',
+  nil: a => typeof a === 'undefined' || a === null
 }
 
 // Easings
@@ -430,7 +431,7 @@ function getCSSValue(el, prop, unit) {
 }
 
 function getAnimationType(el, prop) {
-  if (is.dom(el) && !is.inp(el) && (getAttribute(el, prop) || (is.svg(el) && el[prop]))) return 'attribute';
+  if (is.dom(el) && !is.inp(el) && (!is.nil(getAttribute(el, prop)) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
   if (el[prop] != null) return 'object';
