@@ -3798,7 +3798,10 @@ anime({
       Removes targets from a running animation or timeline.<br>
       The <code>targets</code> parameters accepts the same values as the <a class="color-targets" href="#cssSelector">targets</a> property.
     </p>
+    <p>Removes targets from all active animations.</p>
     <pre><code>anime.remove(targets)</code></pre>
+    <p>Removes targets from the a single animation or timeline.</p>
+    <pre><code>animation.remove(targets)</code></pre>
   </div>
   <div class="demo-content remove-demo">
     <div class="line">
@@ -3819,7 +3822,7 @@ anime({
   </div>
   <script>var remove = function() {
 /*DEMO*/
-anime({
+var animation = anime({
   targets: '.remove-demo .el',
   translateX: 270,
   direction: 'alternate',
@@ -3828,7 +3831,7 @@ anime({
 });
 
 document.querySelector('.remove-el-button').addEventListener('click', function() {
-  anime.remove('.remove-demo .line:nth-child(2) .el');
+  animation.remove('.remove-demo .line:nth-child(2) .el');
 });
 /*DEMO*/
 }

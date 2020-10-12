@@ -1142,6 +1142,11 @@ function anime(params = {}) {
     instance.play();
   }
 
+  instance.remove = function(targets) {
+    const targetsArray = parseTargets(targets);
+    removeTargetsFromInstance(targetsArray, instance);
+  }
+
   instance.reset();
 
   if (instance.autoplay) instance.play();
@@ -1160,20 +1165,24 @@ function removeTargetsFromAnimations(targetsArray, animations) {
   }
 }
 
-function removeTargets(targets) {
+function removeTargetsFromInstance(targetsArray, instance) {
+  const animations = instance.animations;
+  const children = instance.children;
+  removeTargetsFromAnimations(targetsArray, animations);
+  for (let c = children.length; c--;) {
+    const child = children[c];
+    const childAnimations = child.animations;
+    removeTargetsFromAnimations(targetsArray, childAnimations);
+    if (!childAnimations.length && !child.children.length) children.splice(c, 1);
+  }
+  if (!animations.length && !children.length) instance.pause();
+}
+
+function removeTargetsFromActiveInstances(targets) {
   const targetsArray = parseTargets(targets);
   for (let i = activeInstances.length; i--;) {
     const instance = activeInstances[i];
-    const animations = instance.animations;
-    const children = instance.children;
-    removeTargetsFromAnimations(targetsArray, animations);
-    for (let c = children.length; c--;) {
-      const child = children[c];
-      const childAnimations = child.animations;
-      removeTargetsFromAnimations(targetsArray, childAnimations);
-      if (!childAnimations.length && !child.children.length) children.splice(c, 1);
-    }
-    if (!animations.length && !children.length) instance.pause();
+    removeTargetsFromInstance(targetsArray, instance);
   }
 }
 
@@ -1265,7 +1274,7 @@ anime.speed = 1;
 // TODO:#review: naming, documentation
 anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;
-anime.remove = removeTargets;
+anime.remove = removeTargetsFromActiveInstances;
 anime.get = getOriginalTargetValue;
 anime.set = setTargetsValue;
 anime.convertPx = convertPxToUnit;
