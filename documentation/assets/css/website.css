@@ -534,7 +534,6 @@ a.feature-icon:hover img {
   bottom: 0;
   display: flex;
   align-items: center;
-  /*justify-content: space-between;*/
   width: 100%;
   height: 100%;
 }
@@ -932,9 +931,7 @@ a.feature-icon:hover img {
 }
 
 .sphere path {
-  /*opacity: .001;*/
   fill: rgba(37,36,35,.5);
-  /*fill: linear-gradient(-180deg, #FFFFFF 0%, #F6F4F2 35%, #F6F4F2 69%, #DDDAD7 100%);*/
   fill: url(#sphereGradient);
   stroke-width: 1px;
   stroke: #FF4847;
