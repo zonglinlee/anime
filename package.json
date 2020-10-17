@@ -1,38 +1,40 @@
 {
   "name": "animejs",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "homepage": "http://animejs.com",
   "repository": "juliangarnier/anime",
   "description": "JavaScript animation engine",
-  "umd:main": "lib/anime.min.js",
-  "module": "lib/anime.es.js",
-  "main": "lib/anime.js",
-  "umd:name": "anime",
+  "main": "lib/anime.umd.js",
+  "module": "lib/anime.esm.js",
   "license": "MIT",
   "author": "Julian Garnier <hello@julian.gr>",
-  "files": [
-    "lib"
-  ],
-  "scripts": {
-    "build": "node build"
-  },
   "bugs": {
     "url": "https://github.com/juliangarnier/anime/issues"
   },
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "anime",
+    "Anime.js",
     "animation",
-    "javascript",
+    "JavaScript",
     "CSS",
     "transforms",
     "SVG",
     "canvas"
   ],
   "devDependencies": {
-    "gzip-size": "^4.1.0",
-    "pretty-bytes": "^4.0.2",
-    "rollup": "^0.53.2",
-    "rollup-plugin-buble": "^0.18.0",
-    "uglify-js": "^3.3.4"
+    "jest": "^25.2.3",
+    "rollup": "^1.0.0",
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-json": "^4.1.0",
+    "rollup-plugin-notify": "^1.1.0",
+    "rollup-plugin-uglify": "^6.0.4"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "jest --watch"
   }
 }

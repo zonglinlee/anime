@@ -1,3 +1,5 @@
+import { version } from '../package.json';
+
 // Defaults
 
 const defaultInstanceSettings = {
@@ -1271,7 +1273,6 @@ function timeline(params = {}) {
 
 anime.version = '3.2.1';
 anime.speed = 1;
-// TODO:#review: naming, documentation
 anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;
 anime.remove = removeTargetsFromActiveInstances;
