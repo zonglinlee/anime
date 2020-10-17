@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png">
   <link href="../assets/css/animejs.css" rel="stylesheet">
   <link href="../assets/css/documentation.css" rel="stylesheet">
-  <!-- <script src="../../lib/anime.min.js"></script> -->
+  <!-- <script src="../../lib/anime.es5.min.js"></script> -->
   <style>
     .easings {
       display: flex;
@@ -344,7 +344,7 @@
   </div>
   <script type="module">
 
-  import anime from '../../src/index.js';
+  import anime from '../../lib/anime.esm.js';
 
   var pathEl = document.querySelector('.curve');
   var presetsEls = document.querySelectorAll('.options button');

@@ -37,21 +37,21 @@ or manual [download](https://github.com/juliangarnier/anime/archive/master.zip).
 #### ES6 modules
 
 ```javascript
-import anime from 'animejs/lib/anime.es.js';
+import anime from 'animejs/lib/anime.esm.js';
 ```
 
 #### CommonJS
 
 ```javascript
-const anime = require('animejs');
+const anime = require('anime');
 ```
 
-#### File include
+#### Classic ES5 file include
 
-Link `anime.min.js` in your HTML :
+Link `anime.es5.min.js` in your HTML :
 
 ```html
-<script src="anime.min.js"></script>
+<script src="anime.es5.min.js"></script>
 ```
 
 ### Hello world

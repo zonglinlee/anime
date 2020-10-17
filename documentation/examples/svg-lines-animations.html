@@ -65,9 +65,8 @@
       </g>
     </svg>
   </div>
-  <!-- <script type="module" src="../../src/index.js"></script> -->
   <script type="module">
-    import anime from "../../src/index.js";
+    import anime from '../../lib/anime.esm.js';
     anime({
       targets: ['line', 'circle', 'polygon', 'polyline', 'path', 'rect'],
       strokeDashoffset: [anime.setDashoffset, 0],
@@ -88,6 +87,5 @@
       loop: true
     });
   </script>
-  <!-- <script src="../assets/js/vendors/stats.min.js"></script> -->
 </body>
 </html>

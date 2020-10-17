@@ -1,4 +1,4 @@
-import anime from '../../../src/index.js';
+import anime from '../../../lib/anime.esm.js';
 
 function animePlayer(instance, containerEl) {
 
@@ -97,7 +97,6 @@ function animePlayer(instance, containerEl) {
 
   if (instance.children.length) {
     instance.children.forEach(function(child) {
-      console.log(child.timelineOffset);
       child.animations.forEach(function(anim) {
         createAnimationLog(anim, child.timelineOffset);
       });
