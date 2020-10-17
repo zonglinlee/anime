@@ -31,7 +31,7 @@ export default [
   // ES5 minified
   {
     input: inputPath,
-    output: { file: pkg.files + '/anime.min.js', format: 'iife', name: outputName, banner: banner },
+    output: { file: pkg.files + '/anime.es5.min.js', format: 'iife', name: outputName, banner: banner },
     plugins: [
       json(),
       buble({
