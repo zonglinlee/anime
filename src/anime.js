@@ -1024,7 +1024,7 @@ function timeline(params = {}) {
   return tl;
 }
 
-anime.version = '3.2.1';
+anime.version = version;
 anime.speed = 1;
 anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;
