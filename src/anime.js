@@ -15,8 +15,6 @@ import {
   is
 } from './helpers.js';
 
-// Easings
-
 import {
   parseEasings,
   penner,
