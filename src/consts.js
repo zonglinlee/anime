@@ -1,3 +1,5 @@
+// Default animation parameters
+
 const defaultInstanceSettings = {
   update: null,
   begin: null,
@@ -20,6 +22,8 @@ const defaultTweenSettings = {
   easing: 'easeOutElastic(1, .5)',
   round: 0
 }
+
+// Transforms
 
 const validTransforms = [
   'translateX',

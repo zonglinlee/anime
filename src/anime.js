@@ -12,7 +12,15 @@ import {
   minMax,
   stringContains,
   applyArguments,
-  is
+  is,
+  selectString,
+  filterArray,
+  flattenArray,
+  toArray,
+  arrayContains,
+  cloneObject,
+  replaceObjectProps,
+  mergeObjects
 } from './helpers.js';
 
 import {
@@ -21,118 +29,9 @@ import {
   spring,
 } from './easings.js';
 
-// Strings
-
-function selectString(str) {
-  try {
-    let nodes = document.querySelectorAll(str);
-    return nodes;
-  } catch(e) {
-    return;
-  }
-}
-
-// Arrays
-
-function filterArray(arr, callback) {
-  const len = arr.length;
-  const thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-  const result = [];
-  for (let i = 0; i < len; i++) {
-    if (i in arr) {
-      const val = arr[i];
-      if (callback.call(thisArg, val, i, arr)) {
-        result.push(val);
-      }
-    }
-  }
-  return result;
-}
-
-function flattenArray(arr) {
-  return arr.reduce((a, b) => a.concat(is.arr(b) ? flattenArray(b) : b), []);
-}
-
-function toArray(o) {
-  if (is.arr(o)) return o;
-  if (is.str(o)) o = selectString(o) || o;
-  if (o instanceof NodeList || o instanceof HTMLCollection) return [].slice.call(o);
-  return [o];
-}
-
-function arrayContains(arr, val) {
-  return arr.some(a => a === val);
-}
-
-// Objects
-
-function cloneObject(o) {
-  const clone = {};
-  for (let p in o) clone[p] = o[p];
-  return clone;
-}
-
-function replaceObjectProps(o1, o2) {
-  const o = cloneObject(o1);
-  for (let p in o1) o[p] = o2.hasOwnProperty(p) ? o2[p] : o1[p];
-  return o;
-}
-
-function mergeObjects(o1, o2) {
-  const o = cloneObject(o1);
-  for (let p in o2) o[p] = is.und(o1[p]) ? o2[p] : o1[p];
-  return o;
-}
-
-// Colors
-
-function rgbToRgba(rgbValue) {
-  const rgb = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g.exec(rgbValue);
-  return rgb ? `rgba(${rgb[1]},1)` : rgbValue;
-}
-
-function hexToRgba(hexValue) {
-  const rgx = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  const hex = hexValue.replace(rgx, (m, r, g, b) => r + r + g + g + b + b );
-  const rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  const r = parseInt(rgb[1], 16);
-  const g = parseInt(rgb[2], 16);
-  const b = parseInt(rgb[3], 16);
-  return `rgba(${r},${g},${b},1)`;
-}
-
-function hslToRgba(hslValue) {
-  const hsl = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(hslValue) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(hslValue);
-  const h = parseInt(hsl[1], 10) / 360;
-  const s = parseInt(hsl[2], 10) / 100;
-  const l = parseInt(hsl[3], 10) / 100;
-  const a = hsl[4] || 1;
-  function hue2rgb(p, q, t) {
-    if (t < 0) t += 1;
-    if (t > 1) t -= 1;
-    if (t < 1/6) return p + (q - p) * 6 * t;
-    if (t < 1/2) return q;
-    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-    return p;
-  }
-  let r, g, b;
-  if (s == 0) {
-    r = g = b = l;
-  } else {
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1/3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1/3);
-  }
-  return `rgba(${r * 255},${g * 255},${b * 255},${a})`;
-}
-
-function colorToRgb(val) {
-  if (is.rgb(val)) return rgbToRgba(val);
-  if (is.hex(val)) return hexToRgba(val);
-  if (is.hsl(val)) return hslToRgba(val);
-}
+import {
+  normalizeColorToRgba
+} from './colors.js';
 
 // Units
 
@@ -232,7 +131,7 @@ function getRelativeValue(to, from) {
 }
 
 function validateValue(val, unit) {
-  if (is.col(val)) return colorToRgb(val);
+  if (is.col(val)) return normalizeColorToRgba(val);
   if (/\s/g.test(val)) return val;
   const originalUnit = getUnit(val);
   const unitLess = originalUnit ? val.substr(0, val.length - originalUnit.length) : val;
