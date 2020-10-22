@@ -13,21 +13,21 @@ import {
 
 function rgbToRgba(rgbValue) {
   const rgb = rgbExecRgx.exec(rgbValue);
-  return rgb ? `rgba(${rgb[1]}, 1)` : rgbValue;
+  return rgb ? `rgba(${rgb[1]},1)` : rgbValue;
 }
 
-// HEX3 / HEX3A / HEX5 / HEX6A -> RGBA
+// HEX3 / HEX3A / HEX6 / HEX6A -> RGBA
 
 function hexToRgba(hexVal) {
-  const hexPrefix = '0x';
   const hexLength = hexVal.length;
   const isShort = hexLength === 4 || hexLength === 5;
   const isAlpha = hexLength === 5 || hexLength === 9;
+  const hexPrefix = '0x';
   const r = +(hexPrefix + hexVal[1] + hexVal[isShort ? 1 : 2]);
   const g = +(hexPrefix + hexVal[isShort ? 2 : 3] + hexVal[isShort ? 2 : 4]);
   const b = +(hexPrefix + hexVal[isShort ? 3 : 5] + hexVal[isShort ? 3 : 6]);
   const a = isAlpha ? +((hexPrefix + hexVal[isShort ? 4 : 7] + hexVal[isShort ? 4 : 8]) / 255).toFixed(3) : 1;
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
+  return `rgba(${r},${g},${b},${a})`;
 }
 
 // HSL / HSLA -> RGBA
@@ -57,7 +57,7 @@ function hslToRgba(hslVal) {
     g = hueToRgb(p, q, h);
     b = hueToRgb(p, q, h - 1 / 3);
   }
-  return `rgba(${round(r * 255)}, ${round(g * 255)}, ${round(b * 255)}, ${a})`;
+  return `rgba(${round(r * 255)},${round(g * 255)},${round(b * 255)},${a})`;
 }
 
 function normalizeColorToRgba(colorValue) {
