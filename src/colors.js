@@ -43,12 +43,12 @@ function hueToRgb(p, q, t) {
 
 function hslToRgba(hslVal) {
   const hsl = hslExecRgx.exec(hslVal) || hslaExecRgx.exec(hslVal);
-  const h = parseInt(hsl[1], 10) / 360;
-  const s = parseInt(hsl[2], 10) / 100;
-  const l = parseInt(hsl[3], 10) / 100;
+  const h = hsl[1] / 360;
+  const s = hsl[2] / 100;
+  const l = hsl[3] / 100;
   const a = hsl[4] || 1;
   let r, g, b;
-  if (s === 0) {
+  if (s == 0) {
     r = g = b = l;
   } else {
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s;

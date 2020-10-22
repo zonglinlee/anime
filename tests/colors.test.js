@@ -1,7 +1,7 @@
-const fromHex3 = '#F99';
-const fromHex3A = '#F999';
-const fromHex6 = '#FF9999';
-const fromHex6A = '#FF999999';
+const fromHex3 = '#f99';
+const fromHex3A = '#f999';
+const fromHex6 = '#ff9999';
+const fromHex6A = '#ff999999';
 const fromRgb = 'rgb(255, 153, 153)';
 const fromRgba = 'rgba(255, 153, 153, .6)';
 const fromHsl = 'hsl(0, 100%, 80%)';
