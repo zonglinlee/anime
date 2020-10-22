@@ -1,5 +1,3 @@
-import { version } from '../package.json';
-
 import {
   defaultInstanceSettings,
   defaultTweenSettings,
@@ -921,7 +919,7 @@ function timeline(params = {}) {
   return tl;
 }
 
-anime.version = version;
+anime.version = '__packageVersion__';
 anime.speed = 1;
 anime.suspendWhenDocumentHidden = true;
 anime.running = activeInstances;

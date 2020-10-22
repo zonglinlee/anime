@@ -1,3 +1,5 @@
+// Cache
+
 const cache = {
   CSS: {},
   springs: {}
