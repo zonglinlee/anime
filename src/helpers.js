@@ -1,6 +1,9 @@
 import {
   defaultInstanceSettings,
-  defaultTweenSettings
+  defaultTweenSettings,
+  hexTestRgx,
+  rgbTestRgx,
+  hslTestRgx,
 } from './consts.js';
 
 // Utility functions
@@ -17,6 +20,10 @@ function applyArguments(func, args) {
   return func.apply(null, args);
 }
 
+function round(val, base = 1) {
+  return Math.round(val * base) / base;
+}
+
 const is = {
   arr: a => Array.isArray(a),
   obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
@@ -28,9 +35,9 @@ const is = {
   fnc: a => typeof a === 'function',
   und: a => typeof a === 'undefined',
   nil: a => is.und(a) || a === null,
-  hex: a => /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a),
-  rgb: a => /^rgb/.test(a),
-  hsl: a => /^hsl/.test(a),
+  hex: a => hexTestRgx.test(a),
+  rgb: a => rgbTestRgx.test(a),
+  hsl: a => hslTestRgx.test(a),
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
   key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes',
 }
@@ -102,6 +109,7 @@ export {
   minMax,
   stringContains,
   applyArguments,
+  round,
   is,
   selectString,
   filterArray,

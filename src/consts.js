@@ -45,8 +45,25 @@ const validTransforms = [
   'matrix3d'
 ];
 
+// Regex
+
+
+const hexTestRgx = /(^#([0-9A-F]{4}){1,2}$)|(^#([0-9A-F]{3}){1,2}$)/i;
+const rgbTestRgx = /^rgb/;
+const hslTestRgx = /^hsl/;
+const rgbExecRgx = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/i;
+const hslExecRgx = /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/i;
+const hslaExecRgx = /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/i;
+
+
 export {
   defaultInstanceSettings,
   defaultTweenSettings,
-  validTransforms
+  validTransforms,
+  hexTestRgx,
+  rgbTestRgx,
+  hslTestRgx,
+  rgbExecRgx,
+  hslExecRgx,
+  hslaExecRgx
 }
