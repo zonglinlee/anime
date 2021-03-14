@@ -4,7 +4,7 @@ import {
   validTransforms
 } from './consts.js';
 
-import cache from './cache.js';
+import { cache } from './cache.js';
 
 import {
   minMax,

@@ -1,6 +1,6 @@
 // Default animation parameters
 
-const defaultInstanceSettings = {
+export const defaultInstanceSettings = {
   update: null,
   begin: null,
   loopBegin: null,
@@ -15,7 +15,7 @@ const defaultInstanceSettings = {
   timelineOffset: 0,
 }
 
-const defaultTweenSettings = {
+export const defaultTweenSettings = {
   duration: 1000,
   delay: 0,
   endDelay: 0,
@@ -25,7 +25,7 @@ const defaultTweenSettings = {
 
 // Transforms
 
-const validTransforms = [
+export const validTransforms = [
   'translateX',
   'translateY',
   'translateZ',
@@ -47,23 +47,10 @@ const validTransforms = [
 
 // Regex
 
-const hexTestRgx = /(^#([\da-f]{3}){1,2}$)|(^#([\da-f]{4}){1,2}$)/i;
-const rgbTestRgx = /^rgb/i;
-const hslTestRgx = /^hsl/i;
-const rgbExecRgx = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/i;
-const hslExecRgx = /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/i;
-const hslaExecRgx = /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/i;
-const easingsExecRgx = /\(([^)]+)\)/;
-
-export {
-  defaultInstanceSettings,
-  defaultTweenSettings,
-  validTransforms,
-  hexTestRgx,
-  rgbTestRgx,
-  hslTestRgx,
-  rgbExecRgx,
-  hslExecRgx,
-  hslaExecRgx,
-  easingsExecRgx,
-}
+export const hexTestRgx = /(^#([\da-f]{3}){1,2}$)|(^#([\da-f]{4}){1,2}$)/i;
+export const rgbTestRgx = /^rgb/i;
+export const hslTestRgx = /^hsl/i;
+export const rgbExecRgx = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/i;
+export const hslExecRgx = /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/i;
+export const hslaExecRgx = /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/i;
+export const easingsExecRgx = /\(([^)]+)\)/;

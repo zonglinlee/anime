@@ -8,7 +8,7 @@ import {
   applyArguments
 } from './helpers.js';
 
-import cache from './cache.js';
+import { cache } from './cache.js';
 
 // Easings
 

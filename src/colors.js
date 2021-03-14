@@ -60,12 +60,8 @@ function hslToRgba(hslValue) {
   return `rgba(${round(r * 255)},${round(g * 255)},${round(b * 255)},${a})`;
 }
 
-function normalizeColorToRgba(colorValue) {
+export function normalizeColorToRgba(colorValue) {
   if (is.rgb(colorValue)) return rgbToRgba(colorValue);
   if (is.hex(colorValue)) return hexToRgba(colorValue);
   if (is.hsl(colorValue)) return hslToRgba(colorValue);
-}
-
-export {
-  normalizeColorToRgba
 }

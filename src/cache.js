@@ -1,8 +1,6 @@
 // Cache
 
-const cache = {
+export const cache = {
   CSS: {},
   springs: {}
 }
-
-export default cache;
