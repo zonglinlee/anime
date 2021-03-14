@@ -111,6 +111,8 @@ function validateValue(val, unit) {
   return unitLess;
 }
 
+// SVG
+
 // getTotalLength() equivalent for circle, rect, polyline, polygon and line shapes
 // adapted from https://gist.github.com/SebLambla/3e0550c496c236709744
 
