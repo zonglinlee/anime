@@ -36,6 +36,7 @@ import {
 import {
   getUnit,
   getTransformUnit,
+  convertPxToUnit,
 } from './units.js';
 
 // Values
@@ -43,24 +44,6 @@ import {
 function getFunctionValue(val, animatable) {
   if (!is.fnc(val)) return val;
   return val(animatable.target, animatable.id, animatable.total);
-}
-
-function convertPxToUnit(el, value, unit) {
-  const valueUnit = getUnit(value);
-  if (arrayContains([unit, 'deg', 'rad', 'turn'], valueUnit)) return value;
-  const cached = cache.CSS[value + unit];
-  if (!is.und(cached)) return cached;
-  const baseline = 100;
-  const tempEl = document.createElement(el.tagName);
-  const parentEl = (el.parentNode && (el.parentNode !== document)) ? el.parentNode : document.body;
-  parentEl.appendChild(tempEl);
-  tempEl.style.position = 'absolute';
-  tempEl.style.width = baseline + unit;
-  const factor = baseline / tempEl.offsetWidth;
-  parentEl.removeChild(tempEl);
-  const convertedUnit = factor * parseFloat(value);
-  cache.CSS[value + unit] = convertedUnit;
-  return convertedUnit;
 }
 
 function getCSSValue(el, prop, unit) {
