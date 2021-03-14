@@ -1,4 +1,8 @@
 import {
+  easingsExecRgx
+} from './consts.js';
+
+import {
   minMax,
   is,
   applyArguments
@@ -9,19 +13,19 @@ import cache from './cache.js';
 // Easings
 
 function parseEasingParameters(string) {
-  const match = /\(([^)]+)\)/.exec(string);
+  const match = easingsExecRgx.exec(string);
   return match ? match[1].split(',').map(p => parseFloat(p)) : [];
 }
 
 // Spring solver inspired by Webkit Copyright © 2016 Apple Inc. All rights reserved. https://webkit.org/demos/spring/spring.js
 
 function spring(string, duration) {
-
   const params = parseEasingParameters(string);
   const mass = minMax(is.und(params[0]) ? 1 : params[0], .1, 100);
   const stiffness = minMax(is.und(params[1]) ? 100 : params[1], .1, 100);
   const damping = minMax(is.und(params[2]) ? 10 : params[2], .1, 100);
   const velocity =  minMax(is.und(params[3]) ? 0 : params[3], .1, 100);
+
   const w0 = Math.sqrt(stiffness / mass);
   const zeta = damping / (2 * Math.sqrt(stiffness * mass));
   const wd = zeta < 1 ? w0 * Math.sqrt(1 - zeta * zeta) : 0;
@@ -60,7 +64,6 @@ function spring(string, duration) {
   }
 
   return duration ? solver : getDuration;
-
 }
 
 // Basic steps easing implementation https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function
@@ -72,7 +75,6 @@ function steps(steps = 10) {
 // BezierEasing https://github.com/gre/bezier-easing
 
 const bezier = (() => {
-
   const kSplineTableSize = 11;
   const kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
 
@@ -104,7 +106,6 @@ const bezier = (() => {
   }
 
   function bezier(mX1, mY1, mX2, mY2) {
-
     if (!(0 <= mX1 && mX1 <= 1 && 0 <= mX2 && mX2 <= 1)) return;
     let sampleValues = new Float32Array(kSplineTableSize);
 
@@ -115,7 +116,6 @@ const bezier = (() => {
     }
 
     function getTForX(aX) {
-
       let intervalStart = 0;
       let currentSample = 1;
       const lastSample = kSplineTableSize - 1;
@@ -137,7 +137,6 @@ const bezier = (() => {
       } else {
         return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
       }
-
     }
 
     return x => {
@@ -145,17 +144,13 @@ const bezier = (() => {
       if (x === 0 || x === 1) return x;
       return calcBezier(getTForX(x), mY1, mY2);
     }
-
   }
 
   return bezier;
-
 })();
 
 const penner = (() => {
-
   // Based on jQuery UI's implemenation of easing equations from Robert Penner (http://www.robertpenner.com/easing)
-
   const eases = { linear: () => t => t };
 
   const functionEasings = {
@@ -187,14 +182,11 @@ const penner = (() => {
     const easeIn = functionEasings[name];
     eases['easeIn' + name] = easeIn;
     eases['easeOut' + name] = (a, b) => t => 1 - easeIn(a, b)(1 - t);
-    eases['easeInOut' + name] = (a, b) => t => t < 0.5 ? easeIn(a, b)(t * 2) / 2 : 
-      1 - easeIn(a, b)(t * -2 + 2) / 2;
-    eases['easeOutIn' + name] = (a, b) => t => t < 0.5 ? (1 - easeIn(a, b)(1 - t * 2)) / 2 : 
-      (easeIn(a, b)(t * 2 - 1) + 1) / 2;
+    eases['easeInOut' + name] = (a, b) => t => t < 0.5 ? easeIn(a, b)(t * 2) / 2 : 1 - easeIn(a, b)(t * -2 + 2) / 2;
+    eases['easeOutIn' + name] = (a, b) => t => t < 0.5 ? (1 - easeIn(a, b)(1 - t * 2)) / 2 : (easeIn(a, b)(t * 2 - 1) + 1) / 2;
   });
 
   return eases;
-
 })();
 
 function parseEasings(easing, duration) {

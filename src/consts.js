@@ -12,7 +12,7 @@ const defaultInstanceSettings = {
   loop: 1,
   direction: 'normal',
   autoplay: true,
-  timelineOffset: 0
+  timelineOffset: 0,
 }
 
 const defaultTweenSettings = {
@@ -20,7 +20,7 @@ const defaultTweenSettings = {
   delay: 0,
   endDelay: 0,
   easing: 'easeOutElastic(1, .5)',
-  round: 0
+  round: 0,
 }
 
 // Transforms
@@ -42,7 +42,7 @@ const validTransforms = [
   'skewY',
   'perspective',
   'matrix',
-  'matrix3d'
+  'matrix3d',
 ];
 
 // Regex
@@ -53,6 +53,7 @@ const hslTestRgx = /^hsl/i;
 const rgbExecRgx = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/i;
 const hslExecRgx = /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*\)/i;
 const hslaExecRgx = /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/i;
+const easingsExecRgx = /\(([^)]+)\)/;
 
 export {
   defaultInstanceSettings,
@@ -63,5 +64,6 @@ export {
   hslTestRgx,
   rgbExecRgx,
   hslExecRgx,
-  hslaExecRgx
+  hslaExecRgx,
+  easingsExecRgx,
 }
