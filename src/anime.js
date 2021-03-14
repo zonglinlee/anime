@@ -1,10 +1,12 @@
 import {
+  cache,
+} from './cache.js';
+
+import {
   defaultInstanceSettings,
   defaultTweenSettings,
-  validTransforms
+  validTransforms,
 } from './consts.js';
-
-import { cache } from './cache.js';
 
 import {
   minMax,
@@ -18,7 +20,7 @@ import {
   arrayContains,
   cloneObject,
   replaceObjectProps,
-  mergeObjects
+  mergeObjects,
 } from './helpers.js';
 
 import {
@@ -28,30 +30,19 @@ import {
 } from './easings.js';
 
 import {
-  normalizeColorToRgba
+  normalizeColorToRgba,
 } from './colors.js';
 
-// Units
-
-function getUnit(val) {
-  const split = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(val);
-  if (split) return split[1];
-}
-
-function getTransformUnit(propName) {
-  if (stringContains(propName, 'translate') || propName === 'perspective') return 'px';
-  if (stringContains(propName, 'rotate') || stringContains(propName, 'skew')) return 'deg';
-}
+import {
+  getUnit,
+  getTransformUnit,
+} from './units.js';
 
 // Values
 
 function getFunctionValue(val, animatable) {
   if (!is.fnc(val)) return val;
   return val(animatable.target, animatable.id, animatable.total);
-}
-
-function getAttribute(el, prop) {
-  return el.getAttribute(prop);
 }
 
 function convertPxToUnit(el, value, unit) {
@@ -81,7 +72,7 @@ function getCSSValue(el, prop, unit) {
 }
 
 function getAnimationType(el, prop) {
-  if (is.dom(el) && !is.inp(el) && (!is.nil(getAttribute(el, prop)) || (is.svg(el) && el[prop]))) return 'attribute';
+  if (is.dom(el) && !is.inp(el) && (!is.nil(el.getAttribute(prop)) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
   if (el[prop] != null) return 'object';
@@ -110,7 +101,7 @@ function getOriginalTargetValue(target, propName, unit, animatable) {
   switch (getAnimationType(target, propName)) {
     case 'transform': return getTransformValue(target, propName, animatable, unit);
     case 'css': return getCSSValue(target, propName, unit);
-    case 'attribute': return getAttribute(target, propName);
+    case 'attribute': return target.getAttribute(propName);
     default: return target[propName] || 0;
   }
 }
@@ -145,17 +136,17 @@ function getDistance(p1, p2) {
 }
 
 function getCircleLength(el) {
-  return Math.PI * 2 * getAttribute(el, 'r');
+  return Math.PI * 2 * el.getAttribute('r');
 }
 
 function getRectLength(el) {
-  return (getAttribute(el, 'width') * 2) + (getAttribute(el, 'height') * 2);
+  return (el.getAttribute('width') * 2) + (el.getAttribute('height') * 2);
 }
 
 function getLineLength(el) {
   return getDistance(
-    {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')}, 
-    {x: getAttribute(el, 'x2'), y: getAttribute(el, 'y2')}
+    {x: el.getAttribute('x1'), y: el.getAttribute('y1')}, 
+    {x: el.getAttribute('x2'), y: el.getAttribute('y2')}
   );
 }
 
@@ -210,7 +201,7 @@ function getParentSvg(pathEl, svgData) {
   const svg = svgData || {};
   const parentSvgEl = svg.el || getParentSvgEl(pathEl);
   const rect = parentSvgEl.getBoundingClientRect();
-  const viewBoxAttr = getAttribute(parentSvgEl, 'viewBox');
+  const viewBoxAttr = parentSvgEl.getAttribute('viewBox');
   const width = rect.width;
   const height = rect.height;
   const viewBox = svg.viewBox || (viewBoxAttr ? viewBoxAttr.split(' ') : [0, 0, width, height]);
