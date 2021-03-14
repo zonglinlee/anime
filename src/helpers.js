@@ -6,25 +6,36 @@ import {
   hslTestRgx,
 } from './consts.js';
 
-// Utility functions
+// Strings
 
-function minMax(val, min, max) {
-  return Math.min(Math.max(val, min), max);
+export function selectString(str) {
+  try {
+    let nodes = document.querySelectorAll(str);
+    return nodes;
+  } catch(e) {
+    return;
+  }
 }
 
-function stringContains(str, text) {
+export function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
 
-function applyArguments(func, args) {
+// Utility functions
+
+export function minMax(val, min, max) {
+  return Math.min(Math.max(val, min), max);
+}
+
+export function applyArguments(func, args) {
   return func.apply(null, args);
 }
 
-function round(val, base = 1) {
+export function round(val, base = 1) {
   return Math.round(val * base) / base;
 }
 
-const is = {
+export const is = {
   arr: a => Array.isArray(a),
   obj: a => stringContains(Object.prototype.toString.call(a), 'Object'),
   pth: a => is.obj(a) && a.hasOwnProperty('totalLength'),
@@ -42,20 +53,9 @@ const is = {
   key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes',
 }
 
-// Strings
-
-function selectString(str) {
-  try {
-    let nodes = document.querySelectorAll(str);
-    return nodes;
-  } catch(e) {
-    return;
-  }
-}
-
 // Arrays
 
-function filterArray(arr, callback) {
+export function filterArray(arr, callback) {
   const len = arr.length;
   const thisArg = arguments.length >= 2 ? arguments[1] : void 0;
   const result = [];
@@ -70,53 +70,37 @@ function filterArray(arr, callback) {
   return result;
 }
 
-function flattenArray(arr) {
+export function flattenArray(arr) {
   return arr.reduce((a, b) => a.concat(is.arr(b) ? flattenArray(b) : b), []);
 }
 
-function toArray(o) {
+export function toArray(o) {
   if (is.arr(o)) return o;
   if (is.str(o)) o = selectString(o) || o;
   if (o instanceof NodeList || o instanceof HTMLCollection) return [].slice.call(o);
   return [o];
 }
 
-function arrayContains(arr, val) {
+export function arrayContains(arr, val) {
   return arr.some(a => a === val);
 }
 
 // Objects
 
-function cloneObject(o) {
+export function cloneObject(o) {
   const clone = {};
   for (let p in o) clone[p] = o[p];
   return clone;
 }
 
-function replaceObjectProps(o1, o2) {
+export function replaceObjectProps(o1, o2) {
   const o = cloneObject(o1);
   for (let p in o1) o[p] = o2.hasOwnProperty(p) ? o2[p] : o1[p];
   return o;
 }
 
-function mergeObjects(o1, o2) {
+export function mergeObjects(o1, o2) {
   const o = cloneObject(o1);
   for (let p in o2) o[p] = is.und(o1[p]) ? o2[p] : o1[p];
   return o;
-}
-
-export {
-  minMax,
-  stringContains,
-  applyArguments,
-  round,
-  is,
-  selectString,
-  filterArray,
-  flattenArray,
-  toArray,
-  arrayContains,
-  cloneObject,
-  replaceObjectProps,
-  mergeObjects
 }
