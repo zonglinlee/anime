@@ -55,3 +55,8 @@ export const hslExecRgx = /hsl\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*
 export const hslaExecRgx = /hsla\(\s*(-?\d+|-?\d*.\d+)\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)%\s*,\s*(-?\d+|-?\d*.\d+)\s*\)/i;
 export const easingsExecRgx = /\(([^)]+)\)/;
 export const unitsExecRgx = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/;
+export const lowerCaseRgx = /([a-z])([A-Z])/g;
+export const transformsExecRgx = /(\w+)\(([^)]*)\)/g;
+export const relativeValuesExecRgx = /^(\*=|\+=|-=)/;
+export const whiteSpaceTestRgx = /\s/g;
+

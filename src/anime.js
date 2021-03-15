@@ -39,77 +39,14 @@ import {
   convertPxToUnit,
 } from './units.js';
 
-// Values
-
-function getFunctionValue(val, animatable) {
-  if (!is.fnc(val)) return val;
-  return val(animatable.target, animatable.id, animatable.total);
-}
-
-function getCSSValue(el, prop, unit) {
-  if (prop in el.style) {
-    const uppercasePropName = prop.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-    const value = el.style[prop] || getComputedStyle(el).getPropertyValue(uppercasePropName) || '0';
-    return unit ? convertPxToUnit(el, value, unit) : value;
-  }
-}
-
-function getAnimationType(el, prop) {
-  if (is.dom(el) && !is.inp(el) && (!is.nil(el.getAttribute(prop)) || (is.svg(el) && el[prop]))) return 'attribute';
-  if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
-  if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
-  if (el[prop] != null) return 'object';
-}
-
-function getElementTransforms(el) {
-  if (!is.dom(el)) return;
-  const str = el.style.transform || '';
-  const reg  = /(\w+)\(([^)]*)\)/g;
-  const transforms = new Map();
-  let m; while (m = reg.exec(str)) transforms.set(m[1], m[2]);
-  return transforms;
-}
-
-function getTransformValue(el, propName, animatable, unit) {
-  const defaultVal = stringContains(propName, 'scale') ? 1 : 0 + getTransformUnit(propName);
-  const value = getElementTransforms(el).get(propName) || defaultVal;
-  if (animatable) {
-    animatable.transforms.list.set(propName, value);
-    animatable.transforms['last'] = propName;
-  }
-  return unit ? convertPxToUnit(el, value, unit) : value;
-}
-
-function getOriginalTargetValue(target, propName, unit, animatable) {
-  switch (getAnimationType(target, propName)) {
-    case 'transform': return getTransformValue(target, propName, animatable, unit);
-    case 'css': return getCSSValue(target, propName, unit);
-    case 'attribute': return target.getAttribute(propName);
-    default: return target[propName] || 0;
-  }
-}
-
-function getRelativeValue(to, from) {
-  const operator = /^(\*=|\+=|-=)/.exec(to);
-  if (!operator) return to;
-  const u = getUnit(to) || 0;
-  const x = parseFloat(from);
-  const y = parseFloat(to.replace(operator[0], ''));
-  switch (operator[0][0]) {
-    case '+': return x + y + u;
-    case '-': return x - y + u;
-    case '*': return x * y + u;
-  }
-}
-
-function validateValue(val, unit) {
-  if (is.col(val)) return normalizeColorToRgba(val);
-  if (/\s/g.test(val)) return val;
-  const originalUnit = getUnit(val);
-  const unitLess = originalUnit ? val.substr(0, val.length - originalUnit.length) : val;
-  if (unit) return unitLess + unit;
-  return unitLess;
-}
+import {
+  getOriginalTargetValue,
+  getElementTransforms,
+  getAnimationType,
+  getFunctionValue,
+  validateValue,
+  getRelativeValue,
+} from './values.js';
 
 // SVG
 
