@@ -18,6 +18,10 @@ import {
   validTransforms,
 } from './consts.js';
 
+import {
+  normalizeColorToRgba
+} from './colors.js';
+
 export function getFunctionValue(val, animatable) {
   if (!is.fnc(val)) return val;
   return val(animatable.target, animatable.id, animatable.total);
@@ -34,6 +38,7 @@ function getCSSValue(el, prop, unit) {
 export function getAnimationType(el, prop) {
   if (is.dom(el) && !is.inp(el) && (!is.nil(el.getAttribute(prop)) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
+  console.log(prop, getCSSValue(el, prop));
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
   if (el[prop] != null) return 'object';
 }

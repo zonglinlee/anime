@@ -9,6 +9,12 @@ beforeEach(() => {
         height: 0px;
         font-size: 16px;
       }
+
+      .css-properties {
+        width: 150px;
+        height: 300px;
+        font-size: 20px;
+      }
    </style>
   `;
 
@@ -18,9 +24,11 @@ beforeEach(() => {
     <div class="target-class with-width-attribute" width="200" data-index="1"></div>
     <div class="target-class with-inline-styles" data-index="2" style="width: 200px"></div>
     <div class="target-class" data-index="3"></div>
+    <div class="css-properties"></div>
     <svg id="svg-element" width="100" height="100" viewBox="0 0 100 100">
-      <path stroke="#000000" stroke-width="2" d="M80 20c-60 0 0 60-60 60"/>
+      <path stroke="#000000" stroke-width="0" d="M80 20c-60 0 0 60-60 60"/>
     </svg>
+    <input type="number" id="input-number" name="Input number test" min="0" max="100" value="0">
   `;
 
   // Object

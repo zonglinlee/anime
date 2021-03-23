@@ -44,4 +44,45 @@ describe('Values', () => {
     expect(animation.animations[2].tweens[0].endDelay).toBe(404);
     expect(animation.animations[3].tweens[0].endDelay).toBe(604);
   });
+
+  test('CSS computed values', () => {
+    const animation = anime({
+      targets: '.css-properties',
+      width: 100,
+      fontSize: 10,
+    });
+
+    expect(animation.animations[0].tweens[0].from.original).toBe('150px');
+    expect(animation.animations[1].tweens[0].from.original).toBe('20px');
+  });
+
+  test('CSS inline values', () => {
+    const animation = anime({
+      targets: '.with-inline-styles',
+      width: 100,
+    });
+
+    expect(animation.animations[0].tweens[0].from.original).toBe('200px');
+  });
+
+  test('SVG Attribute values', () => {
+    const animation = anime({
+      targets: '#svg-element path',
+      stroke: '#FFFFFF',
+      d: 'M80 20c-30 0 0 30-30 30'
+    });
+
+    expect(animation.animations[0].type).toBe('attribute');
+    expect(animation.animations[1].type).toBe('attribute');
+  });
+
+  test('Input values', () => {
+    const animation = anime({
+      targets: '#input-number',
+      value: 50,
+    });
+
+    expect(animation.animations[0].tweens[0].from.original).toBe('0');
+    expect(animation.animations[0].tweens[0].to.original).toBe('50');
+  });
 });
