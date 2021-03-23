@@ -148,4 +148,46 @@ describe('Values', () => {
       expect(a.type).toBe('object');
     });
   });
+
+  test('Get default transforms values', () => {
+    const animation = anime({
+      targets: '#target-id',
+      translateX: 100,
+      translateY: 100,
+      translateZ: 100,
+      rotate: 360,
+      rotateX: 360,
+      rotateY: 360,
+      rotateZ: 360,
+      skew: 360,
+      skewX: 360,
+      skewY: 360,
+      scale: 10,
+      scaleX: 10,
+      scaleY: 10,
+      scaleZ: 10,
+      perspective: 1000,
+    });
+
+    // Translate
+    expect(animation.animations[0].tweens[0].from.original).toBe('0px');
+    expect(animation.animations[1].tweens[0].from.original).toBe('0px');
+    expect(animation.animations[2].tweens[0].from.original).toBe('0px');
+    // Rotate
+    expect(animation.animations[3].tweens[0].from.original).toBe('0deg');
+    expect(animation.animations[4].tweens[0].from.original).toBe('0deg');
+    expect(animation.animations[5].tweens[0].from.original).toBe('0deg');
+    expect(animation.animations[6].tweens[0].from.original).toBe('0deg');
+    // Skew
+    expect(animation.animations[7].tweens[0].from.original).toBe('0deg');
+    expect(animation.animations[8].tweens[0].from.original).toBe('0deg');
+    expect(animation.animations[9].tweens[0].from.original).toBe('0deg');
+    // Scale
+    expect(animation.animations[10].tweens[0].from.original).toBe('1');
+    expect(animation.animations[11].tweens[0].from.original).toBe('1');
+    expect(animation.animations[12].tweens[0].from.original).toBe('1');
+    expect(animation.animations[13].tweens[0].from.original).toBe('1');
+    // Perspective
+    expect(animation.animations[14].tweens[0].from.original).toBe('0px');
+  });
 });
