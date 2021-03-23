@@ -15,6 +15,7 @@ import {
   transformsExecRgx,
   relativeValuesExecRgx,
   whiteSpaceTestRgx,
+  digitWithExponentRgx,
   validTransforms,
 } from './consts.js';
 
@@ -38,17 +39,19 @@ function getCSSValue(el, prop, unit) {
 export function getAnimationType(el, prop) {
   if (is.dom(el) && !is.inp(el) && (!is.nil(el.getAttribute(prop)) || (is.svg(el) && el[prop]))) return 'attribute';
   if (is.dom(el) && arrayContains(validTransforms, prop)) return 'transform';
-  console.log(prop, getCSSValue(el, prop));
   if (is.dom(el) && (prop !== 'transform' && getCSSValue(el, prop))) return 'css';
-  if (el[prop] != null) return 'object';
+  if (!is.nil(el[prop])) return 'object';
 }
 
 export function getElementTransforms(el) {
   if (!is.dom(el)) return;
-  const str = el.style.transform || '';
+  const str = el.style.transform;
   const transforms = new Map();
-  let m;
-  while (m = transformsExecRgx.exec(str)) transforms.set(m[1], m[2]);
+  if (!str) return transforms;
+  let t;
+  while (t = transformsExecRgx.exec(str)) {
+    transforms.set(t[1], t[2]);
+  }
   return transforms;
 }
 
@@ -91,4 +94,13 @@ export function validateValue(val, unit) {
   const unitLess = originalUnit ? val.substr(0, val.length - originalUnit.length) : val;
   if (unit) return unitLess + unit;
   return unitLess;
+}
+
+export function decomposeValue(val, unit) {
+  const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
+  return {
+    original: value,
+    numbers: value.match(digitWithExponentRgx) ? value.match(digitWithExponentRgx).map(Number) : [0],
+    strings: (is.str(val) || unit) ? value.split(digitWithExponentRgx) : []
+  }
 }

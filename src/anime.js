@@ -46,6 +46,7 @@ import {
   getFunctionValue,
   validateValue,
   getRelativeValue,
+  decomposeValue,
 } from './values.js';
 
 // SVG
@@ -167,20 +168,6 @@ function getPathProgress(path, progress, isPathTargetInsideSVG) {
     case 'x': return (p.x - svg.x) * scaleX;
     case 'y': return (p.y - svg.y) * scaleY;
     case 'angle': return Math.atan2(p1.y - p0.y, p1.x - p0.x) * 180 / Math.PI;
-  }
-}
-
-// Decompose value
-
-function decomposeValue(val, unit) {
-  // const rgx = /-?\d*\.?\d+/g; // handles basic numbers
-  // const rgx = /[+-]?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g; // handles exponents notation
-  const rgx = /[+-]?\d*\.?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/g; // handles exponents notation
-  const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
-  return {
-    original: value,
-    numbers: value.match(rgx) ? value.match(rgx).map(Number) : [0],
-    strings: (is.str(val) || unit) ? value.split(rgx) : []
   }
 }
 
