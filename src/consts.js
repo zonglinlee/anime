@@ -61,3 +61,6 @@ export const transformsExecRgx = /(\w+)\(([^)]*)\)/g;
 export const relativeValuesExecRgx = /^(\*=|\+=|-=)/;
 export const whiteSpaceTestRgx = /\s/g;
 
+// Math variables
+
+export const pi = Math.PI;

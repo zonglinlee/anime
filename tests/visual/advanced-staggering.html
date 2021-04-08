@@ -1,18 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test | Advanced staggering | anime.js</title>
+  <title>Advanced staggering tests | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:title" content="anime.js">
-  <meta property="og:url" content="https://animejs.com">
-  <meta property="og:description" content="Javascript Animation Engine">
-  <meta property="og:image" content="https://animejs.com/documentation/assets/img/icons/og.png">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="anime.js">
-  <meta name="twitter:site" content="@juliangarnier">
-  <meta name="twitter:description" content="Javascript Animation Engine">
-  <meta name="twitter:image" content="https://animejs.com/documentation/assets/img/icons/twitter.png">
   <link href="assets/css/styles.css" rel="stylesheet">
   <style>
     .advanced-staggering-test {
@@ -42,6 +33,95 @@
     <div class="staggered"></div>
     <div class="staggered"></div>
     <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
+    <div class="staggered"></div>
   </div>
 </body>
 <script type="module">
@@ -49,9 +129,10 @@
 
   anime({
     targets: '.staggered',
-    translateY: [-100, 100],
-    delay: anime.stagger(200),
+    translateY: [-50, 50],
+    delay: anime.stagger(10),
     loop: true,
+    easing: 'easeInOutElastic',
     direction: 'alternate'
   })
 </script>
