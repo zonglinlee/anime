@@ -48,70 +48,9 @@ import {
   getAnimatables,
 } from './animatables.js';
 
-// Properties
-
-function normalizePropertyTweens(prop, tweenSettings) {
-  let settings = cloneObject(tweenSettings);
-  // Override duration if easing is a spring
-  if (/^spring/.test(settings.easing)) settings.duration = spring(settings.easing);
-  if (is.arr(prop)) {
-    const l = prop.length;
-    const isFromTo = (l === 2 && !is.obj(prop[0]));
-    if (!isFromTo) {
-      // Duration divided by the number of tweens
-      if (!is.fnc(tweenSettings.duration)) settings.duration = tweenSettings.duration / l;
-    } else {
-      // Transform [from, to] values shorthand to a valid tween value
-      prop = {value: prop};
-    }
-  }
-  const propArray = is.arr(prop) ? prop : [prop];
-  return propArray.map((v, i) => {
-    const obj = (is.obj(v) && !is.pth(v)) ? v : {value: v};
-    // Default delay value should only be applied to the first tween
-    if (is.und(obj.delay)) obj.delay = !i ? tweenSettings.delay : 0;
-    // Default endDelay value should only be applied to the last tween
-    if (is.und(obj.endDelay)) obj.endDelay = i === propArray.length - 1 ? tweenSettings.endDelay : 0;
-    return obj;
-  }).map(k => mergeObjects(k, settings));
-}
-
-
-function flattenKeyframes(keyframes) {
-  const propertyNames = filterArray(flattenArray(keyframes.map(key => Object.keys(key))), p => is.key(p))
-  .reduce((a,b) => { if (a.indexOf(b) < 0) a.push(b); return a; }, []);
-  const properties = {};
-  for (let i = 0; i < propertyNames.length; i++) {
-    const propName = propertyNames[i];
-    properties[propName] = keyframes.map(key => {
-      const newKey = {};
-      for (let p in key) {
-        if (is.key(p)) {
-          if (p == propName) newKey.value = key[p];
-        } else {
-          newKey[p] = key[p];
-        }
-      }
-      return newKey;
-    });
-  }
-  return properties;
-}
-
-function getProperties(tweenSettings, params) {
-  const properties = [];
-  const keyframes = params.keyframes;
-  if (keyframes) params = mergeObjects(flattenKeyframes(keyframes), params);;
-  for (let p in params) {
-    if (is.key(p)) {
-      properties.push({
-        name: p,
-        tweens: normalizePropertyTweens(params[p], tweenSettings)
-      });
-    }
-  }
-  return properties;
-}
+import {
+  getProperties
+} from './properties.js';
 
 // Tweens
 
