@@ -1,19 +1,11 @@
 import {
-  cache,
-} from './cache.js';
-
-import {
   defaultInstanceSettings,
   defaultTweenSettings,
-  validTransforms,
 } from './consts.js';
 
 import {
   minMax,
-  stringContains,
-  applyArguments,
   is,
-  selectString,
   filterArray,
   flattenArray,
   toArray,
@@ -30,12 +22,7 @@ import {
 } from './easings.js';
 
 import {
-  normalizeColorToRgba,
-} from './colors.js';
-
-import {
   getUnit,
-  getTransformUnit,
   convertPxToUnit,
 } from './units.js';
 
