@@ -6,7 +6,7 @@ import {
   hslTestRgx,
 } from './consts.js';
 
-// Strings
+// Strings functions
 
 export function selectString(str) {
   try {
@@ -21,19 +21,21 @@ export function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
 
-// Utility functions
+// Numbers functions
 
 export function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
 
-export function applyArguments(func, args) {
-  return func.apply(null, args);
-}
-
 export function round(val, base = 1) {
   return Math.round(val * base) / base;
 }
+
+export function random(min, max) {
+  Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Types
 
 export const is = {
   arr: a => Array.isArray(a),
@@ -103,4 +105,10 @@ export function mergeObjects(o1, o2) {
   const o = cloneObject(o1);
   for (let p in o2) o[p] = is.und(o1[p]) ? o2[p] : o1[p];
   return o;
+}
+
+// Functions
+
+export function applyArguments(func, args) {
+  return func.apply(null, args);
 }

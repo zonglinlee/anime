@@ -5,6 +5,7 @@ import {
 
 import {
   clamp,
+  random,
   is,
   filterArray,
   flattenArray,
@@ -705,6 +706,6 @@ anime.timeline = timeline;
 anime.easing = parseEasings;
 anime.penner = penner;
 anime.clamp = clamp;
-anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+anime.random = random;
 
 export default anime;
