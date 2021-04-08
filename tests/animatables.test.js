@@ -1,4 +1,4 @@
-describe('Targets', () => {
+describe('Animatables', () => {
   test('Single element from CSS selector', () => {
     const animation = anime({
       targets: '#target-id'
