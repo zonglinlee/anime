@@ -23,7 +23,7 @@ export function stringContains(str, text) {
 
 // Utility functions
 
-export function minMax(val, min, max) {
+export function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
 

@@ -4,7 +4,7 @@ import {
 } from './consts.js';
 
 import {
-  minMax,
+  clamp,
   is,
   filterArray,
   flattenArray,
@@ -375,7 +375,7 @@ function anime(params = {}) {
       let tween = tweens[tweenLength];
       // Only check for keyframes if there is more than one tween
       if (tweenLength) tween = filterArray(tweens, t => (insTime < t.end))[0] || tween;
-      const elapsed = minMax(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
+      const elapsed = clamp(insTime - tween.start - tween.delay, 0, tween.duration) / tween.duration;
       const eased = isNaN(elapsed) ? 1 : tween.easing(elapsed);
       const strings = tween.to.strings;
       const round = tween.round;
@@ -438,7 +438,7 @@ function anime(params = {}) {
     const insDelay = instance.delay;
     const insEndDelay = insDuration - instance.endDelay;
     const insTime = adjustTime(engineTime);
-    instance.progress = minMax((insTime / insDuration) * 100, 0, 100);
+    instance.progress = clamp((insTime / insDuration) * 100, 0, 100);
     instance.reversePlayback = insTime < instance.currentTime;
     if (children) { syncInstanceChildren(insTime); }
     if (!instance.began && instance.currentTime > 0) {
@@ -470,7 +470,7 @@ function anime(params = {}) {
         setCallback('changeComplete');
       }
     }
-    instance.currentTime = minMax(insTime, 0, insDuration);
+    instance.currentTime = clamp(insTime, 0, insDuration);
     if (instance.began) setCallback('update');
     if (engineTime >= insDuration) {
       lastTime = 0;

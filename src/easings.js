@@ -3,7 +3,7 @@ import {
 } from './consts.js';
 
 import {
-  minMax,
+  clamp,
   is,
   applyArguments
 } from './helpers.js';
@@ -21,10 +21,10 @@ function parseEasingParameters(string) {
 
 function spring(string, duration) {
   const params = parseEasingParameters(string);
-  const mass = minMax(is.und(params[0]) ? 1 : params[0], .1, 100);
-  const stiffness = minMax(is.und(params[1]) ? 100 : params[1], .1, 100);
-  const damping = minMax(is.und(params[2]) ? 10 : params[2], .1, 100);
-  const velocity =  minMax(is.und(params[3]) ? 0 : params[3], .1, 100);
+  const mass = clamp(is.und(params[0]) ? 1 : params[0], .1, 100);
+  const stiffness = clamp(is.und(params[1]) ? 100 : params[1], .1, 100);
+  const damping = clamp(is.und(params[2]) ? 10 : params[2], .1, 100);
+  const velocity =  clamp(is.und(params[3]) ? 0 : params[3], .1, 100);
 
   const w0 = Math.sqrt(stiffness / mass);
   const zeta = damping / (2 * Math.sqrt(stiffness * mass));
@@ -69,7 +69,7 @@ function spring(string, duration) {
 // Basic steps easing implementation https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function
 
 function steps(steps = 10) {
-  return t => Math.ceil((minMax(t, 0.000001, 1)) * steps) * (1 / steps);
+  return t => Math.ceil((clamp(t, 0.000001, 1)) * steps) * (1 / steps);
 }
 
 // BezierEasing https://github.com/gre/bezier-easing
@@ -163,8 +163,8 @@ const penner = (() => {
       return 1 / Math.pow(4, 3 - b) - 7.5625 * Math.pow(( pow2 * 3 - 2 ) / 22 - t, 2)
     },
     Elastic: (amplitude = 1, period = .5) => {
-      const a = minMax(amplitude, 1, 10);
-      const p = minMax(period, .1, 2);
+      const a = clamp(amplitude, 1, 10);
+      const p = clamp(period, .1, 2);
       return t => {
         return (t === 0 || t === 1) ? t : 
           -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
