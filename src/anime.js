@@ -704,6 +704,7 @@ anime.stagger = stagger;
 anime.timeline = timeline;
 anime.easing = parseEasings;
 anime.penner = penner;
+anime.clamp = clamp;
 anime.random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export default anime;
