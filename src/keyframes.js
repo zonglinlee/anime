@@ -2,6 +2,8 @@ import {
   is,
   cloneObject,
   mergeObjects,
+  flattenArray,
+  filterArray,
 } from './helpers.js';
 
 import {
@@ -11,8 +13,6 @@ import {
 import {
   spring,
 } from './easings.js';
-
-// Properties
 
 function convertPropertyValueToTweens(propertyValue, tweenSettings) {
   let value = propertyValue;
@@ -25,7 +25,7 @@ function convertPropertyValueToTweens(propertyValue, tweenSettings) {
     const l = value.length;
     const isFromTo = (l === 2 && !is.obj(value[0]));
     if (!isFromTo) {
-      // Duration divided by the number of tweens
+      // In case of a keyframes array, duration is divided by the number of tweens
       if (!is.fnc(tweenSettings.duration)) {
         settings.duration = tweenSettings.duration / l;
       }
@@ -36,7 +36,7 @@ function convertPropertyValueToTweens(propertyValue, tweenSettings) {
   }
   const valuesArray = is.arr(value) ? value : [value];
   return valuesArray.map((v, i) => {
-    const obj = (is.obj(v) && !is.pth(v)) ? v : {value: v};
+    const obj = (is.obj(v) && !is.pth(v)) ? v : { value: v };
     // Default delay value should only be applied to the first tween
     if (is.und(obj.delay)) {
       obj.delay = !i ? tweenSettings.delay : 0;
@@ -50,17 +50,24 @@ function convertPropertyValueToTweens(propertyValue, tweenSettings) {
 }
 
 
-function flattenKeyframes(keyframes) {
-  const propertyNames = filterArray(flattenArray(keyframes.map(key => Object.keys(key))), p => is.key(p))
-  .reduce((a,b) => { if (a.indexOf(b) < 0) a.push(b); return a; }, []);
+function flattenParamsKeyframes(keyframes) {
   const properties = {};
+  const propertyNames = filterArray(flattenArray(keyframes.map(key => Object.keys(key))), p => is.key(p))
+  .reduce((a,b) => {
+    if (a.indexOf(b) < 0) {
+      a.push(b);
+    }
+    return a;
+  }, []);
   for (let i = 0; i < propertyNames.length; i++) {
     const propName = propertyNames[i];
     properties[propName] = keyframes.map(key => {
       const newKey = {};
       for (let p in key) {
         if (is.key(p)) {
-          if (p == propName) newKey.value = key[p];
+          if (p == propName) {
+            newKey.value = key[p];
+          }
         } else {
           newKey[p] = key[p];
         }
@@ -71,23 +78,23 @@ function flattenKeyframes(keyframes) {
   return properties;
 }
 
-function getProperties(tweenSettings, params) {
-  const properties = [];
-  const keyframes = params.keyframes;
-  if (keyframes) {
-    params = mergeObjects(flattenKeyframes(keyframes), params);;
+function getKeyframesFromProperties(tweenSettings, params) {
+  const keyframes = [];
+  const paramsKeyframes = params.keyframes;
+  if (paramsKeyframes) {
+    params = mergeObjects(flattenParamsKeyframes(paramsKeyframes), params);;
   }
   for (let p in params) {
     if (is.key(p)) {
-      properties.push({
+      keyframes.push({
         name: p,
         tweens: convertPropertyValueToTweens(params[p], tweenSettings)
       });
     }
   }
-  return properties;
+  return keyframes;
 }
 
 export {
-  getProperties
+  getKeyframesFromProperties
 }

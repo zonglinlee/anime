@@ -49,8 +49,8 @@ import {
 } from './animatables.js';
 
 import {
-  getProperties
-} from './properties.js';
+  getKeyframesFromProperties
+} from './keyframes.js';
 
 // Tweens
 
@@ -174,7 +174,7 @@ let instanceID = 0;
 function createNewInstance(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
-  const properties = getProperties(tweenSettings, params);
+  const properties = getKeyframesFromProperties(tweenSettings, params);
   const animatables = getAnimatables(params.targets);
   const animations = getAnimations(animatables, properties);
   const timings = getInstanceTimings(animations, tweenSettings);

@@ -118,11 +118,11 @@ function getPathPoint(pathEl, progress, offset = 0) {
 }
 
 function getPathProgress(pathObject, progress, isPathTargetInsideSVG) {
-  const el = pathObject.el;
-  const parentSvg = getParentSvg(pathObject.el, pathObject.svg);
-  const p = getPathPoint(el, progress, 0);
-  const p0 = getPathPoint(el, progress, -1);
-  const p1 = getPathPoint(el, progress, +1);
+  const pathEl = pathObject.el;
+  const parentSvg = getParentSvg(pathEl, pathObject.svg);
+  const p = getPathPoint(pathEl, progress, 0);
+  const p0 = getPathPoint(pathEl, progress, -1);
+  const p1 = getPathPoint(pathEl, progress, +1);
   const scaleX = isPathTargetInsideSVG ? 1 : parentSvg.w / parentSvg.vW;
   const scaleY = isPathTargetInsideSVG ? 1 : parentSvg.h / parentSvg.vH;
   switch (pathObject.property) {
