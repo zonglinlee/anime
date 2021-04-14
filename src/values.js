@@ -104,3 +104,19 @@ export function decomposeValue(val, unit) {
     strings: (is.str(val) || unit) ? value.split(digitWithExponentRgx) : []
   }
 }
+
+export const setValueByType = {
+  css: (t, p, v) => t.style[p] = v,
+  attribute: (t, p, v) => t.setAttribute(p, v),
+  object: (t, p, v) => t[p] = v,
+  transform: (t, p, v, transforms, manual) => {
+    transforms.list.set(p, v);
+    if (p === transforms.last || manual) {
+      let str = '';
+      transforms.list.forEach((value, prop) => {
+        str += `${prop}(${value}) `;
+      });
+      t.style.transform = str;
+    }
+  }
+}

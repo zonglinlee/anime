@@ -35,6 +35,7 @@ import {
   validateValue,
   getRelativeValue,
   decomposeValue,
+  setValueByType,
 } from './values.js';
 
 import {
@@ -57,22 +58,6 @@ import {
 } from './tweens.js';
 
 // Animations
-
-const setProgressValue = {
-  css: (t, p, v) => t.style[p] = v,
-  attribute: (t, p, v) => t.setAttribute(p, v),
-  object: (t, p, v) => t[p] = v,
-  transform: (t, p, v, transforms, manual) => {
-    transforms.list.set(p, v);
-    if (p === transforms.last || manual) {
-      let str = '';
-      transforms.list.forEach((value, prop) => {
-        str += `${prop}(${value}) `;
-      });
-      t.style.transform = str;
-    }
-  }
-}
 
 function createAnimation(animatable, prop) {
   const animType = getAnimationType(animatable.target, prop.name);
@@ -291,7 +276,7 @@ function anime(params = {}) {
           }
         }
       }
-      setProgressValue[anim.type](animatable.target, anim.property, progress, animatable.transforms);
+      setValueByType[anim.type](animatable.target, anim.property, progress, animatable.transforms);
       anim.currentValue = progress;
       i++;
     }
@@ -570,7 +555,7 @@ function setTargetsValue(targets, properties) {
       const unit = valueUnit || getUnit(originalValue);
       const to = getRelativeValue(validateValue(value, unit), originalValue);
       const animType = getAnimationType(target, property);
-      setProgressValue[animType](target, property, to, animatable.transforms, true);
+      setValueByType[animType](target, property, to, animatable.transforms, true);
     }
   });
 }
