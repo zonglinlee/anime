@@ -54,35 +54,8 @@ import {
 } from './keyframes.js';
 
 import {
-  normalizeTweens,
-} from './tweens.js';
-
-// Animations
-
-function createAnimation(animatable, prop) {
-  const animType = getAnimationType(animatable.target, prop.name);
-  if (animType) {
-    const tweens = normalizeTweens(prop, animatable);
-    const lastTween = tweens[tweens.length - 1];
-    return {
-      type: animType,
-      property: prop.name,
-      animatable: animatable,
-      tweens: tweens,
-      duration: lastTween.end,
-      delay: tweens[0].delay,
-      endDelay: lastTween.endDelay
-    }
-  }
-}
-
-function getAnimations(animatables, properties) {
-  return filterArray(flattenArray(animatables.map(animatable => {
-    return properties.map(prop => {
-      return createAnimation(animatable, prop);
-    });
-  })), a => !is.und(a));
-}
+  getAnimations,
+} from './animations.js';
 
 // Create Instance
 
