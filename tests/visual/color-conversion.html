@@ -1,24 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Colors test | anime.js</title>
+  <title>Color conversion tests | anime.js</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:title" content="anime.js">
-  <meta property="og:url" content="https://animejs.com">
-  <meta property="og:description" content="Javascript Animation Engine">
-  <meta property="og:image" content="https://animejs.com/documentation/assets/img/icons/og.png">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="anime.js">
-  <meta name="twitter:site" content="@juliangarnier">
-  <meta name="twitter:description" content="Javascript Animation Engine">
-  <meta name="twitter:image" content="https://animejs.com/documentation/assets/img/icons/twitter.png">
-  <link rel="apple-touch-icon-precomposed" href="../assets/img/social-media-image.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <link href="../assets/css/documentation.css" rel="stylesheet">
-  <script src="../../lib/anime.es5.min.js"></script>
-  <!-- <script src="../assets/js/anime/anime.2.0.2.js"></script> -->
-  <!-- <script src="../assets/js/anime/anime.1.3.js"></script> -->
+  <link href="assets/css/styles.css" rel="stylesheet">
   <style>
     body {
       width: 100%;
@@ -27,16 +13,22 @@
     .color-tests {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
     }
     .section-title {
       display: block;
       width: 100%;
       margin-bottom: 10px;
       padding: 10px;
-      border-bottom: 1px solid #FFF;
+      border-bottom: 1px solid currentColor;
     }
     .color-test {
-      flex-shrink: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: 150px;
+      flex-shrink: 0;
       text-align: center;
       font-size: 10px;
       line-height: 1em;
@@ -50,6 +42,7 @@
       width: 12vw;
       height: 12vw;
       margin-top: 10px;
+      background-color: red;
     }
   </style>
 </head>
@@ -63,6 +56,8 @@
       <div class="color-test hex-to-hsl">#FF4477<br>▾<br>hsl(213,100%,70%)</div>
       <div class="color-test hex-to-rgba">#FF4477<br>▾<br>rgba(102,170,255,.15)</div>
       <div class="color-test hex-to-hsla">#FF4477<br>▾<br>hsla(213,100%,70%,.15)</div>
+      <div class="color-test hex6-to-rgba">#FF447799<br>▾<br>rgba(102,170,255,.15)</div>
+      <div class="color-test hex6-to-hsla">#FF447799<br>▾<br>hsla(213,100%,70%,.15)</div>
     </div>
   </section>
   <section class="color-section">
@@ -91,17 +86,19 @@
       <div class="color-test hsla-to-hsla">hsla(344,100%,63%,.5)<br>▾<br>hsla(213,100%,70%,.15)</div>
     </div>
   </section>
-  <script>
+  <script type="module">
+    import anime from '../../src/anime.js';
 
-    var colorTestEls = document.querySelectorAll('.color-test');
+    const colorTestEls = document.querySelectorAll('.color-test');
 
     function createTest(el) {
-      var testHtml = el.innerHTML;
-      var testValues = testHtml.split('<br>▾<br>');
-      var colorEl = document.createElement('div');
+      const testHtml = el.innerHTML;
+      const testValues = testHtml.split('<br>▾<br>');
+      const colorEl = document.createElement('div');
       colorEl.classList.add('color-el');
       el.appendChild(colorEl);
-      anime({
+
+      const animation = anime({
         targets: colorEl,
         backgroundColor: [testValues[0], testValues[1]],
         scale: [.97, .75],
@@ -112,8 +109,9 @@
       });
     }
 
-    for (var i = 0; i < colorTestEls.length; i++) createTest(colorTestEls[i]);
-
+    for (var i = 0; i < colorTestEls.length; i++) {
+      createTest(colorTestEls[i]);
+    }
   </script>
 </body>
 </html>

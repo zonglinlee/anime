@@ -31,4 +31,23 @@ describe('Units', () => {
     // Perspective
     expect(animation.animations[10].tweens[0].from.strings[1]).toBe('px');
   });
+
+  test('Specified unit on a simple tween', () => {
+    const animation = anime({
+      targets: '#target-id',
+      translateX: '100%',
+    });
+
+    expect(animation.animations[0].tweens[0].to.strings[1]).toBe('%');
+  });
+
+  test('Units inheritance on From To Values', () => {
+    const animation = anime({
+      targets: '#target-id',
+      translateX: [-50, '50%'],
+    });
+
+    expect(animation.animations[0].tweens[0].from.strings[1]).toBe('%');
+    expect(animation.animations[0].tweens[0].to.strings[1]).toBe('%');
+  });
 });

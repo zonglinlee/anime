@@ -49,54 +49,14 @@ import {
 } from './animatables.js';
 
 import {
-  getKeyframesFromProperties
+  getKeyframesFromProperties,
 } from './keyframes.js';
 
-// Tweens
+import {
+  normalizeTweens,
+} from './tweens.js';
 
-function normalizeTweenValues(tween, animatable) {
-  const t = {};
-  for (let p in tween) {
-    let value = getFunctionValue(tween[p], animatable);
-    if (is.arr(value)) {
-      value = value.map(v => getFunctionValue(v, animatable));
-      if (value.length === 1) value = value[0];
-    }
-    t[p] = value;
-  }
-  t.duration = parseFloat(t.duration);
-  t.delay = parseFloat(t.delay);
-  return t;
-}
-
-function normalizeTweens(prop, animatable) {
-  let previousTween;
-  return prop.tweens.map(t => {
-    const tween = normalizeTweenValues(t, animatable);
-    const tweenValue = tween.value;
-    let to = is.arr(tweenValue) ? tweenValue[1] : tweenValue;
-    const toUnit = getUnit(to);
-    const originalValue = getOriginalTargetValue(animatable.target, prop.name, toUnit, animatable);
-    const previousValue = previousTween ? previousTween.to.original : originalValue;
-    const from = is.arr(tweenValue) ? tweenValue[0] : previousValue;
-    const fromUnit = getUnit(from) || getUnit(originalValue);
-    const unit = toUnit || fromUnit;
-    if (is.und(to)) to = previousValue;
-    tween.from = decomposeValue(from, unit);
-    tween.to = decomposeValue(getRelativeValue(to, from), unit);
-    tween.start = previousTween ? previousTween.end : 0;
-    tween.end = tween.start + tween.delay + tween.duration + tween.endDelay;
-    tween.easing = parseEasings(tween.easing, tween.duration);
-    tween.isPath = is.pth(tweenValue);
-    tween.isPathTargetInsideSVG = tween.isPath && is.svg(animatable.target);
-    tween.isColor = is.col(tween.from.original);
-    if (tween.isColor) tween.round = 1;
-    previousTween = tween;
-    return tween;
-  });
-}
-
-// Tween progress
+// Animations
 
 const setProgressValue = {
   css: (t, p, v) => t.style[p] = v,
@@ -106,31 +66,13 @@ const setProgressValue = {
     transforms.list.set(p, v);
     if (p === transforms.last || manual) {
       let str = '';
-      transforms.list.forEach((value, prop) => { str += `${prop}(${value}) `; });
+      transforms.list.forEach((value, prop) => {
+        str += `${prop}(${value}) `;
+      });
       t.style.transform = str;
     }
   }
 }
-
-// Set Value helper
-
-function setTargetsValue(targets, properties) {
-  const animatables = getAnimatables(targets);
-  animatables.forEach(animatable => {
-    for (let property in properties) {
-      const value = getFunctionValue(properties[property], animatable);
-      const target = animatable.target;
-      const valueUnit = getUnit(value);
-      const originalValue = getOriginalTargetValue(target, property, valueUnit, animatable);
-      const unit = valueUnit || getUnit(originalValue);
-      const to = getRelativeValue(validateValue(value, unit), originalValue);
-      const animType = getAnimationType(target, property);
-      setProgressValue[animType](target, property, to, animatable.transforms, true);
-    }
-  });
-}
-
-// Animations
 
 function createAnimation(animatable, prop) {
   const animType = getAnimationType(animatable.target, prop.name);
@@ -203,6 +145,7 @@ const engine = (() => {
       raf = requestAnimationFrame(step);
     }
   }
+  
   function step(t) {
     // memo on algorithm issue:
     // dangerous iteration over mutable `activeInstances`
@@ -452,13 +395,6 @@ function anime(params = {}) {
   // internal method (for engine) to adjust animation timings before restoring engine ticks (rAF)
   instance._onDocumentVisibility = resetTime;
 
-  // Set Value helper
-
-  instance.set = function(targets, properties) {
-    setTargetsValue(targets, properties);
-    return instance;
-  }
-
   instance.tick = function(t) {
     now = t;
     if (!startTime) startTime = now;
@@ -619,6 +555,24 @@ function timeline(params = {}) {
     return tl;
   }
   return tl;
+}
+
+// Set Value helper
+
+function setTargetsValue(targets, properties) {
+  const animatables = getAnimatables(targets);
+  animatables.forEach(animatable => {
+    for (let property in properties) {
+      const value = getFunctionValue(properties[property], animatable);
+      const target = animatable.target;
+      const valueUnit = getUnit(value);
+      const originalValue = getOriginalTargetValue(target, property, valueUnit, animatable);
+      const unit = valueUnit || getUnit(originalValue);
+      const to = getRelativeValue(validateValue(value, unit), originalValue);
+      const animType = getAnimationType(target, property);
+      setProgressValue[animType](target, property, to, animatable.transforms, true);
+    }
+  });
 }
 
 anime.version = '__packageVersion__';

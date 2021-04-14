@@ -8,6 +8,8 @@ beforeEach(() => {
         width: 0px;
         height: 0px;
         font-size: 16px;
+        color: #000;
+        background-color: rgba(0, 0, 0, 0);
       }
 
       .css-properties {
