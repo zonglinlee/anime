@@ -19,7 +19,8 @@ function createAnimation(animatable, prop) {
       tweens: tweens,
       delay: firstTween.delay,
       duration: lastTween.end,
-      endDelay: lastTween.endDelay
+      endDelay: lastTween.endDelay,
+      timelineOffset: 0
     }
   }
 }

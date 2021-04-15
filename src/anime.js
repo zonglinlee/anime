@@ -32,10 +32,10 @@ import {
   getElementTransforms,
   getAnimationType,
   getFunctionValue,
-  validateValue,
   getRelativeValue,
-  decomposeValue,
   setValueByType,
+  validateValue,
+  decomposeValue,
 } from './values.js';
 
 import {
@@ -50,46 +50,9 @@ import {
 } from './animatables.js';
 
 import {
-  getKeyframesFromProperties,
-} from './keyframes.js';
-
-import {
-  getAnimations,
-} from './animations.js';
-
-// Create Instance
-
-function getInstanceTimings(animations, tweenSettings) {
-  const animLength = animations.length;
-  const getTlOffset = anim => anim.timelineOffset ? anim.timelineOffset : 0;
-  const timings = {};
-  timings.duration = animLength ? Math.max.apply(Math, animations.map(anim => getTlOffset(anim) + anim.duration)) : tweenSettings.duration;
-  timings.delay = animLength ? Math.min.apply(Math, animations.map(anim => getTlOffset(anim) + anim.delay)) : tweenSettings.delay;
-  timings.endDelay = animLength ? timings.duration - Math.max.apply(Math, animations.map(anim => getTlOffset(anim) + anim.duration - anim.endDelay)) : tweenSettings.endDelay;
-  return timings;
-}
-
-let instanceID = 0;
-
-function createNewInstance(params) {
-  const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
-  const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
-  const properties = getKeyframesFromProperties(tweenSettings, params);
-  const animatables = getAnimatables(params.targets);
-  const animations = getAnimations(animatables, properties);
-  const timings = getInstanceTimings(animations, tweenSettings);
-  const id = instanceID;
-  instanceID++;
-  return mergeObjects(instanceSettings, {
-    id: id,
-    children: [],
-    animatables: animatables,
-    animations: animations,
-    duration: timings.duration,
-    delay: timings.delay,
-    endDelay: timings.endDelay
-  });
-}
+  getInstanceTimings,
+  createInstance,
+} from './instances.js';
 
 // Core
 
@@ -162,7 +125,7 @@ function anime(params = {}) {
     return promise;
   }
 
-  let instance = createNewInstance(params);
+  let instance = createInstance(params);
   let promise = makePromise(instance);
 
   function toggleInstanceDirection() {
