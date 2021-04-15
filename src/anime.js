@@ -55,7 +55,7 @@ import {
 } from './instances.js';
 
 import {
-  engine,
+  startEngine,
   activeInstances,
 } from './engine.js';
 
@@ -285,7 +285,7 @@ function anime(params = {}) {
     instance.paused = false;
     activeInstances.push(instance);
     resetTime();
-    engine();
+    startEngine();
   }
 
   instance.reverse = function() {
