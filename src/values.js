@@ -1,4 +1,8 @@
 import {
+  emptyString,
+} from './consts.js';
+
+import {
   is,
   stringContains,
   arrayContains,
@@ -60,7 +64,7 @@ function getTransformValue(el, propName, animatable, unit) {
   const value = getElementTransforms(el).get(propName) || defaultVal;
   if (animatable) {
     animatable.transforms.list.set(propName, value);
-    animatable.transforms['last'] = propName;
+    animatable.transforms.last = propName;
   }
   return unit ? convertPxToUnit(el, value, unit) : value;
 }
@@ -79,7 +83,7 @@ export function getRelativeValue(to, from) {
   if (!operator) return to;
   const u = getUnit(to) || 0;
   const x = parseFloat(from);
-  const y = parseFloat(to.replace(operator[0], ''));
+  const y = parseFloat(to.replace(operator[0], emptyString));
   switch (operator[0][0]) {
     case '+': return x + y + u;
     case '-': return x - y + u;
@@ -97,7 +101,7 @@ export function validateValue(val, unit) {
 }
 
 export function decomposeValue(val, unit) {
-  const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + '';
+  const value = validateValue((is.pth(val) ? val.totalLength : val), unit) + emptyString;
   return {
     original: value,
     numbers: value.match(digitWithExponentRgx) ? value.match(digitWithExponentRgx).map(Number) : [0],
@@ -112,11 +116,11 @@ export const setValueByType = {
   transform: (t, p, v, transforms, manual) => {
     transforms.list.set(p, v);
     if (p === transforms.last || manual) {
-      let str = '';
+      transforms.string = emptyString;
       transforms.list.forEach((value, prop) => {
-        str += `${prop}(${value}) `;
+        transforms.string += `${prop}(${value})${emptyString}`;
       });
-      t.style.transform = str;
+      t.style.transform = transforms.string;
     }
   }
 }

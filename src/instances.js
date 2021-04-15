@@ -27,7 +27,7 @@ export function getInstanceTimings(animations, tweenSettings) {
   const { delay, duration, endDelay } = tweenSettings;
 
   if (!animationsLength) {
-    return { delay, duration, endDelay }
+    return { delay, duration, endDelay };
   }
 
   const timings = {};

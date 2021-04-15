@@ -1,4 +1,8 @@
 import {
+  emptyString,
+} from './consts.js';
+
+import {
   is,
   flattenArray,
   filterArray,
@@ -22,7 +26,9 @@ export function getAnimatables(targets) {
       id: i,
       total: parsed.length,
       transforms: {
-        list: getElementTransforms(t)
+        list: getElementTransforms(t),
+        last: null,
+        string: emptyString
       }
     }
   });

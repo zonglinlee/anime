@@ -32,7 +32,7 @@ export function round(val, base = 1) {
 }
 
 export function random(min, max) {
-  Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // Types
@@ -52,7 +52,7 @@ export const is = {
   rgb: a => rgbTestRgx.test(a),
   hsl: a => hslTestRgx.test(a),
   col: a => (is.hex(a) || is.rgb(a) || is.hsl(a)),
-  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes',
+  key: a => !defaultInstanceSettings.hasOwnProperty(a) && !defaultTweenSettings.hasOwnProperty(a) && a !== 'targets' && a !== 'keyframes'
 }
 
 // Arrays
@@ -111,4 +111,12 @@ export function mergeObjects(o1, o2) {
 
 export function applyArguments(func, args) {
   return func.apply(null, args);
+}
+
+// Document
+
+export const isBrowser = !is.und(window) && !is.und(window.document);
+
+export function isDocumentHidden() {
+  return isBrowser && document.hidden;
 }

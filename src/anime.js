@@ -54,62 +54,10 @@ import {
   createInstance,
 } from './instances.js';
 
-// Core
-
-let activeInstances = [];
-
-const engine = (() => {
-  let raf;
-
-  function play() {
-    if (!raf && (!isDocumentHidden() || !anime.suspendWhenDocumentHidden) && activeInstances.length > 0) {
-      raf = requestAnimationFrame(step);
-    }
-  }
-  
-  function step(t) {
-    // memo on algorithm issue:
-    // dangerous iteration over mutable `activeInstances`
-    // (that collection may be updated from within callbacks of `tick`-ed animation instances)
-    let activeInstancesLength = activeInstances.length;
-    let i = 0;
-    while (i < activeInstancesLength) {
-      const activeInstance = activeInstances[i];
-      if (!activeInstance.paused) {
-        activeInstance.tick(t);
-        i++;
-      } else {
-        activeInstances.splice(i, 1);
-        activeInstancesLength--;
-      }
-    }
-    raf = i > 0 ? requestAnimationFrame(step) : undefined;
-  }
-
-  function handleVisibilityChange() {
-    if (!anime.suspendWhenDocumentHidden) return;
-
-    if (isDocumentHidden()) {
-      // suspend ticks
-      raf = cancelAnimationFrame(raf);
-    } else { // is back to active tab
-      // first adjust animations to consider the time that ticks were suspended
-      activeInstances.forEach(
-        instance => instance ._onDocumentVisibility()
-      );
-      engine();
-    }
-  }
-  if (typeof document !== 'undefined') {
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-  }
-
-  return play;
-})();
-
-function isDocumentHidden() {
-  return !!document && document.hidden;
-}
+import {
+  engine,
+  activeInstances,
+} from './engine.js';
 
 // Public Instance
 

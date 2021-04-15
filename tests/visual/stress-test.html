@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Advanced staggering tests | anime.js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <style>
+    body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    .particule {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: -20px;
+      margin-top: -20px;
+      background-color: currentColor;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+<body>
+
+</body>
+<script type="module">
+  import anime from '../../src/anime.js';
+
+  function createParticule() {
+    const el = document.createElement('div');
+    el.classList.add('particule');
+    return el;
+  }
+
+  const docFrag = document.createDocumentFragment();
+
+  for (let i = 0; i < 1000; i++) {
+    const particuleEl = createParticule();
+    docFrag.appendChild(particuleEl);
+    anime.set(particuleEl, {rotate: anime.random(-360, 360)});
+    anime({
+      targets: particuleEl,
+      translateX: 200,
+      translateY: 200,
+      scale: [1, 0],
+      loop: true,
+      easing: 'linear',
+      delay: anime.random(0, 2000),
+      duration: anime.random(1000, 2000),
+    });
+  }
+
+  document.body.appendChild(docFrag);
+
+</script>
+</html>

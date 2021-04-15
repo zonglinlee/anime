@@ -23,6 +23,12 @@ export const defaultTweenSettings = {
   round: 0,
 }
 
+// Global settings
+
+export const settings = {
+  suspendWhenDocumentHidden: true
+}
+
 // Transforms
 
 export const validTransforms = [
@@ -65,3 +71,8 @@ export const whiteSpaceTestRgx = /\s/g;
 // Math variables
 
 export const pi = Math.PI;
+
+// Misc
+
+export const emptyString = '';
+
