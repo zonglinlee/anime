@@ -26,7 +26,8 @@ export const defaultTweenSettings = {
 // Global settings
 
 export const settings = {
-  suspendWhenDocumentHidden: true
+  speed: 1,
+  suspendWhenDocumentHidden: true,
 }
 
 // Transforms
