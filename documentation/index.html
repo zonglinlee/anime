@@ -26,7 +26,7 @@
   <link href="assets/css/anime-theme.css" rel="stylesheet">
   <link href="assets/css/documentation.css" rel="stylesheet">
 
-  <script src="../lib/anime.es5.min.js"></script>
+  <script src="../lib/anime.es5.js"></script>
 </head>
 <body>
   <div class="content">
@@ -2900,7 +2900,8 @@ completeLogEl.value = '';
 anime({
   targets: '.begin-complete-demo .el',
   translateX: 240,
-  delay: 1000,
+  delay: 300,
+  endDelay: 300,
   easing: 'easeInOutCirc',
   update: function(anim) {
     progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';

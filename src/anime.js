@@ -50,7 +50,10 @@ import {
 } from './animatables.js';
 
 import {
-  getInstanceTimings,
+  getTimingsFromAnimations,
+} from './timings.js';
+
+import {
   createInstance,
 } from './instances.js';
 

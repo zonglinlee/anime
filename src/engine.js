@@ -36,21 +36,23 @@ export function startEngine() {
   }
 }
 
-if (isBrowser) {
-  function handleVisibilityChange() {
-    if (!settings.suspendWhenDocumentHidden) return;
 
-    if (isDocumentHidden()) {
-      // suspend ticks
-      raf = cancelAnimationFrame(raf);
-    } else {
-      // is back to active tab
-      // first adjust animations to consider the time that ticks were suspended
-      activeInstances.forEach(
-        instance => instance ._onDocumentVisibility()
-      );
-      startEngine();
-    }
+function handleVisibilityChange() {
+  if (!settings.suspendWhenDocumentHidden) return;
+
+  if (isDocumentHidden()) {
+    // suspend ticks
+    raf = cancelAnimationFrame(raf);
+  } else {
+    // is back to active tab
+    // first adjust animations to consider the time that ticks were suspended
+    activeInstances.forEach(
+      instance => instance ._onDocumentVisibility()
+    );
+    startEngine();
   }
+}
+
+if (isBrowser) {
   document.addEventListener('visibilitychange', handleVisibilityChange);
 }

@@ -32,8 +32,7 @@ const bubleOptions = {
     chrome: 24,
     safari: 6,
     opera: 15,
-    edge: 10,
-    ie: 11
+    edge: 10
   }
 }
 
@@ -59,10 +58,20 @@ export default [
       buble(bubleOptions),
       uglify({
         output: {
-          preamble: banner('ES5 IIFE Minified')
+          preamble: banner('ES5 IIFE minified')
         }
       }),
       notify()
     ]
-  }
+  },
+  // ES5 
+  {
+    input: inputPath,
+    output: { file: pkg.files + '/anime.es5.js', format: 'iife', name: outputName, banner: banner('ES5 IIFE') },
+    plugins: [
+      replace(replaceOptions),
+      buble(bubleOptions),
+      notify()
+    ]
+  },
 ];

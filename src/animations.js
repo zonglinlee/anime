@@ -31,7 +31,11 @@ export function getAnimations(animatables, properties) {
     const animatable = animatables[a];
     if (animatable) {
       for (let p = 0, pLength = properties.length; p < pLength; p++) {
-        animations.push(createAnimation(animatable, properties[p]));
+        const animation = createAnimation(animatable, properties[p]);
+        // Make sure the animation is not undefined
+        if (animation) {
+          animations.push(createAnimation(animatable, properties[p]));
+        }
       }
     }
   }

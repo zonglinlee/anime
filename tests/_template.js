@@ -28,12 +28,16 @@ beforeEach(() => {
     <div class="target-class" data-index="3"></div>
     <div class="css-properties"></div>
     <svg id="svg-element" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 600 400">
+      <filter id="displacementFilter">
+        <feTurbulence type="turbulence" baseFrequency=".05" numOctaves="2" result="turbulence"></feTurbulence>
+        <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      </filter>
       <g fill="none" fill-rule="evenodd" stroke-width="2">
         <line id="line1" x1="51.5" x2="149.5" y1="51.5" y2="149.5" stroke="#F96F82" stroke-linecap="square"/>
         <line id="line2" x1="149.5" x2="51.5" y1="51.5" y2="149.5" stroke="#F96F82" stroke-linecap="square"/>
         <circle id="circle" cx="300" cy="100" r="50" stroke="#FED28B"/>
         <polygon id="polygon" stroke="#D1FA9E" points="500 130.381 464.772 149 471.5 109.563 443 81.634 482.386 75.881 500 40 517.614 75.881 557 81.634 528.5 109.563 535.228 149"/>
-        <polyline id="polyline" stroke="#7BE6D6" points="63.053 345 43 283.815 95.5 246 148 283.815 127.947 345 63.5 345"/>
+        <polyline id="polyline" style="filter: url(#displacementFilter)" stroke="#7BE6D6" points="63.053 345 43 283.815 95.5 246 148 283.815 127.947 345 63.5 345"/>
         <path id="path" stroke="#4E7EFC" d="M250 300c0-27.614 22.386-50 50-50s50 22.386 50 50v50h-50c-27.614 0-50-22.386-50-50z"/>
         <rect id="rect" width="100" height="100" x="451" y="251" stroke="#C987FE" rx="25"/>
       </g>
