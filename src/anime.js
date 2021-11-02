@@ -168,7 +168,7 @@ function timeline(params = {}) {
     passThrough(ins);
     const totalDuration = ins.duration + insParams.timelineOffset;
     children.push(ins);
-    const timings = getInstanceTimings(children, params);
+    const timings = getTimingsFromAnimations(children, params);
     tl.delay = timings.delay;
     tl.endDelay = timings.endDelay;
     tl.duration = timings.duration;
