@@ -2850,7 +2850,7 @@ anime({
   easing: 'easeInOutCirc',
   update: function(anim) {
     updates++;
-    progressLogEl.value = 'progress : '+Math.round(anim.progress)+'%';
+    progressLogEl.value = 'progress : '+Math.round(anim.progress * 100)+'%';
     updateLogEl.value = 'updates : '+updates;
   }
 });
@@ -2904,7 +2904,7 @@ anime({
   endDelay: 300,
   easing: 'easeInOutCirc',
   update: function(anim) {
-    progressLogEl.value = 'progress : ' + Math.round(anim.progress) + '%';
+    progressLogEl.value = 'progress : ' + Math.round(anim.progress * 100) + '%';
     beginLogEl.value = 'began : ' + anim.began;
     completeLogEl.value = 'completed : ' + anim.completed;
   },
@@ -3023,7 +3023,7 @@ anime({
   loop: true,
   easing: 'easeInOutCirc',
   update: function(anim) {
-    progressLogEl.value = 'progress : '+Math.round(anim.progress)+'%';
+    progressLogEl.value = 'progress : '+Math.round(anim.progress * 100)+'%';
   },
   change: function() {
     changes++;
@@ -3085,7 +3085,7 @@ anime({
   direction: 'alternate',
   easing: 'easeInOutCirc',
   update: function(anim) {
-    progressLogEl.value = 'progress : '+Math.round(anim.progress)+'%';
+    progressLogEl.value = 'progress : '+Math.round(anim.progress * 100)+'%';
   },
   changeBegin: function(anim) {
     changeBegan++;
@@ -3143,7 +3143,7 @@ var animation = anime.timeline({
   endDelay: 400,
   easing: 'easeInOutSine',
   update: function(anim) {
-    progressLogEl.value = 'progress : '+Math.round(anim.progress)+'%';
+    progressLogEl.value = 'progress : '+Math.round(anim.progress * 100)+'%';
   }
 }).add({
   translateX: 250

@@ -26,4 +26,23 @@ describe('Instances', () => {
 
     expect(instance01.animations).toEqual(expect.any(Array));
   });
+
+  test('progress should update from 0 to 1', () => {
+    const animParameters = {
+      targets: '#target-id',
+      opacity: [0, 1],
+      duration: 1000,
+      autoplay: false
+    }
+    const instance01 = anime(animParameters);
+    const instance02 = anime(animParameters);
+    const instance03 = anime(animParameters);
+
+    instance02.seek(500);
+    instance03.seek(1000);
+
+    expect(instance01.progress).toEqual(0);
+    expect(instance02.progress).toEqual(.5);
+    expect(instance03.progress).toEqual(1);
+  });
 });
