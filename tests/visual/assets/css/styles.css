@@ -1,3 +1,9 @@
+:root {
+  --black: #252423;
+  --white: #F6F4F2;
+  --red: #F64E4D;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
@@ -9,7 +15,25 @@
 
 html,
 body {
-  background-color: #252423;
-  color: #F6F4F2;
+  background-color: var(--black);
+  color: var(--white);
   font-family: sans-serif;
+}
+
+.black {
+  color: var(--black);
+}
+
+.white {
+  color: var(--white);
+}
+
+.red {
+  color: var(--red);
+}
+
+.dummy {
+  width: 100px;
+  height: 100px;
+  background-color: currentColor;
 }
