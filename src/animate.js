@@ -20,6 +20,9 @@ import {
   activeInstances,
 } from './engine.js';
 
+import {
+  getPathProgress
+} from './svg.js';
 
 export function animate(params = {}) {
   let startTime = 0, lastTime = 0, now = 0;
