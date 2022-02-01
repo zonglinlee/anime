@@ -54,8 +54,8 @@ import {
 } from './timings.js';
 
 import {
-  createInstance,
-} from './instances.js';
+  createTimeline,
+} from './timelines.js';
 
 import {
   startEngine,

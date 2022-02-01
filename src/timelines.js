@@ -26,7 +26,7 @@ import {
 
 let instancesId = 0;
 
-export function createInstance(params) {
+export function createTimeline(params) {
   const instanceSettings = replaceObjectProps(defaultInstanceSettings, params);
   const tweenSettings = replaceObjectProps(defaultTweenSettings, params);
   const properties = getKeyframesFromProperties(tweenSettings, params);

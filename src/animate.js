@@ -8,8 +8,8 @@ import {
 } from './helpers.js';
 
 import {
-  createInstance,
-} from './instances.js';
+  createTimeline,
+} from './timelines.js';
 
 import {
   setValueByType,
@@ -35,7 +35,7 @@ export function animate(params = {}) {
     return promise;
   }
 
-  let instance = createInstance(params);
+  let instance = createTimeline(params);
   let promise = makePromise(instance);
 
   function toggleInstanceDirection() {
