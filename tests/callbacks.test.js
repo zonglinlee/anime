@@ -1,6 +1,6 @@
 describe('Callbacks', () => {
-  test('begin on single  instance', () => {
-    let animationBeginHasBeenTriggered = false;
+  test('begin() on single instance', () => {
+    let callbackCheck = false;
 
     const animation = anime({
       targets: '#target-id',
@@ -8,27 +8,26 @@ describe('Callbacks', () => {
       autoplay: false,
       duration: 100,
       begin: () => {
-        animationBeginHasBeenTriggered = true;
+        callbackCheck = true;
       }
     });
 
-    expect(animationBeginHasBeenTriggered).toBe(false);
+    expect(callbackCheck).toBe(false);
     animation.seek(50);
-    expect(animationBeginHasBeenTriggered).toBe(false);
+    expect(callbackCheck).toBe(false);
     animation.seek(0);
-    expect(animationBeginHasBeenTriggered).toBe(true);
+    expect(callbackCheck).toBe(true);
   });
 
-  test('begin in timeline', () => {
-    let timelineBeginHasBeenTriggered = false;
-    let timelineAnim1BeginHasBeenTriggered = false;
-    let timelineAnim2BeginHasBeenTriggered = false;
+  test('begin() in timeline', () => {
+    let tlCallbackCheck = false;
+    let tlAnim1CallbackCheck = false;
+    let tlAnim2CallbackCheck = false;
 
     const timeline = anime.timeline({
       autoplay: false,
-      duration: 100,
       begin: () => {
-        timelineBeginHasBeenTriggered = true;
+        tlCallbackCheck = true;
       }
     })
     .add({
@@ -37,7 +36,7 @@ describe('Callbacks', () => {
       autoplay: false,
       duration: 100,
       begin: () => {
-        timelineAnim1BeginHasBeenTriggered = true;
+        tlAnim1CallbackCheck = true;
       }
     })
     .add({
@@ -46,25 +45,98 @@ describe('Callbacks', () => {
       autoplay: false,
       duration: 100,
       begin: () => {
-        timelineAnim2BeginHasBeenTriggered = true;
+        tlAnim2CallbackCheck = true;
       }
     })
 
-    expect(timelineBeginHasBeenTriggered).toBe(false);
-    expect(timelineAnim1BeginHasBeenTriggered).toBe(false);
-    expect(timelineAnim2BeginHasBeenTriggered).toBe(false);
+    expect(tlCallbackCheck).toBe(false);
+    expect(tlAnim1CallbackCheck).toBe(false);
+    expect(tlAnim2CallbackCheck).toBe(false);
     timeline.seek(50);
-    expect(timelineBeginHasBeenTriggered).toBe(false);
-    expect(timelineAnim1BeginHasBeenTriggered).toBe(false);
-    expect(timelineAnim2BeginHasBeenTriggered).toBe(false);
+    expect(tlCallbackCheck).toBe(false);
+    expect(tlAnim1CallbackCheck).toBe(false);
+    expect(tlAnim2CallbackCheck).toBe(false);
     timeline.seek(150);
-    expect(timelineBeginHasBeenTriggered).toBe(true);
-    expect(timelineAnim1BeginHasBeenTriggered).toBe(true);
-    expect(timelineAnim2BeginHasBeenTriggered).toBe(false);
+    expect(tlCallbackCheck).toBe(true);
+    expect(tlAnim1CallbackCheck).toBe(true);
+    expect(tlAnim2CallbackCheck).toBe(false);
     timeline.seek(0);
-    expect(timelineBeginHasBeenTriggered).toBe(true);
-    expect(timelineAnim1BeginHasBeenTriggered).toBe(true);
-    expect(timelineAnim2BeginHasBeenTriggered).toBe(true);
+    expect(tlCallbackCheck).toBe(true);
+    expect(tlAnim1CallbackCheck).toBe(true);
+    expect(tlAnim2CallbackCheck).toBe(true);
+  });
+
+  test('complete() on single instance', () => {
+    let callbackCheck = false;
+
+    const animation = anime({
+      targets: '#target-id',
+      translateX: 100,
+      autoplay: false,
+      duration: 100,
+      complete: () => {
+        callbackCheck = true;
+      }
+    });
+
+    expect(callbackCheck).toBe(false);
+    animation.seek(50);
+    expect(callbackCheck).toBe(false);
+    animation.seek(0);
+    expect(callbackCheck).toBe(false);
+    animation.seek(100);
+    expect(callbackCheck).toBe(true);
+  });
+
+  test('complete() in timeline', () => {
+    let tlCallbackCheck = false;
+    let tlAnim1CallbackCheck = false;
+    let tlAnim2CallbackCheck = false;
+
+    const timeline = anime.timeline({
+      autoplay: false,
+      complete: () => {
+        tlCallbackCheck = true;
+      }
+    })
+    .add({
+      targets: '#target-id',
+      translateX: 100,
+      autoplay: false,
+      duration: 100,
+      complete: () => {
+        tlAnim1CallbackCheck = true;
+      }
+    })
+    .add({
+      targets: '#target-id',
+      translateY: 100,
+      autoplay: false,
+      duration: 100,
+      complete: () => {
+        tlAnim2CallbackCheck = true;
+      }
+    })
+
+    expect(tlCallbackCheck).toBe(false);
+    expect(tlAnim1CallbackCheck).toBe(false);
+    expect(tlAnim2CallbackCheck).toBe(false);
+    timeline.seek(50);
+    expect(tlCallbackCheck).toBe(false);
+    expect(tlAnim1CallbackCheck).toBe(false);
+    expect(tlAnim2CallbackCheck).toBe(false);
+    timeline.seek(150);
+    expect(tlCallbackCheck).toBe(false);
+    expect(tlAnim1CallbackCheck).toBe(true);
+    expect(tlAnim2CallbackCheck).toBe(false);
+    timeline.seek(0);
+    expect(tlCallbackCheck).toBe(false);
+    expect(tlAnim1CallbackCheck).toBe(true);
+    expect(tlAnim2CallbackCheck).toBe(false);
+    timeline.seek(200);
+    expect(tlCallbackCheck).toBe(true);
+    expect(tlAnim1CallbackCheck).toBe(true);
+    expect(tlAnim2CallbackCheck).toBe(true);
   });
 
 });
