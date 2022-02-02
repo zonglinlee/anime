@@ -75,5 +75,6 @@ export const pi = Math.PI;
 
 // Misc
 
+export const noop = ()=>{};
 export const emptyString = '';
 

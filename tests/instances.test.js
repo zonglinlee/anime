@@ -27,7 +27,7 @@ describe('Instances', () => {
     expect(instance01.animations).toEqual(expect.any(Array));
   });
 
-  test('progress should update from 0 to 1', () => {
+  test('.progress should update from 0 to 1', () => {
     const animParameters = {
       targets: '#target-id',
       opacity: [0, 1],

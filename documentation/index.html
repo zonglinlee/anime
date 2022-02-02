@@ -2702,7 +2702,7 @@ document.querySelector('.reverse-anim-demo .reverse').onclick = animation.revers
       <div class="small square el"></div>
     </div>
     <div class="line controls">
-      <input class="progress" step=".001" type="range" min="0" max="100" value="0"></input>
+      <input class="progress" step=".001" type="range" min="0" max="1" value="0"></input>
     </div>
   </div>
   <script>var seekAnim = function() {
@@ -2718,7 +2718,7 @@ var animation = anime({
 
 var seekProgressEl = document.querySelector('.seek-anim-demo .progress');
 seekProgressEl.oninput = function() {
-  animation.seek(animation.duration * (seekProgressEl.value / 100));
+  animation.seek(animation.duration * (seekProgressEl.value));
 };
 /*DEMO*/
 }
@@ -2753,7 +2753,7 @@ timeline.seek(timeStamp);
       <button class="play">Play</button>
       <button class="pause">Pause</button>
       <button class="restart">Restart</button>
-      <input class="progress" step=".001" type="range" min="0" max="100" value="0"></input>
+      <input class="progress" step=".001" type="range" min="0" max="1" value="0"></input>
     </div>
   </div>
   <script>var TLcontrols = function() {
@@ -2789,7 +2789,7 @@ document.querySelector('.timeline-controls-demo .pause').onclick = tl.pause;
 document.querySelector('.timeline-controls-demo .restart').onclick = tl.restart;
 
 controlsProgressEl.addEventListener('input', function() {
-  tl.seek(tl.duration * (controlsProgressEl.value / 100));
+  tl.seek(tl.duration * (controlsProgressEl.value));
 });
 /*DEMO*/
 }

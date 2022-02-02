@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Combined tests | anime.js</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <style>
+    .tests-area {
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .log-area {
+      position: absolute;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      font-family: monospace;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="tests-area">
+    <div class="dummy red"></div>
+    <div class="dummy red"></div>
+    <div class="dummy red"></div>
+    <input id="progress-bar" step=".001" type="range" min="0" max="1" value="0">
+  </div>
+  <div class="log-area">
+  </div>
+</body>
+<script type="module">
+  import anime from '../../src/anime.js';
+
+  const logAreaEl = document.querySelector('.log-area');
+
+  function logTest(name) {
+    const logEl = document.createElement('div');
+    logEl.innerHTML = name;
+    logAreaEl.appendChild(logEl);
+    return logEl;
+  }
+
+  const beginTestEl = logTest('Begin callback');
+
+  const animation = anime({
+    targets: '.dummy:nth-child(1)',
+    translateY: 100,
+    autoplay: false,
+    begin: a => {
+      console.log('begin');
+      beginTestEl.classList.add('green');
+    }
+  });
+
+  const seekProgressEl = document.getElementById('progress-bar');
+  seekProgressEl.oninput = function() {
+    animation.seek(animation.duration * (seekProgressEl.value));
+  };
+
+</script>
+</html>

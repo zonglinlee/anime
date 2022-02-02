@@ -2,6 +2,7 @@
   --black: #252423;
   --white: #F6F4F2;
   --red: #F64E4D;
+  --green: #18FF74;
 }
 
 *, *:before, *:after {
@@ -30,6 +31,10 @@ body {
 
 .red {
   color: var(--red);
+}
+
+.green {
+  color: var(--green);
 }
 
 .dummy {
