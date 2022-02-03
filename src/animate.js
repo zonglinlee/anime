@@ -56,15 +56,21 @@ export function animate(params = {}) {
     lastTime = adjustTime(instance.currentTime) * (1 / settings.speed);
   }
 
-  function seekChild(time, child) {
-    if (child) child.seek(time - child.timelineOffset);
+  function seekChild(time, child, muteCallbacks) {
+    if (child) {
+      if (!muteCallbacks) {
+        child.seek(time - child.timelineOffset);
+      } else {
+        child.seekSilently(time - child.timelineOffset);
+      }
+    }
   }
 
-  function syncInstanceChildren(time) {
+  function syncInstanceChildren(time, muteCallbacks) {
     if (!instance.reversePlayback) {
-      for (let i = 0; i < childrenLength; i++) seekChild(time, children[i]);
+      for (let i = 0; i < childrenLength; i++) seekChild(time, children[i], muteCallbacks);
     } else {
-      for (let i = childrenLength; i--;) seekChild(time, children[i]);
+      for (let i = childrenLength; i--;) seekChild(time, children[i], muteCallbacks);
     }
   }
 
@@ -128,10 +134,6 @@ export function animate(params = {}) {
     }
   }
 
-  function setCallback(cb) {
-    if (instance[cb] && !instance.passThrough) instance[cb](instance);
-  }
-
   function countIteration() {
     if (instance.remainingLoops && instance.remainingLoops !== true) {
       instance.remainingLoops--;
@@ -148,11 +150,11 @@ export function animate(params = {}) {
     if (children) { syncInstanceChildren(insTime); }
     if (!instance.began && instance.currentTime > 0) {
       instance.began = true;
-      setCallback('begin');
+      instance.begin(instance);
     }
     if (!instance.loopBegan && instance.currentTime > 0) {
       instance.loopBegan = true;
-      setCallback('loopBegin');
+      instance.loopBegin(instance);
     }
     if (insTime <= insDelay && instance.currentTime !== 0) {
       setAnimationsProgress(0);
@@ -164,19 +166,19 @@ export function animate(params = {}) {
       if (!instance.changeBegan) {
         instance.changeBegan = true;
         instance.changeCompleted = false;
-        setCallback('changeBegin');
+        instance.changeBegin(instance);
       }
-      setCallback('change');
+      instance.change(instance);
       setAnimationsProgress(insTime);
     } else {
       if (instance.changeBegan) {
         instance.changeCompleted = true;
         instance.changeBegan = false;
-        setCallback('changeComplete');
+        instance.changeComplete(instance);
       }
     }
     instance.currentTime = clamp(insTime, 0, insDuration);
-    if (instance.began) setCallback('update');
+    if (instance.began) instance.update(instance);
     if (engineTime >= insDuration) {
       lastTime = 0;
       countIteration();
@@ -184,16 +186,14 @@ export function animate(params = {}) {
         instance.paused = true;
         if (!instance.completed) {
           instance.completed = true;
-          setCallback('loopComplete');
-          setCallback('complete');
-          if (!instance.passThrough && 'Promise' in window) {
-            resolve();
-            promise = makePromise(instance);
-          }
+          instance.loopComplete(instance);
+          instance.complete(instance);
+          resolve();
+          promise = makePromise(instance);
         }
       } else {
         startTime = now;
-        setCallback('loopComplete');
+        instance.loopComplete(instance);
         instance.loopBegan = false;
         if (instance.direction === 'alternate') {
           toggleInstanceDirection();
@@ -204,7 +204,6 @@ export function animate(params = {}) {
 
   instance.reset = function() {
     const direction = instance.direction;
-    instance.passThrough = false;
     instance.currentTime = 0;
     instance.progress = 0;
     instance.paused = true;
@@ -234,6 +233,12 @@ export function animate(params = {}) {
 
   instance.seek = function(time) {
     setInstanceProgress(adjustTime(time));
+  }
+
+  instance.seekSilently = function(time) {
+    // const insTime = adjustTime(time);
+    if (children) { syncInstanceChildren(time, true); }
+    setAnimationsProgress(time);
   }
 
   instance.pause = function() {

@@ -1,14 +1,20 @@
+// Misc
+
+export const noop = () => {};
+export const emptyString = '';
+export const pi = Math.PI;
+
 // Default animation parameters
 
 export const defaultInstanceSettings = {
-  update: null,
-  begin: null,
-  loopBegin: null,
-  changeBegin: null,
-  change: null,
-  changeComplete: null,
-  loopComplete: null,
-  complete: null,
+  update: noop,
+  begin: noop,
+  loopBegin: noop,
+  changeBegin: noop,
+  change: noop,
+  changeComplete: noop,
+  loopComplete: noop,
+  complete: noop,
   loop: 1,
   direction: 'normal',
   autoplay: true,
@@ -68,13 +74,3 @@ export const lowerCaseRgx = /([a-z])([A-Z])/g;
 export const transformsExecRgx = /(\w+)\(([^)]*)\)/g;
 export const relativeValuesExecRgx = /^(\*=|\+=|-=)/;
 export const whiteSpaceTestRgx = /\s/g;
-
-// Math variables
-
-export const pi = Math.PI;
-
-// Misc
-
-export const noop = ()=>{};
-export const emptyString = '';
-
