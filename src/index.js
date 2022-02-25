@@ -885,6 +885,7 @@ const engine = (() => {
     }
   }
   if (typeof document !== 'undefined') {
+    // The visibilitychange event is fired at the document when the contents of its tab have become visible or have been hidden.
     document.addEventListener('visibilitychange', handleVisibilityChange);
   }
 
