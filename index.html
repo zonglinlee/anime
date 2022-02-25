@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime-demo</title>
+    <style>
+        .div1 {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            text-align: center;
+            font-size: 16px;
+            border: #00D672 2px solid;
+        }
+    </style>
+</head>
+<body>
+<div style="padding: 40px;">
+    <div>根目录下启动 http-server 静态服务，查看 demo </div>
+    <div class="div1">div1</div>
+</div>
+<!--    以模块的方式引入 ，注意  index.js文件的 后缀.js 不能省略-->
+<script type="module">
+    import anime from "/src/index.js"
+
+    anime({
+        targets: 'div.div1',
+        translateX: 250,
+        translateY:250,
+        backgroundColor: '#ffa500',
+        borderRadius: ['0%', '50%'],
+        width: 80,
+        height: 80,
+        duration:3000,
+    });
+</script>
+</body>
+</html>
