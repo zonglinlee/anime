@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "build": "node build",
-    "demo1": "webpack && http-server -p 8000",
+    "watch": "webpack --watch",
+    "serve": "http-server -p 8000",
     "demo2": "webpack && http-server -p 8000 &&  open-cli https://localhost:8000/example/ -- 'google chrome' --incognito",
     "demo3": "node build-demo.js"
   },
