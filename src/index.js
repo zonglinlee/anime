@@ -229,7 +229,7 @@ const penner = (() => {
       const a = minMax(amplitude, 1, 10);
       const p = minMax(period, .1, 2);
       return t => {
-        return (t === 0 || t === 1) ? t : 
+        return (t === 0 || t === 1) ? t :
           -a * Math.pow(2, 10 * (t - 1)) * Math.sin((((t - 1) - (p / (Math.PI * 2) * Math.asin(1 / a))) * (Math.PI * 2)) / p);
       }
     }
@@ -245,9 +245,9 @@ const penner = (() => {
     const easeIn = functionEasings[name];
     eases['easeIn' + name] = easeIn;
     eases['easeOut' + name] = (a, b) => t => 1 - easeIn(a, b)(1 - t);
-    eases['easeInOut' + name] = (a, b) => t => t < 0.5 ? easeIn(a, b)(t * 2) / 2 : 
+    eases['easeInOut' + name] = (a, b) => t => t < 0.5 ? easeIn(a, b)(t * 2) / 2 :
       1 - easeIn(a, b)(t * -2 + 2) / 2;
-    eases['easeOutIn' + name] = (a, b) => t => t < 0.5 ? (1 - easeIn(a, b)(1 - t * 2)) / 2 : 
+    eases['easeOutIn' + name] = (a, b) => t => t < 0.5 ? (1 - easeIn(a, b)(1 - t * 2)) / 2 :
       (easeIn(a, b)(t * 2 - 1) + 1) / 2;
   });
 
@@ -504,7 +504,7 @@ function getRectLength(el) {
 
 function getLineLength(el) {
   return getDistance(
-    {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')}, 
+    {x: getAttribute(el, 'x1'), y: getAttribute(el, 'y1')},
     {x: getAttribute(el, 'x2'), y: getAttribute(el, 'y2')}
   );
 }
@@ -844,7 +844,7 @@ function createNewInstance(params) {
 let activeInstances = [];
 
 const engine = (() => {
-  let raf;
+  let raf; // requestAnimationFrame
 
   function play() {
     if (!raf && (!isDocumentHidden() || !anime.suspendWhenDocumentHidden) && activeInstances.length > 0) {
@@ -867,6 +867,7 @@ const engine = (() => {
         activeInstancesLength--;
       }
     }
+    // The callback gets one argument – the time passed from the beginning of the page load in milliseconds. This time can also be obtained by calling performance.now()
     raf = i > 0 ? requestAnimationFrame(step) : undefined;
   }
 
@@ -908,8 +909,9 @@ function anime(params = {}) {
     instance.finished = promise;
     return promise;
   }
-
+  // 创建实例并初始化默认参数
   let instance = createNewInstance(params);
+  // 存储promise的resolve函数，后续resolve
   let promise = makePromise(instance);
 
   function toggleInstanceDirection() {
@@ -1106,7 +1108,7 @@ function anime(params = {}) {
     setTargetsValue(targets, properties);
     return instance;
   }
-
+  // 在每个tick，即每帧中执行动画
   instance.tick = function(t) {
     now = t;
     if (!startTime) startTime = now;
@@ -1148,7 +1150,7 @@ function anime(params = {}) {
   }
 
   instance.reset();
-
+  // 执行动画，默认autoplay为true
   if (instance.autoplay) instance.play();
 
   return instance;
